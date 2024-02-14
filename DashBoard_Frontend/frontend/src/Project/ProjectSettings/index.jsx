@@ -2,7 +2,7 @@ import React from 'react';
 export default function ProjectSettings(){
     return(
         <div>
-            ProjectSettings
+            <h1>ProjectSettings</h1>
         </div>
     )
 }
