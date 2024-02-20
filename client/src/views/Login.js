@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, navigate } from "@reach/router";
 import Axios from "axios";
+
 // import "./All.css";
 
 import { GoogleLogin } from 'react-google-login';
@@ -33,6 +34,7 @@ const Login = (props) => {
   const [errors, setErrors] = useState("");
   const onSuccess = (res) => {
     console.log("Login Success! Current User: ", res.profileObj);
+    
 }
 const onFailure = (res) => {
     console.log("login Failed res: ", res);
@@ -59,7 +61,8 @@ const onFailure = (res) => {
   const bodyStyle = {
     margin: 0,
     height: "100vh", 
-    background: "linear-gradient(-45deg, #020024, #090979, #00d4ff)",
+    background: "#000000",
+ 
     backgroundSize: "400% 400%",
     animation: "gradient 15s ease infinite",
   };
@@ -82,13 +85,13 @@ const onFailure = (res) => {
       <div className="container">
         <div className="row">
           <div className="col text-center mt-5 ">
-            <h1 className="display-3">TrackerX</h1>
+            <h1 className="display-3" style={{color: "yellow"}}>TrackerX</h1>
           </div>
         </div>
         <div className="row justify-content-center mt-5">
           <div className="col-md-5">
             <div className="card p-4 shadow rounded border" style={formStyle}>
-              <h2 className="font-weight-bold text-center mb-4">
+              <h2 className="font-weight-bold text-center mb-4" style={{color: "yellow"}}>
                 Log in to your account
               </h2>
               <form onSubmit={handleSubmit}>
@@ -139,7 +142,10 @@ const onFailure = (res) => {
         </div>
         <br/>
               <div className="text-center" >
-                <Link to="/register" style={{ color: 'white' }}>Sign up for an account</Link>
+                <Link to="/register" style={{ color: '#00dc00' }}>Sign up for an account</Link>
+              </div>
+              <div className="text-center" >
+                <Link to= '/email' style={{ color: '#FF474C', background:"light blue" }}>Forget Password</Link>
               </div>
             </div>
           </div>
