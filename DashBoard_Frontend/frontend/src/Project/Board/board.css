@@ -1,0 +1,10 @@
+.boardHeader{
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    background-color: rgb(51,51,51);
+    color: white;
+    padding: 1rem 1rem;
+    border-left: 1px solid white;
+    height:fit-content;
+}

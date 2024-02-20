@@ -1,8 +1,10 @@
 import React from 'react';
-export default function ProjectSettings(){
+import './projectSetting.css';
+const ProjectSettings=()=>{
     return(
-        <div>
+        <div className='settingHeader'>
             <h1>ProjectSettings</h1>
         </div>
     )
 }
+export default ProjectSettings;

@@ -1,8 +1,8 @@
 import React from "react";
-
+import './board.css';
 export default function Board(){
     return(
-        <div>
+        <div className="boardHeader">
             <h1>Board</h1>
         </div>
     )
