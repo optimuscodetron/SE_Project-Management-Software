@@ -1,5 +1,5 @@
 import React from 'react';
-import './projectSetting.css';
+
 const ProjectSettings=()=>{
     return(
         <div>
