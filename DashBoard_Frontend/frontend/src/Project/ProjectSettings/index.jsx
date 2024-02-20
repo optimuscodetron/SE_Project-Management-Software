@@ -2,7 +2,7 @@ import React from 'react';
 import './projectSetting.css';
 const ProjectSettings=()=>{
     return(
-        <div className='settingHeader'>
+        <div>
             <h1>ProjectSettings</h1>
         </div>
     )
