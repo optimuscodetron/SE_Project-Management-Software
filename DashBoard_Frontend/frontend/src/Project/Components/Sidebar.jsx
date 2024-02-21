@@ -27,15 +27,15 @@ const Sidebar = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/project/board" activeClassName="activeClicked">
+            <NavLink exact to="/workspace/project/board" activeClassName="activeClicked">
               <CDBSidebarMenuItem icon="th-large">Agile Board</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/project/settings" activeClassName="activeClicked">
+            <NavLink exact to="/workspace/project/settings" activeClassName="activeClicked">
                 {/* <FontAwesomeIcon icon="fa-solid fa-gear" /> */}
               <CDBSidebarMenuItem icon="cog" className="">Project Settings</CDBSidebarMenuItem>
             </NavLink>
             <hr />
-                <NavLink exact to="/project/issue" activeClassName="activeClicked">
+                <NavLink exact to="/workspace/project/issue" activeClassName="activeClicked">
                 <CDBSidebarMenuItem icon="table">Issues</CDBSidebarMenuItem>
                 </NavLink>
           </CDBSidebarMenu>
