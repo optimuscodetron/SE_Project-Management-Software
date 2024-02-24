@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, navigate, useNavigate } from "@reach/router";
+import {  useNavigate } from "@reach/router";
 import Axios from "axios";
 // import { ToastContainer, toast } from 'react-toastify';
 
@@ -7,7 +7,7 @@ import Axios from "axios";
 const Email = () => {
     const [spiner,setSpiner] = useState(false);
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
 
 
@@ -53,7 +53,7 @@ const Email = () => {
                 console.log("User created successfully: " + res.data.user_id);
                 localStorage.setItem('userID', res.data.user._id);
                 localStorage.setItem('userName', res.data.user.name);
-                navigate("/welcome");
+                // navigate("/workspace");
             })
             .catch(err => {
                 setErrors(err.response.data.errors);

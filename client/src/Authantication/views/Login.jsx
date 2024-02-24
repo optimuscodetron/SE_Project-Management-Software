@@ -5,40 +5,68 @@ import Axios from "axios";
 // import "./All.css";
 
 import { GoogleLogin } from 'react-google-login';
-const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
-function login() {
-    const onSuccess = (res) => {
-        console.log("Login Success! Current User: ", res.profileObj);
-    }
-    const onFailure = (res) => {
-        console.log("login Failed res: ", res);
-    }
-    return (
-        <div id="siginbutton">
-            <GoogleLogin
-                clientId={clientid}
-                buttonText='Login with Google'
-                onSuccess={onSuccess}
-                onFailure={onFailure}
-                cookiePolicy={'single_host_origin'}
-                isSignedIn={true}
-            />
-        </div>
 
-    )
-}
+// const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
+
+// function login() {
+//   const onSuccess = (res) => {
+//     console.log("Login Success! Current User: ", res.profileObj);
+//   }
+//   const onFailure = (res) => {
+//     console.log("login Failed res: ", res);
+//   }
+//   return (
+//     <div id="siginbutton">
+//       <GoogleLogin
+//         clientId={clientid}
+//         buttonText='Login with Google'
+//         onSuccess={onSuccess}
+//         onFailure={onFailure}
+//         cookiePolicy={'single_host_origin'}
+//         isSignedIn={true}
+//       />
+//     </div>
+
+//   )
+// }
 
 const Login = (props) => {
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
+  const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
+
+
+  // function login() {
+  //     const onSuccess = (res) => {
+  //       console.log("Login Success! Current User: ", res.profileObj);
+  //     }
+  //     const onFailure = (res) => {
+  //       console.log("login Failed res: ", res);
+  //     }
+  //     return (
+  //       <div id="siginbutton">
+  //         <GoogleLogin
+  //           clientId={clientid}
+  //           buttonText='Login with Google'
+  //           onSuccess={onSuccess}
+  //           onFailure={onFailure}
+  //           cookiePolicy={'single_host_origin'}
+  //           isSignedIn={true}
+  //         />
+  //       </div>
+    
+  //     )
+  //   }
+    
   const onSuccess = (res) => {
     console.log("Login Success! Current User: ", res.profileObj);
-    
-}
-const onFailure = (res) => {
+
+  }
+  const onFailure = (res) => {
     console.log("login Failed res: ", res);
-}
+  }
   function handleSubmit(e) {
     e.preventDefault();
     const user = {
@@ -60,23 +88,23 @@ const onFailure = (res) => {
   }
   const bodyStyle = {
     margin: 0,
-    height: "100vh", 
+    height: "100vh",
     background: "#000000",
- 
+
     backgroundSize: "400% 400%",
     animation: "gradient 15s ease infinite",
   };
   const formStyle = {
-    backgroundColor: "rgba(255, 255, 255, 0)", 
+    backgroundColor: "rgba(255, 255, 255, 0)",
     padding: "20px",
     borderRadius: "10px",
     border: "none",
   };
 
   const inputStyle = {
-    backgroundColor: "rgba(255, 255, 255, 0)", 
-    border: "none", 
-    borderBottom: "1px solid #ccc", 
+    backgroundColor: "rgba(255, 255, 255, 0)",
+    border: "none",
+    borderBottom: "1px solid #ccc",
     marginBottom: "15px",
   };
 
@@ -85,13 +113,13 @@ const onFailure = (res) => {
       <div className="container">
         <div className="row">
           <div className="col text-center mt-5 ">
-            <h1 className="display-3" style={{color: "yellow"}}>TrackerX</h1>
+            <h1 className="display-3" style={{ color: "yellow" }}>TrackerX</h1>
           </div>
         </div>
         <div className="row justify-content-center mt-5">
           <div className="col-md-5">
             <div className="card p-4 shadow rounded border" style={formStyle}>
-              <h2 className="font-weight-bold text-center mb-4" style={{color: "yellow"}}>
+              <h2 className="font-weight-bold text-center mb-4" style={{ color: "yellow" }}>
                 Log in to your account
               </h2>
               <form onSubmit={handleSubmit}>
@@ -109,7 +137,7 @@ const onFailure = (res) => {
                     placeholder="Enter email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    
+
                   />
                 </div>
                 <div className="form-group">
@@ -131,21 +159,21 @@ const onFailure = (res) => {
                 </div>
               </form>
               <div className="text-center" id="siginbutton">
-            <GoogleLogin
-                clientId={clientid}
-                buttonText='Login with Google'
-                onSuccess={onSuccess}
-                onFailure={onFailure}
-                cookiePolicy={'single_host_origin'}
-                isSignedIn={true}
-            />
-        </div>
-        <br/>
+                <GoogleLogin
+                  clientId={clientid}
+                  buttonText='Login with Google'
+                  onSuccess={onSuccess}
+                  onFailure={onFailure}
+                  cookiePolicy={'single_host_origin'}
+                  isSignedIn={true}
+                />
+              </div>
+              <br />
               <div className="text-center" >
-                <Link to="/register" style={{ color: '#00dc00' }}>Sign up for an account</Link>
+                <a href="/register" style={{ color: '#00dc00' }}>Sign up for an account</a>
               </div>
               <div className="text-center" >
-                <Link to= '/email' style={{ color: '#FF474C', background:"light blue" }}>Forget Password</Link>
+                <a href='/email' style={{ color: '#FF474C', background: "light blue" }}>Forget Password</a>
               </div>
             </div>
           </div>

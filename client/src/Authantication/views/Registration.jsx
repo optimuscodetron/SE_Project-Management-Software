@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
-import { navigate, Link } from '@reach/router';
+import { navigate } from '@reach/router';
 
 const Registration = (props) => {
     const [email, setEmail] = useState("");
@@ -101,7 +101,7 @@ const Registration = (props) => {
                                 </div>
                             </form>
                             <div className="text-center">
-                                <Link to="/login" style={{ color: '#00dc00' }}>Already have an account? Log in</Link>
+                                <a href="/login" style={{ color: '#00dc00' }}>Already have an account? Log in</a>
                             </div>
                         </div>
                     </div>
