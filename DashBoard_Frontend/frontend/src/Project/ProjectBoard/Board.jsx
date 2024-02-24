@@ -2,7 +2,7 @@ import React from "react";
 
 import Sidebar from "../Components/Sidebar";
 import Header from "./Componets/Header";
-import Issue from "./Componets/Issues";
+import Issue from "./Componets/IssuesScreen";
 import IssueSearch from "./Componets/IssueSearch";
 
 export default function Board(){

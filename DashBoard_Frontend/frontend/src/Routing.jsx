@@ -13,7 +13,7 @@ const Routing = () => (
       {/* <Navigate exact from="/" to="/workspace" /> */}
     <Routes>
       {/* <Route path="/authenticate" component={Authenticate} /> */}
-      
+
       <Route exact path="/workspace" element={<Workspace/>} />
       <Route exact path="/workspace/project/board" element={<Board/>} />
       <Route exact path="/workspace/project/settings" element={<Settings/>} />

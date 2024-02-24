@@ -6,7 +6,7 @@ const Settings=()=>{
         <div className="flex flex-row w-screen">
             <Sidebar/>
             <div className="flex flex-col px-8 py-8">
-                ProjectSettings
+                ProjectSetting
             </div>
             
         </div>
