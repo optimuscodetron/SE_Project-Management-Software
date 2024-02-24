@@ -1,9 +1,9 @@
 import React from "react";
-
+import WorkspaceSidebar from "./components/workspaceSidebar";
 export default function Workspace(){
     return(
         <div>
-            workspace
+            <WorkspaceSidebar/>
         </div>
     );
 };
