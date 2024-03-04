@@ -5,6 +5,7 @@ import { Router, Redirect } from '@reach/router';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { gapi } from 'gapi-script';
+import Invite from './invitation/Invite';
 import Otp from './Authantication/Forgetpassword/otp';
 
 import Login from './Authantication/views/Login';
@@ -14,7 +15,7 @@ import loginbutton from "./Authantication/views/Login";
 
 import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
-import Workspace from './Workspace'
+import Workspace from './Workspace';
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
@@ -52,7 +53,7 @@ function App() {
                     <Route  path="/register" element={<Registration />} />
                     <Route  path="/email" element={<Email />} />
                     <Route  path="/login" element={<Login />} />
-
+                    <Route path="/invite" element={<Invite/>} />
 
                     <Route  path="/workspace" element={<Workspace />} />
                     <Route  path="/workspace/project/board" element={<Board />} />
