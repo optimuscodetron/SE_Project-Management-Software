@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { Router, Redirect } from '@reach/router';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
@@ -15,6 +15,8 @@ import loginbutton from "./Authantication/views/Login";
 import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace'
+import WorkPage from "./Create_workspace/Components/WorkPage";
+
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
@@ -52,6 +54,11 @@ function App() {
                     <Route  path="/register" element={<Registration />} />
                     <Route  path="/email" element={<Email />} />
                     <Route  path="/login" element={<Login />} />
+
+                    {/* by ayush */}
+                    <Route path="/create_workspace" element={<WorkPage/>}> </Route>
+                   
+
 
 
                     <Route  path="/workspace" element={<Workspace />} />
