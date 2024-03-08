@@ -31,11 +31,11 @@ export default function IssuesScreen() {
         // ...
     ]);
     const [inProgressIssues, setInProgressIssues] = useState([
-        // { id: 12, title: 'Issue 12', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' },
-        // // ...
-        // { id: 13, title: 'Issue 13', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' },
-        // // ...
-        // { id: 14, title: 'Issue 14', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' },
+        { id: 12, title: 'Issue 12', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' },
+        // ...
+        { id: 13, title: 'Issue 13', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' },
+        // ...
+        { id: 14, title: 'Issue 14', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' },
         // ...
     ]);
     const [doneIssues, setDoneIssues] = useState([
@@ -87,7 +87,7 @@ export default function IssuesScreen() {
                     // Issues+="Issues";
                     // console.log(Issues);
                     if(currentStatus==="ToDo")removeFromStage(toDoIssues, setToDoIssues);
-                    else if(currentStatus==="Inprogress")removeFromStage(inProgressIssues, setInProgressIssues);
+                    else if(currentStatus==="InProgress")removeFromStage(inProgressIssues, setInProgressIssues);
                     else if(currentStatus==="Done")removeFromStage(doneIssues, setDoneIssues);
                     else if(currentStatus==="Cancelled")removeFromStage(cancelledIssues, setCancelledIssues);
                     // removeFromStage(Issues, setter);
@@ -102,12 +102,12 @@ export default function IssuesScreen() {
                     // Issues+="Issues";
                     // console.log(Issues);
                     if(currentStatus==="Backlog")removeFromStage(backlogIssues, setBacklogIssues);
-                    else if(currentStatus==="Inprogress")removeFromStage(inProgressIssues, setInProgressIssues);
+                    else if(currentStatus==="InProgress")removeFromStage(inProgressIssues, setInProgressIssues);
                     else if(currentStatus==="Done")removeFromStage(doneIssues, setDoneIssues);
                     else if(currentStatus==="Cancelled")removeFromStage(cancelledIssues, setCancelledIssues);
                     addToStage(toDoIssues, setToDoIssues);
                     break;
-                case 'Inprogress':
+                case 'InProgress':
                     // setter+=currentStatus;
                     // setter+="Issues";
 
@@ -131,7 +131,7 @@ export default function IssuesScreen() {
                     // console.log(Issues);
                     if(currentStatus==="Backlog")removeFromStage(backlogIssues, setBacklogIssues);
                     else if(currentStatus==="ToDo")removeFromStage(toDoIssues, setToDoIssues);
-                    else if(currentStatus==="Inprogress")removeFromStage(inProgressIssues, setInProgressIssues);
+                    else if(currentStatus==="InProgress")removeFromStage(inProgressIssues, setInProgressIssues);
                     else if(currentStatus==="Cancelled")removeFromStage(cancelledIssues, setCancelledIssues);
                     addToStage(doneIssues, setDoneIssues);
                     break;
@@ -146,7 +146,7 @@ export default function IssuesScreen() {
                     // console.log(Issues);
                      if(currentStatus==="Backlog")removeFromStage(backlogIssues, setBacklogIssues);
                      else if(currentStatus==="ToDo")removeFromStage(toDoIssues, setToDoIssues);
-                     else if(currentStatus==="Inprogress")removeFromStage(inProgressIssues, setInProgressIssues);
+                     else if(currentStatus==="InProgress")removeFromStage(inProgressIssues, setInProgressIssues);
                      else if(currentStatus==="Done")removeFromStage(doneIssues, setDoneIssues);
                         addToStage(cancelledIssues, setCancelledIssues);
                     break;
@@ -158,17 +158,27 @@ export default function IssuesScreen() {
 
 
     return (
-        <div className="pt-4">
-           
-          
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-2">
-                <IssueStage stageName="Backlog" issues={backlogIssues} onMoveIssue={moveIssue} />
-                <IssueStage stageName="To Do" issues={toDoIssues} onMoveIssue={moveIssue} />
-                <IssueStage stageName="In Progress" issues={inProgressIssues} onMoveIssue={moveIssue} />
-                <IssueStage stageName="Done" issues={doneIssues} onMoveIssue={moveIssue} />
-                <IssueStage stageName="Cancelled" issues={cancelledIssues} onMoveIssue={moveIssue} />
+        // issues={backlogIssues} onMoveIssue={moveIssue}
+        <div className="pt-4 overflow-x-auto">
+            <div className="max-w-screen-xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-[1600px]">
+                    <div className="col-span-1 w-[310px]">
+                        <IssueStage stageName="Backlog" issues={backlogIssues} onMoveIssue={moveIssue}/>
+                    </div>
+                    <div className="col-span-1 w-[310px]">
+                        <IssueStage stageName="To Do" issues={toDoIssues} onMoveIssue={moveIssue}/>
+                    </div>
+                    <div className="col-span-1 w-[310px]">
+                        <IssueStage stageName="In Progress" issues={inProgressIssues} onMoveIssue={moveIssue}/>
+                    </div>
+                    <div className="col-span-1 w-[310px]">
+                        <IssueStage stageName="Done" issues={doneIssues} onMoveIssue={moveIssue}/>
+                    </div>
+                    <div className="col-span-1 w-[310px]">
+                        <IssueStage stageName="Cancelled" issues={cancelledIssues} onMoveIssue={moveIssue}/>
+                    </div>
+                </div>
             </div>
-       
         </div>
     );
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Sidebar from '../Components/Sidebar';
+import PSidebar from '../Components/PSidebar';
 const Settings=()=>{
     return(
         <div className="flex flex-row w-screen">
-            <Sidebar/>
+            <PSidebar/>
             <div className="flex flex-col px-8 py-8">
                 ProjectSetting
             </div>
