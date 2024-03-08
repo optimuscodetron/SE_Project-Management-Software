@@ -19,6 +19,7 @@ import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace/workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
+import Profile from './Workspace/myAccount/profile';
 
 import General from './Workspace/Settings/General/General';
 
@@ -80,6 +81,7 @@ function App() {
 
 
                     <Route path="/create_workspace" element={<WorkPage/>}> </Route>
+                    <Route  path="/workspace/myaccount/profile" element={<Profile />} />
                     {/* <Route component={PageError} /> */}
                 </Routes>
             
