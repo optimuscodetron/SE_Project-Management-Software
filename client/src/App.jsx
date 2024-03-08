@@ -16,6 +16,7 @@ import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
+import Profile from './Workspace/myAccount/profile';
 
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
@@ -64,6 +65,7 @@ function App() {
                     <Route  path="/workspace" element={<Workspace />} />
                     <Route  path="/workspace/project/board" element={<Board />} />
                     <Route  path="/workspace/project/settings" element={<Settings />} />
+                    <Route  path="/workspace/myaccount/profile" element={<Profile />} />
                     {/* <Route component={PageError} /> */}
                 </Routes>
             </BrowserRouter>
