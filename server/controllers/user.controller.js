@@ -1,6 +1,20 @@
 const { User } = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const userotp = require("../models/userOtp");
+const nodemailer = require("nodemailer");
+const tarnsporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 587, secure: false,
+  requireTLS: true,
+  auth:
+  {
+      user: '2021csb1107@iitrpr.ac.in',
+      pass: 'KUSHagra08092004@'
+  }
+})
+
+
 exports.userOtpSend = async (req, res) => {
   const { email } = req.body;
 
@@ -75,33 +89,6 @@ exports.userOtpSend = async (req, res) => {
   }
 };
 
-
-exports.userLogin = async (req, res) => {
-  const { email, otp } = req.body;
-
-  if (!otp || !email) {
-      res.status(400).json({ error: "Please Enter Your OTP and email" })
-  }
-
-  try {
-      const otpverification = await userotp.findOne({ email: email });
-
-      if (otpverification.otp === otp) {
-          const preuser = await User.findOne({ email: email });
-          let x = await User.findOne({ email: email });
-          console.log(x);
-
-          // token generate
-          const token = await preuser.generateAuthtoken();
-          res.status(200).json({ message: "User Login Succesfully done", usertoken: token, myuser: x });
-
-      } else {
-          res.status(400).json({ error: "Invalid Otp" })
-      }
-  } catch (error) {
-      res.status(400).json({ error: "Invalid Details", error })
-  }
-}
 module.exports.create = (req, res) => {
   User.create(req.body)
     .then((user) => {
