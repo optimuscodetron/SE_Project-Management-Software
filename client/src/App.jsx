@@ -16,6 +16,7 @@ import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
+import NewPassword from './Authantication/Forgetpassword/Newpassword/NewPassword';
 
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
@@ -57,6 +58,9 @@ function App() {
 
                     {/* by ayush */}
                     <Route path="/create_workspace" element={<WorkPage/>}> </Route>
+
+                    {/* by sushil */}
+                    <Route path='/newpassword' element = {<NewPassword/>} />
                    
 
 
