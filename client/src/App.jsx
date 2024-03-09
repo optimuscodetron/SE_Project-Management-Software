@@ -10,7 +10,7 @@ import Login from './Authantication/views/Login';
 import Registration from './Authantication/views/Registration';
 import Email from './Authantication/Forgetpassword/email';
 import Otp from './Authantication/Forgetpassword/otp';
-import Forgotpassword from './Authantication/Forgetpassword/newpassword';
+import Newpassword from './Authantication/Forgetpassword/newpassword';
 import loginbutton from "./Authantication/views/Login";
 
 import Board from './Project/ProjectBoard/Board';
@@ -54,7 +54,7 @@ function App() {
                     <Route  path="/register" element={<Registration />} />
                     <Route  path="/email" element={<Email />} />
                     <Route  path="/otp" element={<Otp />} />
-                    <Route  path="/forgotpassword" element={<Forgotpassword />} />
+                    <Route  path="/newpassword" element={<Newpassword />} />
                     <Route  path="/" element={<Login />} />
 
 

@@ -62,30 +62,43 @@ const Email = () => {
     const bodyStyle = {
         margin: 0,
         height: "100vh", // Set body height to full viewport height
-        background: "#000000",
+        background: "rgb(31,41,55)",
         backgroundSize: "400% 400%",
         animation: "gradient 15s ease infinite",
+        color: "#333",
     };
     const formStyle = {
         backgroundColor: "rgba(255, 255, 255, 0)", // Transparent white
         padding: "20px",
         borderRadius: "10px",
         border: "none",
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+        overflow: "hidden",
+        animation: "slideFromRight 1s linear both",
+        transition: "all 0.5s ease",
     };
+    const input = {
+        // backgroundColor: "#191919",
+        border: "none",
+        
+        borderBottom: "1px solid #ccc",
+        marginBottom: "15px",
+        animation: "animateInput 0.5s ease both",
+      };
     return (
         <>
             <div style={bodyStyle}>
 
                 <div className="container">
                     <div className="row">
-                        <div className="col text-center mt-5">
-                            <h1 className="display-3" style={{color: "yellow"}}>TrackerX</h1>
+                        <div className="col text-center mt-3">
+                            <h1 className="display-4" style={{color: "#ffff"}}>TrackerX</h1>
                         </div>
                     </div>
                     <div className="row justify-content-center mt-5">
-                        <div className="col-md-6">
-                            <div className="card p-4 shadow rounded border" style={formStyle}>
-                                <h2 className="font-weight-bold text-center mb-4" style={{color: "yellow"}}>OTP Authentication</h2>
+                        <div className="col-md-4">
+                            <div className="card p-5 shadow rounded border" style={formStyle}>
+                                <h2 className="font-weight-bold text-center mb-4" style={{color: "#ffff"}}>OTP Authentication</h2>
                                 <form onSubmit={handleSubmit}>
                                     <div className="form-group">
                                         {errors && (
@@ -110,7 +123,7 @@ const Email = () => {
                                     </div>
                                     
                                     <div className="form-group text-center">
-                                        <button className="btn btn-primary btn-lg btn-block" onClick={sendOtp}>Send OTP</button>
+                                        <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}} onClick={sendOtp}>Send OTP</button>
                                     </div>
                                 </form>
                                 
