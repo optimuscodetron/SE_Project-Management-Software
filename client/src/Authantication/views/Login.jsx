@@ -6,6 +6,7 @@ import backgroundImage from './auth.jpg';
 // import "./All.css";
 
 import { GoogleLogin } from "react-google-login";
+import { NavLink } from "react-router-dom";
 
 // const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
@@ -38,27 +39,7 @@ const Login = (props) => {
   const clientid =
     "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
-  // function login() {
-  //     const onSuccess = (res) => {
-  //       console.log("Login Success! Current User: ", res.profileObj);
-  //     }
-  //     const onFailure = (res) => {
-  //       console.log("login Failed res: ", res);
-  //     }
-  //     return (
-  //       <div id="siginbutton">
-  //         <GoogleLogin
-  //           clientId={clientid}
-  //           buttonText='Login with Google'
-  //           onSuccess={onSuccess}
-  //           onFailure={onFailure}
-  //           cookiePolicy={'single_host_origin'}
-  //           isSignedIn={true}
-  //         />
-  //       </div>
 
-  //     )
-  //   }
 
   const onSuccess = (res) => {
     console.log("Login Success! Current User: ", res.profileObj);
@@ -95,6 +76,7 @@ const Login = (props) => {
     animation: "gradient 15s ease infinite",
     backgroundSize: "cover",
     backgroundPosition: "center",
+    overflow:"auto",
   };
   const formStyle = {
     backgroundColor: "rgba(17, 24, 39)",
@@ -161,6 +143,7 @@ const Login = (props) => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     // style = {{background:'#191919'}}
+                    // style = {{background:'#191919'}}
                   />
                 </div>
                 <div
@@ -171,8 +154,8 @@ const Login = (props) => {
                     paddingTop: "0.1rem",
                   }}
                 >
-                  <a
-                    href="/email"
+                  <NavLink
+                    to="/email"
                     style={{
                       color: "#dcdcdc",
                       textDecoration: "none",
@@ -180,7 +163,7 @@ const Login = (props) => {
                     }}
                   >
                     Forgot Password
-                  </a>
+                  </NavLink>
                 </div>
 
                 <div
@@ -210,8 +193,8 @@ const Login = (props) => {
               <div className="text-center">
                 <span style={{ color: "#dcdcdc" }}>
                   Don't have an account?&nbsp;  
-                  <a
-                    href="/register"
+                  <NavLink
+                    to="/register"
                     style={{
                       fontWeight: "bold",
                       textDecoration: "none",
@@ -219,7 +202,7 @@ const Login = (props) => {
                     }}
                   >
                     Sign up
-                  </a>
+                  </NavLink>
                 </span>
               </div>
             </div>

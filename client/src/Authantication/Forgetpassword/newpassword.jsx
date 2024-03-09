@@ -1,9 +1,10 @@
-// import { ToastContainer, toast } from 'react-toastify';
+
+import { ToastContainer, toast } from 'react-toastify';
 import { useState } from "react";
 import 'react-router';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
-// import { passWordReset } from "../services/Apis";
+import { passWordReset } from "../services/Apis";
 // import { Spinner } from '@material-tailwind/react';
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -46,7 +47,19 @@ const NewPassword = () => {
 
 
         if (Object.keys(error1) == 0) {
+            const response = await passWordReset(data);
+            // console.log(response)
+            if (response.status === 200) {
     
+              toast.success(response.data.message);
+              setTimeout(() => {
+                navigate("/")
+              }, 5000)
+            } else {
+            //   toast.error(response.response.data.error)
+            }
+            console.log(newPassword);
+            console.log(email);
             
         }
         else {
@@ -183,7 +196,7 @@ const NewPassword = () => {
                                     </div>
                                     
                                     <div className="form-group text-center">
-                                        <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}} >Update
+                                        <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}} onClick={passWordReset}>Update
                                         {
                                                 spiner ? <span><Spinner animation="border" /></span> : ""
                                             }

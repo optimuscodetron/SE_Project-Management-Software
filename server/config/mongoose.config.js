@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const db=process.env.DB
 
 mongoose.connect("mongodb+srv://kumarchspiyush:WmXMs5kOS3jIqwun@cluster0.rf3lmty.mongodb.net/LoginWithGoogle?retryWrites=true&w=majority&appName=Cluster0", {
     useNewUrlParser: true,

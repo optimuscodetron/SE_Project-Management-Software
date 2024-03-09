@@ -11,12 +11,15 @@ import Registration from './Authantication/views/Registration';
 import Email from './Authantication/Forgetpassword/email';
 import Otp from './Authantication/Forgetpassword/otp';
 import Newpassword from './Authantication/Forgetpassword/newpassword';
+
+// import Forgotpassword from './Authantication/Forgetpassword/forgotpassword';
 import loginbutton from "./Authantication/views/Login";
 
 import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
+
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
