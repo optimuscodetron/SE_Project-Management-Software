@@ -10,6 +10,8 @@ import Login from './Authantication/views/Login';
 import Registration from './Authantication/views/Registration';
 import Email from './Authantication/Forgetpassword/email';
 import Otp from './Authantication/Forgetpassword/otp';
+import Newpassword from './Authantication/Forgetpassword/newpassword';
+
 // import Forgotpassword from './Authantication/Forgetpassword/forgotpassword';
 import loginbutton from "./Authantication/views/Login";
 
@@ -17,7 +19,7 @@ import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
-import NewPassword from './Authantication/Forgetpassword/newpassword';
+
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
@@ -55,7 +57,7 @@ function App() {
                     <Route  path="/register" element={<Registration />} />
                     <Route  path="/email" element={<Email />} />
                     <Route  path="/otp" element={<Otp />} />
-                    <Route  path="/newpassword" element={<NewPassword />} />
+                    <Route  path="/newpassword" element={<Newpassword />} />
                     <Route  path="/" element={<Login />} />
 
 
