@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import {useLocation, useNavigate } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import Spinner from 'react-bootstrap/Spinner';
 // import { navigate } from "@reach/router";
 import Axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
@@ -13,47 +13,49 @@ import { counter } from "@fortawesome/fontawesome-svg-core";
 
 const Otp = () => {
     // const [spiner,setSpiner] = useState(false);
-    const navigate=useNavigate();
+    const navigate = useNavigate();
+    const [spiner, setSpiner] = useState(false);
     const [otp, setOtp] = useState("");
     const location = useLocation();
 
-    const[counter,setCounter] = useState(30);
-    React.useEffect(() => { 
+    const [counter, setCounter] = useState(30);
+    React.useEffect(() => {
         counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
         if (counter === 0) {
-          navigate('/email', { state: { chk: counter } });
-        
+            navigate('/email', { state: { chk: counter } });
+
         }
-      }, [counter]);
+    }, [counter]);
     const verify = async (e) => {
         e.preventDefault();
 
         if (otp === "") {
             toast.error("Enter Your Otp")
-          } else if (!/[^a-zA-Z]/.test(otp)) {
+        } else if (!/[^a-zA-Z]/.test(otp)) {
             toast.error("Enter Valid Otp")
-          } else if (otp.length < 6) {
+        } else if (otp.length < 6) {
             toast.error("Otp Length minimum 6 digit")
-          } else {
+        } else {
             const data = {
-              otp, email: location.state
+                otp, email: location.state
             }
-                console.log(data)
+            setSpiner(true)
+            console.log(data)
             const response = await userVerify(data);
             if (response.status === 200) {
-            //   localStorage.setItem("usertoken", response.data.userToken);
-            //   localStorage.setItem("name", response.data.myuser.fname);
-              localStorage.setItem("email", response.data.myuser.email);
-            //   localStorage.setItem("phone", response.data.myuser.phone);
-            //   localStorage.setItem("address", response.data.myuser.address);
-              toast.success(response.data.message);
-              setTimeout(() => {
-                navigate("/newpassword")
-              }, 5000)
+                //   localStorage.setItem("usertoken", response.data.userToken);
+                //   localStorage.setItem("name", response.data.myuser.fname);
+                localStorage.setItem("email", response.data.myuser.email);
+                //   localStorage.setItem("phone", response.data.myuser.phone);
+                //   localStorage.setItem("address", response.data.myuser.address);
+                toast.success(response.data.message);
+                setTimeout(() => {
+                    navigate("/newpassword")
+                }, 5000)
             } else {
-              toast.error(response.response.data.error)
+                toast.error(response.response.data.error)
             }
-          }
+        }
     }
 
 
@@ -100,11 +102,11 @@ const Otp = () => {
     const input = {
         // backgroundColor: "#191919",
         border: "none",
-        
+
         borderBottom: "1px solid #ccc",
         marginBottom: "15px",
         animation: "animateInput 0.5s ease both",
-      };
+    };
     return (
         <>
             <div style={bodyStyle}>
@@ -112,49 +114,54 @@ const Otp = () => {
                 <div className="container">
                     <div className="row">
                         <div className="col text-center mt-3">
-                            <h1 className="display-4" style={{color: "#ffff"}}>TrackerX</h1>
+                            <h1 className="display-4" style={{ color: "#ffff" }}>TrackerX</h1>
                         </div>
                     </div>
                     <div className="row justify-content-center mt-5">
                         <div className="col-md-4">
                             <div className="card p-5 shadow rounded border" style={formStyle}>
-                                <h2 className="font-weight-bold text-center mb-4" style={{color: "#ffff"}}>Otp Verification</h2>
+                                <h2 className="font-weight-bold text-center mb-4" style={{ color: "#ffff" }}>Otp Verification</h2>
                                 {/* <form onSubmit={handleSubmit}> */}
-                                    <div className="form-group">
-                                        {errors && (
-                                            <span className="text-danger">
-                                                {errors?.email?.properties?.message}
-                                            </span>
-                                        )}
-                                    </div>
-                                    <div className="form-group">
-                                        <input className="form-control" type="otp" placeholder="Enter your otp" value={otp} onChange={e => setOtp(e.target.value)} />
-                                        {/* console.log(otp) */}
-                                    </div>
-                                 
-                                 
-                                
-                                    
-                                    {/* <div className="form-group">
+                                <div className="form-group">
+                                    {errors && (
+                                        <span className="text-danger">
+                                            {errors?.email?.properties?.message}
+                                        </span>
+                                    )}
+                                </div>
+                                <div className="form-group">
+                                    <input className="form-control" type="otp" placeholder="Enter your otp" value={otp} onChange={e => setOtp(e.target.value)} />
+                                    {/* console.log(otp) */}
+                                </div>
+
+
+
+
+                                {/* <div className="form-group">
                                         {errors && (
                                             <span className="text-danger">
                                                 {errors?.confirmPassword?.properties?.message}
                                             </span>
                                         )}
                                     </div> */}
-                                    <div className="countdown-text">
-                                        <p style = {{color:'#c0c0c0'}}>Time Remaining: {`${counter}s`}</p>
-                                    </div>
-                                    <div className="form-group text-center">
-                                        <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}} onClick={verify}>Verify</button>
-                                    </div>
+                                <div className="countdown-text">
+                                    <p style={{ color: '#c0c0c0' }}>Time Remaining: {`${counter}s`}</p>
+                                </div>
+                                <div className="form-group text-center">
+                                    <button className="btn btn-primary btn-lg btn-block" style={{ backgroundColor: 'rgb(147, 51, 234)' }} onClick={verify}>Verify
+
+                                        {
+                                            spiner ? <span><Spinner animation="border" /></span> : ""
+                                        }
+                                    </button>
+                                </div>
                                 {/* </form> */}
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <ToastContainer/>
+                <ToastContainer />
             </div>
         </>
     )

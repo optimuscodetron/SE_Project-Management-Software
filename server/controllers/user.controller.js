@@ -5,14 +5,15 @@ const userotp = require("../models/userOtp");
 const nodemailer = require("nodemailer");
 const {MongoClient}=require('mongodb')
 
+
 const tarnsporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587, secure: false,
   requireTLS: true,
   auth:
   {
-      user: '2021csb1107@iitrpr.ac.in',
-      pass: 'KUSHagra08092004@'
+      user: process.env.USER,
+      pass: process.env.PASSWORD
   }
 })
 

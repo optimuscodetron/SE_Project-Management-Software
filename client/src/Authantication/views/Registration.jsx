@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Axios from "axios";
 import { navigate } from "@reach/router";
 import backgroundImage from './auth.jpg';
+import { NavLink } from "react-router-dom";
 
 const Registration = (props) => {
   const [email, setEmail] = useState("");
@@ -160,9 +161,9 @@ const Registration = (props) => {
               </form>
               <div className="text-center">
                 <span style={{ color: "#dcdcdc" }}>
-                  Don't have an account?&nbsp;
-                  <a
-                    href="/"
+                  Already have an account?&nbsp;
+                  <NavLink
+                    to="/"
                     style={{
                       fontWeight: "bold",
                       textDecoration: "none",
@@ -170,7 +171,7 @@ const Registration = (props) => {
                     }}
                   >
                     Login
-                  </a>
+                  </NavLink>
                 </span>
               </div>
             </div>

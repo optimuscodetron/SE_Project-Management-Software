@@ -5,11 +5,14 @@ import 'react-router';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { passWordReset } from "../services/Apis";
+// import { Spinner } from '@material-tailwind/react';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 const NewPassword = () => {
 
   let email=localStorage.getItem("email");
+  const [spiner, setSpiner] = useState(false);
   const navigate=useNavigate();
    
     const [newPassword, setNewPassword] = useState('');
@@ -40,6 +43,7 @@ const NewPassword = () => {
             newPassword
             
         }
+        setSpiner(true)
 
 
         if (Object.keys(error1) == 0) {
@@ -164,7 +168,7 @@ const NewPassword = () => {
                     <div className="row justify-content-center mt-5">
                         <div className="col-md-4">
                             <div className="card p-5 shadow rounded border" style={formStyle}>
-                                <h2 className="font-weight-bold text-center mb-4" style={{color: "#ffff"}}>Otp Verification</h2>
+                                <h2 className="font-weight-bold text-center mb-4" style={{color: "#ffff"}}>Password Reset</h2>
                                 <form onSubmit={handleSubmit}>
                                     <div className="form-group">
                                         {errors && (
@@ -192,7 +196,11 @@ const NewPassword = () => {
                                     </div>
                                     
                                     <div className="form-group text-center">
-                                        <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}} onClick={passWordReset}>Update</button>
+                                        <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}} onClick={passWordReset}>Update
+                                        {
+                                                spiner ? <span><Spinner animation="border" /></span> : ""
+                                            }
+                                        </button>
                                     </div>
                                 </form>
                                 

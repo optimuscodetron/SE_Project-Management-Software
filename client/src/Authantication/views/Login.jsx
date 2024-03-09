@@ -6,6 +6,7 @@ import backgroundImage from './auth.jpg';
 // import "./All.css";
 
 import { GoogleLogin } from "react-google-login";
+import { NavLink } from "react-router-dom";
 
 // const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
@@ -152,8 +153,8 @@ const Login = (props) => {
                     paddingTop: "0.1rem",
                   }}
                 >
-                  <a
-                    href="/email"
+                  <NavLink
+                    to="/email"
                     style={{
                       color: "#dcdcdc",
                       textDecoration: "none",
@@ -161,7 +162,7 @@ const Login = (props) => {
                     }}
                   >
                     Forgot Password
-                  </a>
+                  </NavLink>
                 </div>
 
                 <div
@@ -191,8 +192,8 @@ const Login = (props) => {
               <div className="text-center">
                 <span style={{ color: "#dcdcdc" }}>
                   Don't have an account?&nbsp;  
-                  <a
-                    href="/register"
+                  <NavLink
+                    to="/register"
                     style={{
                       fontWeight: "bold",
                       textDecoration: "none",
@@ -200,7 +201,7 @@ const Login = (props) => {
                     }}
                   >
                     Sign up
-                  </a>
+                  </NavLink>
                 </span>
               </div>
             </div>
