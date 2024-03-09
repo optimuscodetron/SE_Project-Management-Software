@@ -1,7 +1,7 @@
 import React from 'react';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { Router, Redirect } from '@reach/router';
+
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { gapi } from 'gapi-script';

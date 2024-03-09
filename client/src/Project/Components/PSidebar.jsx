@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 

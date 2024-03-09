@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Link, navigate } from "@reach/router";
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 // import "./All.css";
 
-import { GoogleLogin } from 'react-google-login';
+// import { GoogleLogin } from 'react-google-login';
 
 // const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
@@ -31,7 +31,8 @@ import { GoogleLogin } from 'react-google-login';
 // }
 
 const Login = (props) => {
-
+  
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
@@ -158,7 +159,7 @@ const Login = (props) => {
                   </button>
                 </div>
               </form>
-              <div className="text-center" id="siginbutton">
+              {/* <div className="text-center" id="siginbutton">
                 <GoogleLogin
                   clientId={clientid}
                   buttonText='Login with Google'
@@ -167,7 +168,7 @@ const Login = (props) => {
                   cookiePolicy={'single_host_origin'}
                   isSignedIn={true}
                 />
-              </div>
+              </div> */}
               <br />
               <div className="text-center" >
                 <a href="/register" style={{ color: '#00dc00' }}>Sign up for an account</a>

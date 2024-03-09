@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
-import { navigate } from '@reach/router';
+import { useNavigate } from "react-router-dom";
 
 const Registration = (props) => {
+    const navigate=useNavigate();
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
