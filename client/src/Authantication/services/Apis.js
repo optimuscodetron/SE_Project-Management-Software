@@ -1,7 +1,7 @@
 // import { commonrequest } from "./ApiCall";
 // import {BACKEND_URL} from "./helper";
-import { commonrequest } from "./Apicall"
-import { BACKEND_URL } from "./Helper"
+import { commonrequest } from "./ApiCall"
+import { BACKEND_URL } from "./helper"
 
 
 export const registerfunction = async(data)=>{

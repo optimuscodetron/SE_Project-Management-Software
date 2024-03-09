@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const db=process.env.DB
 
-mongoose.connect("mongodb+srv://kumarchspiyush:WmXMs5kOS3jIqwun@cluster0.rf3lmty.mongodb.net/LoginWithGoogle?retryWrites=true&w=majority&appName=Cluster0", {
+mongoose.connect("mongodb+srv://Kushagra_18:bDFTOPZeMaygXAE3@cluster0.mxxglsz.mongodb.net/Demo?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
