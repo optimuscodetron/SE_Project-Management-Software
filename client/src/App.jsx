@@ -1,23 +1,22 @@
 import React from 'react';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { Router, Redirect } from '@reach/router';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { gapi } from 'gapi-script';
-import Otp from './Authantication/Forgetpassword/otp';
+
 
 import Login from './Authantication/views/Login';
 import Registration from './Authantication/views/Registration';
 import Email from './Authantication/Forgetpassword/email';
+import Otp from './Authantication/Forgetpassword/otp';
+import Forgotpassword from './Authantication/Forgetpassword/newpassword';
 import loginbutton from "./Authantication/views/Login";
 
 import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
-import NewPassword from './Authantication/Forgetpassword/Newpassword/NewPassword';
-
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
@@ -37,9 +36,9 @@ function App() {
         e.preventDefault();
     };
     return (
-        <div className="App">
+       <>
             <loginbutton />
-            <BrowserRouter>
+         
                 {/* <Redirect from="/" to="/register" noThrow /> */}
                 {/* <Route path='/user/otp' element={<Otp />} /> */}
 
@@ -54,24 +53,21 @@ function App() {
                     {/* <Route exact path="/register" element={< />} /> */}
                     <Route  path="/register" element={<Registration />} />
                     <Route  path="/email" element={<Email />} />
-                    <Route  path="/login" element={<Login />} />
-
-                    {/* by ayush */}
-                    <Route path="/create_workspace" element={<WorkPage/>}> </Route>
-
-                    {/* by sushil */}
-                    <Route path='/newpassword' element = {<NewPassword/>} />
-                   
-
+                    <Route  path="/otp" element={<Otp />} />
+                    <Route  path="/forgotpassword" element={<Forgotpassword />} />
+                    <Route  path="/" element={<Login />} />
 
 
                     <Route  path="/workspace" element={<Workspace />} />
                     <Route  path="/workspace/project/board" element={<Board />} />
                     <Route  path="/workspace/project/settings" element={<Settings />} />
+
+
+                    <Route path="/create_workspace" element={<WorkPage/>}> </Route>
                     {/* <Route component={PageError} /> */}
                 </Routes>
-            </BrowserRouter>
-        </div >
+            
+       </>
     );
 }
 
