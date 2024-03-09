@@ -4,6 +4,7 @@ import Axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { sentOtpFunction } from "../services/Apis";
 import Spinner from 'react-bootstrap/Spinner';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -12,9 +13,6 @@ const Email = () => {
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
 
-
-
-    // sendotp
     const sendOtp = async (e) => {
         e.preventDefault();
 
@@ -32,12 +30,43 @@ const Email = () => {
 
             if (response.status === 200) {
                 setSpiner(false)
-                navigate("/user/otp",{state:email})
+                navigate("/otp",{state:email})
             } else {
+                setSpiner(false)
                 toast.error(response.response.data.error);
             }
         }
     }
+
+    // sendotp
+    // function handleSubmit(e) {
+    //     e.preventDefault();
+    //     const user = {
+    //       email
+    //     }
+
+    //     // if (email === "") {
+    //     //     toast.error("Enter Your Email !")
+    //     // } else if (!email.includes("@")) {
+    //     //     toast.error("Enter Valid Email !")
+    //     // } else {
+    //     //     setSpiner(true)
+           
+    //     Axios.post("http://localhost:8000/api/users/email", user, {
+    //   withCredentials: true,
+    // })
+    // .then((res) => {
+    //     // localStorage.setItem("userID", res.data.user._id);
+    //     // localStorage.setItem("userName", res.data.user.name);
+    //     // console.log(`login succesful`);
+    //     navigate("/otp");
+    //     window.location.reload();
+    //   })
+    //   .catch((err) => {
+    //     setErrors(err.response.data.message);
+    //   });
+        
+    // }
 
 
 
@@ -72,6 +101,7 @@ const Email = () => {
       };
     return (
         <>
+        <section>
             <div style={bodyStyle}>
 
                 <div className="container">
@@ -84,6 +114,7 @@ const Email = () => {
                         <div className="col-md-4">
                             <div className="card p-5 shadow rounded border" style={formStyle}>
                                 <h2 className="font-weight-bold text-center mb-4" style={{color: "#ffff"}}>OTP Authentication</h2>
+              {/* <form style={input} onSubmit={handleSubmit}> */}
                                 
                                     <div className="form-group">
                                         {errors && (
@@ -108,7 +139,7 @@ const Email = () => {
                                     </div>
                                     
                                     <div className="form-group text-center">
-                                        <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}} onClick={sendOtp}>Send OTP
+                                        <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}}onClick={sendOtp}>Send OTP
                                         {
                             spiner ? <span><Spinner animation="border" /></span>:""
                         }
@@ -121,7 +152,11 @@ const Email = () => {
                         </div>
                     </div>
                 </div>
+                
             </div>
+            <ToastContainer />
+            </section>
+            
         </>
     )
 }

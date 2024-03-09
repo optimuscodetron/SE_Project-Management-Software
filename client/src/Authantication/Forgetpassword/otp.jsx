@@ -1,66 +1,73 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
 
 // import { navigate } from "@reach/router";
 import Axios from "axios";
-// import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import { userVerify } from "../services/Apis";
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 const Otp = () => {
-    const [spiner,setSpiner] = useState(false);
-
-   
-
-
-
-    // sendotp
-    const sendOtp = async (e) => {
+    // const [spiner,setSpiner] = useState(false);
+    const navigate=useNavigate();
+    const [otp, setOtp] = useState("");
+    const location = useLocation();
+    const verify = async (e) => {
         e.preventDefault();
 
-        if (email === "") {
-            // toast.error("Enter Your Email !")
-        } else if (!email.includes("@")) {
-            // toast.error("Enter Valid Email !")
-        } else {
-            setSpiner(true)
+        if (otp === "") {
+            toast.error("Enter Your Otp")
+          } else if (!/[^a-zA-Z]/.test(otp)) {
+            toast.error("Enter Valid Otp")
+          } else if (otp.length < 6) {
+            toast.error("Otp Length minimum 6 digit")
+          } else {
             const data = {
-                email: email
+              otp, email: location.state
             }
-
-            // const response = await sentOtpFunction(data);
-
-            // if (response.status === 200) {
-            //     setSpiner(false)
-            //     navigate("/user/otp",{state:email})
-            // } else {
-            //     toast.error(response.response.data.error);
-            // }
-        }
+                console.log(data)
+            const response = await userVerify(data);
+            if (response.status === 200) {
+            //   localStorage.setItem("usertoken", response.data.userToken);
+            //   localStorage.setItem("name", response.data.myuser.fname);
+              localStorage.setItem("email", response.data.myuser.email);
+            //   localStorage.setItem("phone", response.data.myuser.phone);
+            //   localStorage.setItem("address", response.data.myuser.address);
+              toast.success(response.data.message);
+              setTimeout(() => {
+                navigate("/create_workspace")
+              }, 5000)
+            } else {
+              toast.error(response.response.data.error)
+            }
+          }
     }
 
-    const [email, setEmail] = useState("");
 
 
 
     const [errors, setErrors] = useState([]);
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        const newUser = {
-            email
+    // function handleSubmit(e) {
+    //     e.preventDefault();
+    //     const newUser = {
+    //         email
 
-        }
-        Axios.post('http://localhost:8000/api/users', newUser, { withCredentials: true })
-            .then(res => {
-                console.log("User created successfully: " + res.data.user_id);
-                localStorage.setItem('userID', res.data.user._id);
-                localStorage.setItem('userName', res.data.user.name);
-                // navigate("/workspace");
-            })
-            .catch(err => {
-                setErrors(err.response.data.errors);
-            });
-    }
+    //     }
+    //     Axios.post('http://localhost:8000/api/users', newUser, { withCredentials: true })
+    //         .then(res => {
+    //             console.log("User created successfully: " + res.data.user_id);
+    //             localStorage.setItem('userID', res.data.user._id);
+    //             localStorage.setItem('userName', res.data.user.name);
+    //             navigate("/workspace");
+    //         })
+    //         .catch(err => {
+    //             setErrors(err.response.data.errors);
+    //         });
+    // }
     const bodyStyle = {
         margin: 0,
         height: "100vh", // Set body height to full viewport height
@@ -102,7 +109,7 @@ const Otp = () => {
                         <div className="col-md-4">
                             <div className="card p-5 shadow rounded border" style={formStyle}>
                                 <h2 className="font-weight-bold text-center mb-4" style={{color: "#ffff"}}>Otp Verification</h2>
-                                <form onSubmit={handleSubmit}>
+                                {/* <form onSubmit={handleSubmit}> */}
                                     <div className="form-group">
                                         {errors && (
                                             <span className="text-danger">
@@ -111,7 +118,8 @@ const Otp = () => {
                                         )}
                                     </div>
                                     <div className="form-group">
-                                        <input className="form-control" type="email" placeholder="Enter your otp" value={email} onChange={e => setEmail(e.target.value)} />
+                                        <input className="form-control" type="otp" placeholder="Enter your otp" value={otp} onChange={e => setOtp(e.target.value)} />
+                                        console.log(otp)
                                     </div>
                                  
                                  
@@ -126,14 +134,15 @@ const Otp = () => {
                                     </div>
                                     
                                     <div className="form-group text-center">
-                                        <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}} onClick={sendOtp}>Verify</button>
+                                        <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}} onClick={verify}>Verify</button>
                                     </div>
-                                </form>
+                                {/* </form> */}
                                 
                             </div>
                         </div>
                     </div>
                 </div>
+                <ToastContainer/>
             </div>
         </>
     )

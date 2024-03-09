@@ -52,8 +52,7 @@ function App() {
                     {/* <Route exact path="/register" element={< />} /> */}
                     <Route  path="/register" element={<Registration />} />
                     <Route  path="/email" element={<Email />} />
-                    <Route  path="/user/otp" element={<Otp />} />
-
+                    <Route  path="/otp" element={<Otp />} />
                     <Route  path="/" element={<Login />} />
 
 

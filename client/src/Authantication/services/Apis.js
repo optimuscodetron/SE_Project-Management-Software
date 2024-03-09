@@ -1,5 +1,7 @@
-import { commonrequest } from "./ApiCall";
-import {BACKEND_URL} from "./helper";
+// import { commonrequest } from "./ApiCall";
+// import {BACKEND_URL} from "./helper";
+import { commonrequest } from "./Apicall"
+import { BACKEND_URL } from "./Helper"
 
 
 export const registerfunction = async(data)=>{
@@ -7,9 +9,9 @@ export const registerfunction = async(data)=>{
 }
 
 export const sentOtpFunction = async(data)=>{
-    return await commonrequest("POST",`${BACKEND_URL}/user/sendotp`,data)
+    return await commonrequest("POST",`${BACKEND_URL}/users/email`,data)
 }
 
 export const userVerify = async(data)=>{
-    return await commonrequest("POST",`${BACKEND_URL}/user/login`,data)
+    return await commonrequest("POST",`${BACKEND_URL}/users/otp`,data)
 }
