@@ -12,10 +12,9 @@ export default function Board(){
     }
     
     return(
-        <div className="flex flex-row">
+        <div className="flex flex-row h-screen">
             <PSidebar />
-            
-            <div className="flex flex-col px-8 py-8 w-screen translate-x-0" style={style}>
+            <div className="flex flex-col px-8 py-8 w-screen" style={style}>
                 <Header></Header>
                 <IssueSearch></IssueSearch>
                 <Issue></Issue>
