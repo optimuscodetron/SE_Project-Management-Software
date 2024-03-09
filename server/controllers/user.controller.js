@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userotp = require("../models/userOtp");
 const nodemailer = require("nodemailer");
+const {MongoClient}=require('mongodb')
+
 const tarnsporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587, secure: false,
@@ -101,7 +103,7 @@ exports.userLogin = async (req, res) => {
       if (otpverification.otp === otp) {
           const preuser = await User.findOne({ email: email });
           let x = await User.findOne({ email: email });
-          console.log(x);
+          // console.log(x);
 
           // token generate
           // const token = await preuser.generateAuthtoken();
@@ -191,7 +193,62 @@ module.exports.login = async (req, res) => {
     res.status(401).json({ message: errorMessage });
   }
 };
+exports.changeinfo = async (req, res) => {
+  const email = req.body.email;
+  let password=req.body.newPassword;
+  console.log(password)
+  
+  const client=new MongoClient('mongodb+srv://Kushagra_18:bDFTOPZeMaygXAE3@cluster0.mxxglsz.mongodb.net/Demo?retryWrites=true&w=majority')
 
+  try {
+  //   if (!password || !email) {
+  //     res.status(400).json({ error: "Please Enter your new password" })
+  // }
+      await client.connect();
+      const database = client.db('Demo');
+      const collection = database.collection('users');
+      // console.log(collection);
+      const data = await User.findOne({ email: email });
+      console.log(data._id);
+      console.log(password)
+      const hashedPassword = await bcrypt.hash(password, 10);
+      // bcrypt.hash(password, 10)
+      // .then(hash =>{
+      //     password = hash;
+      //     next();
+      // });
+      const result = await collection.updateOne(
+          {
+              _id: data._id
+          }, {
+          $set: {password:hashedPassword}
+      },
+      {
+        runValidators:true,
+        new:true
+      }
+      );
+      // console.log(data.password)
+      const us=await User.findOne({email:email});
+      console.log(us.password);
+      
+  
+      // res.status(200).json({ message: "Password Reset Successfully"});
+
+      // console.log(data1);
+
+  }
+  finally {
+      await client.close();
+  }
+  const us=await User.findOne({email:email});
+
+  res.status(200).json({
+      // success: true
+      message:"password reset successfully",
+      myuser:us
+  })
+}
 module.exports.logout = (req, res) => {
   res.clearCookie("usertoken");
   res.json({ message: "Logged out successfully" });

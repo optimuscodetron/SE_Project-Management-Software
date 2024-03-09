@@ -8,6 +8,8 @@ module.exports = function(app){
     app.post('/api/users/login', UserController.login);
     app.post('/api/users/email', UserController.userOtpSend);
     app.post('/api/users/otp', UserController.userLogin);
+    app.post('/api/users/newpassword', UserController.changeinfo);
+
 
     app.delete('/api/users/:id', authenticate , UserController.delete);
     app.put('/api/users/:id', authenticate, UserController.update);

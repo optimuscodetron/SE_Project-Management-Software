@@ -41,6 +41,7 @@ const Registration = (props) => {
     animation: "gradient 15s ease infinite",
     backgroundSize: "cover",
     backgroundPosition: "center",
+    overflow:"auto",
   };
   const formStyle = {
     backgroundColor: "rgba(17, 24, 39)", // Transparent white

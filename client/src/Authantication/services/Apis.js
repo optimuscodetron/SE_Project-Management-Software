@@ -11,7 +11,9 @@ export const registerfunction = async(data)=>{
 export const sentOtpFunction = async(data)=>{
     return await commonrequest("POST",`${BACKEND_URL}/users/email`,data)
 }
-
+export const passWordReset = async(data)=>{
+    return await commonrequest("POST",`${BACKEND_URL}/users/newpassword`,data)
+}
 export const userVerify = async(data)=>{
     return await commonrequest("POST",`${BACKEND_URL}/users/otp`,data)
 }

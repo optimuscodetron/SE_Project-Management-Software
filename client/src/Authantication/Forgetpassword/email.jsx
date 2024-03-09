@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { sentOtpFunction } from "../services/Apis";
@@ -9,9 +9,13 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 const Email = () => {
-    const [spiner,setSpiner] = useState(false);
+    const [spiner, setSpiner] = useState(false);
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
+
+    const location = useLocation();
+
+    const chk = location.state ? location.state.chk : null;
 
     const sendOtp = async (e) => {
         e.preventDefault();
@@ -30,7 +34,7 @@ const Email = () => {
 
             if (response.status === 200) {
                 setSpiner(false)
-                navigate("/otp",{state:email})
+                navigate("/otp", { state: email })
             } else {
                 setSpiner(false)
                 toast.error(response.response.data.error);
@@ -51,7 +55,7 @@ const Email = () => {
     //     //     toast.error("Enter Valid Email !")
     //     // } else {
     //     //     setSpiner(true)
-           
+
     //     Axios.post("http://localhost:8000/api/users/email", user, {
     //   withCredentials: true,
     // })
@@ -65,7 +69,7 @@ const Email = () => {
     //   .catch((err) => {
     //     setErrors(err.response.data.message);
     //   });
-        
+
     // }
 
 
@@ -94,28 +98,28 @@ const Email = () => {
     const input = {
         // backgroundColor: "#191919",
         border: "none",
-        
+
         borderBottom: "1px solid #ccc",
         marginBottom: "15px",
         animation: "animateInput 0.5s ease both",
-      };
+    };
     return (
         <>
-        <section>
-            <div style={bodyStyle}>
+            <section>
+                <div style={bodyStyle}>
 
-                <div className="container">
-                    <div className="row">
-                        <div className="col text-center mt-3">
-                            <h1 className="display-4" style={{color: "#ffff"}}>TrackerX</h1>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col text-center mt-3">
+                                <h1 className="display-4" style={{ color: "#ffff" }}>TrackerX</h1>
+                            </div>
                         </div>
-                    </div>
-                    <div className="row justify-content-center mt-5">
-                        <div className="col-md-4">
-                            <div className="card p-5 shadow rounded border" style={formStyle}>
-                                <h2 className="font-weight-bold text-center mb-4" style={{color: "#ffff"}}>OTP Authentication</h2>
-              {/* <form style={input} onSubmit={handleSubmit}> */}
-                                
+                        <div className="row justify-content-center mt-5">
+                            <div className="col-md-4">
+                                <div className="card p-5 shadow rounded border" style={formStyle}>
+                                    <h2 className="font-weight-bold text-center mb-4" style={{ color: "#ffff" }}>OTP Authentication</h2>
+                                    {/* <form style={input} onSubmit={handleSubmit}> */}
+
                                     <div className="form-group">
                                         {errors && (
                                             <span className="text-danger">
@@ -126,10 +130,10 @@ const Email = () => {
                                     <div className="form-group">
                                         <input className="form-control" type="email" placeholder="Enter email address" value={email} onChange={e => setEmail(e.target.value)} />
                                     </div>
-                                 
-                                 
-                                
-                                    
+
+
+
+
                                     <div className="form-group">
                                         {errors && (
                                             <span className="text-danger">
@@ -137,26 +141,26 @@ const Email = () => {
                                             </span>
                                         )}
                                     </div>
-                                    
+
                                     <div className="form-group text-center">
-                                        <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}}onClick={sendOtp}>Send OTP
-                                        {
-                            spiner ? <span><Spinner animation="border" /></span>:""
-                        }
+                                        <button className="btn btn-primary btn-lg btn-block" style={{ backgroundColor: 'rgb(147, 51, 234)' }} onClick={sendOtp}>{chk===0?"Resend OTP" :   "Send OTP"}
+                                            {
+                                                spiner ? <span><Spinner animation="border" /></span> : ""
+                                            }
                                         </button>
 
                                     </div>
-                                {/* </form> */}
-                                
+                                    {/* </form> */}
+
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
-                
-            </div>
-            <ToastContainer />
+                <ToastContainer />
             </section>
-            
+
         </>
     )
 }

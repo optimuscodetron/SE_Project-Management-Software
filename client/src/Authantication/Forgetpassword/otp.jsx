@@ -6,6 +6,7 @@ import Axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { userVerify } from "../services/Apis";
 import 'react-toastify/dist/ReactToastify.css';
+import { counter } from "@fortawesome/fontawesome-svg-core";
 
 
 
@@ -15,6 +16,15 @@ const Otp = () => {
     const navigate=useNavigate();
     const [otp, setOtp] = useState("");
     const location = useLocation();
+
+    const[counter,setCounter] = useState(30);
+    React.useEffect(() => { 
+        counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
+        if (counter === 0) {
+          navigate('/email', { state: { chk: counter } });
+        
+        }
+      }, [counter]);
     const verify = async (e) => {
         e.preventDefault();
 
@@ -38,7 +48,7 @@ const Otp = () => {
             //   localStorage.setItem("address", response.data.myuser.address);
               toast.success(response.data.message);
               setTimeout(() => {
-                navigate("/create_workspace")
+                navigate("/newpassword")
               }, 5000)
             } else {
               toast.error(response.response.data.error)
@@ -119,20 +129,22 @@ const Otp = () => {
                                     </div>
                                     <div className="form-group">
                                         <input className="form-control" type="otp" placeholder="Enter your otp" value={otp} onChange={e => setOtp(e.target.value)} />
-                                        console.log(otp)
+                                        {/* console.log(otp) */}
                                     </div>
                                  
                                  
                                 
                                     
-                                    <div className="form-group">
+                                    {/* <div className="form-group">
                                         {errors && (
                                             <span className="text-danger">
                                                 {errors?.confirmPassword?.properties?.message}
                                             </span>
                                         )}
+                                    </div> */}
+                                    <div className="countdown-text">
+                                        <p style = {{color:'#c0c0c0'}}>Time Remaining: {`${counter}s`}</p>
                                     </div>
-                                    
                                     <div className="form-group text-center">
                                         <button className="btn btn-primary btn-lg btn-block" style = {{backgroundColor: 'rgb(147, 51, 234)'}} onClick={verify}>Verify</button>
                                     </div>
