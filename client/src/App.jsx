@@ -17,7 +17,9 @@ import loginbutton from "./Authantication/views/Login";
 
 import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
-import Workspace from './Workspace/workspace'
+import Workspace from './Workspace/workspace';
+import MemberSetting from "./Workspace/settings/MemberSetting";
+
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import Profile from "./Workspace/Settings/Profile/Profile";
 
@@ -64,6 +66,9 @@ function App() {
                     {/* by ayush */}
                     <Route path="/create_workspace" element={<WorkPage/>}> </Route>
                     <Route path="/workspace/settings/general" element={<General/>}> </Route>
+                    {/* by Priyanshu */}
+                    <Route path="/workspace/workspacesetting/member" element={<MemberSetting/>}> </Route>
+                   
                   
                    
                    
