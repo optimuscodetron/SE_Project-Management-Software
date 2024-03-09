@@ -1,15 +1,16 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { Router, Redirect } from '@reach/router';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { gapi } from 'gapi-script';
-import Otp from './Authantication/Forgetpassword/otp';
+
 
 import Login from './Authantication/views/Login';
 import Registration from './Authantication/views/Registration';
 import Email from './Authantication/Forgetpassword/email';
+import Otp from './Authantication/Forgetpassword/otp';
+import Newpassword from './Authantication/Forgetpassword/newpassword';
 import loginbutton from "./Authantication/views/Login";
 
 import Board from './Project/ProjectBoard/Board';
@@ -35,9 +36,9 @@ function App() {
         e.preventDefault();
     };
     return (
-        <div className="App">
+       <>
             <loginbutton />
-            <BrowserRouter>
+         
                 {/* <Redirect from="/" to="/register" noThrow /> */}
                 {/* <Route path='/user/otp' element={<Otp />} /> */}
 
@@ -52,6 +53,8 @@ function App() {
                     {/* <Route exact path="/register" element={< />} /> */}
                     <Route  path="/register" element={<Registration />} />
                     <Route  path="/email" element={<Email />} />
+                    <Route  path="/otp" element={<Otp />} />
+                    <Route  path="/newpassword" element={<Newpassword />} />
                     <Route  path="/" element={<Login />} />
 
 
@@ -63,8 +66,8 @@ function App() {
                     <Route path="/create_workspace" element={<WorkPage/>}> </Route>
                     {/* <Route component={PageError} /> */}
                 </Routes>
-            </BrowserRouter>
-        </div >
+            
+       </>
     );
 }
 
