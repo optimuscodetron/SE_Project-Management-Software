@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
+import { ThemeProvider } from "@material-tailwind/react";
 ReactDOM.render(
     <>
         {/* <link
@@ -13,7 +13,9 @@ ReactDOM.render(
             crossOrigin="anonymous"
         ></link> */}
         <React.StrictMode>
+        <ThemeProvider>
             <App />
+            </ThemeProvider>
         </React.StrictMode>
     </>,
     document.getElementById('root')

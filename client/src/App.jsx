@@ -14,7 +14,7 @@ import loginbutton from "./Authantication/views/Login";
 
 import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
-import Workspace from './Workspace'
+import Workspace from './Workspace/workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
 
 
