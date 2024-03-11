@@ -20,6 +20,7 @@ import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace/workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import Profile from "./Workspace/Settings/Profile/Profile";
+import Profile from "./Workspace/Settings/Profile/Profile";
 
 import General from './Workspace/Settings/General/General';
 
@@ -80,9 +81,6 @@ function App() {
                     <Route  path="/workspace/project/settings" element={<Settings />} />
                     <Route path="/workspace/settings/profile" element={<Profile />} />
 
-
-                    <Route path="/create_workspace" element={<WorkPage/>}/>
-                    <Route  path="/workspace/myaccount/profile" element={<Profile />} />
                     </Routes>
             
        </>
