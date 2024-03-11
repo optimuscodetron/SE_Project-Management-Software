@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import WorkspaceSidebar from "../../components/workspaceSidebar";
-// import SettingsSidebar from "../Components/SettingsSidebar";
+import SettingsSidebar from "../Component/SettingsSidebar";
 
 const Profile = () => {
   // State variables to store form data
@@ -27,7 +26,7 @@ const Profile = () => {
 
   return (
     <div className=" bg-[#1f2937] flex flex-row w-screen h-screen">
-      {/* <SettingsSidebar /> */}
+      <SettingsSidebar />
 
       <div className="w-[40vw] ml-[36vw] flex items-center  justify-center ">
         <div className="w-full bg-[#111827] h-[68vh] ">

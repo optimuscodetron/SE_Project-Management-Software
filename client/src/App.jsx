@@ -20,7 +20,6 @@ import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace/workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import Profile from "./Workspace/Settings/Profile/Profile";
-import Profile from "./Workspace/Settings/Profile/Profile";
 
 import General from './Workspace/Settings/General/General';
 
