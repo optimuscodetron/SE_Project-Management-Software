@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidebar from "../Components/Sidebar";
+import PSidebar from "../Components/PSidebar";
 
 function Members() {
   // Array of team members
@@ -119,7 +119,7 @@ function Members() {
 
   return (
     <div class="flex flex-row w-screen">
-      <Sidebar />
+      <PSidebar />
       <div className="bg-gray-800 w-full text-white justify-center p-10">
         <div className="flex flex-col mx-auto h-[100%] mb-4 w-full lg:w-[60%] bg-gray-900 p-3 ">
           <h1 className="text-3xl font-bold mb-4 border-b border-gray-600 pb-3">
