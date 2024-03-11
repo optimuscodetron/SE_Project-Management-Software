@@ -77,8 +77,8 @@ function App() {
 
                     <Route  path="/workspace" element={<Workspace />} />
                     <Route  path="/workspace/project/board" element={<Board />} />
-                    <Route  path="/workspace/project/settings" element={<Settings />} />
-                    <Route  path="/workspace/project/settings/members" element={<Members />} />
+                    <Route  path="/workspace/project/settings/general" element={<Settings />} />
+                    <Route  path="/workspace/project/settings/team_members" element={<Members />} />
 
 
                     <Route path="/create_workspace" element={<WorkPage/>}> </Route>
