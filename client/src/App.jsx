@@ -1,4 +1,5 @@
 import React from "react";
+import React from "react";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
@@ -19,6 +20,7 @@ import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace/workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
+import Members from "./Project/ProjectSettings/Members";
 import Members from "./Project/ProjectSettings/Members";
 
 import General from './Workspace/Settings/General/General';
