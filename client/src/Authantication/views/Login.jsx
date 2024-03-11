@@ -5,9 +5,6 @@ import backgroundImage from './auth.jpg';
 
 // import "./All.css";
 
-
-// import { GoogleLogin } from 'react-google-login';
-
 import { NavLink } from "react-router-dom";
 
 
@@ -37,8 +34,10 @@ import { NavLink } from "react-router-dom";
 
 const Login = (props) => {
 
+
   
   const navigate = useNavigate();
+
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
