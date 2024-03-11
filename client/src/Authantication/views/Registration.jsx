@@ -1,6 +1,9 @@
+
 import React, { useState } from 'react';
 import Axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import backgroundImage from './auth.jpg';
+import { NavLink } from "react-router-dom";
 
 const Registration = (props) => {
     const navigate=useNavigate();
@@ -10,106 +13,177 @@ const Registration = (props) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errors, setErrors] = useState([]);
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        const newUser = {
-            email,
-            name,
-            password,
-            confirmPassword
-        }
-        Axios.post('http://localhost:8000/api/users', newUser, { withCredentials: true })
-            .then(res => {
-                console.log("User created successfully: " + res.data.user_id);
-                localStorage.setItem('userID', res.data.user._id);
-                localStorage.setItem('userName', res.data.user.name);
-                navigate("/welcome");
-            })
-            .catch(err => {
-                setErrors(err.response.data.errors);
-            });
-    }
-    const bodyStyle = {
-        margin: 0,
-        height: "100vh", // Set body height to full viewport height
-        background: "#000000",
-        backgroundSize: "400% 400%",
-        animation: "gradient 15s ease infinite",
-    };
-    const formStyle = {
-        backgroundColor: "rgba(255, 255, 255, 0)", // Transparent white
-        padding: "20px",
-        borderRadius: "10px",
-        border: "none",
-    };
 
-    return (
-        <div style={bodyStyle}>
 
-            <div className="container">
-                <div className="row">
-                    <div className="col text-center mt-5">
-                        <h1 className="display-3" style={{color: "yellow"}}>TrackerX</h1>
-                    </div>
-                </div>
-                <div className="row justify-content-center mt-5">
-                    <div className="col-md-6">
-                        <div className="card p-4 shadow rounded border" style={formStyle}>
-                            <h2 className="font-weight-bold text-center mb-4" style={{color: "yellow"}}>Sign up for your account</h2>
-                            <form onSubmit={handleSubmit}>
-                                <div className="form-group">
-                                    {errors && (
-                                        <span className="text-danger">
-                                            {errors?.email?.properties?.message}
-                                        </span>
-                                    )}
-                                </div>
-                                <div className="form-group">
-                                    <input className="form-control" type="email" placeholder="Enter email address" value={email} onChange={e => setEmail(e.target.value)} />
-                                </div>
-                                <div className="form-group">
-                                    {errors && (
-                                        <span className="text-danger">
-                                            {errors?.name?.properties?.message}
-                                        </span>
-                                    )}
-                                </div>
-                                <div className="form-group">
-                                    <input className="form-control" type="text" placeholder="Enter full name" value={name} onChange={e => setName(e.target.value)} />
-                                </div>
-                                <div className="form-group">
-                                    {errors && (
-                                        <span className="text-danger">
-                                            {errors?.password?.properties?.message}
-                                        </span>
-                                    )}
-                                </div>
-                                <div className="form-group">
-                                    <input className="form-control" type="password" placeholder="Create password" value={password} onChange={e => setPassword(e.target.value)} />
-                                </div>
-                                <div className="form-group">
-                                    {errors && (
-                                        <span className="text-danger">
-                                            {errors?.confirmPassword?.properties?.message}
-                                        </span>
-                                    )}
-                                </div>
-                                <div className="form-group">
-                                    <input className="form-control" type="password" placeholder="Confirm password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
-                                </div>
-                                <div className="form-group text-center">
-                                    <button className="btn btn-primary btn-lg btn-block">Sign Up</button>
-                                </div>
-                            </form>
-                            <div className="text-center">
-                                <a href="/login" style={{ color: '#00dc00' }}>Already have an account? Log in</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  function handleSubmit(e) {
+    e.preventDefault();
+    const newUser = {
+      email,
+      name,
+      password,
+      confirmPassword,
+    };
+    Axios.post("http://localhost:8000/api/users", newUser, {
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log("User created successfully: " + res.data.user_id);
+        localStorage.setItem("userID", res.data.user._id);
+        localStorage.setItem("userName", res.data.user.name);
+        navigate("/create_workspace");
+        window.location.reload();
+      })
+      .catch((err) => {
+        setErrors(err.response.data.errors);
+      });
+  }
+  const bodyStyle = {
+    margin: 0,
+    height: "100vh",
+    background: `url(${backgroundImage})`,
+    color: "#333",
+    backgroundSize: "400% 400%",
+    animation: "gradient 15s ease infinite",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    overflow:"auto",
+  };
+  const formStyle = {
+    backgroundColor: "rgba(17, 24, 39)", // Transparent white
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+    border: "none", // Set border to none
+ 
+  };
+  const input = {
+    // backgroundColor: "#191919",
+    border: "none",
+
+    borderBottom: "1px solid #ccc",
+    marginBottom: "15px",
+    animation: "animateInput 0.5s ease both",
+  };
+
+  return (
+    <div style={bodyStyle}>
+      <div className="container" >
+        <div className="row" >
+          <div className="col text-center mt-3" >
+            <a>
+              <h1 className="display-4" style={{ color: "#ffff" }}>
+                TrackerX
+              </h1>
+            </a>
+          </div>
         </div>
-    );
-}
+        <div className="row justify-content-center mt-5"  >
+          <div className="col-md-4" >
+            <div className="card p-5 shadow rounded border" style={formStyle}>
+              <h2
+                className="font-weight-bold text-center mb-5"
+                style={{ color: "#ffff" }}
+              >
+                Sign up for your account
+              </h2>
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  {errors && (
+                    <span className="text-danger">
+                      {errors?.email?.properties?.message}
+                    </span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    type="email"
+                    placeholder="Enter email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  {errors && (
+                    <span className="text-danger">
+                      {errors?.name?.properties?.message}
+                    </span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    type="text"
+                    placeholder="Enter full name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  {errors && (
+                    <span className="text-danger">
+                      {errors?.password?.properties?.message}
+                    </span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    type="password"
+                    placeholder="Create password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  {errors && (
+                    <span className="text-danger">
+                      {errors?.confirmPassword?.properties?.message}
+                    </span>
+                  )}
+                </div>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    type="password"
+                    placeholder="Confirm password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                </div>
+                <div
+                  className="form-group text-center"
+                  style={{ paddingTop: "0.6rem" }}
+                >
+                  <button
+                    className="btn btn-primary btn-lg btn-block"
+                    style={{ backgroundColor: "rgb(147, 51, 234)" }}
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              </form>
+              <div className="text-center">
+                <span style={{ color: "#dcdcdc" }}>
+                  Already have an account?&nbsp;
+                  <NavLink
+                    to="/"
+                    style={{
+                      fontWeight: "bold",
+                      textDecoration: "none",
+                      color: "#dcdcdc",
+                    }}
+                  >
+                    Login
+                  </NavLink>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Registration;
