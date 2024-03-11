@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 // import history from 'browserHistory';
 import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
-import Workspace from './Workspace'
+import Workspace from './Workspace/workspace';
 // import Authenticate from 'Auth/Authenticate';
 // import PageError from 'shared/components/PageError';
 
