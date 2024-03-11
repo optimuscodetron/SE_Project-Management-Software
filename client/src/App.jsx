@@ -20,6 +20,7 @@ import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace/workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
 
+import General from './Workspace/Settings/General/General';
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
@@ -56,9 +57,21 @@ function App() {
                     {/* <Route exact path="/register" element={< />} /> */}
                     <Route  path="/register" element={<Registration />} />
                     <Route  path="/email" element={<Email />} />
+
+                   
+
+                    {/* by ayush */}
+                    <Route path="/create_workspace" element={<WorkPage/>}> </Route>
+                    <Route path="/workspace/settings/general" element={<General/>}> </Route>
+                  
+                   
+                   
+
+
                     <Route  path="/otp" element={<Otp />} />
                     <Route  path="/newpassword" element={<Newpassword />} />
                     <Route  path="/" element={<Login />} />
+
 
 
                     <Route  path="/workspace" element={<Workspace />} />
