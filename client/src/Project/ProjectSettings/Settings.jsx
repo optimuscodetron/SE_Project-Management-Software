@@ -21,7 +21,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="flex flex-row w-screen">
+    <div className="flex flex-row h-screen w-screen">
       <PSidebar />
       <div className="bg-gray-800 w-full text-white flex justify-center p-10">
         <form action="#" className="mb-4 w-full lg:w-[60%] bg-gray-900 p-3 " onSubmit={(e)=>e.preventDefault()}>

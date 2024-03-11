@@ -118,7 +118,7 @@ function Members() {
   );
 
   return (
-    <div class="flex flex-row w-screen">
+    <div class="flex flex-row h-screen w-screen">
       <PSidebar />
       <div className="bg-gray-800 w-full text-white justify-center p-10">
         <div className="flex flex-col mx-auto h-[100%] mb-4 w-full lg:w-[60%] bg-gray-900 p-3 ">
