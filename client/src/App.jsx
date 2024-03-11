@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React from "react";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -19,6 +19,7 @@ import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace/workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
+import Members from "./Project/ProjectSettings/Members";
 
 import General from './Workspace/Settings/General/General';
 
@@ -77,6 +78,7 @@ function App() {
                     <Route  path="/workspace" element={<Workspace />} />
                     <Route  path="/workspace/project/board" element={<Board />} />
                     <Route  path="/workspace/project/settings" element={<Settings />} />
+                    <Route  path="/workspace/project/settings/members" element={<Members />} />
 
 
                     <Route path="/create_workspace" element={<WorkPage/>}> </Route>
