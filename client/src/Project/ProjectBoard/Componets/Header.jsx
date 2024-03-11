@@ -4,14 +4,15 @@ import { useState } from "react";
 
 
 
+
 export default function Header() {
     const [projectName, setprojectName] = useState("DemoProject");
 
     return (
         <div className="flex justify-between justify-between">
-            <h1 className="font-sans text-3xl">{projectName}</h1>
+            <h1 className="font-sans text-3xl tracking-wider text-white font-['quicksand']">{projectName}</h1>
             <a href="/workspace">
-                <button type="button" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mb-2">
+                <button type="button" class="text-white font-['quicksand']-700 text-sm tracking-wide font-semibold bg-[#d946ef] hover:bg-[#e879f9] focus:ring-4 focus:outline-none focus:ring-gray-100  rounded-lg  px-5 py-2.5 text-center inline-flex items-center me-2 mb-2">
                     WorkSpace
                 </button>
             </a>

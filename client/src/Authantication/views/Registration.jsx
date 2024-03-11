@@ -1,16 +1,23 @@
-import React, { useState } from "react";
-import Axios from "axios";
+
+
+import React, { useState } from 'react';
+import Axios from 'axios';
+
 import { useNavigate } from "react-router-dom";
 import backgroundImage from './auth.jpg';
 import { NavLink } from "react-router-dom";
 
 const Registration = (props) => {
+
   const navigate=useNavigate();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+
+   
+
 
   function handleSubmit(e) {
     e.preventDefault();

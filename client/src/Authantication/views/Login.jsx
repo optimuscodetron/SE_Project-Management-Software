@@ -7,6 +7,7 @@ import backgroundImage from './auth.jpg';
 
 import { NavLink } from "react-router-dom";
 
+
 // const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
 // function login() {
@@ -32,7 +33,12 @@ import { NavLink } from "react-router-dom";
 // }
 
 const Login = (props) => {
-  const navigate=useNavigate();
+
+
+  
+  const navigate = useNavigate();
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
