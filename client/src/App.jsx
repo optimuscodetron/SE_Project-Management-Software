@@ -20,6 +20,9 @@ import Settings from './Project/ProjectSettings/Settings';
 import Workspace from './Workspace/workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import Members from "./Project/ProjectSettings/Members";
+
+import Profile from "./Workspace/Settings/Profile/Profile";
+
 import General from './Workspace/Settings/General/General';
 import Cycles from "./Project/ProjectSettings/Cycles";
 
@@ -77,17 +80,19 @@ function App() {
 
                     <Route  path="/workspace" element={<Workspace />} />
                     <Route  path="/workspace/project/board" element={<Board />} />
+                      
+                      {/* by Harsh */}
                     <Route  path="/workspace/project/settings/general" element={<Settings />} />
                     <Route  path="/workspace/project/settings/team_members" element={<Members />} />
                     <Route  path="/workspace/project/settings/cycles" element={<Cycles />} />
 
+                    <Route path="/workspace/settings/profile" element={<Profile />} />
 
-                    <Route path="/create_workspace" element={<WorkPage/>}> </Route>
-                    {/* <Route component={PageError} /> */}
-                </Routes>
+
+                    </Routes>
             
        </>
     );
-}
+};
 
 export default App;
