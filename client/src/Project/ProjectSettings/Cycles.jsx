@@ -21,16 +21,16 @@ function Cycles() {
     <div class="flex flex-row h-screen w-screen">
       <PSidebar />
       <div className="bg-gray-800 w-full h-screen text-white justify-center p-10">
-        <div className="flex flex-col mx-auto h-[100%] mb-4 w-full lg:w-[60%] bg-gray-900 p-3 ">
+        <div className="flex flex-col rounded mx-auto h-[100%] mb-4 w-full lg:w-[60%] bg-gray-900 p-3 ">
           <div className="text-gray-400 text-base mb-2">
             {workspaceName} <span className="mx-2"> / </span> Projects{" "}
             <span className="mx-2"> / </span> {projectName}
           </div>
-          <h1 className="text-3xl font-bold mb-10 border-b border-gray-600 pb-3 ">
+          <h1 className="text-3xl tracking-wide font-semibold mb-10 border-b border-gray-600 pb-3 ">
             Cycles
           </h1>
           <div className="flex justify-between mb-4">
-            <div className="text-2xl font-semibold ">Cycle Options</div>
+            <div className="text-2xl ">Enable Cycle</div>
             <div>
               <Switch
                 checked={cycleEnabled}
@@ -43,7 +43,7 @@ function Cycles() {
             </div>
           </div>
           {cycleEnabled ? (
-            <div className="rounded border border-gray-600 p-3 border-rou">
+            <div className="rounded border bg-gray-950 border-gray-700 p-3 border-rou">
               <div className="mb-4 flex justify-between  border-b border-gray-600 pb-3">
                 <div className="text-white">Each Cycle Lasts</div>
                 <select
@@ -175,9 +175,9 @@ function Cycles() {
                       <span className="ml-2">&#10003;</span>
                     )}
                   </option>
-                  <option value="4">
-                    4 cycles{"   "}
-                    {numCycles === "4" && (
+                  <option value="5">
+                    5 cycles{"   "}
+                    {numCycles === "5" && (
                       <span className="ml-2">&#10003;</span>
                     )}
                   </option>
@@ -191,7 +191,7 @@ function Cycles() {
                 </select>
               </div>
 
-              <div className=" flex justify-between  border-b border-gray-600 pb-3">
+              <div className=" flex justify-between  ">
                 <div className="text-white">Cycle Starts On</div>
                 <DatePicker
                   selected={cycleStarts}

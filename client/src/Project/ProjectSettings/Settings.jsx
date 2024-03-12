@@ -28,14 +28,14 @@ const Settings = () => {
       <div className="bg-gray-800 w-full h-screen text-white flex justify-center p-10">
         <form
           action="#"
-          className="mb-4 w-full lg:w-[60%] h-[100%] bg-gray-900 p-3 "
+          className="mb-4 rounded w-full lg:w-[60%] h-[100%] bg-gray-900 p-3 "
           onSubmit={(e) => e.preventDefault()}
         >
           <div className="text-gray-400 text-base mb-2">
             {workspaceName} <span className="mx-2"> / </span> Projects{" "}
             <span className="mx-2"> / </span> {projectName}
           </div>
-          <h1 className="text-3xl font-bold mb-4 border-b border-gray-600 pb-3">
+          <h1 className="text-3xl tracking-wide font-semibold mb-4 border-b border-gray-600 pb-3">
             Project Details
           </h1>
 
