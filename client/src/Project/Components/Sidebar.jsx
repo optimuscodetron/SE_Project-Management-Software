@@ -34,6 +34,9 @@ const Sidebar = () => {
                 {/* <FontAwesomeIcon icon="fa-solid fa-gear" /> */}
               <CDBSidebarMenuItem icon="cog" className="">Project Settings</CDBSidebarMenuItem>
             </NavLink>
+            <NavLink exact to="/invite" activeClassName="activeClicked">
+              <CDBSidebarMenuItem icon="plus">Invite to Workspace</CDBSidebarMenuItem>
+            </NavLink>
             <hr />
                 <NavLink exact to="/workspace/project/issue" activeClassName="activeClicked">
                 <CDBSidebarMenuItem icon="table">Issues</CDBSidebarMenuItem>
