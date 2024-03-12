@@ -75,6 +75,10 @@ function Members() {
     // Add more team members as needed
   ]);
 
+  // State for project
+  const [workspaceName, setWorkspaceName] = useState("IIT_Ropar");
+  const [projectName, setProjectName] = useState("SE Project");
+
   // State for search query
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -120,8 +124,12 @@ function Members() {
   return (
     <div class="flex flex-row h-screen w-screen">
       <PSidebar />
-      <div className="bg-gray-800 w-full text-white justify-center p-10">
+      <div className="bg-gray-800 w-full h-screen text-white justify-center p-10">
         <div className="flex flex-col mx-auto h-[100%] mb-4 w-full lg:w-[60%] bg-gray-900 p-3 ">
+          <div className="text-gray-400 text-base mb-2">
+            {workspaceName} <span className="mx-2"> / </span> Projects{" "}
+            <span className="mx-2"> / </span> {projectName}
+          </div>
           <h1 className="text-3xl font-bold mb-4 border-b border-gray-600 pb-3">
             Team Members
           </h1>
@@ -173,61 +181,73 @@ function Members() {
           </div>
 
           {/* List of Team Members */}
-          <div className="grid gap-2">
-            {filteredTeamMembers.map((member) => (
-              <div
-                key={member.id}
-                className="bg-gray-900 mx-4 border-b border-gray-600 pb-[-10px] flex justify-between items-center"
-              >
-                <div className="flex flex-col ">
-                  <h2 className="text-lg ">{member.name}</h2>
-                  <p className="text-gray-600 w-[10vw]">{member.email}</p>
-                </div>
-                <div>
-                  <p className="text-white text-sm mx-4 my-auto">{member.role}</p>
-                </div>
-                <div className="flex items-center">
-                  {/* <p className="text-gray-600 mx-4">{member.role}</p> */}
-                  <button
-                    onClick={() => handleRemoveMember(member.id)}
-                    className="text-white hover:text-red-500 focus:outline-none"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 20 20"
+          <div
+            class="overflow-auto h-[100vh] "
+            style={{
+              scrollbarWidth: "thin",
+              scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
+            }}
+          >
+            <div className="grid gap-2">
+              {filteredTeamMembers.map((member) => (
+                <div
+                  key={member.id}
+                  className="bg-gray-900 mx-4 border-b border-gray-600 pb-[-10px] flex justify-between items-center"
+                >
+                  <div className="flex flex-col ">
+                    <h2 className="text-lg ">{member.name}</h2>
+                    <p className="text-gray-600 w-[10vw]">{member.email}</p>
+                  </div>
+                  <div>
+                    <p className="text-white text-sm mx-4 my-auto">
+                      {member.role}
+                    </p>
+                  </div>
+                  <div className="flex items-center">
+                    {/* <p className="text-gray-600 mx-4">{member.role}</p> */}
+                    <button
+                      onClick={() => handleRemoveMember(member.id)}
+                      className="text-white hover:text-red-500 focus:outline-none"
                     >
-                      <path
-                        fill="currentColor"
-                        d="M10.001 7.8a2.2 2.2 0 1 0 0 4.402A2.2 2.2 0 0 0 10 7.8zm0-2.6A2.2 2.2 0 1 0 9.999.8a2.2 2.2 0 0 0 .002 4.4m0 9.6a2.2 2.2 0 1 0 0 4.402a2.2 2.2 0 0 0 0-4.402"
-                      />
-                    </svg>
-                  </button>
-                  {showRemoveConfirmation && member.id === memberToRemove && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-700 bg-opacity-50">
-                      <div className="bg-gray-900 rounded-md border-1 border-gray-700 text-center p-6 shadow-md">
-                      <h2 className="text-lg font-semibold mb-4">Remove Member?</h2>
-                        <div className="flex justify-end mt-2">
-                          <button
-                            onClick={confirmRemoveMember}
-                            className="bg-red-500 w-[6vw] text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600 mr-2"
-                          >
-                            Yes
-                          </button>
-                          <button
-                            onClick={() => setShowRemoveConfirmation(false)}
-                            className="bg-gray-300 w-[6vw] text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:bg-gray-400"
-                          >
-                            Cancel
-                          </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M10.001 7.8a2.2 2.2 0 1 0 0 4.402A2.2 2.2 0 0 0 10 7.8zm0-2.6A2.2 2.2 0 1 0 9.999.8a2.2 2.2 0 0 0 .002 4.4m0 9.6a2.2 2.2 0 1 0 0 4.402a2.2 2.2 0 0 0 0-4.402"
+                        />
+                      </svg>
+                    </button>
+                    {showRemoveConfirmation && member.id === memberToRemove && (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-700 bg-opacity-50">
+                        <div className="bg-gray-900 rounded-md border-1 border-gray-700 text-center p-6 shadow-md">
+                          <h2 className="text-lg font-semibold mb-4">
+                            Remove Member?
+                          </h2>
+                          <div className="flex justify-end mt-2">
+                            <button
+                              onClick={confirmRemoveMember}
+                              className="bg-red-500 w-[6vw] text-white px-4 py-2 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600 mr-2"
+                            >
+                              Yes
+                            </button>
+                            <button
+                              onClick={() => setShowRemoveConfirmation(false)}
+                              className="bg-gray-300 w-[6vw] text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:bg-gray-400"
+                            >
+                              Cancel
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

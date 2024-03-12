@@ -10,11 +10,13 @@ const Settings = () => {
   const [aboutProject, setAboutProject] = useState(
     "Description of the project"
   );
+  const [inputValue, setInputValue] = useState(projectName);
 
   const handleInputChangeProjectName = (event) => {
     const changedValue = event.target.value;
     setProjectName(changedValue);
     setProjectUrl("www.trackerx.app/" + changedValue);
+    setInputValue(event.target.value);
   };
   const handleAboutProjectChange = (event) => {
     setAboutProject(event.target.value);
@@ -23,20 +25,22 @@ const Settings = () => {
   return (
     <div className="flex flex-row h-screen w-screen">
       <PSidebar />
-      <div className="bg-gray-800 w-full text-white flex justify-center p-10">
-        <form action="#" className="mb-4 w-full lg:w-[60%] bg-gray-900 p-3 " onSubmit={(e)=>e.preventDefault()}>
-          <div className="text-gray-400 text-base">
+      <div className="bg-gray-800 w-full h-screen text-white flex justify-center p-10">
+        <form
+          action="#"
+          className="mb-4 w-full lg:w-[60%] h-[100%] bg-gray-900 p-3 "
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <div className="text-gray-400 text-base mb-2">
             {workspaceName} <span className="mx-2"> / </span> Projects{" "}
             <span className="mx-2"> / </span> {projectName}
           </div>
-
-          <div className="text-4xl mt-2 font-bold border-b border-gray-600 pb-3">Project Details</div>
+          <h1 className="text-3xl font-bold mb-4 border-b border-gray-600 pb-3">
+            Project Details
+          </h1>
 
           <div class="mb-4 ">
-            <label
-              for="form-field-17"
-              class="block text-lg text-white  mt-10"
-            >
+            <label for="form-field-17" class="block text-lg text-white  mt-10">
               Project Name
             </label>
             <input
@@ -45,12 +49,15 @@ const Settings = () => {
               onChange={handleInputChangeProjectName}
               class="h-10 w-[60%] lg:w-[17vw] px-2 rounded-sm border-[1px] border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base"
             />
+            {inputValue.trim() === "" && (
+              <p className="text-red-500 text-xs italic mt-1">
+                Project name must not be empty.
+              </p>
+            )}
           </div>
 
           <div class="mb-4">
-            <label class="block text-lg text-white mt-10 ">
-              Project URL
-            </label>
+            <label class="block text-lg text-white mt-10 ">Project URL</label>
             <input
               name="url"
               class="h-10 w-[60%] lg:w-[17vw] px-2 rounded-sm border-[1px] border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base"
@@ -59,10 +66,7 @@ const Settings = () => {
           </div>
 
           <div class="mb-4">
-            <label
-              for="form-field-19"
-              class="block text-lg text-white mt-10"
-            >
+            <label for="form-field-19" class="block text-lg text-white mt-10">
               Project Description
             </label>
             <textarea
