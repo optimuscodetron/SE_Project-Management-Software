@@ -24,16 +24,16 @@ const General = () => {
   return (
 
 
-    <div className='bg-gray-800 h-[100%] w-[100%]  flex '>
+    <div className='bg-gray-800 h-full w-screen flex flex-row '>
 
       <SettingsSidebar />
 
-        <div className='w-[45vw] md:w-[41vw] ml-[36vw] mt-10  bg-gray-900 text-white p-3 '>
+        <div className='w-[45vw] md:w-[41vw] ml-[36vw] h-screen mt-10  bg-gray-900 text-white p-3 '>
 
-          <p className='text-3xl tracking-wide font-normal'>Workspace</p>
-          <p className=' text-[rgb(107,114,128)] text-[15px] border-b-[1px] border-gray-500 pb-4'>Manage your workspace settings</p>
+          <p className='text-3xl tracking-wide font-normal my-2'>Workspace</p>
+          <p className=' text-[rgb(107,114,128)] text-[15px] border-b-[1px] border-gray-500 pb-4 '>Manage your workspace settings</p>
 
-          <h3 className='text-[20px] tracking-wide font-normal'>Logo</h3>
+          <h3 className='text-[20px] tracking-wide font-normal my-2'>Logo</h3>
 
           <div className='rounded-lg mt-3 mb-2'>
           <img src="https://static.toiimg.com/thumb/msid-96054814,width-400,resizemode-4/96054814.jpg" alt="" onMouseOver={handleUpload} onMouseOut={handleUpload}
@@ -46,12 +46,12 @@ const General = () => {
           <p className='text-[rgb(107,114,128)] text-[15px] border-b-[1px] border-gray-500 pb-4'>Pick a logo for your workspace</p>
 
           <div className='border-gray-500 border-b-[1px]'>
-            <p className='text-[20px] font-normal tracking-wide'>General</p>
-            <h6 className='text-gray-300 text-[15px] font-normal tracking-wide'>Workspace name</h6>
+            <p className='text-[20px] font-normal tracking-wide my-2'>General</p>
+            <h6 className='text-gray-300 text-[15px] font-normal tracking-wide my-2'>Workspace name</h6>
             <input value={workspaceName} className='bg-[rgb(15,19,29)] w-[35vw] md:w-[17vw] border-[1px] px-2 py-[2px]  border-gray-600 rounded-sm' onChange={(e)=>handleInput(e,1)}></input>
             {workspaceName===""?<p className='text-[12px] text-[rgb(220,38,38)] my-1 font-bold '>Workspace name cannot be empty</p>:""}
 
-            <h6 className='text-gray-300 tracking-wide text-[15px] mt-4 font-normal'>Workspace URL</h6>
+            <h6 className='text-gray-300 tracking-wide text-[15px] mt-4 font-normal my-2'>Workspace URL</h6>
             <input value={workspaceUrl} className='bg-[rgb(15,19,29)] w-[35vw] md:w-[17vw]  border-[1px] px-2 py-[2px]  border-gray-600 rounded-sm' onChange={(e)=>handleInput(e,2)}></input>
             {workspaceUrl===""?<p className='text-[12px] text-[rgb(220,38,38)] my-1 font-bold'>Workspace url cannot be empty</p>:""}
             <br></br>
