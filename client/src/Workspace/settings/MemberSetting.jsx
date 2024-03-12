@@ -57,11 +57,7 @@ const membersData = [
     post: "User",
   },
   // Add more members as needed
-];
-
-
-// Member component
-const Member = ({ name, email, post }) => {
+];const Member = ({ name, email, post }) => {
   return (
     <tr className="border-b border-gray-100">
       <td className="py-2 px-4 items-center">
@@ -77,26 +73,62 @@ const Member = ({ name, email, post }) => {
       <td className="py-2 px-4">{post}</td>
       <td className="py-2 px-4 items-center">
         <button className="cursor-pointer">&#8226;&#8226;&#8226;</button>
-        {/* Add more options as needed */}
       </td>
     </tr>
   );
 };
 
-// MemberList component with search functionality
 const MemberList = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [inviteLink, setInviteLink] = useState(generateInviteLink());
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
+  };
+
+  const handleRefreshInviteLink = () => {
+    const newInviteLink = generateInviteLink();
+    setInviteLink(newInviteLink);
+  };
+
+  const handleCopyInviteLink = () => {
+    navigator.clipboard.writeText(inviteLink);
+    // You can add visual feedback or notifications for successful copy here
   };
 
   const filteredMembers = membersData.filter((member) =>
     member.name.profile_name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  function generateInviteLink() {
+    return "https://example.com/invite";
+  }
+
   return (
-    <div className="w-1/2 mx-auto mt-20 ">
+    <div className="w-1/2 mx-auto mt-20">
+      <div className="inviteBox mb-3 flex items-center justify-between">
+        <span>Invite Link: </span>
+        <input
+          className="inviteLink form-control form-control-sm border-2"
+          type="text"
+          value={inviteLink}
+          readOnly
+        />
+        <button
+          className="refreshIcon cursor-pointer"
+          onClick={handleRefreshInviteLink}
+        >
+          &#x21bb;
+        </button>
+        {/* Corrected class name: 'copyBox' */}
+        <button
+          className="copyBox cursor-pointer"
+          onClick={handleCopyInviteLink}
+          style={{ backgroundColor: "#6E79D6", color: "white" }}
+        >
+          Copy
+        </button>
+      </div>
       <div className="searchBox mb-3">
         <div className="searchInputContainer relative">
           <input
@@ -111,7 +143,7 @@ const MemberList = () => {
         </div>
       </div>
 
-      <tr className="border-b border-gray-100">
+      <table className="border-b border-gray-100">
         <thead className="bg-gray-200">
           <tr>
             <th className="py-2 px-4">Name</th>
@@ -130,7 +162,7 @@ const MemberList = () => {
             />
           ))}
         </tbody>
-      </tr>
+      </table>
     </div>
   );
 };

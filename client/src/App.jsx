@@ -17,8 +17,14 @@ import loginbutton from "./Authantication/views/Login";
 
 import Board from './Project/ProjectBoard/Board';
 import Settings from './Project/ProjectSettings/Settings';
+<<<<<<< HEAD
 import Workspace from './Workspace/workspace';
-import MemberSetting from "./Workspace/settings/MemberSetting";
+import MemberSetting from "./Workspace/Settings/Member/MemberSetting";
+=======
+import Workspace from './Workspace'
+import MemberSetting from './Workspace/Settings/Member/MemberSetting';
+import WorkPage from "./Create_workspace/Components/WorkPage";
+>>>>>>> a2a116e4146e84e377997489838c5c979ee8771d
 
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import Profile from "./Workspace/Settings/Profile/Profile";
@@ -65,9 +71,13 @@ function App() {
 
                     {/* by ayush */}
                     <Route path="/create_workspace" element={<WorkPage/>}> </Route>
+<<<<<<< HEAD
                     <Route path="/workspace/settings/general" element={<General/>}> </Route>
+=======
+
+>>>>>>> a2a116e4146e84e377997489838c5c979ee8771d
                     {/* by Priyanshu */}
-                    <Route path="/workspace/workspacesetting/member" element={<MemberSetting/>}> </Route>
+                    <Route path="/workspace/settings/members" element={<MemberSetting/>}> </Route>
                    
                   
                    
