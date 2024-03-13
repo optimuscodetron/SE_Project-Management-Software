@@ -159,22 +159,22 @@ export default function IssuesScreen() {
 
     return (
         // issues={backlogIssues} onMoveIssue={moveIssue}
-        <div className="pt-4 overflow-x-auto ">
-            <div className="mx-auto">
-                <div className="grid grid-cols-5 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-5 gap-2 w-[1650px]">
-                    <div className="col-span-1 w-[320px]">
+        <div className="pt-4">
+            <div className="mx-auto overflow-auto">
+                <div className="flex flex-row gap-3 w-screen overflow-x-auto">
+                    <div className="w-[320px]">
                         <IssueStage stageName="Backlog" issues={backlogIssues} onMoveIssue={moveIssue}/>
                     </div>
-                    <div className="col-span-1 w-[320px]">
+                    <div className=" w-[320px]">
                         <IssueStage stageName="To Do" issues={toDoIssues} onMoveIssue={moveIssue}/>
                     </div>
-                    <div className="col-span-1 w-[320px]">
+                    <div className=" w-[320px]">
                         <IssueStage stageName="In Progress" issues={inProgressIssues} onMoveIssue={moveIssue}/>
                     </div>
-                    <div className="col-span-1 w-[320px]">
+                    <div className=" w-[320px]">
                         <IssueStage stageName="Done" issues={doneIssues} onMoveIssue={moveIssue}/>
                     </div>
-                    <div className="col-span-1 w-[320px]">
+                    <div className=" w-[320px]">
                         <IssueStage stageName="Cancelled" issues={cancelledIssues} onMoveIssue={moveIssue}/>
                     </div>
                 </div>
