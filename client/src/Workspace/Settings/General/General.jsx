@@ -24,11 +24,17 @@ const General = () => {
   return (
 
 
-    <div className='bg-gray-800 h-full w-screen flex flex-row '>
+    <div className='bg-gray-800 overflow-auto h-screen w-screen flex flex-row ' style={{
+      scrollbarWidth: "thin",
+      scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
+    }}>
 
       <SettingsSidebar />
 
-        <div className='w-[45vw] md:w-[41vw] ml-[36vw] h-screen mt-10  bg-gray-900 text-white p-3 '>
+        <div className='w-[45vw] md:w-[41vw] ml-[36vw] h-full overflow-auto mt-10  bg-gray-900 text-white p-3 ' style={{
+              scrollbarWidth: "thin",
+              scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
+            }}>
 
           <p className='text-3xl tracking-wide font-normal my-2'>Workspace</p>
           <p className=' text-[rgb(107,114,128)] text-[15px] border-b-[1px] border-gray-500 pb-4 '>Manage your workspace settings</p>
@@ -59,10 +65,10 @@ const General = () => {
 
           </div>
 
-        <div className='my-4'>
+        <div className='mt-4'>
           <p className='text-[20px] tracking-wide font-normal'>Delete Workspace</p>
           <p className='text-[rgb(107,114,128)] text-[15px] '>If you want to permanently delete this workspace and all of its data, including but not limited to users, issues, and comments, you can do so below</p>
-          <button className='bg-red-500 py-1 px-3 my-4 rounded-md'>Delete this workspace</button>
+          <button className='bg-red-500 py-1 px-3 mt-4 rounded-md'>Delete this workspace</button>
         </div>
 
        

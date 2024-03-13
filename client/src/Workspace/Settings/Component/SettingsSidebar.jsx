@@ -13,7 +13,7 @@ const SettingsSidebar = () => {
   }
 
   return (
-    <div className='md:w-[18%] w-[30%] h-screen bg-gray-900 fixed'>
+    <div className='md:w-[18%] w-[30%] h-full bg-gray-900 fixed'>
         
         <div className='text-white  p-2 '>
 
