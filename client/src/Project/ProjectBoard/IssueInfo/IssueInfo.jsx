@@ -16,6 +16,9 @@ function IssueInfo() {
           }}
         >
           <TitleDescrip />
+          <div className="mt-2 mx-2 my-2">
+            <hr/>
+          </div>
           <Comment />
         </div>
       </div>
