@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TitleDescrip from "./Components/TitleDescrip";
 import Comment from "./Components/Comment";
 import RightBar from "./Components/RightBar";
 
 function IssueInfo() {
+  const [isMediumScreen, setIsMediumScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMediumScreen(window.innerWidth <= 1024);
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   return (
     <div class="flex flex-row h-screen w-screen">
       <div className="w-60 bg-red-500 ">left sidebar</div>
@@ -19,7 +33,7 @@ function IssueInfo() {
           <Comment />
         </div>
       </div>
-      <RightBar />
+      {!isMediumScreen && <RightBar />}
     </div>
   );
 }
