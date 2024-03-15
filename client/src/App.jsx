@@ -25,6 +25,7 @@ import Profile from "./Workspace/Settings/Profile/Profile";
 
 import General from './Workspace/Settings/General/General';
 import Cycles from "./Project/ProjectSettings/Cycles";
+import Invite from "./Invite/Invite";
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
@@ -86,7 +87,10 @@ function App() {
                     <Route  path="/workspace/project/settings/team_members" element={<Members />} />
                     <Route  path="/workspace/project/settings/cycles" element={<Cycles />} />
 
-                    <Route path="/workspace/settings/profile" element={<Profile />} />
+                    <Route path="/workspace/settings/profile" element={<Profile />} />  
+
+                    {/*by khushboo*/}
+                    <Route path="/Invite" element={<Invite/>} />
 
 
                     </Routes>
