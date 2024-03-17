@@ -1,7 +1,6 @@
-import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
-const Navbar = (props) => {
-  const nameInitials = "NG";
+const UserPopUp=()=>{
+    const nameInitials = "NG";
 
   const [userInfo, setUserInfo] = useState(false);
   const openUserInfoHandler = () => {
@@ -11,31 +10,7 @@ const Navbar = (props) => {
   const userName="Nikhil Garg";
 
   const userEmailId="nikhilgarg@gmail.com";
-
-
-  return (
-    <nav className="fixed top-0 z-50 w-full bg-gray-800 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 h-16">
-      <div className="flex items-center justify-between h-16 px-3">
-        <div className="flex items-center justify-start rtl:justify-end">
-
-          <button
-            type="button"
-            className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-            onClick={props.showSideBarHandler}
-          >
-            <span className="sr-only">Open sidebar</span>
-            <GiHamburgerMenu />
-          </button>
-
-          <a href="#" className="flex ms-2 md:me-24 text-decoration-none ">
-            <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-white dark:text-white">
-              TrackerX
-            </span>
-          </a>
-
-        </div>
-
-
+    return (
         <div className="flex flex-col relative">
 
           <button
@@ -87,8 +62,6 @@ const Navbar = (props) => {
           </div>
 
         </div>
-      </div>
-    </nav>
-  );
-};
-export default Navbar;
+    );
+}
+export default UserPopUp;

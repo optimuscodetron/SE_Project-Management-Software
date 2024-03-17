@@ -2,15 +2,16 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import WorkspaceListSidebar from "./components/workspacesListSidebar";
 import ProjectListSidebar from "./components/projectListSidebar";
+import './workspaceSidebar.css';
 const WorkspaceSidebar = (props) => {
 
   return (
 
       <aside
-        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${props.showSideBar?"":"-translate-x-full"} bg-gray-800 border-r border-gray-200 sm:translate-x-0`}
+        className={` fixed sm:relative custom-sidebar w-64 mt-16 h-screen overflow-hidden transition-transform ${props.showSideBar?"":"-translate-x-full"} bg-gray-800 border-r border-gray-200 sm:translate-x-0`}
       >
-        <div className="h-full px-2 overflow-y-auto bg-gray-700 dark:bg-gray-800">
-          <ul className="space-y-2 font-medium p-0">
+        <div className="h-full px-2 overflow-y-auto bg-[#171e28] dark:bg-[#171e28]">
+          <ul className="space-y-2 font-medium pt-2">
 
             <li>
               <WorkspaceListSidebar/>
