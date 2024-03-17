@@ -1,49 +1,44 @@
 import { useEffect, useState } from "react";
 import IssuesList from "./components/issuesList";
-import IssueStage from "../../Project/ProjectBoard/Componets/IssueStage";
 import IssuePanel from "./components/issuePanel";
-import { BsFill0CircleFill } from "react-icons/bs";
-import { BsFill1CircleFill } from "react-icons/bs";
-import { BsFill2CircleFill } from "react-icons/bs";
-import { BsFill3CircleFill } from "react-icons/bs";
-import { BsFill4CircleFill } from "react-icons/bs";
-import { BsFill5CircleFill } from "react-icons/bs";
+import { LuCircleDashed } from "react-icons/lu";
+import { FaRegCircle } from "react-icons/fa6";
+import { FaCircleHalfStroke } from "react-icons/fa6";
+import { FaRegTimesCircle } from "react-icons/fa";
+import { FaRegCheckCircle } from "react-icons/fa";
 const WorkspaceIssues = () => {
-  const [issues, setIssues] = useState(IssuesList);
   const [toDoIssues, setToDoIssues] = useState([]);
   const [inProgressIssues, setInProgressIssues] = useState([]);
   const [backlogIssues, setBacklogIssues] = useState([]);
   const [doneIssues, setDoneIssues] = useState([]);
   const [cancelledIssues, setCancelledIssues] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [firsttime, setFirstTime] = useState(true);
   useEffect(() => {
     const todoDummy = [];
     const inProgressDummy = [];
     const backlogDummy = [];
     const doneDummy = [];
     const cancelledDummy = [];
-    {
-      IssuesList.forEach((issue) => {
-        if (issue.status === "ToDo") {
-          todoDummy.push(issue);
-        } else if (issue.status === "InProgress") {
-          inProgressDummy.push(issue);
-        } else if (issue.status === "Backlog") {
-          backlogDummy.push(issue);
-        } else if (issue.status === "Cancelled") {
-          cancelledDummy.push(issue);
-        } else if (issue.status === "Done") {
-          doneDummy.push(issue);
-        }
-      });
-    }
+    IssuesList.forEach((issue) => {
+      if (issue.status === "ToDo") {
+        todoDummy.push(issue);
+      } else if (issue.status === "InProgress") {
+        inProgressDummy.push(issue);
+      } else if (issue.status === "Backlog") {
+        backlogDummy.push(issue);
+      } else if (issue.status === "Cancelled") {
+        cancelledDummy.push(issue);
+      } else if (issue.status === "Done") {
+        doneDummy.push(issue);
+      }
+    });
+
     // setFirstTime(false);
     setToDoIssues(todoDummy);
     setInProgressIssues(inProgressDummy);
-    setBacklogIssues(doneDummy);
+    setBacklogIssues(backlogDummy);
     setCancelledIssues(cancelledDummy);
-    setDoneIssues(backlogDummy);
+    setDoneIssues(doneDummy);
     setDataLoaded(true);
   }, []);
 
@@ -53,7 +48,8 @@ const WorkspaceIssues = () => {
     if (currentStatus === newStatus) {
       console.log("Current Status and New Status are the same");
       return 0;
-    } else {
+    } 
+    else {
       const removeFromStage = (issues, setter) => {
         currentIssue = issues.find((issue) => issue.id === issueId);
         console.log(currentIssue);
@@ -61,24 +57,11 @@ const WorkspaceIssues = () => {
         const updatedIssues = issues.filter((issue) => issue.id !== issueId);
         setter(updatedIssues);
       };
-
-      // // Add the issue to the new stage
       const addToStage = (issues, setter) => {
-        // const issueToMove = allIssues.find(issue => issue.id === issueId);
-        // if (issueToMove) {
-        //     setter([...issues, issueToMove]);
-        // }
         setter([...issues, currentIssue]);
-        console.log(backlogIssues);
       };
       switch (newStatus) {
         case "Backlog":
-          // setter+=currentStatus;
-          // setter+="Issues";
-          // console.log(setter);
-          // Issues=currentStatus.charAt(0).toLowerCase() + currentStatus.slice(1);
-          // Issues+="Issues";
-          // console.log(Issues);
           if (currentStatus === "ToDo")
             removeFromStage(toDoIssues, setToDoIssues);
           else if (currentStatus === "InProgress")
@@ -91,13 +74,6 @@ const WorkspaceIssues = () => {
           addToStage(backlogIssues, setBacklogIssues);
           break;
         case "ToDo":
-          // setter+=currentStatus;
-          // setter+="Issues";
-
-          // console.log(setter);
-          // Issues=currentStatus.charAt(0).toLowerCase() + currentStatus.slice(1);
-          // Issues+="Issues";
-          // console.log(Issues);
           if (currentStatus === "Backlog")
             removeFromStage(backlogIssues, setBacklogIssues);
           else if (currentStatus === "InProgress")
@@ -109,13 +85,6 @@ const WorkspaceIssues = () => {
           addToStage(toDoIssues, setToDoIssues);
           break;
         case "InProgress":
-          // setter+=currentStatus;
-          // setter+="Issues";
-
-          // console.log(setter);
-          // Issues=currentStatus.charAt(0).toLowerCase() + currentStatus.slice(1);
-          // Issues+="Issues";
-          // console.log(Issues);
           if (currentStatus === "Backlog")
             removeFromStage(backlogIssues, setBacklogIssues);
           else if (currentStatus === "ToDo")
@@ -127,13 +96,6 @@ const WorkspaceIssues = () => {
           addToStage(inProgressIssues, setInProgressIssues);
           break;
         case "Done":
-          // setter+=currentStatus;
-          // setter+="Issues";
-
-          // console.log(setter);
-          // Issues=currentStatus.charAt(0).toLowerCase() + currentStatus.slice(1);
-          // Issues+="Issues";
-          // console.log(Issues);
           if (currentStatus === "Backlog")
             removeFromStage(backlogIssues, setBacklogIssues);
           else if (currentStatus === "ToDo")
@@ -145,14 +107,6 @@ const WorkspaceIssues = () => {
           addToStage(doneIssues, setDoneIssues);
           break;
         case "Cancelled":
-          // setter+=currentStatus;
-          // setter+="Issues";
-
-          // console.log(setter);
-          // Issues=currentStatus.charAt(0).toLowerCase() + currentStatus.slice(1);
-          // Issues+="Issues";
-          // console.log(Issues);
-          // console.log(Issues);
           if (currentStatus === "Backlog")
             removeFromStage(backlogIssues, setBacklogIssues);
           else if (currentStatus === "ToDo")
@@ -171,14 +125,14 @@ const WorkspaceIssues = () => {
 
   return (
     <div className=" mt-16 bg-[#171e28] overflow-x-scroll ">
-      {dataLoaded && (  
-        <div className="flex flex-row gap-0 w-screen">
+      {dataLoaded && (
+        <div className="flex flex-row w-screen">
           <div className="w-[320px]">
             <IssuePanel
               statusName="Backlog"
               issues={backlogIssues}
               onMoveIssue={moveIssue}
-              icon={<BsFill0CircleFill/>}
+              icon={<LuCircleDashed />}
             />
           </div>
           <div className="w-[320px]">
@@ -186,7 +140,7 @@ const WorkspaceIssues = () => {
               statusName="To Do"
               issues={toDoIssues}
               onMoveIssue={moveIssue}
-              icon={<BsFill1CircleFill/>}
+              icon={<FaRegCircle />}
             />
           </div>
           <div className="w-[320px]">
@@ -194,7 +148,8 @@ const WorkspaceIssues = () => {
               statusName="In Progress"
               issues={inProgressIssues}
               onMoveIssue={moveIssue}
-              icon={<BsFill2CircleFill/>}
+              icon={<FaCircleHalfStroke />}
+              iconColor="text-yellow-400"
             />
           </div>
           <div className="w-[320px]">
@@ -202,7 +157,8 @@ const WorkspaceIssues = () => {
               statusName="Done"
               issues={doneIssues}
               onMoveIssue={moveIssue}
-              icon={<BsFill3CircleFill/>}
+              icon={<FaRegCheckCircle />}
+              iconColor='text-green-400'
             />
           </div>
           <div className="w-[320px]">
@@ -210,7 +166,8 @@ const WorkspaceIssues = () => {
               statusName="Cancelled"
               issues={cancelledIssues}
               onMoveIssue={moveIssue}
-              icon={<BsFill4CircleFill/>}
+              icon={<FaRegTimesCircle />}
+              iconColor='text-red-400'
             />
           </div>
         </div>
