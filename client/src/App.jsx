@@ -25,6 +25,7 @@ import Profile from "./Workspace/Settings/Profile/Profile";
 import General from './Workspace/Settings/General/General';
 import Members from "./Project/ProjectSettings/Members";
 import Cycles from "./Project/ProjectSettings/Cycles";
+import Invite from "./Invite/Invite";
 
 import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 
@@ -89,7 +90,10 @@ function App() {
                     <Route  path="/workspace/project/settings/cycles" element={<Cycles />} />
                     <Route  path="/workspace/project/board/issue" element={<IssueInfo />} />
 
-                    <Route path="/workspace/settings/profile" element={<Profile />} />
+                    <Route path="/workspace/settings/profile" element={<Profile />} />  
+
+                    {/*by khushboo*/}
+                    <Route path="/Invite" element={<Invite/>} />
 
 
                     </Routes>
