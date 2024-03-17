@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React from "react";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -16,14 +16,19 @@ import Newpassword from './Authantication/Forgetpassword/newpassword';
 import loginbutton from "./Authantication/views/Login";
 
 import Board from './Project/ProjectBoard/Board';
-import Settings from './Project/ProjectSettings/Settings';
+import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
+import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
 
-import Workspace from './Workspace/workspace';
+
+import Workspace from './Workspace/workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
-
-import Profile from "./Workspace/Settings/Profile/Profile";
 import MemberSetting from './Workspace/Settings/Member/MemberSetting';
-import General from './Workspace/Settings/General/General';
+import Profile from "./Workspace/Settings/Profile/Profile";
+import General from "./Workspace/Settings/General/General";
+
+import Invite from "./Invite/Invite";
+
+
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
@@ -82,8 +87,16 @@ function App() {
 
                     <Route  path="/workspace" element={<Workspace />} />
                     <Route  path="/workspace/project/board" element={<Board />} />
-                    <Route  path="/workspace/project/settings" element={<Settings />} />
-                    <Route path="/workspace/settings/profile" element={<Profile />} />
+                      
+                    {/* by Harsh */}
+                    <Route  path="/workspace/project/settings" element={<ProjectSettings />} />
+                    <Route  path="/workspace/project/board/issue" element={<IssueInfo />} />
+
+                    <Route path="/workspace/settings/profile" element={<Profile />} />  
+
+                    {/*by khushboo*/}
+                    <Route path="/Invite" element={<Invite/>} />
+
 
                     </Routes>
             
