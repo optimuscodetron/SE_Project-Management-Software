@@ -27,7 +27,7 @@ const WorkspaceListSidebar=()=>{
               {showWorkspaces&&<ul className={""}>
                 {userWorkspaces.map((item,index) => (
                   <li key={index}>
-                    <div className="flex items-center p-2 font-semibold text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between" onClick={()=>chooseWorkspaceHandler(item,index)}>
+                    <div className="flex justify-center p-2 font-semibold text-white text-decoration-none  rounded-lg hover:bg-gray-900 group " onClick={()=>chooseWorkspaceHandler(item,index)}>
                       {item}
                     </div>
                   </li>

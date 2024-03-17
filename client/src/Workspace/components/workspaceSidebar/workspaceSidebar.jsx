@@ -11,7 +11,6 @@ const WorkspaceSidebar = (props) => {
       >
         <div className="h-full px-2 overflow-y-auto bg-[#171e28] dark:bg-[#171e28]">
           <ul className="space-y-2 font-medium pt-2">
-
             <li>
               <WorkspaceListSidebar/>
             </li>
@@ -39,7 +38,7 @@ const WorkspaceSidebar = (props) => {
                 className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
               >
                 <span className="flex-1 ms-3 font-medium whitespace-nowrap">
-                  Add Members
+                  Create Workspace
                 </span>
               </div>
             </li>
