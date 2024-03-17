@@ -22,6 +22,7 @@ import WorkPage from "./Create_workspace/Components/WorkPage";
 
 import Profile from "./Workspace/Settings/Profile/Profile";
 
+import General from "./Workspace/Settings/General/General";
 
 import Invite from "./Invite/Invite";
 
