@@ -14,7 +14,7 @@ export default function IssueStage({ stageName, issues, onMoveIssue }) {
                 {stageName}
             </h2>
             <div className="flex flex-col pt-1 shadow-md rounded-lg" style={{ maxHeight: '510px',  overflowY: 'auto', scrollbarWidth: 'thin', scrollbarColor: 'rgba(0,0,0,0) rgba(0,0,0,0)' }}>
-                {issues.map((issue) => (
+                {issues?"":issues.map((issue) => (
                     <IssueCard key={issue.id} issue={issue} onMoveIssue={onMoveIssue} />
                 ))}
             </div>

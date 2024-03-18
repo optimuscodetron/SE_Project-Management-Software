@@ -1,18 +1,20 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import WorkspaceListSidebar from "./components/workspacesListSidebar";
 import ProjectListSidebar from "./components/projectListSidebar";
+
+import './workspaceSidebar.css';
+
 import Invite from "../../../Invite/Invite";
+
 const WorkspaceSidebar = (props) => {
 
   return (
 
       <aside
-        className={`fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform ${props.showSideBar?"":"-translate-x-full"} bg-gray-800 border-r border-gray-200 sm:translate-x-0`}
+        className={` fixed sm:relative custom-sidebar w-64 mt-16 h-screen overflow-hidden transition-transform ${props.showSideBar?"":"-translate-x-full"} bg-gray-800 border-r border-gray-200 sm:translate-x-0`}
       >
-        <div className="h-full px-2 overflow-y-auto bg-gray-700 dark:bg-gray-800">
-          <ul className="space-y-2 font-medium p-0">
-
+        <div className="h-full px-2 overflow-y-auto bg-[#171e28] dark:bg-[#171e28]">
+          <ul className="space-y-2 font-medium pt-2">
             <li>
               <WorkspaceListSidebar/>
             </li>
@@ -32,7 +34,7 @@ const WorkspaceSidebar = (props) => {
               <div
                 className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
               >
-                <span className="flex-1 ms-3 font-medium ">Invite Co-Workers</span>
+                <span className="flex-1 ms-3 font-medium ">Invite Members</span>
               </div>
             </NavLink>
             </li>
@@ -42,7 +44,7 @@ const WorkspaceSidebar = (props) => {
                 className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
               >
                 <span className="flex-1 ms-3 font-medium whitespace-nowrap">
-                  Add Members
+                  Create Workspace
                 </span>
               </div>
             </li>

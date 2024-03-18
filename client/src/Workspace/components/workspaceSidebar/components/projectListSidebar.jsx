@@ -36,7 +36,7 @@ const ProjectListSidebar = () => {
             <ul className={""}>
               {userProjects.map((item) => (
                 <li>
-                  <div className="flex items-center font-semibold p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between">
+                  <div className="flex justify-center font-semibold p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group ">
                     {item}
                   </div>
                 </li>
