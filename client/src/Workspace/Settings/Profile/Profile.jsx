@@ -25,11 +25,11 @@ const Profile = () => {
   };
 
   return (
-    <div className=" bg-[#1f2937] flex flex-row w-screen h-screen">
+    <div className=" bg-[#1f2937] flex flex-row w-screen h-screen ">
       <SettingsSidebar />
 
-      <div className="w-[40vw] ml-[36vw] flex items-center  justify-center ">
-        <div className="w-full bg-[#111827] h-[70vh] ">
+      <div className="w-[40vw] ml-[36vw] flex items-center h-full  overflow-auto justify-center ">
+        <div className="w-full bg-[#111827] h-[full] ">
           <div className=" p-8 rounded-lg shadow-md  text-white">
             <h1 className="text-[42px] text-center font-normal tracking-wide mb-2">
               Profile
@@ -54,11 +54,11 @@ const Profile = () => {
             <div className="mb-4 text-lg flex items-center justify-between border-b border-gray-700 pb-3 pt-4">
               <label
                 htmlFor="email"
-                className="block text-white tracking-wide font-normal mb-2"
+                className="block text-white w-[50%] tracking-wide font-normal mb-2"
               >
                 Email :
               </label>
-              <div className=" border-[1px] w-[16vw] h-10 px-2 py-1 border-gray-600 rounded-md bg-[rgb(15,19,29)] ">
+              <div className=" border-[1px] w-[50%] h-10 px-2 py-1 border-gray-600 rounded-md bg-[rgb(15,19,29)] ">
                 <p className="text-white  ">{formData.email}</p>
               </div>
             </div>
@@ -66,15 +66,15 @@ const Profile = () => {
             <div className="mb-4 flex items-center justify-between border-b border-gray-700 pb-3">
               <label
                 htmlFor="fullname"
-                className="block text-white tracking-wide font-normal mr-[45%]"
+                className="block text-white w-[50%] tracking-wide font-normal mr-[45%]"
               >
                 Name :
               </label>
               <input
                 type="text"
                 id="fullname"
-                className=" border-[1px] w-[16vw] h-10 px-2 py-1 border-gray-600 rounded-md bg-[rgb(15,19,29)]"
-                placeholder="Enter your full name"
+                className=" border-[1px] w-[50%] h-10 px-2 py-1 border-gray-600 rounded-md bg-[rgb(15,19,29)]"
+                placeholder="Enter Name"
                 value={formData.fullname}
                 onChange={handleChange}
               />
@@ -83,15 +83,15 @@ const Profile = () => {
             <div className="mb-4 flex items-center justify-between ">
               <label
                 htmlFor="username"
-                className="block text-white  tracking-wide  font-normal mr-[45%]"
+                className="block text-white w-[50%] tracking-wide  font-normal mr-[45%]"
               >
-                Username:
+                Username :
               </label>
               <input
                 type="text"
                 id="username"
-                className="border-[1px] w-[16vw] h-10 px-2 py-1 border-gray-600 rounded-md bg-[rgb(15,19,29)]"
-                placeholder="Enter your username"
+                className="border-[1px] w-[50%] h-10 px-2 py-1 border-gray-600 rounded-md bg-[rgb(15,19,29)]"
+                placeholder="Enter username"
                 value={formData.username}
                 onChange={handleChange}
               />

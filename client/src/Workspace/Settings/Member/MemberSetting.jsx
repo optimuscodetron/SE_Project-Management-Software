@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import PSidebar from "../Components/PSidebar";
-
-function Members() {
+import SettingsSidebar from "../Component/SettingsSidebar";
+function MemberList() {
   // Array of team members
   const [teamMembers, setTeamMembers] = useState([
     { id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },
@@ -72,12 +71,10 @@ function Members() {
       email: "2021csb1139@iitrpr.ac.in",
       role: "Member",
     },
-    // Add more team members as needed
   ]);
 
   // State for project
   const [workspaceName, setWorkspaceName] = useState("IIT_Ropar");
-  const [projectName, setProjectName] = useState("SE Project");
 
   // State for search query
   const [searchQuery, setSearchQuery] = useState("");
@@ -89,6 +86,11 @@ function Members() {
   // State for showing add member popup
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
   const [newMemberEmail, setNewMemberEmail] = useState(""); // State for the email input
+
+  // State for invite link
+  const [inviteLink, setInviteLink] = useState("www.myworkspace.com/IIT_Ropar");
+
+  // Function to get Gravatar image URL based on email
 
   // Function to handle adding a new member
   const handleAddMember = () => {
@@ -116,22 +118,61 @@ function Members() {
     setShowRemoveConfirmation(false);
   };
 
+  // Function to generate a new invite link
+  const generateInviteLink = () => {
+    // Add logic to generate a new invite link (you can use a library like uuid for unique links)
+    const newLink =
+      "https://example.com/invite/" + Math.random().toString(36).substr(2, 9);
+    setInviteLink(newLink);
+  };
+  const copyInviteLink = () => {
+    navigator.clipboard.writeText(inviteLink);
+  };
+
   // Filter team members based on search query
   const filteredTeamMembers = teamMembers.filter((member) =>
     member.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
-    <div class="flex flex-row h-screen w-screen">
-      <PSidebar />
-      <div className="bg-gray-800 w-full h-screen text-white justify-center p-10">
-        <div className="flex flex-col rounded mx-auto h-[100%] mb-4 w-full lg:w-[60%] bg-gray-900 p-3 ">
-          <div className="text-gray-400 text-base mb-2">
-            {workspaceName} <span className="mx-2"> / </span> Projects{" "}
-            <span className="mx-2"> / </span> {projectName}
+    <div className="flex flex-row  h-screen w-screen">
+      <SettingsSidebar />
+      {/* <div className="bg-gray-800 h-screen flex flex-col px-8 py-8 w-full"> */}
+      <div className="bg-gray-800 w-full overflow-auto h-screen text-white flex justify-center ml-[18vw] p-10">
+        <div className=" h-[100%] flex flex-col mb-4 w-full lg:w-[60%] bg-gray-900 p-3 ">
+          <h1 className=" flex flex-col text-3xl tracking-wide font-semibold mb-3 border-b border-gray-600 pb-3">
+            Members
+            <span className="text-gray-400 text-base font-normal">
+              Manage who has access to this workspace
+            </span>
+          </h1>
+
+          {/* New Invite Link Box */}
+          <div className="text-white  mb-8">
+            <div className="flex flex-col">
+              <p className="mr-4">Invite Link:</p>
+              <div className="flex flex-row justify-between">
+                <input
+                  type="text"
+                  value={inviteLink}
+                  readOnly
+                  className="border rounded-sm border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base px-2 mr-4 w-[70%]"
+                />
+                <button
+                  onClick={copyInviteLink}
+                  className="text-center px-4 py-1.5 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition  w-[20%] text-center "
+                >
+                  Copy Link
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-gray-400 text-base mb-2 mt-4">
+            {workspaceName}
           </div>
           <h1 className="text-3xl tracking-wide font-semibold mb-4 border-b border-gray-600 pb-3">
-            Team Members
+            Manage Members
           </h1>
 
           {/* Search Box */}
@@ -141,11 +182,11 @@ function Members() {
               placeholder="Search members..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="border rounded-sm border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base px-3 py-1 w-48 mr-2"
+              className="border rounded-sm border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base px-3 py-1 w-1/3"
             />
             <button
               onClick={() => setShowAddMemberPopup(true)}
-              className="inline-flex items-center px-4 py-2 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition "
+              className=" text-center px-4 py-1 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition"
             >
               Add Member
             </button>
@@ -164,13 +205,13 @@ function Members() {
                   <div className="flex justify-end mt-4">
                     <button
                       onClick={handleAddMember}
-                      className="text-center px-4 py-2 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition mr-2  w-[7vw]"
+                      className="text-center font-semibold px-4 py-1 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition mr-2 w-[7vw]"
                     >
                       Add Member
                     </button>
                     <button
                       onClick={() => setShowAddMemberPopup(false)}
-                      className="text-center font-semibold text-xs  uppercase tracking-widest hover:outline-none hover:ring hover:ring-indigo-300 disabled:opacity-25 transition bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:bg-gray-400  w-[7vw] "
+                      className="text-center font-semibold text-xs uppercase tracking-widest hover:outline-none hover:ring hover:ring-indigo-300 disabled:opacity-25 transition bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:bg-gray-400 w-[7vw] "
                     >
                       Cancel
                     </button>
@@ -182,7 +223,7 @@ function Members() {
 
           {/* List of Team Members */}
           <div
-            class="overflow-auto h-[100vh] "
+            className="overflow-auto h-[100vh]"
             style={{
               scrollbarWidth: "thin",
               scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
@@ -194,33 +235,37 @@ function Members() {
                   key={member.id}
                   className="bg-gray-900 mx-4 border-b border-gray-600 pb-[-10px] flex justify-between items-center"
                 >
-                  <div className="flex flex-col ">
-                    <h2 className="text-lg ">{member.name}</h2>
-                    <p className="text-gray-600 w-[10vw]">{member.email}</p>
-                  </div>
-                  <div>
+                  <div className="flex justify-between w-[100%]">
+                    {/* Profile Image */}
+
+                    <div className="flex flex-col ">
+                      <h2 className="text-lg font-normal  ">{member.name}</h2>
+                      <p className="text-gray-500 w-[10vw]">{member.email}</p>
+                    </div>
+
                     <p className="text-white text-sm mx-4 my-auto">
                       {member.role}
                     </p>
-                  </div>
-                  <div className="flex items-center">
-                    {/* <p className="text-gray-600 mx-4">{member.role}</p> */}
-                    <button
-                      onClick={() => handleRemoveMember(member.id)}
-                      className="text-white hover:text-red-500 focus:outline-none"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        viewBox="0 0 20 20"
+
+                    <div className="flex items-center">
+                      <button
+                        onClick={() => handleRemoveMember(member.id)}
+                        className="text-white hover:text-red-500 focus:outline-none"
                       >
-                        <path
-                          fill="currentColor"
-                          d="M10.001 7.8a2.2 2.2 0 1 0 0 4.402A2.2 2.2 0 0 0 10 7.8zm0-2.6A2.2 2.2 0 1 0 9.999.8a2.2 2.2 0 0 0 .002 4.4m0 9.6a2.2 2.2 0 1 0 0 4.402a2.2 2.2 0 0 0 0-4.402"
-                        />
-                      </svg>
-                    </button>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="1em"
+                          height="1em"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M10.001 7.8a2.2 2.2 0 1 0 0 4.402A2.2 2.2 0 0 0 10 7.8zm0-2.6A2.2 2.2 0 1 0 9.999.8a2.2 2.2 0 0 0 .002 4.4m0 9.6a2.2 2.2 0 1 0 0 4.402a2.2 2.2 0 0 0 0-4.402"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+
                     {showRemoveConfirmation && member.id === memberToRemove && (
                       <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-700 bg-opacity-50">
                         <div className="bg-gray-900 rounded-md border-1 border-gray-700 text-center p-6 shadow-md">
@@ -251,8 +296,9 @@ function Members() {
           </div>
         </div>
       </div>
+      {/* </div> */}
     </div>
   );
 }
 
-export default Members;
+export default MemberList;

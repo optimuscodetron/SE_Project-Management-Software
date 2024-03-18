@@ -1,7 +1,11 @@
 import React from "react";
 import WorkspaceListSidebar from "./components/workspacesListSidebar";
 import ProjectListSidebar from "./components/projectListSidebar";
+
 import './workspaceSidebar.css';
+
+import Invite from "../../../Invite/Invite";
+
 const WorkspaceSidebar = (props) => {
 
   return (
@@ -26,11 +30,13 @@ const WorkspaceSidebar = (props) => {
             </li>
 
             <li>
+            <NavLink to="../../../Invite" activeClassName="text-blue-500">
               <div
                 className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
               >
-                <span className="flex-1 ms-3 font-medium ">Invite & Manage Members</span>
+                <span className="flex-1 ms-3 font-medium ">Invite Members</span>
               </div>
+            </NavLink>
             </li>
 
             <li>
