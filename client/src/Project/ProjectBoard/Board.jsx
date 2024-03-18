@@ -6,7 +6,7 @@ import Header from "./Componets/Header";
 import Issue from "./Componets/IssuesScreen";
 import IssueSearch from "./Componets/IssueSearch";
 import PNavbar from "../Components/PNavbar";
-import Navbar from "../../Components/Layout/navbar";
+
 
 export default function Board() {
     const style = {
