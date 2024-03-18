@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import WorkspaceSidebar from '../Workspace/components/workspaceSidebar/workspaceSidebar';
-import Navbar from '../Components/Layout/navbar';
+import Navbar from '../Components/Layout/navbar/navbar';
 
 function Invite() {
   const [showForm, setShowForm] = useState(false);
