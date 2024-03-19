@@ -27,6 +27,9 @@ import Members from "./Project/ProjectSettings/Members";
 import Cycles from "./Project/ProjectSettings/Cycles";
 
 import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
+import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
+
+
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
@@ -69,6 +72,7 @@ function App() {
                     {/* by ayush */}
                     <Route path="/create_workspace" element={<WorkPage/>}> </Route>
                     <Route path="/workspace/settings/general" element={<General/>}> </Route>
+                    <Route path="/workspace/create_new_project" element={<CreateNewProject/>}> </Route>
                   
                    
                    
