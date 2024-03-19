@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { PiMonitorFill } from "react-icons/pi";
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 const WorkspaceListSidebar=()=>{
@@ -20,14 +20,16 @@ const WorkspaceListSidebar=()=>{
     return (
         <>
         <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between" onClick={showWorkspaceHandler}>
-                <span className="ms-3">{currentWorkspace}</span>
-                
+              <div className="flex">
+                <PiMonitorFill/>
+                <span className="text-sm ms-3">{currentWorkspace}</span>
+                </div>
                 {showWorkspaces?<FaChevronUp />:<FaChevronDown />}
               </div>
-              {showWorkspaces&&<ul className={""}>
+              {showWorkspaces&&<ul className={"flex row ml-8"}>
                 {userWorkspaces.map((item,index) => (
                   <li key={index}>
-                    <div className="flex justify-center p-2 font-semibold text-white text-decoration-none  rounded-lg hover:bg-gray-900 group " onClick={()=>chooseWorkspaceHandler(item,index)}>
+                    <div className="p-2 text-sm font-semibold text-white text-decoration-none  rounded-lg hover:bg-gray-900 group " onClick={()=>chooseWorkspaceHandler(item,index)}>
                       {item}
                     </div>
                   </li>
