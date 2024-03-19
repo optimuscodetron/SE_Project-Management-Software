@@ -1,0 +1,23 @@
+.modal {  /* Assuming this is the styling for your modal component */
+    position: fixed;  /* Make the modal fixed on the screen */
+    top: 0;  /* Position at the top */
+    left: 0;  /* Position at the left */
+    right: 0;  /* Stretch to the right edge */
+    bottom: 0;  /* Stretch to the bottom */
+    background-color: rgba(0, 0, 0, 0.4);  /* Semi-transparent background */
+    display: flex;  /* Allow content to be centered horizontally */
+    justify-content: center;  /* Center the content horizontally */
+    align-items: center;  /* Center the content vertically */
+    z-index: 100;  /* Ensure the modal is above other elements */
+  }
+  
+  .modal-content {  /* Adjust styles for the modal content container */
+    background-color: #fff;  /* White background for the modal content */
+    /* No need to set width/height here as they will be adjusted automatically */
+  }
+  
+  .modal-inner {  /* Styles for the inner content of the modal (optional) */
+    padding: 20px
+     /* You can add padding or margin here to adjust content spacing within the modal */
+  }
+  
