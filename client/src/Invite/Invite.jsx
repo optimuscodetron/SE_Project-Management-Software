@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import WorkspaceSidebar from '../Workspace/components/workspaceSidebar/workspaceSidebar';
 import Navbar from '../Components/Layout/navbar';
+import Modal from "../UI/Modal";
+import { GiBowlingPropulsion } from 'react-icons/gi';
 
-function Invite() {
+function Invite(props) {
   const [showForm, setShowForm] = useState(false);
   const [email, setEmail] = useState('');
   const [generatedLink, setGeneratedLink] = useState('');
@@ -38,13 +40,9 @@ function Invite() {
   }
 
   return (
-    <>
-      <div>
-        <WorkspaceSidebar />
-      </div>
-      <div>
-        <Navbar />
-      </div>
+    <Modal onClose={props.onCloseInviteMembers}>
+      
+      
       <div className="flex justify-center items-center h-screen bg-white">
         <div className="bg-gray-300 rounded-lg p-8 shadow-md">
           <h2 className="text-2xl font-bold mb-4">Invite Co-workers to your workspace</h2>
@@ -69,7 +67,7 @@ function Invite() {
           )}
         </div>
       </div>
-    </>
+    </Modal>
   );
 }
 
