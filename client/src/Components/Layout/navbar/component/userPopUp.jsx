@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 const UserPopUp=()=>{
     const nameInitials = "NG";
 
@@ -35,29 +36,27 @@ const UserPopUp=()=>{
 
             <ul className="text-sm text-gray-700 dark:text-gray-200 p-0">
               <li>
-                <a
-                  href="#"
+                <NavLink
+                  to="/workspace"
                   className="flex  text-white justify-center w-full py-2 text-decoration-none "
                 >
                   Dashboard
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="flex text-white justify-center w-full py-2 text-decoration-none"
+                <NavLink to={'/workspace/settings/profile'} className="flex text-white justify-center w-full py-2 text-decoration-none"
                 >
                   Settings
-                </a>
+                </NavLink>
               </li>
             </ul>
             <div className="">
-              <a
-                href="#"
+              <NavLink
+                to="/"
                 className="flex text-white justify-center w-full py-2 text-sm text-decoration-none  "
               >
                 Sign out
-              </a>
+              </NavLink>
             </div>
           </div>
 
