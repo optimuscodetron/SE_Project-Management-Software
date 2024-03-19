@@ -34,8 +34,8 @@ const WorkspaceSidebar = (props) => {
 
             <li>
               <div
-                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
-                onClick={props.onOpenInviteMembers}
+                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group hover:cursor-pointer"
+                onClick={props.onOpenInviteMembers} 
               >
                 <IoPersonAdd/>
                 <span className="flex-1 ms-3 text-sm ">Invite Members</span>
