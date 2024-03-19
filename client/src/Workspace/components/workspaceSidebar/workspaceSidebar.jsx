@@ -3,9 +3,9 @@ import WorkspaceListSidebar from "./components/workspacesListSidebar";
 import ProjectListSidebar from "./components/projectListSidebar";
 import { NavLink } from "react-router-dom";
 import './workspaceSidebar.css';
-
-import Invite from "../../../Invite/Invite";
-
+import { AiFillSetting } from "react-icons/ai"
+import { IoPersonAdd } from "react-icons/io5";
+import { HiPlus } from "react-icons/hi";
 const WorkspaceSidebar = (props) => {
 
   return (
@@ -20,34 +20,39 @@ const WorkspaceSidebar = (props) => {
             </li>
 
             <li>
+              <NavLink to={'/workspace/settings/general'} className={'text-decoration-none '}>
               <div
                 className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
               >
-                <span className="flex-1 ms-3 font-medium  whitespace-nowrap">
+                  <AiFillSetting/>
+                <span className="flex row ms-3 text-sm  whitespace-nowrap text-decoration-none">
                   Workspace Settings
                 </span>
               </div>
+              </NavLink>
             </li>
 
             <li>
-        
               <div
-                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
-                onClick={props.onOpenInviteMembers}
+                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group hover:cursor-pointer"
+                onClick={props.onOpenInviteMembers} 
               >
-                <span className="flex-1 ms-3 font-medium ">Invite Members</span>
+                <IoPersonAdd/>
+                <span className="flex-1 ms-3 text-sm ">Invite Members</span>
               </div>
-            
             </li>
 
             <li>
+            <NavLink to={'/create_workspace'} className={'text-decoration-none '}>
               <div
                 className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
               >
-                <span className="flex-1 ms-3 font-medium whitespace-nowrap">
+                <HiPlus/>
+                <span className="flex-1 ms-3 text-sm whitespace-nowrap">
                   Create Workspace
                 </span>
               </div>
+              </NavLink>
             </li>
 
             <div className="border-b border-white my-2 w-full"></div>

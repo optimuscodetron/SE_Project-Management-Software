@@ -14,13 +14,11 @@
     left: 35%;
     
     transform: translate(-50%, -50%);
-   max-width: calc(100% - 5rem);
-    min-height: 10rem;
+    max-width: calc(100% - 5rem);
+    min-width: 11rem;
+    min-height: 15rem;
     overflow:scroll;
-    background-color: white;
-    padding: 1rem;
     border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     z-index: 30;
     animation: slide-down 300ms ease-out forwards;
   }
