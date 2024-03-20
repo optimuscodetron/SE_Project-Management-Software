@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const userotp = require("../models/userOtp");
 const nodemailer = require("nodemailer");
 const {MongoClient}=require('mongodb')
+const {Workspace}=require("../models/workspace.model");
 
 
 const tarnsporter = nodemailer.createTransport({
@@ -118,7 +119,7 @@ exports.userLogin = async (req, res) => {
   }
 }
 
-module.exports.create = (req, res) => {
+module.exports.create1 = (req, res) => {
   User.create(req.body)
     .then((user) => {
       const userToken = jwt.sign(
@@ -194,6 +195,16 @@ module.exports.login = async (req, res) => {
     res.status(401).json({ message: errorMessage });
   }
 };
+exports.saveworskapce=async(req,res)=>{
+  console.log(req.body)
+  Workspace.create(req.body)
+  .then((Workspace) => {
+    res
+    
+      .json({ message: "Workspace Successfully created!", workspace: Workspace });
+  })
+  .catch((err) => res.status(400).json(err));
+}
 exports.changeinfo = async (req, res) => {
   const email = req.body.email;
   let password=req.body.newPassword;
