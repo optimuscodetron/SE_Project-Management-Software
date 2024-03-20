@@ -20,7 +20,8 @@ import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
 
 
-import Workspace from './Workspace/workspace'
+import Project from "./Project/upcomingCycles";
+import Workspace from "./Workspace/workspace";
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import MemberSetting from './Workspace/Settings/Member/MemberSetting';
 import Profile from "./Workspace/Settings/Profile/Profile";
@@ -81,7 +82,7 @@ function App() {
                     <Route path="/workspace/create_new_project" element={<CreateNewProject/>}> </Route>
                     {/* by Priyanshu */}
                     <Route path="/workspace/settings/members" element={<MemberSetting/>}> </Route>
-                   
+                   <Route  path="/upcomingCycles" element={<Project />} />
                   
                    
                    
