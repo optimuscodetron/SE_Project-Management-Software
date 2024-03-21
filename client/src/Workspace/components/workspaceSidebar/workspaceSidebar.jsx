@@ -6,6 +6,7 @@ import './workspaceSidebar.css';
 import { AiFillSetting } from "react-icons/ai"
 import { IoPersonAdd } from "react-icons/io5";
 import { HiPlus } from "react-icons/hi";
+import CreateNewProject from "../../CreateNewProject/CreateNewProject";
 const WorkspaceSidebar = (props) => {
 
   return (
@@ -57,7 +58,8 @@ const WorkspaceSidebar = (props) => {
 
             <div className="border-b border-white my-2 w-full"></div>
             <li>
-              <ProjectListSidebar/>
+              <ProjectListSidebar onOpenCreateProject={props.onOpenCreateProject}/>
+             
             </li>
           </ul>
         </div>
