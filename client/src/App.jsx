@@ -33,6 +33,9 @@ import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
 
 
+import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
+
+
 
 const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
