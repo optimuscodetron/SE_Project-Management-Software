@@ -1,5 +1,4 @@
-const { Project } = require('../models/project.model');
-const { Task } = require('../models/task.model');
+
 
 module.exports.create = (req, res) => {
     const project = {
