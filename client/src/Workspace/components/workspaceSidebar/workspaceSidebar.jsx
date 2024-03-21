@@ -1,12 +1,22 @@
-import React from "react";
+import React,{useState} from "react";
 import WorkspaceListSidebar from "./components/workspacesListSidebar";
 import ProjectListSidebar from "./components/projectListSidebar";
 import { NavLink } from "react-router-dom";
 import './workspaceSidebar.css';
+import { FiInbox } from "react-icons/fi";
 import { AiFillSetting } from "react-icons/ai"
 import { IoPersonAdd } from "react-icons/io5";
 import { HiPlus } from "react-icons/hi";
+
+
+import InboxSidebar from "../../../UI/Optional";
 const WorkspaceSidebar = (props) => {
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
 
@@ -40,6 +50,20 @@ const WorkspaceSidebar = (props) => {
                 <IoPersonAdd/>
                 <span className="flex-1 ms-3 text-sm ">Invite Members</span>
               </div>
+            </li>
+
+            
+            <li>
+            <NavLink to={'/workspace/inbox'} className={'text-decoration-none '}>
+              <div
+                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
+              >
+                <FiInbox/>
+                <span className="flex-1 ms-3 text-sm whitespace-nowrap">
+                  Inbox
+                </span>
+              </div>
+              </NavLink>
             </li>
 
             <li>
