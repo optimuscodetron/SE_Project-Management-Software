@@ -82,7 +82,7 @@ function App() {
                     <Route path="/workspace/create_new_project" element={<CreateNewProject/>}> </Route>
                     {/* by Priyanshu */}
                     <Route path="/workspace/settings/members" element={<MemberSetting/>}> </Route>
-                   <Route  path="/upcomingCycles" element={<Project />} />
+                   <Route  path="/upcomingCycles" element={<Project/>} />
                   
                    
                    

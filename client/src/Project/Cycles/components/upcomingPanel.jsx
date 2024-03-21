@@ -2,7 +2,7 @@ import UpcomingCard from "./upcomingCard";
 import { BsPlusCircle } from "react-icons/bs";
 const UpcomingPanel = (props) => {
   return (
-    <div className=" h-screen custom-sidebar-2 p-3 min-w-60 rounded-lg">
+    <div className="">
       <div className=" text-white font-normal  tracking-wider py-2 px-1 text-start font-sans justify-between  ">
         <div className="flex flex-row">
           <div
