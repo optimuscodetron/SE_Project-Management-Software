@@ -1,15 +1,17 @@
 import React, { useState } from "react";
+
 import { useLocation, useNavigate } from "react-router-dom";
+
 import Axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { sentOtpFunction } from "../services/Apis";
-import Spinner from 'react-bootstrap/Spinner';
+// import Spinner from 'react-bootstrap/Spinner';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 
 const Email = () => {
-    const [spiner, setSpiner] = useState(false);
+    // const [spiner, setSpiner] = useState(false);
     const [email, setEmail] = useState("");
     const navigate = useNavigate();
 
@@ -25,7 +27,7 @@ const Email = () => {
         } else if (!email.includes("@")) {
             toast.error("Enter Valid Email !")
         } else {
-            setSpiner(true)
+            // setSpiner(true)
             const data = {
                 email: email
             }
@@ -33,10 +35,10 @@ const Email = () => {
             const response = await sentOtpFunction(data);
 
             if (response.status === 200) {
-                setSpiner(false)
+                // setSpiner(false)
                 navigate("/otp", { state: email })
             } else {
-                setSpiner(false)
+                // setSpiner(false)
                 toast.error(response.response.data.error);
             }
         }
@@ -144,9 +146,9 @@ const Email = () => {
 
                                     <div className="form-group text-center">
                                         <button className="btn btn-primary btn-lg btn-block" style={{ backgroundColor: 'rgb(147, 51, 234)' }} onClick={sendOtp}>{chk===0?"Resend OTP" :   "Send OTP"}
-                                            {
+                                            {/* {
                                                 spiner ? <span><Spinner animation="border" /></span> : ""
-                                            }
+                                            } */}
                                         </button>
 
                                     </div>

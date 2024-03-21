@@ -21,7 +21,19 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required:[true, "Password is required"],
         minlength: [6, "Password must be at least 6 characters"]
+    },
+    username:{
+        type:String,
+        // required:true,
+        unique:true
     }
+    ,
+    workspaces: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Workspace' // Referencing the 'Workspace' model
+        }
+    ]
 }, {timestamps: true});
 
 UserSchema.virtual('confirmPassword')
@@ -41,6 +53,12 @@ UserSchema.pre('save', function(next){
             this.password = hash;
             next();
         });
+});
+UserSchema.pre('save', function(next){
+    if(!this.username){
+        this.username=this.email.substring(0,this.email.indexOf('@'));
+    }
+    next();
 });
 
 UserSchema.plugin(uniqueValidator);

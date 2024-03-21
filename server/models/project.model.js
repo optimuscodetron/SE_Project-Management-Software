@@ -6,20 +6,44 @@ const ProjectSchema = new mongoose.Schema({
         type: String,
         required: [true, "Name is required"]
     },
-    tasks:[
+    description:{
+        type:String,
+    },
+    workspaceID:{
+        type: Schema.Types.ObjectId,
+        ref:'Worskpace',
+        required:true
+    },
+    issuesIDs:[
         {
             type: Schema.Types.ObjectId,
-            ref: 'Task'
+            ref: 'Issue'
         }
     ],
-    users:[
+    memberIDs:[
         {
             type: Schema.Types.ObjectId,
             ref: 'User'
         }
     ],
-    numTasks: Number,
-    dueDate: Date
+    startDate:{
+        type:Date,
+        required:true
+    },
+    targetDate:{
+        type:Date,
+        required:true
+    },
+    cycleIDs:[{
+        type:Schema.Types.ObjectId,
+       ref:'Cycle'
+    }],
+    status:{
+        type:String,
+        enum:['Backlog','Planned','In Progress','Completed','Cancelled'],
+        default:'Backlog'
+    },
+    
 }, {timestamps: true});
 
 module.exports.Project = mongoose.model('Project', ProjectSchema);
