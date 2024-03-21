@@ -28,6 +28,7 @@ import Profile from "./Workspace/Settings/Profile/Profile";
 import General from "./Workspace/Settings/General/General";
 
 import Invite from "./Invite/Invite";
+import InboxSidebar from "./Workspace/Inbox/InboxSidebar";
 
 
 // import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
@@ -105,6 +106,8 @@ function App() {
 
                     {/*by khushboo*/}
                     <Route path="/Invite" element={<Invite/>} />
+                    <Route path="/Workspace/Inbox" element={<InboxSidebar/>} />
+
 
 
                     </Routes>
