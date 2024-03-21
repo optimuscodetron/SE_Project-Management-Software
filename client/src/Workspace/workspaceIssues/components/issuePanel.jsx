@@ -2,7 +2,7 @@ import IssueCard from "./issueCard";
 import { BsPlusCircle } from "react-icons/bs";
 const IssuePanel = (props) => {
   return (
-    <div className=" ">
+    <div className=" h-screen custom-sidebar-2 p-3 min-w-60 rounded-lg">
       <div className=" text-white font-normal  tracking-wider py-2 px-1 text-start font-sans justify-between  ">
         <div className="flex flex-row">
           <div
@@ -37,12 +37,14 @@ const IssuePanel = (props) => {
                 onMoveIssue={props.onMoveIssue}
               />
             ))}
-          <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] ">
-            <div className="ml-[45%]">
-
-            <BsPlusCircle/>
-            </div>
+        <div
+          className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] "
+          onClick={props.onToggleCreateOverlay}
+        >
+          <div className="ml-[45%]">
+            <BsPlusCircle />
           </div>
+        </div>
       </div>
     </div>
   );
