@@ -2,7 +2,10 @@ const jwt = require('jsonwebtoken');
 
 module.exports.authenticate = function(req, res, next){
     try{
-        jwt.verify(req.cookies.usertoken, process.env.SECRET_KEY);
+        const decode=jwt.verify(req.cookies.usertoken, "abcdef");
+        // console.log(decode.id)
+
+        {req.adminuserId=decode.id};
         next();
     }catch(e){
         res.status(401).json({message: "Unauthorized"});

@@ -119,15 +119,16 @@ exports.userLogin = async (req, res) => {
   }
 }
 
-module.exports.create1 = (req, res) => {
+module.exports.create = (req, res) => {
   User.create(req.body)
     .then((user) => {
       const userToken = jwt.sign(
         {
           id: user._id,
         },
-        process.env.SECRET_KEY
+        "abcdef"
       );
+      console.log(userToken)
       res
         .cookie("usertoken", userToken, {
           httpOnly: true,
@@ -184,7 +185,8 @@ module.exports.login = async (req, res) => {
       {
         id: user._id,
       },
-      process.env.SECRET_KEY
+      // process.env.SECRET_KEY
+      "abcdef"
     );
     res
       .cookie("usertoken", userToken, {
@@ -195,16 +197,7 @@ module.exports.login = async (req, res) => {
     res.status(401).json({ message: errorMessage });
   }
 };
-exports.saveworskapce=async(req,res)=>{
-  console.log(req.body)
-  Workspace.create(req.body)
-  .then((Workspace) => {
-    res
-    
-      .json({ message: "Workspace Successfully created!", workspace: Workspace });
-  })
-  .catch((err) => res.status(400).json(err));
-}
+
 exports.changeinfo = async (req, res) => {
   const email = req.body.email;
   let password=req.body.newPassword;

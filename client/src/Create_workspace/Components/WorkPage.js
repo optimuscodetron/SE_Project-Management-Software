@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router'
 import Axios  from 'axios';
+// const {Workspace} =require('../models/')
 
 const WorkPage = () => {
     const navigate=useNavigate();
@@ -9,19 +10,19 @@ const WorkPage = () => {
 
     function handleclick (e){
       e.preventDefault();
-      console.log('Hello')
       const name=name1.current.value;
       const newWorkspcae = {
         name,
         url
        
       };
-      console.log(newWorkspcae)
       
-      Axios.post("http://localhost:8000/api/users/workspace", newWorkspcae
+      Axios.post("http://localhost:8000/api/users/workspace", newWorkspcae,{
+        withCredentials:true
+      }
       )
       .then((res) => {
-        console.log(res.data.workspace);
+        // console.log(res.data.workspace);
         console.log(`workspace succesfully created`);
         navigate("/workspace");
         // window.location.reload();
