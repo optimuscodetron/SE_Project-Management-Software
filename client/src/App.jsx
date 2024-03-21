@@ -29,8 +29,8 @@ import General from "./Workspace/Settings/General/General";
 import Invite from "./Invite/Invite";
 
 
-import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
-import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
+// import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
+// import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
 
 
 import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";

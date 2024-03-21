@@ -7,8 +7,9 @@ import { FaUsers } from "react-icons/fa";
 import { FaUserTie } from "react-icons/fa";
 import { GrStatusDisabledSmall } from "react-icons/gr";
 import { FiHexagon } from "react-icons/fi";
+import Modal from '../../UI/Modal';
 
-const CreateNewProject = () => {
+const CreateNewProject = (props) => {
     const [isopen,setisopen]=useState(false);
 
     //send by backend
@@ -102,7 +103,7 @@ const CreateNewProject = () => {
     }
 
     const handlediscard=()=>{
-      setisopen(false);
+     
       setIsCancel(false);
     }
 
@@ -113,55 +114,64 @@ const CreateNewProject = () => {
     
   return (
     
-    <div className='bg-gray-800 h-screen min-w-full text-white '>
-        <button onClick={handlePopup}>Open Popup</button>
+    // <div className='bg-gray-800 h-screen min-w-full text-white '>
+    //     <button onClick={handlePopup}>Open Popup</button>
 
-        {iscancel &&
-          <div className='bg-gray-900 absolute ml-auto mr-auto md:mt-[40vh] mt-[50vh] md:w-[30%] w-[70%]  left-0 right-0 md:px-5 md:py-10 z-10 opacity-90 rounded-md'>
-              <p className='text-gray-400 px-4'>Are you sure u want to discard this project?</p>
-              <div className='flex justify-around justify-items-end mt-[4vh]'>
-                <button className='px-2 py-1 bg-gray-600 rounded-sm' onClick={handleCancel}>Cancel</button>
-                <button className='bg-purple-500 px-2 py-1 rounded-sm' onClick={handlediscard}>Discard</button>
-              </div>
-          </div>}
+    <Modal onClose={props.onCloseCreateProject}>
 
-        {isopen && <div className={` ${iscancel ? 'bg-gray-900 pointer-events-none ' : ''}bg-gray-900 opacity-90 mx-auto my-[10vh]  w-[75%] md:w-[65%]  h-[45%]  text-white px-[1vw] py-[2vh] flex flex-col justify-between`}>
+    <div>
+    {iscancel &&
+      <div className='bg-gray-900 text-white absolute ml-auto mr-auto md:mt-[40vh] mt-[50vh] md:w-[30%] w-[100%]  left-0 right-0 md:px-5 md:py-10 z-10 opacity-90 rounded-md '>
+          <p className='text-gray-400 px-4'>Are you sure u want to discard this project?</p>
+          <div className='flex justify-around justify-items-end mt-[4vh]'>
+            <button className='px-2 py-1 bg-gray-600 rounded-sm' onClick={handleCancel}>Cancel</button>
+            <button className='bg-purple-500 px-2 py-1 rounded-sm' onClick={props.onCloseCreateProject}>Discard</button>
+          </div>
+      </div>}
+
+    <div className={` ${iscancel ? ' pointer-events-none ' : ''}bg-gray-900 opacity-100 absolute text-[13px] md:text-[17px] w-[100%] md:w-[100%]  h-full  text-white px-[1vw] py-[2vh] flex flex-col justify-between`}>
+      
+     
         <h1 className=''> <span className='md:p-[4px] md:px-[6px] p-[1px] bg-gray-600 rounded-sm border-[1px] border-gray-400'>{Workspacename}</span> &gt; New project</h1>
+
         <div className='flex flex-row'>
             <GrProjects className='items-center mt-3' />
             <div className='flex flex-col ml-[1vw] w-full'>
-            <input type='text' placeholder='Project name ' ref={projectName} onChange={handleName} className='outline-none bg-transparent text-xl placeholder:text-lg p-1'></input>
+            <input type='text' placeholder='Project name ' ref={projectName} onChange={handleName} className='outline-none bg-transparent md:text-xl text-sm placeholder:md:text-lg placeholder:text:sm p-1'></input>
             
-            <textarea placeholder='Description (optional)' ref={description} className=' bg-transparent text-gray-400   p-1 resize-none ' style={{
+            <textarea placeholder='Description (optional)' ref={description} className=' bg-transparent text-gray-400  placeholder:md:text-sm placeholder:text-[10px] p-1 resize-none ' style={{
                 scrollbarWidth: "thin",
                 scrollbarColor: "rgb(75,85,99) rgba(0,0,0,0)",
              }}></textarea>
             </div>
         
         </div>
+
+
           <div>
-            <div className='flex justify-evenly md:justify-evenly gap-y-3 gap-x-1 flex-wrap  '>
+            <div className='flex justify-evenly md:justify-evenly gap-y-3 gap-x-2 flex-wrap  '>
 
             {/* {!isSelect && <button className='bg-gray-700 p-1 md:w-[8vw] h-[4vh] sm:w-1/3  text-sm border-[1px] border-gray-400 flex justify-evenly items-center' onClick={(num)=>handleSelect(1)}>< GrStatusDisabledSmall  /> <p >Project Status</p></button>} */}
               
-               <div className='bg-white h-[4vh] w-1/3 md:w-[11vw] rounded-sm'>
-                  <button className='flex justify-evenly h-[4vh] items-center w-full  md:w-[11vw] text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 ' onClick={(num)=>handleSelect(1)}>< GrStatusDisabledSmall  /> <p >{projectStatus}</p></button>
+               <div className='bg-white overflow-visible h-[4vh] w-1/3 md:w-[9vw] rounded-sm md:text-sm text-[10px]'>
+               
+                  <button className='flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 ' onClick={(num)=>handleSelect(1)}>< GrStatusDisabledSmall  /> <p className='overflow-hidden '>{projectStatus}</p></button>
                  
-                  {isSelect && <div   className='flex flex-col items-start py-2 px-4 relative top-[2vh] rounded-md bg-gray-900 border-[1px]  border-gray-400'>
-                    <button key={1} onClick={handleStatus}>Backlog</button>
-                    <button key={2} onClick={handleStatus}>Cancelled</button>
-                    <button key={3} onClick={handleStatus}>Planned</button>
-                    <button key={4} onClick={handleStatus}>In Progress</button>
-                    <button key={5} onClick={handleStatus}>Completed</button>
+                  {isSelect && <div   className='flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 '>
+                    <button   key={1} onClick={handleStatus}>Backlog</button>
+                    <button  key={2} onClick={handleStatus}>Cancelled</button>
+                    <button  key={3} onClick={handleStatus}>Planned</button>
+                    <button  key={4} onClick={handleStatus}>In Progress</button>
+                    <button  key={5} onClick={handleStatus}>Completed</button>
                  </div>}
                </div>
 
 
 
-                <div className=' h-[4vh] w-1/3 md:w-[8vw] rounded-sm'>
-                  <button className='flex justify-evenly h-[4vh] w-full  items-center rounded-sm text-sm border-[1px] p-1 border-gray-400  bg-gray-700' onClick={(num)=>handleSelect(2)}>< FaUserTie  /> <p >{lead}</p></button>
+                <div className=' h-[4vh] w-1/3 md:w-[8vw] rounded-sm overflow-visible md:text-sm text-[10px]'>
+                  <button className='flex justify-evenly h-[4vh] w-full  items-center rounded-sm border-[1px] p-1 border-gray-400  bg-gray-700' onClick={(num)=>handleSelect(2)}>< FaUserTie  /> <p >{lead}</p></button>
 
-                 {isSelect2 && <div   className=' p-2  w-[10vw] flex flex-col items-start relative rounded-md top-[2vh] bg-gray-900 border-[1px]  border-gray-400'>
+                 {isSelect2 && <div   className='overflow-x-hidden p-2 z-1 w-[25vw]  md:w-[8vw] flex flex-col items-start relative rounded-md top-[2vh] bg-gray-900 border-[1px]  border-gray-400'>
                   <button onClick={()=>setLead("unassigned")}>unassigned</button>
                  {
                    members.map((element)=>{
@@ -182,10 +192,10 @@ const CreateNewProject = () => {
               </select>} */}
 
               
-            <button className='bg-gray-700 p-1 md:w-[9vw] w-[30%] rounded-sm h-[4vh] text-sm border-[1px] border-gray-400 flex justify-evenly items-center' onClick={(num)=>handleSelect(4)}>
-            <FaUsers /> <p>Members</p></button>
+            <button className='bg-gray-700 md:p-1 md:w-[8vw] w-[30%] rounded-sm h-[4vh] md:text-sm text-[10px] border-[1px] border-gray-400 flex justify-evenly items-center' onClick={(num)=>handleSelect(4)}>
+            <FaUsers /> <p className='overflow-hidden'>Members</p></button>
 
-            {isSelect4 && <div className='absolute overflow-auto  flex-col bg-gray-900 sm:left-[18vw] md:left-[45.5vw] sm:top-[45vh] md:top-[50vh] p-2 text-sm border-[1px] border-gray-400 rounded-md '>
+            {isSelect4 && <div className='absolute overflow-auto  flex-col bg-gray-900 z-1 left-[6vw] md:left-[18vw] top-[30vh] md:top-[36.5vh] p-2 md:text-sm text-[10px] border-[1px] border-gray-400 rounded-md '>
 
               <div className='border-b-[1px] border-gray-400 pb-1 m-1'>
                 <p className='text-gray-400'>Change project members</p>
@@ -215,9 +225,9 @@ const CreateNewProject = () => {
               
                 {/* {!sDate && <button className='bg-gray-700 p-1 md:w-[7vw] sm:w-1/3  h-[4vh] text-sm border-[1px] border-gray-400 flex justify-evenly items-center' onClick={(num)=>handledate(1)}><BsFillCalendarDateFill /> <p>Start date</p></button>}
                 {sDate && <input type='date' ref={startDate} className='bg-gray-700  md:w-[7vw] sm:w-1/3   h-[4vh] text-sm p-1 border-[1px] border-gray-400' onMouseLeave={(e,num)=>{if(!e.target.value)handledate(1)}}></input>} */}
-              <div className="bg-gray-700 rounded-sm p-1 md:w-[10vw] w-1/3 h-[4vh] text-sm border-[1px] border-gray-400 flex justify-evenly items-center">
+              <div className="bg-gray-700 overflow-hidden rounded-sm md:p-1 md:w-[8vw] w-1/3 h-[4vh] md:text-sm text-[10px] border-[1px] border-gray-400 flex justify-evenly items-center">
               <BsFillCalendarDateFill />
-              <div className='w-[70%]' >
+              <div className='w-[80%]' >
                   <DatePicker
                     selected={startDate}
                     onChange={date => setStartDate(date)}
@@ -227,13 +237,13 @@ const CreateNewProject = () => {
                 </div>
                 </div>
 
-              <div className="bg-gray-700 rounded-sm p-1 md:w-[10vw] w-1/3 h-[4vh] text-sm border-[1px]  border-gray-400 flex justify-evenly items-center">
+              <div className="bg-gray-700 overflow-hidden rounded-sm md:p-1 md:w-[8vw] w-2/5 h-[4vh] md:text-sm text-[10px] border-[1px]  border-gray-400 flex justify-evenly items-center">
               <BsFillCalendarDateFill />
-              <div className='w-[70%]'>
+              <div className='w-[80%]'>
                   <DatePicker
                     selected={targetDate}
                     onChange={date => setTargetDate(date)}
-                    className='bg-transparent text-sm placeholder:text-white outline-none'
+                    className='bg-transparent placeholder:text-white outline-none'
                     placeholderText="Target Date"
                    />
                 </div>
@@ -248,18 +258,20 @@ const CreateNewProject = () => {
           </div>
             
             <div className='border-t-[1px] mt-2 border-gray-500 '>
-              <div className='flex justify-end mt-3 mb-2 text-sm  '>
-            {isEmpty && <div className='text-red-500 font-bold mr-auto absolute md:static top-[55vh]'>Project name cannot be empty</div>}
-                <button className='bg-gray-600 rounded-sm tracking-wide px-3 py-[3px] mx-3' onClick={handleCancel}>Cancel</button>
-                <button className='bg-purple-500  rounded-sm tracking-wide px-2 py-[3px]' onClick={handleCreateProject}>Create Project</button>
+              <div className='flex justify-end mt-3 mb-2 md:text-sm text-[10px]  '>
+            {isEmpty && <div className='text-red-500 font-bold mr-auto absolute md:static top-[42vh]'>Project name cannot be empty</div>}
+                <button className='bg-gray-600 rounded-sm tracking-wide px-3 md:py-[3px] mx-3' onClick={handleCancel}>Cancel</button>
+                <button className='bg-purple-500  rounded-sm tracking-wide px-2 md:py-[3px]' onClick={handleCreateProject}>Create Project</button>
               </div>
             </div>
           </div>
 
         
-
-        </div>}
-    </div>
+          </div>
+       
+          </div>
+         </Modal>
+    // </div>
   )
 }
 

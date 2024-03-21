@@ -5,10 +5,17 @@ import { NavLink } from "react-router-dom";
 import { RiTeamFill } from "react-icons/ri";
 import { GoProjectRoadmap } from "react-icons/go";
 import { MdFormatListBulletedAdd } from "react-icons/md";
-const ProjectListSidebar = () => {
+import CreateNewProject from "../../../CreateNewProject/CreateNewProject";
+const ProjectListSidebar = (props) => {
   const [showProject, setShowProject] = useState(false);
+  const [isopen,setisopen]=useState(false);
+
   const showProjectHandler = () => {
     setShowProject((prevState) => !prevState);
+  };
+
+  const handlePopup=()=>{
+    setisopen(!isopen);
   };
 
   const teamName = "My Team Name";
@@ -31,6 +38,8 @@ const ProjectListSidebar = () => {
     }
 ];
 
+
+
   return (
     <>
       <div className="flex items-center p-2 text-sm text-white text-decoration-none  rounded-lg hover:bg-gray-900 group">
@@ -39,10 +48,11 @@ const ProjectListSidebar = () => {
       </div>
       <ul>
         <li>
-          <div className="flex items-center text-sm p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group">
+          <div className="flex items-center text-sm p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group" onClick={props.onOpenCreateProject}>
             <MdFormatListBulletedAdd/>
             <span className="flex-1 ms-3 font-medium whitespace-nowrap">
-              Create Project
+
+            Create Project
             </span>
           </div>
         </li>
