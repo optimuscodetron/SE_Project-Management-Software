@@ -1,13 +1,18 @@
 import React,{useState} from "react";
+import React,{useState} from "react";
 import WorkspaceListSidebar from "./components/workspacesListSidebar";
 import ProjectListSidebar from "./components/projectListSidebar";
 import { NavLink } from "react-router-dom";
 import './workspaceSidebar.css';
 import { FiInbox } from "react-icons/fi";
+import { FiInbox } from "react-icons/fi";
 import { AiFillSetting } from "react-icons/ai"
 import { IoPersonAdd } from "react-icons/io5";
 import { HiPlus } from "react-icons/hi";
 import CreateNewProject from "../../CreateNewProject/CreateNewProject";
+
+
+import InboxSidebar from "../../../UI/Optional";
 const WorkspaceSidebar = (props) => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

@@ -1,92 +1,25 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import WorkspaceSidebar from '../components/workspaceSidebar/workspaceSidebar';
-import Navbar from '../../Components/Layout/navbar/navbar';
+import WorkspaceSidebar from '../components/workspaceSidebar/workspaceSidebar'; // Assuming this component exists elsewhere in your project
 import "./Inbox.css";
+import Navbar from '../../Components/Layout/navbar/navbar';
 
 const Inbox = () => {
   const [messages, setMessages] = useState([
     {
-      id: 6,
+      id: 1,
       sender: 'John Doe',
       subject: 'Project Update',
       body: 'This is a message about a project update.',
       isRead: false,
-      relatedTask: {
-        taskId: 'Task001',
-        taskName: 'Implement User Authentication',
-        deadline: '2024-04-10',
-        completed: false,
-      },
     },
     {
-      id: 5,
+      id: 2,
       sender: 'Jane Smith',
       subject: 'Task Reminder',
       body: 'This is a message to remind you about a task.',
       isRead: true,
-      relatedTask: {
-        taskId: 'Task002',
-        taskName: 'Update Dashboard UI',
-        deadline: '2024-03-28',
-        completed: true,
-      },
     },
-    {
-      id: 1,
-      sender: 'Khushboo Gupta',
-      subject: 'Project Update',
-      body: 'This is a message about a project update.',
-      isRead: false,
-      relatedTask: {
-        taskId: 'Task001',
-        taskName: 'Implement User Authentication',
-        deadline: '2024-04-10',
-        completed: false,
-      },
-    },
-    {
-      id: 2,
-      sender: 'Kushagra Sharma',
-      subject: 'Task Reminder',
-      body: 'This is a message to remind you about a task.',
-      isRead: true,
-      relatedTask: {
-        taskId: 'Task002',
-        taskName: 'Update Dashboard UI',
-        deadline: '2024-03-28',
-        completed: true,
-      },
-    },
-    {
-      id: 3,
-      sender: 'Nikhil Garg',
-      subject: 'Deadline Extension',
-      body: 'The deadline for the UI redesign task has been extended to next week.',
-      isRead: false,
-      relatedTask: {
-        taskId: 'Task003',
-        taskName: 'Redesign User Interface',
-        deadline: '2024-04-05',
-        completed: false,
-      },
-    },
-    {
-      id: 4,
-      sender: 'Het Patel',
-      subject: 'Vacation Request',
-      body: 'I need to request some time off next month.',
-      isRead: false,
-      relatedTask: {
-        taskId: 'Task004',
-        taskName: 'Optimize Database Queries',
-        deadline: '2024-04-15',
-        completed: false,
-      },
-    },
-    // Add more messages as needed
   ]);
-
   const [selectedMessageId, setSelectedMessageId] = useState(null);
 
   const handleSelectMessage = (messageId) => {
@@ -94,28 +27,26 @@ const Inbox = () => {
   };
 
   return (
-    <div className="inbox-container bg-navy-700">
-      <Navbar />
+    <div className="inbox-container">
+        
       <WorkspaceSidebar />
       <div className="inbox-content">
         <div className="message-list">
-          <br></br>
-          <br></br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <NavLink to="/workspace" className="close-button">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;close
-               
-            </NavLink>
-          <h2 className="inbox-title">
-
-          <br></br>
+          <h2>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 4H28V28H4Z" fill="#007BFF" />
+              <path d="M22 6L16 12L10 6L9 7L13 11L22 6Z" fill="#fff" />
+              <path d="M12 18L8 22L7 21L11 17L16 21L15 22L12 18Z" fill="#fff" />
+            </svg>
             Inbox
           </h2>
           <ul>
             {messages.map((message) => (
               <li
                 key={message.id}
-                className={`message-item ${selectedMessageId === message.id ? 'selected' : ''}`}
+                className={`message-item ${
+                  selectedMessageId === message.id ? 'selected' : ''
+                }`}
                 onClick={() => handleSelectMessage(message.id)}
               >
                 <div className="message-sender">{message.sender}</div>
@@ -127,21 +58,9 @@ const Inbox = () => {
         </div>
         {selectedMessageId && (
           <div className="message-details">
-            <br></br>
-            <br></br>
-            <h1>{messages.find((m) => m.id === selectedMessageId)?.subject}</h1>
-            <div className="message-task">
-              <h2>Task Details:</h2><br></br>
-              <p><strong>Task ID:</strong> {messages.find((m) => m.id === selectedMessageId)?.relatedTask.taskId}</p><br></br>
-              <p><strong>Task Name:</strong> {messages.find((m) => m.id === selectedMessageId)?.relatedTask.taskName}</p><br></br>
-              <p><strong>Deadline:</strong> {messages.find((m) => m.id === selectedMessageId)?.relatedTask.deadline}</p><br></br>
-              <p><strong>Status:</strong> {messages.find((m) => m.id === selectedMessageId)?.relatedTask.completed ? 'Completed' : 'Pending'}</p><br></br>
-            </div>
-            <div className="message-body">
-              <h2>Message Body:</h2><br></br>
-              <p>{messages.find((m) => m.id === selectedMessageId)?.body}</p>
-            </div>
-            <NavLink to="/workspace" className="close-button">Close</NavLink>
+            <h2>{messages.find((m) => m.id === selectedMessageId)?.subject}</h2>
+            <div className="message-sender">From: {messages.find((m) => m.id === selectedMessageId)?.sender}</div>
+            <div className="message-body">{messages.find((m) => m.id === selectedMessageId)?.body}</div>
           </div>
         )}
       </div>
