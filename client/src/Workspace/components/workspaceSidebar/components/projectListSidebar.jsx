@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
@@ -13,14 +12,8 @@ const ProjectListSidebar = (props) => {
   
 
   const [showProject, setShowProject] = useState(false);
-  const [isopen, setisopen] = useState(false);
-
   const showProjectHandler = () => {
     setShowProject((prevState) => !prevState);
-  };
-
-  const handlePopup = () => {
-    setisopen(!isopen);
   };
 
   const teamName = "My Team Name";
@@ -80,14 +73,11 @@ const ProjectListSidebar = (props) => {
             className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group justify-between cursor-pointer"
             onClick={showProjectHandler}
           >
-            <div className="flex ">
-              <GoProjectRoadmap />
-              <span className="ms-3 text-sm">All Projects</span>
-            </div>
+            <span className="ms-3 font-medium">All Projects</span>
             {showProject ? <FaChevronUp /> : <FaChevronDown />}
           </div>
           {showProject && (
-            <ul className={"flex row ml-8"}>
+            <ul className={""}>
               {userProjects.map((item) => (
                 <li>
                   <NavLink to={'/workspace/project'} className="text-decoration-none " >

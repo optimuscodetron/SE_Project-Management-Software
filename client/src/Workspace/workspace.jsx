@@ -3,10 +3,8 @@ import WorkspaceSidebar from "./components/workspaceSidebar/workspaceSidebar";
 import Navbar from "../Components/Layout/navbar/navbar";
 import { useState } from "react";
 import WorkspaceIssues from "./workspaceIssues/workspaceIssues";
-import Invite from "../Invite/Invite";
-import CreateNewProject from "./CreateNewProject/CreateNewProject";
 export default function Workspace() {
-  const [showSideBar, setShowSideBar] = useState(true);
+  const [showSideBar, setShowSideBar] = useState(false);
   const showSideBarHandler = () => {
     setShowSideBar((prevState) => !prevState);
   };
@@ -62,9 +60,7 @@ export default function Workspace() {
 
   return (
     <div className="flex flex-col">
-      <div className="flex-1">
-        <Navbar showSideBarHandler={showSideBarHandler} />
-      </div>
+      <Navbar showSideBarHandler={showSideBarHandler} />
       <div className="flex flex-row">
         
         <div className="">

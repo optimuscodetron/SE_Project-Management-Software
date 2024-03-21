@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import SettingsSidebar from "../Component/SettingsSidebar";
-import Navbar from "../../../Components/Layout/navbar/navbar";
 function MemberList() {
   // Array of team members
   const [teamMembers, setTeamMembers] = useState([
@@ -90,7 +89,7 @@ function MemberList() {
 
   // State for invite link
   const [inviteLink, setInviteLink] = useState("www.myworkspace.com/IIT_Ropar");
-  const [showSidebar, setShowSidebar] = useState(false);
+
   // Function to get Gravatar image URL based on email
 
   // Function to handle adding a new member
@@ -135,17 +134,9 @@ function MemberList() {
     member.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleSidebar = () => {
-    setShowSidebar((prevstate) => !prevstate);
-  };
-
   return (
-    <div>
-      <Navbar showSideBarHandler={handleSidebar} />
-
-    <div className="flex flex-row fixed bg-gray-800  h-screen w-screen">
-
-      <SettingsSidebar showSideBar={showSidebar}  />
+    <div className="flex flex-row  h-screen w-screen">
+      <SettingsSidebar />
       {/* <div className="bg-gray-800 h-screen flex flex-col px-8 py-8 w-full"> */}
       <div className=" w-full overflow-auto h-full text-white flex justify-center p-10">
         <div className=" h-[100%] flex flex-col mb-4 w-full lg:w-[60%] bg-gray-900 p-3 ">
@@ -165,11 +156,11 @@ function MemberList() {
                   type="text"
                   value={inviteLink}
                   readOnly
-                  className="border rounded-sm border-gray-600 mt-2 text-white font-normal bg-[rgb(15,19,29)] text-base px-2 py-1 mr-4 w-[65%]"
+                  className="border rounded-sm border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base px-2 mr-4 w-[70%]"
                 />
                 <button
                   onClick={copyInviteLink}
-                  className="text-center md:px-4 py-1 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition  w-[20%] "
+                  className="text-center px-4 py-1.5 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition  w-[20%] text-center "
                 >
                   Copy Link
                 </button>
@@ -177,7 +168,7 @@ function MemberList() {
             </div>
           </div>
 
-          <div className="text-gray-400 text-base mb-2 mt-[10px]">
+          <div className="text-gray-400 text-base mb-2 mt-4">
             {workspaceName}
           </div>
           <h1 className="text-3xl tracking-wide font-semibold mb-4 border-b border-gray-600 pb-3">
@@ -305,7 +296,7 @@ function MemberList() {
           </div>
         </div>
       </div>
-      </div>
+      {/* </div> */}
     </div>
   );
 }

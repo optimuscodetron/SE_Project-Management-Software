@@ -97,6 +97,14 @@ const WorkspaceSidebar = (props) => {
             </NavLink>
           </li>
 
+          <li>
+            <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group">
+              <span className="flex-1 ms-3 font-medium whitespace-nowrap">
+                Create Workspace
+              </span>
+            </div>
+          </li>
+
           <div className="border-b border-white my-2 w-full"></div>
           <li>
             
