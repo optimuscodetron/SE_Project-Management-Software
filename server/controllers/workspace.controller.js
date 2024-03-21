@@ -4,7 +4,8 @@ const router = express.Router();
 
 module.exports.getAllWorkspaceOfUser = async (req, res) => {
     try {
-        const user_id = "65f896c8d55907704a2c9a28";
+        // console.log(req.cookies);
+        const user_id = req.userId;
 
         // Query the Workspace collection to find all workspaces where the user is either the admin or a member
         const workspaces = await Workspace.find({
@@ -15,9 +16,14 @@ module.exports.getAllWorkspaceOfUser = async (req, res) => {
         });
 
         // Return the list of workspaces associated with the user
-        const workspaceNames = workspaces.map(workspace => workspace.name);
-        // console.log(workspaceNames);
-        res.status(200).json({workspaceNames:workspaceNames});
+        const workspaceData = workspaces.map(workspace => ({
+            name: workspace.name,
+            id: workspace._id
+        }));
+        
+        console.log(workspaceData);
+        res.status(200).json({ workspaces: workspaceData });
+
     } catch (error) {
         console.error('Error fetching workspaces:', error);
         res.status(500).json({ message: 'Internal server error' });

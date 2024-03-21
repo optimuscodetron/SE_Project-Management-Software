@@ -181,6 +181,7 @@ module.exports.login = async (req, res) => {
       console.log("Password incorrect for: " + req.body.email);
       throw new Error(errorMessage);
     }
+    console.log(correctPassword);
     const userToken = jwt.sign(
       {
         id: user._id,
@@ -188,6 +189,7 @@ module.exports.login = async (req, res) => {
       // process.env.SECRET_KEY
       "abcdef"
     );
+    console.log(userToken);
     res
       .cookie("usertoken", userToken, {
         httpOnly: true,
