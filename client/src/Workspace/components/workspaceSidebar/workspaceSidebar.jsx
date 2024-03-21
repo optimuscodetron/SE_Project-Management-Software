@@ -27,7 +27,11 @@ const WorkspaceSidebar = (props) => {
   // };
   const [isHide, setIsHide] = useState(true);
 
-  setTimeout(() => setIsHide(false), 1000);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <aside
