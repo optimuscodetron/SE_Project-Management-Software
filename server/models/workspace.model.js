@@ -37,6 +37,6 @@ const userworkspaceSchema = new mongoose.Schema({
 
 
 // user otp model
-// const Workspace = new mongoose.model("Workspace",userworkspaceSchema);
+module.exports.Workspace =mongoose.model("Workspace",userworkspaceSchema);
 
-module.exports.Workspace = mongoose.model("Workspace",userworkspaceSchema);
+
