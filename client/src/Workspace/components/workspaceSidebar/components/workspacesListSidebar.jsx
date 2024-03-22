@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PiMonitorFill } from "react-icons/pi";
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
-const WorkspaceListSidebar=()=>{
+const WorkspaceListSidebar=(props)=>{
 
     const [showWorkspaces,setShowWorkspaces]=useState(false);
     const showWorkspaceHandler=()=>{
@@ -11,15 +11,23 @@ const WorkspaceListSidebar=()=>{
 
     const userWorkspaces = ["Workspace 1", "Workspace 2", "Workspace 3"];
     const [currentWorkspace,setCurrentWorkspace] = useState(userWorkspaces[0]);
+    useEffect(()=>{
+
+      props.headerInfo({headerIcon:<PiMonitorFill/>,
+      headerTitle:currentWorkspace});
+    },[]);
     const chooseWorkspaceHandler=(item,index)=>{
         // console.log(index);
+        const data={headerIcon:<PiMonitorFill/>,
+        headerTitle:userWorkspaces[index]}
+        props.headerInfo(data);
         setCurrentWorkspace(userWorkspaces[index]);
         setShowWorkspaces(!showWorkspaces);
     }
 
     return (
         <>
-        <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between" onClick={showWorkspaceHandler}>
+        <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between cursor-pointer" onClick={showWorkspaceHandler}>
               <div className="flex">
                 <PiMonitorFill/>
                 <span className="text-sm ms-3">{currentWorkspace}</span>

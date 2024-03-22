@@ -48,7 +48,7 @@ const ProjectListSidebar = (props) => {
       </div>
       <ul>
         <li>
-          <div className="flex items-center text-sm p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group" onClick={props.onOpenCreateProject}>
+          <div className="flex items-center text-sm p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group cursor-pointer" onClick={props.onOpenCreateProject}>
             <MdFormatListBulletedAdd/>
             <span className="flex-1 ms-3 font-medium whitespace-nowrap">
 
@@ -58,12 +58,12 @@ const ProjectListSidebar = (props) => {
         </li>
         <li>
           <div
-            className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between"
+            className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between cursor-pointer"
             onClick={showProjectHandler}
           >
             <div className="flex ">
             <GoProjectRoadmap/>
-            <span className="ms-3 text-sm">All Projects</span>
+            <span className="ms-3 text-sm ">All Projects</span>
             </div>
             {showProject ? <FaChevronUp /> : <FaChevronDown />}
           </div>

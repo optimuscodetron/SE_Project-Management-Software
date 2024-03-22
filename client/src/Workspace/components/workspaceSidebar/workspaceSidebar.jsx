@@ -12,12 +12,12 @@ const WorkspaceSidebar = (props) => {
   return (
 
       <aside
-        className={` fixed sm:relative custom-sidebar w-64 mt-16 h-screen overflow-hidden transition-transform ${props.showSideBar?"":"-translate-x-full"} bg-gray-800 border-r border-gray-200 sm:translate-x-0`}
+        className={`sm:relative w-64 h-full transition-transform ${props.showSideBar?"":"-translate-x-full"} bg-gray-800 border-r border-gray-200 sm:translate-x-0`}
       >
         <div className="h-full px-2 overflow-y-auto bg-[#171e28] dark:bg-[#171e28]">
           <ul className="space-y-2 font-medium pt-2">
             <li>
-              <WorkspaceListSidebar/>
+              <WorkspaceListSidebar headerInfo={props.currentWorkspace} />
             </li>
 
             <li>
