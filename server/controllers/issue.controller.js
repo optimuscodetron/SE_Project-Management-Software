@@ -31,7 +31,7 @@ module.exports.getAllIssueOfWorkspace = async (req, res) => {
         console.log(issues);
 
         // Send the list of issues as a response
-        res.status(200).json(issues);
+        res.status(200).json({issues:issues});
 
         
     } catch (error) {
