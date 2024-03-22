@@ -33,7 +33,7 @@ module.exports.getAllWorkspaceOfUser = async (req, res) => {
 
 exports.saveworskapce=async(req,res)=>{
     // console.log(req.adminuserId)
-    const id=req.adminuserId;
+    const id=req.userId;
     req.body.members=[];
     req.body.adminuserId=id;
     req.body.members.push(id);
