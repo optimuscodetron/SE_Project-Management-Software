@@ -22,32 +22,7 @@ const WorkspaceListSidebar = () => {
         setShowWorkspaces(!showWorkspaces);
     }
 
-  useEffect(() => {
-
-    console.log('hello');
-    const data={
-      workspaceId:"65fc632fd70364c8633c67dd",
-    }
-
-    Axios.post('http://localhost:8000/api/getAllProjectOfUser', data , {withCredentials:true,})
-      .then(res => {
-
-        if (res.status == 200) {
-          // console.log(res.data.workspaceNames);
-          // setUserWorkspace(res.data.workspaceNames);
-          // setCurrentWorkspace(res.data.workspaceNames[0]);
-        }
-        else {
-          console.log("error");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-
-
-  }, [])
+  
 
     return (
         <>

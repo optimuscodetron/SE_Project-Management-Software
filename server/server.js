@@ -13,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 require('./routes/user.routes')(app);
 require('./routes/workspace.routes')(app);
 require('./routes/project.routes')(app);
+require('./routes/issue.routes')(app);
 
 
 
