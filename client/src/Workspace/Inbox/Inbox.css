@@ -6,6 +6,7 @@
     position: relative;
     
     
+    
   }
 
   
@@ -114,6 +115,20 @@
     margin-bottom: 10px;
     
   }
+
+  /* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .inbox-content {
+    flex-direction: column; /* Change to column layout on smaller screens */
+  }
+
+  .message-list {
+    width: 100%; /* Take up full width on smaller screens */
+    border-right: none; /* Remove border for full width */
+    border-bottom: 1px solid #ddd; /* Add border at the bottom */
+    padding-bottom: 15px; /* Add padding at the bottom */
+  }
+}
 
   /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
