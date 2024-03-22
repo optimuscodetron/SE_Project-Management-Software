@@ -1,5 +1,5 @@
 const UserController = require('../controllers/user.controller');
-
+const Workspacecontroller=require('../controllers/workspace.controller')
 const {authenticate} = require('../config/jwt.config');
 
 module.exports = function(app){
@@ -9,6 +9,8 @@ module.exports = function(app){
     app.post('/api/users/email', UserController.userOtpSend);
     app.post('/api/users/otp', UserController.userLogin);
     app.post('/api/users/newpassword', UserController.changeinfo);
+    app.post('/api/users/workspace', authenticate, Workspacecontroller.saveworskapce);
+
 
 
     app.delete('/api/users/:id', authenticate , UserController.delete);
