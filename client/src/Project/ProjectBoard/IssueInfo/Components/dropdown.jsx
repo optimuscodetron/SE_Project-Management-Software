@@ -28,7 +28,7 @@ const Dropdown = ({ options, initialSelectedOption }) => {
   }, []);
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="relative " ref={dropdownRef}>
       {/* Display selected option */}
       <button
         className="bg-gray-800 text-white py-1 px-4 rounded inline-flex justify-between items-center focus:outline-none w-40"
@@ -53,7 +53,8 @@ const Dropdown = ({ options, initialSelectedOption }) => {
       <ul
         className={`absolute ${
           isOpen ? 'block' : 'hidden'
-        } bg-gray-800 text-white py-1 z-1 w-40 rounded-md shadow-lg`}
+        } bg-gray-800 text-white py-1 z-1 w-40  rounded-md shadow-lg`}
+        
       >
         {options.map((option) => (
           <li key={option}>

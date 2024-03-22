@@ -1,21 +1,36 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Dropdown from "./dropdown";
 import "react-datepicker/dist/react-datepicker.css";
 
 function formatDate(dateString) {
-  const [day, month, year] = dateString.split('/');
+  const [day, month, year] = dateString.split("/");
   return `${year}-${month}-${day}`;
 }
 
 function RightBar() {
-  const [project, setProject] = useState(
-    "Project_namewecnwjneicuewicjiwejcjowejc"
-  );
+  const [isMediumScreen, setIsMediumScreen] = useState(false);
 
-  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMediumScreen(window.innerWidth <= 1024);
+    };
 
-  const projectOptions = ["Project 1", "Project 2", "Project 3", "Project 4", "Project 5"];
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const projectOptions = [
+    "Project 1",
+    "Project 2",
+    "Project 3",
+    "Project 4",
+    "Project 5",
+  ];
   const initialSelectedProjectOption = "Project 1";
 
   const statusOptions = ["Backlog", "Todo", "In Progress", "Done", "Canceled"];
@@ -43,75 +58,142 @@ function RightBar() {
   const initialSelectedCycleOption = "Cycle 1"; // Initial selected option
 
   const [dueDate, setStartDate] = useState(formatDate("22/03/2024"));
-  
 
   return (
-    <div
-      className="bg-gray-900 w-[30vw] flex flex-col overflow-auto text-white p-3"
-      style={{
-        scrollbarWidth: "thin",
-        scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
-      }}
-    >
-      <div className="my-4 flex justify-start items-center">
-        <div className="text-white w-[20%] mr-3">Status</div>
-        <Dropdown
-          options={statusOptions}
-          initialSelectedOption={initialSelectedStatusOption}
-        />
-      </div>
+    <div>
+      {!isMediumScreen ? (
+        <div
+          className="bg-gray-900 w-[30vw] h-screen flex flex-col overflow-auto text-white p-3"
+          style={{
+            scrollbarWidth: "thin",
+            scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
+          }}
+        >
+          <div className="my-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Status</div>
+            <Dropdown
+              options={statusOptions}
+              initialSelectedOption={initialSelectedStatusOption}
+            />
+          </div>
 
-      <div className="mb-4 flex justify-start items-center">
-        <div className="text-white w-[20%] mr-3">Priority</div>
-        <Dropdown
-          options={PriorityOptions}
-          initialSelectedOption={initialSelectedPriorityOption}
-        />
-      </div>
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Priority</div>
+            <Dropdown
+              options={PriorityOptions}
+              initialSelectedOption={initialSelectedPriorityOption}
+            />
+          </div>
 
-      <div className="mb-4 flex justify-start items-center">
-        <div className="text-white w-[20%] mr-3">Assigne</div>
-        <Dropdown
-          options={AssigneOptions}
-          initialSelectedOption={initialSelectedAssigneOption}
-        />
-      </div>
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Assigne</div>
+            <Dropdown
+              options={AssigneOptions}
+              initialSelectedOption={initialSelectedAssigneOption}
+            />
+          </div>
 
-      <div className="mb-4 flex justify-start items-center">
-        <div className="text-white w-[20%] mr-3">Cycle</div>
-        <Dropdown
-          options={cycleOptions}
-          initialSelectedOption={initialSelectedCycleOption}
-        />
-      </div>
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Cycle</div>
+            <Dropdown
+              options={cycleOptions}
+              initialSelectedOption={initialSelectedCycleOption}
+            />
+          </div>
 
-      <div className="mb-4 flex justify-start items-center">
-        <div className="text-white w-[20%] mr-3">Labels</div>
-        <Dropdown
-          options={LabelOptions}
-          initialSelectedOption={initialSelectedLabelOption}
-        />
-      </div>
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Labels</div>
+            <Dropdown
+              options={LabelOptions}
+              initialSelectedOption={initialSelectedLabelOption}
+            />
+          </div>
 
-      <hr class="w-[95%] h-1 mx-auto mb-5 mt-3 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-400"></hr>
+          <hr class="w-[95%] h-1 mx-auto mb-5 mt-3 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-400"></hr>
 
-      <div className="mb-4 flex justify-start items-center">
-        <div className="text-white w-[20%] mr-3">Project</div>
-        <Dropdown
-          options={projectOptions}
-          initialSelectedOption={initialSelectedProjectOption}
-        />
-      </div>
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Project</div>
+            <Dropdown
+              options={projectOptions}
+              initialSelectedOption={initialSelectedProjectOption}
+            />
+          </div>
 
-      <div className="mb-4 flex justify-start items-center">
-        <div className="text-white w-[20%] mr-3">Due date</div>
-        <DatePicker
-          selected={dueDate}
-          onChange={(date) => setStartDate(date)}
-          dateFormat="dd/MM/yyyy"
-          className="bg-gray-800 text-white py-1 px-4 rounded inline-flex items-center focus:outline-none w-40"
-        />
-      </div>
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Due date</div>
+            <DatePicker
+              selected={dueDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="dd/MM/yyyy"
+              className="bg-gray-800 text-white py-1 px-4 rounded inline-flex items-center focus:outline-none w-40"
+            />
+          </div>
+        </div>
+      ) : (
+        <div
+          className="bg-gray-900 w-full flex flex-row overflow-x-scroll overflow-y-hidden text-white p-3"
+          
+        >
+          <div className="mr-4 ml-7 flex justify-start items-center">
+            
+            <Dropdown
+              options={statusOptions}
+              initialSelectedOption={initialSelectedStatusOption}
+            />
+          </div>
+
+          <div className="mr-4 flex justify-start items-center">
+            
+            <Dropdown
+              options={PriorityOptions}
+              initialSelectedOption={initialSelectedPriorityOption}
+            />
+          </div>
+
+          <div className="mr-4 flex justify-start items-center">
+            
+            <Dropdown
+              options={AssigneOptions}
+              initialSelectedOption={initialSelectedAssigneOption}
+            />
+          </div>
+
+          <div className="mr-4 flex justify-start items-center">
+            
+            <Dropdown
+              options={cycleOptions}
+              initialSelectedOption={initialSelectedCycleOption}
+            />
+          </div>
+
+          <div className="mr-4 flex justify-start items-center">
+            
+            <Dropdown
+              options={LabelOptions}
+              initialSelectedOption={initialSelectedLabelOption}
+            />
+          </div>
+
+
+          <div className="mr-4 flex justify-start items-center">
+            
+            <Dropdown
+              options={projectOptions}
+              initialSelectedOption={initialSelectedProjectOption}
+            />
+          </div>
+
+          <div className="mr-4 flex justify-start items-center">
+            
+            <DatePicker
+              selected={dueDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="dd/MM/yyyy"
+              className="bg-gray-800 text-white py-1 px-4 rounded inline-flex items-center focus:outline-none w-40"
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
