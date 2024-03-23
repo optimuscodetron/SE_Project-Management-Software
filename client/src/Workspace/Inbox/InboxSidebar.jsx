@@ -8,27 +8,27 @@ const Inbox = () => {
   const [messages, setMessages] = useState([
     {
       id: 6,
-      sender: 'John Doe',
-      subject: 'Project Update',
-      body: 'This is a message about a project update.',
+      sender: 'Pallavi Kashyap ',
+      subject: 'Meet Schedule',
+      body: 'This is a message about upcoming meeting. Answer the poll for deciding meeting date.',
       isRead: false,
       relatedTask: {
-        taskId: 'Task001',
-        taskName: 'Implement User Authentication',
+        taskId: 'Task005',
+        taskName: 'Meetings',
         deadline: '2024-04-10',
         completed: false,
       },
     },
     {
       id: 5,
-      sender: 'Jane Smith',
-      subject: 'Task Reminder',
-      body: 'This is a message to remind you about a task.',
+      sender: 'Tanu',
+      subject: 'Need info',
+      body: 'This is a message to ask info about your branch of the project.',
       isRead: true,
       relatedTask: {
-        taskId: 'Task002',
-        taskName: 'Update Dashboard UI',
-        deadline: '2024-03-28',
+        taskId: 'Task006',
+        taskName: 'Merging',
+        deadline: '2024-03-26',
         completed: true,
       },
     },
@@ -41,7 +41,7 @@ const Inbox = () => {
       relatedTask: {
         taskId: 'Task001',
         taskName: 'Implement User Authentication',
-        deadline: '2024-04-10',
+        deadline: '2024-04-15',
         completed: false,
       },
     },
@@ -101,14 +101,17 @@ const Inbox = () => {
         <div className="message-list">
           <br></br>
           <br></br>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <NavLink to="/workspace" className="close-button">
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;close
-               
+              &#x2716;   
             </NavLink>
-          <h2 className="inbox-title">
+            <br></br>
 
-          <br></br>
+          <h2 className="inbox-title">
             Inbox
           </h2>
           <ul>
@@ -117,6 +120,9 @@ const Inbox = () => {
                 key={message.id}
                 className={`message-item ${selectedMessageId === message.id ? 'selected' : ''}`}
                 onClick={() => handleSelectMessage(message.id)}
+                style={{
+                  borderBottom: '1px solid  rgba(255, 255, 255, 0.1)', // Light white with 50% opacity
+                }}
               >
                 <div className="message-sender">{message.sender}</div>
                 <div className="message-subject">{message.subject}</div>
@@ -129,7 +135,7 @@ const Inbox = () => {
           <div className="message-details">
             <br></br>
             <br></br>
-            <h1>{messages.find((m) => m.id === selectedMessageId)?.subject}</h1>
+            <h1>{messages.find((m) => m.id === selectedMessageId)?.subject}</h1><br></br>
             <div className="message-task">
               <h2>Task Details:</h2><br></br>
               <p><strong>Task ID:</strong> {messages.find((m) => m.id === selectedMessageId)?.relatedTask.taskId}</p><br></br>
@@ -138,10 +144,10 @@ const Inbox = () => {
               <p><strong>Status:</strong> {messages.find((m) => m.id === selectedMessageId)?.relatedTask.completed ? 'Completed' : 'Pending'}</p><br></br>
             </div>
             <div className="message-body">
-              <h2>Message Body:</h2><br></br>
+              <h2>Message Body:</h2>
               <p>{messages.find((m) => m.id === selectedMessageId)?.body}</p>
-            </div>
-            <NavLink to="/workspace" className="close-button">Close</NavLink>
+            </div><br></br>
+           
           </div>
         )}
       </div>
