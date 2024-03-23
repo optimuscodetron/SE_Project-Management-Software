@@ -27,8 +27,9 @@ const ProjectListSidebar = (props) => {
   const teamName = "My Team Name";
   const [userProjects, setUserProject] = useState();
 
-
   useEffect(() => {
+    console.log("UseProject");
+
     fetchProjectData();
    
 
@@ -50,7 +51,7 @@ const ProjectListSidebar = (props) => {
         const data = response.data;
         setUserProject(data.project)
       } else {
-        throw new Error('Internal server error');
+        throw new Error("Internal server error");
       }
     } catch (error) {
       
@@ -59,7 +60,6 @@ const ProjectListSidebar = (props) => {
       
     }
   };
-
 
   return (
     <>
@@ -72,7 +72,6 @@ const ProjectListSidebar = (props) => {
           <div className="flex items-center text-sm p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group cursor-pointer" onClick={props.onOpenCreateProject}>
             <MdFormatListBulletedAdd />
             <span className="flex-1 ms-3 font-medium whitespace-nowrap">
-
               Create Project
             </span>
           </div>
@@ -89,7 +88,7 @@ const ProjectListSidebar = (props) => {
             {showProject ? <FaChevronUp /> : <FaChevronDown />}
           </div>
           {showProject && (
-            <ul className={"flex row ml-8"}>
+            <ul className={""}>
               {userProjects.map((item) => (
                 <li>
                   <NavLink to={'/workspace/project'} className="text-decoration-none " >

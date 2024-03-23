@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useEffect } from "react";
 import { PiMonitorFill } from "react-icons/pi";
@@ -6,15 +5,17 @@ import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import Axios from "axios";
 
-
 const WorkspaceListSidebar = (props) => {
-
   const [showWorkspaces, setShowWorkspaces] = useState(false);
   const showWorkspaceHandler = () => {
     setShowWorkspaces((prevState) => !prevState);
-  }
+  };
   const [workspaceData, setWorkspaceData] = useState();
-  const [userWorkspaces, setUserWorkspace] = useState(["Workspace 1", "Workspace 2", "Workspace 3"]);
+  const [userWorkspaces, setUserWorkspace] = useState([
+    "Workspace 1",
+    "Workspace 2",
+    "Workspace 3",
+  ]);
   const [currentWorkspace, setCurrentWorkspace] = useState(userWorkspaces[0]);
   useEffect(() => {
   const [workspaceData, setWorkspaceData] = useState();
@@ -24,7 +25,7 @@ const WorkspaceListSidebar = (props) => {
 
     props.headerInfo({
       headerIcon: <PiMonitorFill />,
-      headerTitle: currentWorkspace
+      headerTitle: currentWorkspace,
     });
     fetchWorkspaceData();
   }, []);
@@ -45,7 +46,7 @@ const WorkspaceListSidebar = (props) => {
           return data.workspaces
         });
       } else {
-        throw new Error('Internal server error');
+        throw new Error("Internal server error");
       }
     } catch (error) {
       
@@ -54,13 +55,25 @@ const WorkspaceListSidebar = (props) => {
     }
   };
 
-
-
   const chooseWorkspaceHandler = (item, index) => {
-    
-    dispatch(changeWorkspaceId(item.id));
+    localStorage.setItem('activeWorkspaceId', item.id);
+    console.log(item.id);
+      // Make a request to the server with activeWorkspaceId included
+  axios.get('/api/getActiveWorkspaceOfUser', {
+    params: {
+      activeWorkspaceId: item.id  // Include activeWorkspaceId in the query parameters
+    },
+    withCredentials: true,
+  })
+  .then(response => {
+    // Handle response data here
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.error('Error fetching workspace:', error);
+    // Handle errors as needed
+  });
 
-    // console.log(index);
     const data = {
       headerIcon: <PiMonitorFill />,
       headerTitle: userWorkspaces[index]
@@ -68,9 +81,7 @@ const WorkspaceListSidebar = (props) => {
     props.headerInfo(data);
     setCurrentWorkspace(userWorkspaces[index]);
     setShowWorkspaces(!showWorkspaces);
-  }
-
-
+  };
 
   return (
     <>
@@ -92,5 +103,5 @@ const WorkspaceListSidebar = (props) => {
       </ul>}
     </>
   );
-}
+};
 export default WorkspaceListSidebar;

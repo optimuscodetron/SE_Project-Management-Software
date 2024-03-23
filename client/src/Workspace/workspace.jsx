@@ -35,43 +35,51 @@ export default function Workspace() {
     setCreateProject(false)
 }
 
-  const [headerInfo, setHeaderInfo]=useState([]);
-  const currentWorkspaceHandler=(item)=>{
+  const [headerInfo, setHeaderInfo] = useState([]);
+  const currentWorkspaceHandler = (item) => {
     console.log(item);
-    setHeaderInfo([{ 
-      headerIcon: item.headerIcon,
-      headerTitle: item.headerTitle,
-    }]);
-  }
+    setHeaderInfo([
+      {
+        headerIcon: item.headerIcon,
+        headerTitle: item.headerTitle,
+      },
+    ]);
+  };
 
-  const [openWorkspace,setOpenWorkspace]=useState(true);
-  const openWorkspaceHandler=()=>{
+  const [openWorkspace, setOpenWorkspace] = useState(true);
+  const openWorkspaceHandler = () => {
     setOpenInbox(false);
     setOpenWorkspace(true);
-  }
+  };
 
-  const [openInbox,setOpenInbox]=useState(false);
-  const openInboxHandler=()=>{
+  const [openInbox, setOpenInbox] = useState(false);
+  const openInboxHandler = () => {
     setOpenWorkspace(false);
     setOpenInbox(true);
-  }
-  const closeInboxHandler=()=>{
+  };
+  const closeInboxHandler = () => {
     setOpenInbox(false);
     setOpenWorkspace(true);
-  }
-
+  };
 
   return (
     <div className="flex flex-col">
       <div className="flex-1">
-      <Navbar showSideBarHandler={showSideBarHandler} />
+        <Navbar showSideBarHandler={showSideBarHandler} />
       </div>
       <div className="flex flex-row">
         
         <div className="">
-          {showSideBar&&
-        <WorkspaceSidebar onOpenInviteMembers={openInviteMembersHandler} onOpenCreateProject={openCreateProject} showSideBar={showSideBar} currentWorkspace={currentWorkspaceHandler} inboxOpened={openInboxHandler} openWorkspace={openWorkspaceHandler} />
-          }
+          {showSideBar && (
+            <WorkspaceSidebar
+              onOpenInviteMembers={openInviteMembersHandler}
+              onOpenCreateProject={openCreateProject}
+              showSideBar={showSideBar}
+              currentWorkspace={currentWorkspaceHandler}
+              inboxOpened={openInboxHandler}
+              openWorkspace={openWorkspaceHandler}
+            />
+          )}
         </div>
         {/* Main content goes here */}
         <div className="overflow-x-scroll">
