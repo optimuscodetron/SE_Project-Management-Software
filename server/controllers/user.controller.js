@@ -275,14 +275,23 @@ module.exports.getProfile = async (req, res) => {
 
   
   // Update user profile
-  module.exports.updateProfile =  async (req, res) => {
+  module.exports.updateProfile = async (req, res) => {
     try {
-      const { name, username } = req.body; // Removed email as it's not updateable
-      const updatedUser = await User.findByIdAndUpdate(req.id, { name, username }, { new: true }); // Use { new: true } to return the updated document
+      const { fullname, username } = req.body; // Removed email as it's not updateable4
+      const name = fullname;
+      console.log(fullname)
+      console.log(username)
+      const userId = req.params.id; // Get user ID from request parameters
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { name, username },
+        { new: true }
+      ); // Use { new: true } to return the updated document
       res.status(200).json(updatedUser);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   }
+  
 
 

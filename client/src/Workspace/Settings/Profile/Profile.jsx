@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SettingsSidebar from "../Component/SettingsSidebar";
+import { ToastContainer, toast } from 'react-toastify';
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +15,7 @@ const Profile = () => {
   }, []);
 
   const profile = async () => {
-    const userId = "65fe89d1e6552659f0791d43"; // Replace with the actual user ID
+    const userId = "65feb964dcd23e30ac1d1b3f"; // Replace with the actual user ID
     try {
       const response = await axios.get(`http://localhost:8000/api/users/profile/${userId}`, {
         headers: {
@@ -40,9 +41,26 @@ const Profile = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add logic to handle form submission (e.g., send updated data to server)
+    const userId = "65feb964dcd23e30ac1d1b3f"; // Replace with the actual user ID
+    try {
+      const response = await axios.put(`http://localhost:8000/api/users/profile/${userId}`, {
+        fullname: formData.fullname,
+        username: formData.username,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer <your_token>",
+        },
+      });
+      toast.success('Profile updated successfully!');
+      console.log('Profile updated successfully:', response.data);
+      // Optionally, you can show a success message or redirect the user to another page
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      // Optionally, you can show an error message to the user
+    }
   };
 
   return (
@@ -128,6 +146,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
