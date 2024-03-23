@@ -128,6 +128,8 @@ module.exports.create = (req, res) => {
         },
         process.env.SECRET_KEY
       );
+      console.log("userToken : ")
+      console.log(userToken)
       res
         .cookie("usertoken", userToken, {
           httpOnly: true,
@@ -255,3 +257,32 @@ module.exports.logout = (req, res) => {
   res.clearCookie("usertoken");
   res.json({ message: "Logged out successfully" });
 };
+
+
+module.exports.getProfile = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findOne({ _id: userId });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user profile:", error);
+    res.status(500).json({ message: "Failed to fetch user profile" });
+  }
+};
+
+  
+  // Update user profile
+  module.exports.updateProfile =  async (req, res) => {
+    try {
+      const { name, username } = req.body; // Removed email as it's not updateable
+      const updatedUser = await User.findByIdAndUpdate(req.id, { name, username }, { new: true }); // Use { new: true } to return the updated document
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+

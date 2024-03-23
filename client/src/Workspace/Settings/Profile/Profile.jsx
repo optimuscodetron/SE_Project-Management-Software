@@ -1,15 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import SettingsSidebar from "../Component/SettingsSidebar";
 
 const Profile = () => {
-  // State variables to store form data
   const [formData, setFormData] = useState({
-    email: "user@example.com", // Default email
-    fullname: "John Doe", // Default full name
-    username: "johndoe123", // Default username
+    email: "", // Default email
+    fullname: "", // Default full name
+    username: "", // Default username
   });
 
-  // Function to handle form field changes
+  useEffect(() => {
+    profile();
+  }, []);
+
+  const profile = async () => {
+    const userId = "65fe89d1e6552659f0791d43"; // Replace with the actual user ID
+    try {
+      const response = await axios.get(`http://localhost:8000/api/users/profile/${userId}`, {
+        headers: {
+          Authorization: "Bearer YOUR_AUTH_TOKEN",
+        },
+      });
+      const userData = response.data;
+      setFormData({
+        email: userData.email,
+        fullname: userData.name,
+        username: userData.username,
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({
@@ -18,7 +40,6 @@ const Profile = () => {
     });
   };
 
-  // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add logic to handle form submission (e.g., send updated data to server)
@@ -44,7 +65,7 @@ const Profile = () => {
               <h2 className="text-lg font-normal mb-2">Profile Picture</h2>
               <div className="mb-6 flex items-center justify-center">
                 <img
-                  src="https://t3.ftcdn.net/jpg/05/79/55/26/360_F_579552668_sZD51Sjmi89GhGqyF27pZcrqyi7cEYBH.jpg" // Replace "profile.jpg" with your profile photo URL
+                  src="https://t3.ftcdn.net/jpg/05/79/55/26/360_F_579552668_sZD51Sjmi89GhGqyF27pZcrqyi7cEYBH.jpg"
                   alt=""
                   className="w-[110px] h-[110px] rounded-full  bg-pink-500 border-4 border-[#000000]"
                 />

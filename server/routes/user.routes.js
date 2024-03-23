@@ -14,4 +14,12 @@ module.exports = function(app){
     app.delete('/api/users/:id', authenticate , UserController.delete);
     app.put('/api/users/:id', authenticate, UserController.update);
     app.get('/api/users/:id', authenticate, UserController.findById);
+
+  
+
+ // Get user profile
+  app.get("/api/users/profile/:id", UserController.getProfile);
+
+  // Update user profile
+  app.put("/api/users/profile/:id", UserController.updateProfile);
 }
