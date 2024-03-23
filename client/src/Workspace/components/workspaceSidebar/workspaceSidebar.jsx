@@ -7,7 +7,10 @@ import { FiInbox } from "react-icons/fi";
 import { AiFillSetting } from "react-icons/ai"
 import { IoPersonAdd } from "react-icons/io5";
 import { HiPlus } from "react-icons/hi";
+
 import CreateNewProject from "../../CreateNewProject/CreateNewProject";
+
+
 const WorkspaceSidebar = (props) => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
