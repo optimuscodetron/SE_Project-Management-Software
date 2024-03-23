@@ -37,7 +37,7 @@ const WorkspaceListSidebar = () => {
         <>
         <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between cursor-pointer" onClick={showWorkspaceHandler}>
               <div className="flex">
-                <PiMonitorFill/>
+                
                 <span className="text-sm ms-3">{currentWorkspace}</span>
                 </div>
                 {showWorkspaces?<FaChevronUp />:<FaChevronDown />}
