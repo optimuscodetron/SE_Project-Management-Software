@@ -3,10 +3,12 @@
     background-color: #011225e6;
     color: #fff;
     min-height: 100vh;
-    
+    position: relative;
     
     
   }
+
+  
   
   .inbox-title {
     color: aliceblue;
