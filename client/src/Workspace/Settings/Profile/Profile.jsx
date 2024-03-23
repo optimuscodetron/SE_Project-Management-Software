@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SettingsSidebar from "../Component/SettingsSidebar";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -14,15 +14,20 @@ const Profile = () => {
     profile();
   }, []);
 
+
+  
+  // fetch data,piyush
   const profile = async () => {
-    const userId = "65feb964dcd23e30ac1d1b3f"; // Replace with the actual user ID
+    // const userId = "65feb964dcd23e30ac1d1b3f"; // Replace with the actual user ID
     try {
-      const response = await axios.get(`http://localhost:8000/api/users/profile/${userId}`, {
-        headers: {
-          Authorization: "Bearer YOUR_AUTH_TOKEN",
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:8000/api/users/profile`,
+        {
+          withCredentials: true,
+        }
+      );
       const userData = response.data;
+      console.log(userData);
       setFormData({
         email: userData.email,
         fullname: userData.name,
@@ -30,6 +35,7 @@ const Profile = () => {
       });
     } catch (error) {
       console.error("Error:", error);
+      toast.error("Error!");
     }
   };
 
@@ -41,25 +47,30 @@ const Profile = () => {
     });
   };
 
+
+  
+  //update profile page of user data, piyush
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userId = "65feb964dcd23e30ac1d1b3f"; // Replace with the actual user ID
     try {
-      const response = await axios.put(`http://localhost:8000/api/users/profile/${userId}`, {
-        fullname: formData.fullname,
-        username: formData.username,
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer <your_token>",
+      const response = await axios.put(
+        `http://localhost:8000/api/users/profile`,
+        {
+          fullname: formData.fullname,
+          username: formData.username,
         },
-      });
-      toast.success('Profile updated successfully!');
-      console.log('Profile updated successfully:', response.data);
-      // Optionally, you can show a success message or redirect the user to another page
+        {
+          withCredentials: true, // Ensure credentials are sent with the request
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast.success("Profile updated successfully!");
+      console.log("Profile updated successfully:", response.data);
     } catch (error) {
-      console.error('Error updating profile:', error);
-      // Optionally, you can show an error message to the user
+      console.error("Error updating profile:", error);
+      toast.error("Error updating profile!");
     }
   };
 

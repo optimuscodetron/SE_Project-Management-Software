@@ -126,7 +126,7 @@ module.exports.create = (req, res) => {
         {
           id: user._id,
         },
-        process.env.SECRET_KEY
+        "abcdef"
       );
       console.log("userToken : ")
       console.log(userToken)
@@ -186,7 +186,7 @@ module.exports.login = async (req, res) => {
       {
         id: user._id,
       },
-      process.env.SECRET_KEY
+      "abcdef"
     );
     res
       .cookie("usertoken", userToken, {
@@ -259,16 +259,27 @@ module.exports.logout = (req, res) => {
 };
 
 
+
+
+
+
+// fetch profile page data, piyush
 module.exports.getProfile = async (req, res) => {
+  // console.log("Get profile")
+
   try {
-    const userId = req.params.id;
+    console.log(req.userId);
+    const userId = req.userId;
+    console.log(userId);
+  
     const user = await User.findOne({ _id: userId });
+    console.log(user);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     res.status(200).json(user);
   } catch (error) {
-    console.error("Error fetching user profile:", error);
+    console.log("Error fetching user profile:");
     res.status(500).json({ message: "Failed to fetch user profile" });
   }
 };
@@ -277,21 +288,20 @@ module.exports.getProfile = async (req, res) => {
   // Update user profile
   module.exports.updateProfile = async (req, res) => {
     try {
-      const { fullname, username } = req.body; // Removed email as it's not updateable4
+      const { fullname, username } = req.body;
       const name = fullname;
-      console.log(fullname)
-      console.log(username)
-      const userId = req.params.id; // Get user ID from request parameters
+      const userId = req.userId; // Get user ID from authenticated request
       const updatedUser = await User.findByIdAndUpdate(
         userId,
-        { name, username },
-        { new: true }
-      ); // Use { new: true } to return the updated document
+        { name, username }, // Update fullname and username
+        { new: true } // Return the updated document
+      );
       res.status(200).json(updatedUser);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  }
+  };
+  
   
 
 
