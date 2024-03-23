@@ -15,11 +15,7 @@ import CreateNewProject from "../../CreateNewProject/CreateNewProject";
 import InboxSidebar from "../../../UI/Optional";
 const WorkspaceSidebar = (props) => {
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+  
 
   return (
 
