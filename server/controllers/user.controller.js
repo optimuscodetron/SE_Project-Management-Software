@@ -13,8 +13,8 @@ const tarnsporter = nodemailer.createTransport({
   requireTLS: true,
   auth:
   {
-      user: process.env.USER,
-      pass: process.env.PASSWORD
+      user: "hetrpatel03@gmail.com",
+      pass: "Rasik@44Patel"
   }
 })
 
@@ -181,6 +181,7 @@ module.exports.login = async (req, res) => {
       console.log("Password incorrect for: " + req.body.email);
       throw new Error(errorMessage);
     }
+    console.log(correctPassword);
     const userToken = jwt.sign(
       {
         id: user._id,
@@ -188,6 +189,7 @@ module.exports.login = async (req, res) => {
       // process.env.SECRET_KEY
       "abcdef"
     );
+    console.log(userToken);
     res
       .cookie("usertoken", userToken, {
         httpOnly: true,
@@ -203,7 +205,7 @@ exports.changeinfo = async (req, res) => {
   let password=req.body.newPassword;
   console.log(password)
   
-  const client=new MongoClient('mongodb+srv://Kushagra_18:bDFTOPZeMaygXAE3@cluster0.mxxglsz.mongodb.net/Demo?retryWrites=true&w=majority')
+  const client=new MongoClient('mongodb://127.0.0.1:27017/SE_Project')
 
   try {
   //   if (!password || !email) {

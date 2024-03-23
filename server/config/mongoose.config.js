@@ -1,11 +1,20 @@
 const mongoose = require('mongoose');
-const db=process.env.DB
+const { Workspace } = require('../models/workspace.model');
+// const db=process.env.DB
 
-mongoose.connect("mongodb+srv://Kushagra_18:bDFTOPZeMaygXAE3@cluster0.mxxglsz.mongodb.net/Demo?retryWrites=true&w=majority", {
+mongoose.connect("mongodb://127.0.0.1:27017/SE_Project", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
 })
-    .then(() => console.log("Established connection to the database"))
+    .then(() => {
+        console.log("Established connection to the database")
+       
+       
+           
+
+
+
+})
     .catch(err => console.log("Something went wrong ", err));
 
