@@ -111,8 +111,6 @@ const Inbox = (props) => {
             <br></br>
             </div>
           <h2 className="inbox-title">
-
-          <br></br>
             Inbox
           </h2>
           <ul>
