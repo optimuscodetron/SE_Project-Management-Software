@@ -74,12 +74,6 @@ function App() {
         <Route path="/workspace/settings/general" element={<General />}>
           {" "}
         </Route>
-        <Route
-          path="/workspace/create_new_project"
-          element={<CreateNewProject />}
-        >
-          {" "}
-        </Route>
         {/* by Priyanshu */}
         <Route path="/workspace/settings/members" element={<MemberSetting />}>
           {" "}
@@ -98,11 +92,6 @@ function App() {
           element={<ProjectSettings />}
         />
         <Route path="/workspace/project/board/issue" element={<IssueInfo />} />
-
-        <Route path="/workspace/settings/profile" element={<Profile />} />
-
-        {/*by khushboo*/}
-        <Route path="/Invite" element={<Invite />} />
 
         {/* by manav */}
         <Route

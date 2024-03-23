@@ -1,48 +1,46 @@
 import { useState } from "react";
-import { useEffect } from "react";
 
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
-import Axios from "axios";
-
 const WorkspaceListSidebar = () => {
-
-
-
   const [showWorkspaces, setShowWorkspaces] = useState(false);
   const showWorkspaceHandler = () => {
     setShowWorkspaces((prevState) => !prevState);
-  }
+  };
 
-    const [userWorkspaces,setUserWorkspace] = useState(["Workspace 1", "Workspace 2", "Workspace 3"]);
-    const [currentWorkspace,setCurrentWorkspace] = useState(userWorkspaces[0]);
-    const chooseWorkspaceHandler=(item,index)=>{
-        // console.log(index);
-        setCurrentWorkspace(userWorkspaces[index]);
-        setShowWorkspaces(!showWorkspaces);
-    }
+  const userWorkspaces = ["Workspace 1", "Workspace 2", "Workspace 3"];
+  const [currentWorkspace, setCurrentWorkspace] = useState(userWorkspaces[0]);
+  const chooseWorkspaceHandler = (item, index) => {
+    // console.log(index);
+    setCurrentWorkspace(userWorkspaces[index]);
+    setShowWorkspaces(!showWorkspaces);
+  };
 
-  
+  return (
+    <>
+      <div
+        className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between"
+        onClick={showWorkspaceHandler}
+      >
+        <span className="ms-3">{currentWorkspace}</span>
 
-    return (
-        <>
-        <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between" onClick={showWorkspaceHandler}>
-              <div className="flex">
-                <PiMonitorFill/>
-                <span className="text-sm ms-3">{currentWorkspace}</span>
-                </div>
-                {showWorkspaces?<FaChevronUp />:<FaChevronDown />}
+        {showWorkspaces ? <FaChevronUp /> : <FaChevronDown />}
+      </div>
+      {showWorkspaces && (
+        <ul className={""}>
+          {userWorkspaces.map((item, index) => (
+            <li key={index}>
+              <div
+                className="flex justify-center p-2 font-semibold text-white text-decoration-none  rounded-lg hover:bg-gray-900 group "
+                onClick={() => chooseWorkspaceHandler(item, index)}
+              >
+                {item}
               </div>
-              {showWorkspaces&&<ul className={"flex row ml-8"}>
-                {userWorkspaces.map((item,index) => (
-                  <li key={index}>
-                    <div className="p-2 text-sm font-semibold text-white text-decoration-none  rounded-lg hover:bg-gray-900 group " onClick={()=>chooseWorkspaceHandler(item,index)}>
-                      {item}
-                    </div>
-                  </li>
-                ))}
-              </ul>}
-        </>
-    );
-}
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
+  );
+};
 export default WorkspaceListSidebar;
