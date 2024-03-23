@@ -17,3 +17,6 @@ export const passWordReset = async(data)=>{
 export const userVerify = async(data)=>{
     return await commonrequest("POST",`${BACKEND_URL}/users/otp`,data)
 }
+export const Worskpacedata = async(data)=>{
+    return await commonrequest("POST",`${BACKEND_URL}/users/workspace`,data)
+}

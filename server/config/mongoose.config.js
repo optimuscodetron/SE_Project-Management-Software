@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const db=process.env.DB
+const { Workspace } = require('../models/workspace.model');
+// const db=process.env.DB
 
 mongoose.connect("mongodb://127.0.0.1:27017/ragnar_SE", {
     useNewUrlParser: true,
@@ -7,6 +8,14 @@ mongoose.connect("mongodb://127.0.0.1:27017/ragnar_SE", {
     useCreateIndex: true,
     useFindAndModify: false,
 })
-    .then(() => console.log("Established connection to the database"))
+    .then(() => {
+        console.log("Established connection to the database")
+       
+       
+           
+
+
+
+})
     .catch(err => console.log("Something went wrong ", err));
 

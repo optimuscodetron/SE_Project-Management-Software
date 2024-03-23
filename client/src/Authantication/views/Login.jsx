@@ -63,11 +63,9 @@ const Login = (props) => {
       withCredentials: true,
     })
       .then((res) => {
-        localStorage.setItem("userID", res.data.user._id);
-        localStorage.setItem("userName", res.data.user.name);
         console.log(`login succesful`);
-        navigate("/create_workspace");
-        window.location.reload();
+        navigate("/workspace");
+        // window.location.reload();
       })
       .catch((err) => {
         setErrors(err.response.data.message);

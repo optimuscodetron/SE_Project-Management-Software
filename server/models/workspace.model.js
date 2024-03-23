@@ -16,20 +16,20 @@ const userworkspaceSchema = new mongoose.Schema({
     adminuserId:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
-        required:true
+        // required:true
     },
     members:[
         {
             type:mongoose.Schema.Types.ObjectId,
             ref:'User',
-            required :true
+            // required :true
         }
     ],
     projects: [
         {
             type:mongoose.Schema.Types.ObjectId,
             ref:'Project',
-            required :true
+            // required :true
         }
     ]
 
@@ -37,6 +37,6 @@ const userworkspaceSchema = new mongoose.Schema({
 
 
 // user otp model
-const Workspace = new mongoose.model("Workspace",userworkspaceSchema);
+module.exports.Workspace =mongoose.model("Workspace",userworkspaceSchema);
 
-module.exports = Workspace
+

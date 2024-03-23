@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SettingsSidebar from "../Component/SettingsSidebar";
+import Navbar from "../../../Components/Layout/navbar/navbar";
 import { ToastContainer, toast } from "react-toastify";
 
 const Profile = () => {
@@ -9,6 +10,7 @@ const Profile = () => {
     fullname: "", // Default full name
     username: "", // Default username
   });
+  const [showSidebar, setShowSidebar] = useState(false);
 
   useEffect(() => {
     profile();
@@ -74,14 +76,21 @@ const Profile = () => {
     }
   };
 
-  return (
-    <div className=" bg-[#1f2937] flex flex-row w-screen h-screen ">
-      <SettingsSidebar />
+  const handleSidebar = () => {
+    setShowSidebar((prevstate) => !prevstate);
+  };
 
-      <div className="w-[40vw] ml-[36vw] flex items-center h-full  overflow-auto justify-center ">
-        <div className="w-full bg-[#111827] h-[full] ">
-          <div className=" p-8 rounded-lg shadow-md  text-white">
-            <h1 className="text-[42px] text-center font-normal tracking-wide mb-2">
+  return (
+    <div>
+      <Navbar showSideBarHandler={handleSidebar} />
+
+    <div className=" bg-[#1f2937] fixed flex flex-row w-screen h-screen ">
+      <SettingsSidebar showSideBar={showSidebar} />
+
+      <div className="flex justify-center h-full w-full overflow-auto  ">
+        <div className="w-[80vw] sm:w-[70vw] md:w-[50vw] mt-20  bg-[#111827] overflow-y-scroll py-5 px-16">
+          <div className=" rounded-lg shadow-md  text-white">
+            <h1 className="text-3xl text-center font-normal tracking-wide mb-2 ">
               Profile
             </h1>
             <p className="text-gray-500 text-center mb-6 ">
@@ -91,56 +100,62 @@ const Profile = () => {
             <hr className="my-6" />
 
             <div className=" ">
-              <h2 className="text-lg font-normal mb-2">Profile Picture</h2>
+              <h2 className="text-[16px] font-normal mb-2">Profile Picture</h2>
               <div className="mb-6 flex items-center justify-center">
                 <img
                   src="https://t3.ftcdn.net/jpg/05/79/55/26/360_F_579552668_sZD51Sjmi89GhGqyF27pZcrqyi7cEYBH.jpg"
                   alt=""
-                  className="w-[110px] h-[110px] rounded-full  bg-pink-500 border-4 border-[#000000]"
+                  className="w-[100px] h-[100px] rounded-full  bg-pink-500 border-4 border-[#000000]"
                 />
               </div>
             </div>
 
-            <div className="mb-4 text-lg flex items-center justify-between border-b border-gray-700 pb-3 pt-4">
+            <div className="mb-4 md:text-[16px] text-sm  flex items-center justify-center md:justify-between border-b border-gray-700 pb-3 pt-3 ">
               <label
                 htmlFor="email"
-                className="block text-white w-[50%] tracking-wide font-normal mb-2"
+                className="block text-white w-[50%]  tracking-wide font-normal mb-2"
               >
                 Email :
               </label>
-              <div className=" border-[1px] w-[50%] h-10 px-2 py-1 border-gray-600 rounded-md bg-[rgb(15,19,29)] ">
-                <p className="text-white  ">{formData.email}</p>
-              </div>
+              <input
+               type="text"
+               id="fullname"
+               readOnly
+               className=" border-[1px] w-[41vw]  md:w-[17vw] px-4 py-2 border-gray-600 rounded-md bg-gray-800 "
+               value={formData.email}
+               >
+              </input>
             </div>
 
-            <div className="mb-4 flex items-center justify-between border-b border-gray-700 pb-3">
+
+            <div className="mb-4 md:text-[16px] text-sm flex items-center justify-center md:justify-between border-b border-gray-700 pb-3">
               <label
                 htmlFor="fullname"
-                className="block text-white w-[50%] tracking-wide font-normal mr-[45%]"
+                className="block text-white w-[50%] tracking-wide font-normal mb-2"
               >
                 Name :
               </label>
               <input
                 type="text"
                 id="fullname"
-                className=" border-[1px] w-[50%] h-10 px-2 py-1 border-gray-600 rounded-md bg-[rgb(15,19,29)]"
+                className=" border-[1px] w-[41vw] md:w-[17vw] px-4 py-2 outline-1 border-gray-600 rounded-md bg-[rgb(15,19,29)]"
                 placeholder="Enter Name"
                 value={formData.fullname}
                 onChange={handleChange}
               />
             </div>
 
-            <div className="mb-4 flex items-center justify-between ">
+            <div className="mb-4  md:text-[16px] text-sm flex items-center justify-center md:justify-between border-b border-gray-700 pb-3">
               <label
                 htmlFor="username"
-                className="block text-white w-[50%] tracking-wide  font-normal mr-[45%]"
+                className="block text-white w-[50%] tracking-wide  font-normal mb-2"
               >
                 Username :
               </label>
               <input
                 type="text"
                 id="username"
-                className="border-[1px] w-[50%] h-10 px-2 py-1 border-gray-600 rounded-md bg-[rgb(15,19,29)]"
+                className="border-[1px] w-[39vw] md:w-[17vw] px-4 py-2 border-gray-600 rounded-md bg-[rgb(15,19,29)]"
                 placeholder="Enter username"
                 value={formData.username}
                 onChange={handleChange}
@@ -148,7 +163,7 @@ const Profile = () => {
             </div>
 
             <button
-              className="bg-[#9333EA] mt-3 text-white font-semibold  tracking-wide py-2 px-4 rounded focus:outline-none focus:shadow-outline "
+              className="bg-[#9333EA] mt-[10px] text-white font-semibold  tracking-wide py-[6px] px-4 rounded focus:outline-none focus:shadow-outline "
               type="button"
               onClick={handleSubmit}
             >
@@ -158,6 +173,7 @@ const Profile = () => {
         </div>
       </div>
       <ToastContainer />
+    </div>
     </div>
   );
 };

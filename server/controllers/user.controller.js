@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const userotp = require("../models/userOtp");
 const nodemailer = require("nodemailer");
 const {MongoClient}=require('mongodb')
-const DB = process.env.DB;
+const {Workspace}=require("../models/workspace.model");
 
 
 const tarnsporter = nodemailer.createTransport({
@@ -128,7 +128,6 @@ module.exports.create = (req, res) => {
         },
         "abcdef"
       );
-      console.log("userToken : ")
       console.log(userToken)
       res
         .cookie("usertoken", userToken, {
@@ -182,12 +181,14 @@ module.exports.login = async (req, res) => {
       console.log("Password incorrect for: " + req.body.email);
       throw new Error(errorMessage);
     }
+    console.log(correctPassword);
     const userToken = jwt.sign(
       {
         id: user._id,
       },
       "abcdef"
     );
+    console.log(userToken);
     res
       .cookie("usertoken", userToken, {
         httpOnly: true,
@@ -197,6 +198,7 @@ module.exports.login = async (req, res) => {
     res.status(401).json({ message: errorMessage });
   }
 };
+
 exports.changeinfo = async (req, res) => {
   const email = req.body.email;
   let password=req.body.newPassword;
