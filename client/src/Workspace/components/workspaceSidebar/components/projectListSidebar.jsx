@@ -23,42 +23,38 @@ const ProjectListSidebar = (props) => {
   const teamName = "My Team Name";
   const [userProjects, setUserProject] = useState();
 
-
   useEffect(() => {
-
-    console.log('UseProject');
+    console.log("UseProject");
 
     fetchProjectData();
-
-
   }, [props.workspaceId]);
 
   const fetchProjectData = async () => {
-
     try {
-      
       const data = {
         workspaceId: props.workspaceId,
-      }
-      const response = await Axios.post('http://localhost:8000/api/getAllProjectOfUser', data, {
-        withCredentials: true,
-      });
+      };
+      const response = await Axios.post(
+        "http://localhost:8000/api/getAllProjectOfUser",
+        data,
+        {
+          withCredentials: true,
+        }
+      );
 
       if (response.status === 200) {
         const data = response.data;
         console.log(data.project);
-        setUserProject(data.project)
+        setUserProject(data.project);
         // console.log(userProjects)
-
       } else {
-        throw new Error('Internal server error');
+        throw new Error("Internal server error");
       }
     } catch (error) {
-      console.error('Error fetching data:', error.message);
+      console.error("Error fetching data:", error.message);
       // Handle error here
     }
   };
-
 
   return (
     <>
@@ -68,10 +64,12 @@ const ProjectListSidebar = (props) => {
       </div>
       <ul>
         <li>
-          <div className="flex items-center text-sm p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group cursor-pointer" onClick={props.onOpenCreateProject}>
+          <div
+            className="flex items-center text-sm p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group cursor-pointer"
+            onClick={props.onOpenCreateProject}
+          >
             <MdFormatListBulletedAdd />
             <span className="flex-1 ms-3 font-medium whitespace-nowrap">
-
               Create Project
             </span>
           </div>
@@ -88,10 +86,13 @@ const ProjectListSidebar = (props) => {
             {showProject ? <FaChevronUp /> : <FaChevronDown />}
           </div>
           {showProject && (
-            <ul className={"flex row ml-8"}>
+            <ul className={""}>
               {userProjects.map((item) => (
                 <li>
-                  <NavLink to={'/workspace/project/board'} className="text-decoration-none " >
+                  <NavLink
+                    to={"/workspace/project/board"}
+                    className="text-decoration-none "
+                  >
                     <div className=" text-sm font-semibold p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group truncate">
                       {item.name}
                     </div>

@@ -77,12 +77,6 @@ function App() {
         <Route path="/workspace/settings/general" element={<General />}>
           {" "}
         </Route>
-        <Route
-          path="/workspace/create_new_project"
-          element={<CreateNewProject />}
-        >
-          {" "}
-        </Route>
         {/* by Priyanshu */}
         <Route path="/workspace/settings/members" element={<MemberSetting />}>
           {" "}
@@ -109,40 +103,8 @@ function App() {
 
         <Route path="/workspace/settings/profile" element={<Profile />} />
 
-        {/* by manav */}
-        <Route
-          path="/workspace/project/createissue"
-          element={<Createissue />}
-        />
-        <Route path="/workspace/settings/profile" element={<Profile />} />
-        {/* by manav */}
-        <Route
-          path="/workspace/project/createissue"
-          element={<Createissue />}
-        />
-        <Route path="/workspace/settings/profile" element={<Profile />} />
-        {/* by manav */}
-        <Route
-          path="/workspace/project/createissue"
-          element={<Createissue />}
-        />
-        <Route path="/workspace/settings/profile" element={<Profile />} />
-        {/* by manav */}
-        <Route
-          path="/workspace/project/createissue"
-          element={<Createissue />}
-        />
-        <Route path="/workspace/settings/profile" element={<Profile />} />
-        {/* by manav */}
-        <Route
-          path="/workspace/project/createissue"
-          element={<Createissue />}
-        />
-        <Route path="/workspace/settings/profile" element={<Profile />} />
-
         {/*by khushboo*/}
         <Route path="/Invite" element={<Invite />} />
-        <Route path="/Workspace/Inbox" element={<InboxSidebar />} />
 
         {/* by manav */}
         <Route

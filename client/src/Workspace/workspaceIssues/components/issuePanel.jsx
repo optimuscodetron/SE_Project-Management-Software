@@ -37,12 +37,11 @@ const IssuePanel = (props) => {
                 onMoveIssue={props.onMoveIssue}
               />
             ))}
-          <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] ">
-            <div className="ml-[45%]">
-
-            <BsPlusCircle/>
-            </div>
+        <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] ">
+          <div className="ml-[45%]">
+            <BsPlusCircle />
           </div>
+        </div>
       </div>
     </div>
   );
