@@ -13,11 +13,7 @@ import CreateNewProject from "../../CreateNewProject/CreateNewProject";
 
 const WorkspaceSidebar = (props) => {
 
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+  
 
   return (
 
