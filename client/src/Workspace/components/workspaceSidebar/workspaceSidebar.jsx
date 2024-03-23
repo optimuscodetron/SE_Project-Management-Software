@@ -1,4 +1,4 @@
-import React, { useEffect },{useState} from "react";
+import React,{useState} from "react";
 import WorkspaceListSidebar from "./components/workspacesListSidebar";
 import ProjectListSidebar from "./components/projectListSidebar";
 import { NavLink } from "react-router-dom";
