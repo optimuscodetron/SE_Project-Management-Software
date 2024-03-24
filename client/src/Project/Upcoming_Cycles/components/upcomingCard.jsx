@@ -26,6 +26,7 @@ export default function UpcomingCard({ issue, onMoveIssue }) {
         {issue.status !== "Backlog" && (
           <button
             className={btnstyle}
+            style={{ marginLeft: "8px" }}
             onClick={() => onMoveIssue(issue.id, issue.status, "Backlog")}
           >
             Backlog
@@ -34,33 +35,10 @@ export default function UpcomingCard({ issue, onMoveIssue }) {
         {issue.status !== "ToDo" && (
           <button
             className={btnstyle}
+            style={{ marginLeft: "8px" }}
             onClick={() => onMoveIssue(issue.id, issue.status, "ToDo")}
           >
             ToDo
-          </button>
-        )}
-        {issue.status !== "InProgress" && (
-          <button
-            className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.status, "InProgress")}
-          >
-            InProgress
-          </button>
-        )}
-        {issue.status !== "Done" && (
-          <button
-            className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.status, "Done")}
-          >
-            Done
-          </button>
-        )}
-        {issue.status !== "Cancelled" && (
-          <button
-            className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.status, "Cancelled")}
-          >
-            Cancelled
           </button>
         )}
       </div>

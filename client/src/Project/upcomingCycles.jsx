@@ -2,7 +2,7 @@ import React from "react";
 // import WorkspaceSidebar from "./components/workspaceSidebar/workspaceSidebar";
 import Navbar from "../Components/Layout/navbar/navbar";
 import { useState } from "react";
-import UpcomingCycles from "./Cycles/Cycles";
+import UpcomingCycles from "./Upcoming_Cycles/Upcoming_Cycles";
 import Invite from "../Invite/Invite";
 
 export default function Project() {
