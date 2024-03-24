@@ -1,18 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import SettingsSidebar from "../Component/SettingsSidebar";
 import Navbar from "../../../Components/Layout/navbar/navbar";
+import { ToastContainer, toast } from "react-toastify";
 
 const Profile = () => {
-  // State variables to store form data
   const [formData, setFormData] = useState({
-    email: "user@example.com", // Default email
-    fullname: "John Doe", // Default full name
-    username: "johndoe123", // Default username
+    email: "", // Default email
+    fullname: "", // Default full name
+    username: "", // Default username
   });
-
   const [showSidebar, setShowSidebar] = useState(false);
 
-  // Function to handle form field changes
+  useEffect(() => {
+    profile();
+  }, []);
+
+
+  
+  // fetch data,piyush
+  const profile = async () => {
+    // const userId = "65feb964dcd23e30ac1d1b3f"; // Replace with the actual user ID
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/users/profile`,
+        {
+          withCredentials: true,
+        }
+      );
+      const userData = response.data;
+      console.log(userData);
+      setFormData({
+        email: userData.email,
+        fullname: userData.name,
+        username: userData.username,
+      });
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Error!");
+    }
+  };
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({
@@ -21,10 +49,31 @@ const Profile = () => {
     });
   };
 
-  // Function to handle form submission
-  const handleSubmit = (e) => {
+
+  
+  //update profile page of user data, piyush
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add logic to handle form submission (e.g., send updated data to server)
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/api/users/profile`,
+        {
+          fullname: formData.fullname,
+          username: formData.username,
+        },
+        {
+          withCredentials: true, // Ensure credentials are sent with the request
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      toast.success("Profile updated successfully!");
+      console.log("Profile updated successfully:", response.data);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      toast.error("Error updating profile!");
+    }
   };
 
   const handleSidebar = () => {
@@ -54,7 +103,7 @@ const Profile = () => {
               <h2 className="text-[16px] font-normal mb-2">Profile Picture</h2>
               <div className="mb-6 flex items-center justify-center">
                 <img
-                  src="https://t3.ftcdn.net/jpg/05/79/55/26/360_F_579552668_sZD51Sjmi89GhGqyF27pZcrqyi7cEYBH.jpg" // Replace "profile.jpg" with your profile photo URL
+                  src="https://t3.ftcdn.net/jpg/05/79/55/26/360_F_579552668_sZD51Sjmi89GhGqyF27pZcrqyi7cEYBH.jpg"
                   alt=""
                   className="w-[100px] h-[100px] rounded-full  bg-pink-500 border-4 border-[#000000]"
                 />
@@ -123,6 +172,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
     </div>
   );
