@@ -13,7 +13,14 @@ module.exports = function(app){
 
 
 
-    app.delete('/api/users/:id', authenticate , UserController.delete);
-    app.put('/api/users/:id', authenticate, UserController.update);
-    app.get('/api/users/:id', authenticate, UserController.findById);
+    // app.delete('/api/users/:id', authenticate , UserController.delete);
+    // app.put('/api/users/:id', authenticate, UserController.update);
+    // app.get('/api/users/:id', authenticate, UserController.findById);
+
+  
+
+ // Get user profile , Piyush
+  app.get("/api/users/profile", authenticate, UserController.getProfile);
+ // Update user profile, Piyush
+  app.put("/api/users/profile", authenticate, UserController.updateProfile);
 }

@@ -1,15 +1,21 @@
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
+import { useEffect } from "react";
 import { PiMonitorFill } from "react-icons/pi";
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
-const WorkspaceListSidebar=(props)=>{
+import Axios from "axios";
 
-    const [showWorkspaces,setShowWorkspaces]=useState(false);
-    const showWorkspaceHandler=()=>{
-      setShowWorkspaces((prevState) => !prevState);
-    }
+const WorkspaceListSidebar = () => {
 
-    const userWorkspaces = ["Workspace 1", "Workspace 2", "Workspace 3"];
+
+
+  const [showWorkspaces, setShowWorkspaces] = useState(false);
+  const showWorkspaceHandler = () => {
+    setShowWorkspaces((prevState) => !prevState);
+  }
+
+    const [userWorkspaces,setUserWorkspace] = useState(["Workspace 1", "Workspace 2", "Workspace 3"]);
     const [currentWorkspace,setCurrentWorkspace] = useState(userWorkspaces[0]);
     useEffect(()=>{
 
@@ -24,6 +30,8 @@ const WorkspaceListSidebar=(props)=>{
         setCurrentWorkspace(userWorkspaces[index]);
         setShowWorkspaces(!showWorkspaces);
     }
+
+  
 
     return (
         <>

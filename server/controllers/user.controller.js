@@ -13,8 +13,8 @@ const tarnsporter = nodemailer.createTransport({
   requireTLS: true,
   auth:
   {
-      user: process.env.USER,
-      pass: process.env.PASSWORD
+    user: "2021csb1107@iitrpr.ac.in",
+    pass: "KUSHagra08092004@"
   }
 })
 
@@ -181,13 +181,14 @@ module.exports.login = async (req, res) => {
       console.log("Password incorrect for: " + req.body.email);
       throw new Error(errorMessage);
     }
+    console.log(correctPassword);
     const userToken = jwt.sign(
       {
         id: user._id,
       },
-      // process.env.SECRET_KEY
       "abcdef"
     );
+    console.log(userToken);
     res
       .cookie("usertoken", userToken, {
         httpOnly: true,
@@ -203,7 +204,7 @@ exports.changeinfo = async (req, res) => {
   let password=req.body.newPassword;
   console.log(password)
   
-  const client=new MongoClient('mongodb+srv://Kushagra_18:bDFTOPZeMaygXAE3@cluster0.mxxglsz.mongodb.net/Demo?retryWrites=true&w=majority')
+  const client=new MongoClient("mongodb://127.0.0.1:27017/ragnar_SE")
 
   try {
   //   if (!password || !email) {
@@ -258,3 +259,51 @@ module.exports.logout = (req, res) => {
   res.clearCookie("usertoken");
   res.json({ message: "Logged out successfully" });
 };
+
+
+
+
+
+
+// fetch profile page data, piyush
+module.exports.getProfile = async (req, res) => {
+  // console.log("Get profile")
+
+  try {
+    console.log(req.userId);
+    const userId = req.userId;
+    console.log(userId);
+  
+    const user = await User.findOne({ _id: userId });
+    console.log(user);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.log("Error fetching user profile:");
+    res.status(500).json({ message: "Failed to fetch user profile" });
+  }
+};
+
+  
+  // Update user profile
+  module.exports.updateProfile = async (req, res) => {
+    try {
+      const { fullname, username } = req.body;
+      const name = fullname;
+      const userId = req.userId; // Get user ID from authenticated request
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { name, username }, // Update fullname and username
+        { new: true } // Return the updated document
+      );
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
+  
+
+

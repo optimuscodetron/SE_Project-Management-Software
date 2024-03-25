@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const socketIo = require('socket.io');
 
 require('../server/config/mongoose.config');
-require('dotenv').config({ path: __dirname + '/./.env' });
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
