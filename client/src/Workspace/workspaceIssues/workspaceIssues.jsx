@@ -126,7 +126,7 @@ const WorkspaceIssues = () => {
   };
 
   return (
-    <div className=" mt-16 bg-[#171e28] overflow-x-scroll ">
+    <div className="bg-[#171e28] overflow-x-scroll ">
      
       {dataLoaded && (
         <div className="flex flex-row w-screen">
