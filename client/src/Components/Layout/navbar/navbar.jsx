@@ -1,8 +1,10 @@
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import UserPopUp from "./component/userPopUp";
-import Modal from '../../../UI/Modal';
 const Navbar = (props) => {
+  
+
+
   return (
     <nav className="fixed z-50 w-screen bg-[#171e28] border-b border-gray-200 dark:bg-[#171e28] dark:border-gray-700 h-16">
       <div className="flex items-center justify-between h-16 px-3">
@@ -24,7 +26,7 @@ const Navbar = (props) => {
           </a>
 
         </div>
-        <UserPopUp />
+        <UserPopUp/>
       </div>
     </nav>
   );

@@ -11,7 +11,7 @@ const issueSchema=new mongoose.Schema({
         ref:'User'
     },
     creator:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "User"
     },
     stage:{
@@ -26,12 +26,12 @@ const issueSchema=new mongoose.Schema({
         required:true
     },
     cycleId:{
-     type:mongoose.Schema.Types.ObjectId,
+     type:Schema.Types.ObjectId,
      ref:'Cycle'
     },
     dueDate:Date,
     projectId:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:Schema.Types.ObjectId,
         ref:'Project',
         required:true
     },

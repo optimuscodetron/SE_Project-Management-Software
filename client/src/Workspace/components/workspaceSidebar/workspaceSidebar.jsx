@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import WorkspaceListSidebar from "./components/workspacesListSidebar";
 import ProjectListSidebar from "./components/projectListSidebar";
 import { NavLink } from "react-router-dom";
 import './workspaceSidebar.css';
-import { AiFillSetting } from "react-icons/ai"
-import { IoPersonAdd } from "react-icons/io5";
-import { HiPlus } from "react-icons/hi";
-import CreateNewProject from "../../CreateNewProject/CreateNewProject";
+
+import Invite from "../../../Invite/Invite";
+
 const WorkspaceSidebar = (props) => {
 
   return (
@@ -21,45 +20,38 @@ const WorkspaceSidebar = (props) => {
             </li>
 
             <li>
-              <NavLink to={'/workspace/settings/general'} className={'text-decoration-none '}>
               <div
                 className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
               >
-                  <AiFillSetting/>
-                <span className="flex row ms-3 text-sm  whitespace-nowrap text-decoration-none">
+                <span className="flex-1 ms-3 font-medium  whitespace-nowrap">
                   Workspace Settings
                 </span>
               </div>
-              </NavLink>
             </li>
 
             <li>
-              <div
-                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group hover:cursor-pointer"
-                onClick={props.onOpenInviteMembers} 
-              >
-                <IoPersonAdd/>
-                <span className="flex-1 ms-3 text-sm ">Invite Members</span>
-              </div>
-            </li>
-
-            <li>
-            <NavLink to={'/create_workspace'} className={'text-decoration-none '}>
+            <NavLink to="../../../Invite" activeClassName="text-blue-500">
               <div
                 className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
               >
-                <HiPlus/>
-                <span className="flex-1 ms-3 text-sm whitespace-nowrap">
+                <span className="flex-1 ms-3 font-medium ">Invite Members</span>
+              </div>
+            </NavLink>
+            </li>
+
+            <li>
+              <div
+                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
+              >
+                <span className="flex-1 ms-3 font-medium whitespace-nowrap">
                   Create Workspace
                 </span>
               </div>
-              </NavLink>
             </li>
 
             <div className="border-b border-white my-2 w-full"></div>
             <li>
-              <ProjectListSidebar onOpenCreateProject={props.onOpenCreateProject}/>
-             
+              <ProjectListSidebar/>
             </li>
           </ul>
         </div>

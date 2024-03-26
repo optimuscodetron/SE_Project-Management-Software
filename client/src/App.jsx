@@ -20,21 +20,13 @@ import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
 
 
-import Project from "./Project/upcomingCycles";
-import Workspace from "./Workspace/workspace";
+import Workspace from './Workspace/workspace'
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import MemberSetting from './Workspace/Settings/Member/MemberSetting';
 import Profile from "./Workspace/Settings/Profile/Profile";
 import General from "./Workspace/Settings/General/General";
 
 import Invite from "./Invite/Invite";
-
-
-// import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
-// import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
-
-
-import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
 
 
 
@@ -79,10 +71,9 @@ function App() {
                     {/* by ayush */}
                     <Route path="/create_workspace" element={<WorkPage/>}> </Route>
                     <Route path="/workspace/settings/general" element={<General/>}> </Route>
-                    <Route path="/workspace/create_new_project" element={<CreateNewProject/>}> </Route>
                     {/* by Priyanshu */}
                     <Route path="/workspace/settings/members" element={<MemberSetting/>}> </Route>
-                   <Route  path="/upcomingCycles" element={<Project/>} />
+                   
                   
                    
                    
@@ -108,6 +99,7 @@ function App() {
 
 
                     </Routes>
+            
        </>
     );
 };
