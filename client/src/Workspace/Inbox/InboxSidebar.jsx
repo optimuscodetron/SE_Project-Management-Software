@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import WorkspaceSidebar from '../components/workspaceSidebar/workspaceSidebar';
-import Navbar from '../../Components/Layout/navbar/navbar';
 import "./Inbox.css";
 
-const Inbox = () => {
+const Inbox = (props) => {
   const [messages, setMessages] = useState([
     {
       id: 6,
@@ -95,8 +93,6 @@ const Inbox = () => {
 
   return (
     <div className="inbox-container bg-navy-700">
-      <Navbar />
-      <WorkspaceSidebar />
       <div className="inbox-content">
         <div className="message-list">
           <br></br>
@@ -106,11 +102,12 @@ const Inbox = () => {
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <NavLink to="/workspace" className="close-button">
+          <div className='flex justify-end mx-2'>
+          <div onClick={props.onCloseInbox} className="close-button">
               &#x2716;   
-            </NavLink>
+            </div>
             <br></br>
-
+            </div>
           <h2 className="inbox-title">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M4 4H28V28H4Z" fill="#007BFF" />

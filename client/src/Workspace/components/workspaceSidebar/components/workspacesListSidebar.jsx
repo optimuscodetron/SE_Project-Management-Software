@@ -6,7 +6,7 @@ import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import Axios from "axios";
 
-const WorkspaceListSidebar = () => {
+const WorkspaceListSidebar = (props) => {
 
 
 
@@ -36,8 +36,8 @@ const WorkspaceListSidebar = () => {
     return (
         <>
         <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between cursor-pointer" onClick={showWorkspaceHandler}>
-              <div className="flex">
-                
+              <div className="flex" onClick={props.openWorkspace}>
+                <PiMonitorFill/>
                 <span className="text-sm ms-3">{currentWorkspace}</span>
                 </div>
                 {showWorkspaces?<FaChevronUp />:<FaChevronDown />}

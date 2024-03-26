@@ -10,8 +10,6 @@ import { HiPlus } from "react-icons/hi";
 
 import CreateNewProject from "../../CreateNewProject/CreateNewProject";
 
-
-import InboxSidebar from "../../../UI/Optional";
 const WorkspaceSidebar = (props) => {
 
   
@@ -24,7 +22,7 @@ const WorkspaceSidebar = (props) => {
         <div className="h-full px-2 overflow-y-auto bg-[#171e28] dark:bg-[#171e28]">
           <ul className="space-y-2 font-medium pt-2">
             <li>
-              <WorkspaceListSidebar headerInfo={props.currentWorkspace} />
+              <WorkspaceListSidebar headerInfo={props.currentWorkspace} openWorkspace={props.openWorkspace} />
             </li>
 
             <li>
@@ -42,7 +40,7 @@ const WorkspaceSidebar = (props) => {
 
             <li>
               <div
-                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group hover:cursor-pointer"
+                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group hover:cursor-pointer "
                 onClick={props.onOpenInviteMembers} 
               >
                 <IoPersonAdd/>
@@ -52,16 +50,15 @@ const WorkspaceSidebar = (props) => {
 
             
             <li>
-            <NavLink to={'/workspace/inbox'} className={'text-decoration-none '}>
               <div
-                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group"
+                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group hover:cursor-pointer"
+                onClick={props.inboxOpened}
               >
                 <FiInbox/>
                 <span className="flex-1 ms-3 text-sm whitespace-nowrap">
                   Inbox
                 </span>
               </div>
-              </NavLink>
             </li>
 
             <li>

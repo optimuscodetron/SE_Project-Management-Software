@@ -6,6 +6,7 @@ import WorkspaceIssues from "./workspaceIssues/workspaceIssues";
 import Invite from "../Invite/Invite";
 import CreateNewProject from "./CreateNewProject/CreateNewProject";
 import Header from "../Components/header/header";
+import Inbox from "./Inbox/InboxSidebar";
 export default function Workspace() {
   const [showSideBar, setShowSideBar] = useState(true);
   const showSideBarHandler = () => {
@@ -37,6 +38,23 @@ export default function Workspace() {
     }]);
   }
 
+  const [openWorkspace,setOpenWorkspace]=useState(true);
+  const openWorkspaceHandler=()=>{
+    setOpenInbox(false);
+    setOpenWorkspace(true);
+  }
+
+  const [openInbox,setOpenInbox]=useState(false);
+  const openInboxHandler=()=>{
+    setOpenWorkspace(false);
+    setOpenInbox(true);
+  }
+  const closeInboxHandler=()=>{
+    setOpenInbox(false);
+    setOpenWorkspace(true);
+  }
+
+
   return (
     <div className="flex flex-col">
       <div className="flex-1">
@@ -45,13 +63,14 @@ export default function Workspace() {
       <div className="flex flex-row">
         <div className="">
           {showSideBar&&
-        <WorkspaceSidebar onOpenInviteMembers={openInviteMembersHandler} onOpenCreateProject={openCreateProject} showSideBar={showSideBar} currentWorkspace={currentWorkspaceHandler} />
+        <WorkspaceSidebar onOpenInviteMembers={openInviteMembersHandler} onOpenCreateProject={openCreateProject} showSideBar={showSideBar} currentWorkspace={currentWorkspaceHandler} inboxOpened={openInboxHandler} openWorkspace={openWorkspaceHandler} />
           }
         </div>
         {/* Main content goes here */}
         <div className="overflow-x-scroll">
           <Header headerInfo={headerInfo}/>
-          <WorkspaceIssues/>
+          {openWorkspace&&<WorkspaceIssues/>}
+          {openInbox&&<Inbox onCloseInbox={closeInboxHandler}/>}
         </div>
         <div className="flex-1">
         {openInviteMembers  && <Invite onCloseInviteMembers={closeInviteMembersHandler}/>}
