@@ -6,7 +6,15 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { gapi } from "gapi-script";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { gapi } from "gapi-script";
 
+import Login from "./Authantication/views/Login";
+import Registration from "./Authantication/views/Registration";
+import Email from "./Authantication/Forgetpassword/email";
+import Otp from "./Authantication/Forgetpassword/otp";
+import Newpassword from "./Authantication/Forgetpassword/newpassword";
 import Login from "./Authantication/views/Login";
 import Registration from "./Authantication/views/Registration";
 import Email from "./Authantication/Forgetpassword/email";
@@ -20,24 +28,21 @@ import Project from './Project/Project';
 import IssueInfo from "./Project/ProjectIssues/IssueInfo/IssueInfo";
 import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
 import Workspace from "./Workspace/workspace";
+import Createissue from "./Workspace/workspaceIssues/components/issueCreate.jsx";
 import WorkPage from "./Create_workspace/Components/WorkPage";
-import MemberSetting from './Workspace/Settings/Member/MemberSetting';
+import MemberSetting from "./Workspace/Settings/Member/MemberSetting";
 import Profile from "./Workspace/Settings/Profile/Profile";
 import General from "./Workspace/Settings/General/General";
 
 import Invite from "./Invite/Invite";
 
-
 // import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 // import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
 
-
 import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
 
-
-
-const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
-
+const clientid =
+  "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
 function App() {
     useEffect(() => {
@@ -60,69 +65,63 @@ function App() {
         {/* <Redirect from="/" to="/register" noThrow /> */}
         {/* <Route path='/user/otp' element={<Otp />} /> */}
 
-                {/* <Registration path="/register" /> */}
-                {/* <Email path="/email" /> */}
-                {/* <Login path="/login" /> */}
-                {/* <Main path="/home" onSubmit={onSubmit} /> */}
-                {/* <Main path="/home/geer/:id" onSubmit={onSubmit} /> */}
-                {/* <NewUser path="/welcome" /> */}
-                <Routes>
-                    {/* <Route path="/authenticate" component={Authenticate} /> */}
-                    {/* <Route exact path="/register" element={< />} /> */}
-                    <Route  path="/register" element={<Registration />} />
-                    <Route  path="/email" element={<Email />} />
+      {/* <Registration path="/register" /> */}
+      {/* <Email path="/email" /> */}
+      {/* <Login path="/login" /> */}
+      {/* <Main path="/home" onSubmit={onSubmit} /> */}
+      {/* <Main path="/home/geer/:id" onSubmit={onSubmit} /> */}
+      {/* <NewUser path="/welcome" /> */}
+      <Routes>
+        {/* <Route path="/authenticate" component={Authenticate} /> */}
+        {/* <Route exact path="/register" element={< />} /> */}
+        <Route path="/register" element={<Registration />} />
+        <Route path="/email" element={<Email />} />
 
-                   
+        {/* by ayush */}
+        <Route path="/create_workspace" element={<WorkPage />}>
+          {" "}
+        </Route>
+        <Route path="/workspace/settings/general" element={<General />}>
+          {" "}
+        </Route>
+        <Route
+          path="/workspace/create_new_project"
+          element={<CreateNewProject />}
+        >
+          {" "}
+        </Route>
+        {/* by Priyanshu */}
+        <Route path="/workspace/settings/members" element={<MemberSetting />}>
+          {" "}
+        </Route>
+        <Route path="/upcomingCycles" element={<Project />} />
 
-                    {/* by ayush */}
-                    <Route path="/create_workspace" element={<WorkPage/>}> </Route>
-                    <Route path="/workspace/settings/general" element={<General/>}> </Route>
-                    <Route path="/workspace/create_new_project" element={<CreateNewProject/>}> </Route>
-                    {/* by Priyanshu */}
-                    <Route path="/workspace/settings/members" element={<MemberSetting/>}> </Route>
-                   <Route  path="/upcomingCycles" element={<Project/>} />
-                  
-                   
-                   
+        <Route path="/otp" element={<Otp />} />
+        <Route path="/newpassword" element={<Newpassword />} />
+        <Route path="/" element={<Login />} />
 
+        <Route path="/workspace" element={<Workspace />} />
+        <Route path="/workspace/project/board" element={<Board />} />
 
-                    <Route  path="/otp" element={<Otp />} />
-                    <Route  path="/newpassword" element={<Newpassword />} />
-                    <Route  path="/" element={<Login />} />
-
-
-
-                    <Route  path="/workspace" element={<Workspace />} />
-                    <Route  path="/workspace/project/board" element={<Board />} />
-                      
-                    {/* by Harsh */}
-                    <Route  path="/workspace/project/settings" element={<ProjectSettings />} />
-                    <Route  path="/workspace/project/board/issue" element={<IssueInfo />} />
-
+        {/* by Harsh */}
+        <Route
+          path="/workspace/project/settings"
+          element={<ProjectSettings />}
+        />
+        <Route path="/workspace/project/board/issue" element={<IssueInfo />} />
         {/* by manav */}
         <Route
           path="/workspace/project/createissue"
           element={<Createissue />}
         />
+        <Route path="/workspace/settings/profile" element={<Profile />} />
 
-        <Route path="/create_workspace" element={<WorkPage />}>
-          {" "}
-        </Route>
-        {/* <Route component={PageError} /> */}
+        {/*by khushboo*/}
+        <Route path="/Invite" element={<Invite />} />
       </Routes>
     </>
   );
 }
-                    <Route path="/workspace/settings/profile" element={<Profile />} />  
-
-                    {/*by khushboo*/}
-                    <Route path="/Invite" element={<Invite/>} />
-
-
-                    </Routes>
-       </>
-    );
-};
 
 export default App;
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import IssuesList from "./components/issuesList";
 import IssuePanel from "./components/issuePanel";
+import IssueCreate from "./components/issueCreate";
 import { LuCircleDashed } from "react-icons/lu";
 import { FaRegCircle } from "react-icons/fa6";
 import { FaCircleHalfStroke } from "react-icons/fa6";
@@ -48,14 +49,17 @@ const WorkspaceIssues = (props) => {
     setDataLoaded(true);
   }, []);
 
+  const toggleCreateOverlay = () => {
+    setShowCreateOverlay((prev) => !prev);
+  };
+
   const moveIssue = (issueId, currentStatus, newStatus) => {
     console.log("Function moveIssue Called with status", { newStatus });
     let currentIssue;
     if (currentStatus === newStatus) {
       console.log("Current Status and New Status are the same");
       return 0;
-    } 
-    else {
+    } else {
       const removeFromStage = (issues, setter) => {
         currentIssue = issues.find((issue) => issue.id === issueId);
         console.log(currentIssue);
