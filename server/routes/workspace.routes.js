@@ -7,5 +7,6 @@ module.exports = function(app){
     app.post('/api/users/workspace', authenticate, Workspacecontroller.saveworskapce);
 
     // app.get('/api/getAllProjectOfUser', Workpsacecontroller.getAllOfUser);
+    app.get('/api/getAllWorkspaceOfUser',authenticate, Workpsacecontroller.WorkspaceSetting);
    
 }
