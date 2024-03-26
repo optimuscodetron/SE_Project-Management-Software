@@ -5,12 +5,12 @@ import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import Axios from "axios";
 
-const WorkspaceListSidebar = (props) => {
+const WorkspaceListSidebar = () => {
   const [showWorkspaces, setShowWorkspaces] = useState(false);
   const showWorkspaceHandler = () => {
     setShowWorkspaces((prevState) => !prevState);
   };
-  const [workspaceData, setWorkspaceData] = useState();
+
   const [userWorkspaces, setUserWorkspace] = useState([
     "Workspace 1",
     "Workspace 2",

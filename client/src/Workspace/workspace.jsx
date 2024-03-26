@@ -5,8 +5,6 @@ import { useState } from "react";
 import WorkspaceIssues from "./workspaceIssues/workspaceIssues";
 import Invite from "../Invite/Invite";
 import CreateNewProject from "./CreateNewProject/CreateNewProject";
-import Header from "../Components/header/header";
-import Inbox from "./Inbox/InboxSidebar";
 export default function Workspace() {
   const [showSideBar, setShowSideBar] = useState(true);
   const showSideBarHandler = () => {

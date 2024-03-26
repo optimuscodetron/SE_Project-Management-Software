@@ -11,7 +11,6 @@ import { HiPlus } from "react-icons/hi";
 import Axios from "axios";
 
 import CreateNewProject from "../../CreateNewProject/CreateNewProject";
-
 const WorkspaceSidebar = (props) => {
   const [workspaceId, setWorkspaceId] = useState();
 

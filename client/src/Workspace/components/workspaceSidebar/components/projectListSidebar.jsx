@@ -7,7 +7,6 @@ import { RiTeamFill } from "react-icons/ri";
 import { GoProjectRoadmap } from "react-icons/go";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import CreateNewProject from "../../../CreateNewProject/CreateNewProject";
-import Axios from "axios";
 const ProjectListSidebar = (props) => {
   const workspaceId=useSelector((state)=>state.workspaceId.value);
   console.log(workspaceId);
@@ -83,12 +82,12 @@ const ProjectListSidebar = (props) => {
           >
             <div className="flex ">
               <GoProjectRoadmap />
-              <span className="ms-3 text-sm ">All Projects</span>
+              <span className="ms-3 text-sm">All Projects</span>
             </div>
             {showProject ? <FaChevronUp /> : <FaChevronDown />}
           </div>
           {showProject && (
-            <ul className={""}>
+            <ul className={"flex row ml-8"}>
               {userProjects.map((item) => (
                 <li>
                   <NavLink to={'/workspace/project'} className="text-decoration-none " >
