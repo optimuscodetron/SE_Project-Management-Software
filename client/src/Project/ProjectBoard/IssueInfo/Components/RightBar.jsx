@@ -1,158 +1,199 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
+import Dropdown from "./dropdown";
 import "react-datepicker/dist/react-datepicker.css";
 
+function formatDate(dateString) {
+  const [day, month, year] = dateString.split("/");
+  return `${year}-${month}-${day}`;
+}
+
 function RightBar() {
-  const [status, setStatus] = useState("1");
-  const [priority, setPriority] = useState("1");
-  const [cycle, setCycle] = useState("1");
-  const [dueDate, setDueDate] = useState(null);
-  const [assigne, setAssigne] = useState("Harsh");
-  const [project, setProject] = useState("Project_name");
+  const [isMediumScreen, setIsMediumScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMediumScreen(window.innerWidth <= 1024);
+    };
+
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const projectOptions = [
+    "Project 1",
+    "Project 2",
+    "Project 3",
+    "Project 4",
+    "Project 5",
+  ];
+  const initialSelectedProjectOption = "Project 1";
+
+  const statusOptions = ["Backlog", "Todo", "In Progress", "Done", "Canceled"];
+  const initialSelectedStatusOption = "Backlog";
+
+  const PriorityOptions = ["No priority", "Urgent", "High", "Medium", "Low"]; // Your options array
+  const initialSelectedPriorityOption = "No priority"; // Initial selected option
+
+  const AssigneOptions = ["Het", "Kushagra", "Nikhil"]; // Your options array
+  const initialSelectedAssigneOption = "Het"; // Initial selected option
+
+  const LabelOptions = ["Improvement", "Feature", "Bug", "None"]; // Your options array
+  const initialSelectedLabelOption = "None"; // Initial selected option
+
+  const cycleOptions = [
+    "Cycle 1",
+    "Cycle 2",
+    "Cycle 3",
+    "Cycle 4",
+    "Cycle 5",
+    "Cycle 6",
+    "Cycle 7",
+    "Cycle 8",
+  ]; // Your options array
+  const initialSelectedCycleOption = "Cycle 1"; // Initial selected option
+
+  const [dueDate, setStartDate] = useState(formatDate("22/03/2024"));
+
   return (
-    <div
-      className="bg-gray-900 w-[38vw] flex flex-col overflow-auto text-white p-3"
-      style={{
-        scrollbarWidth: "thin",
-        scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
-      }}
-    >
-      <div className="mt-10 mb-4 flex justify-start ">
-        <div className="text-white w-[20%] mr-3">Status</div>
-        <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          className="block appearance-none w-[30%]  h-7  bg-[rgb(15,19,29)] border border-gray-400 hover:border-gray-500 px-2 rounded shadow leading-tight focus:outline-none focus:border-blue-500 text-white overflow-x-hidden"
+    <div>
+      {!isMediumScreen ? (
+        <div
+          className="bg-gray-900 w-[30vw] h-screen flex flex-col overflow-auto text-white p-3"
+          style={{
+            scrollbarWidth: "thin",
+            scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
+          }}
         >
-          <option value="1">
-            Backlog{"   "}
-            {status === "1" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="2">
-            Todo{"   "}
-            {status === "2" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="3">
-            In Progress{"   "}
-            {status === "3" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="4">
-            In Review{"   "}
-            {status === "4" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="5">
-            Done{"   "}
-            {status === "5" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="6">
-            Canceled{"   "}
-            {status === "6" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="7">
-            Duplicate{"   "}
-            {status === "7" && <span className="ml-2">&#10003;</span>}
-          </option>
-        </select>
-      </div>
+          <div className="my-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Status</div>
+            <Dropdown
+              options={statusOptions}
+              initialSelectedOption={initialSelectedStatusOption}
+            />
+          </div>
 
-      <div className="mb-4 flex justify-start">
-        <div className="text-white w-[20%] mr-3">Priority</div>
-        <select
-          value={priority}
-          onChange={(e) => setPriority(e.target.value)}
-          className="block appearance-none w-[30%]  h-7  bg-[rgb(15,19,29)] border border-gray-400 hover:border-gray-500 px-2 rounded shadow leading-tight focus:outline-none focus:border-blue-500 text-white overflow-x-hidden"
-        >
-          <option value="1">
-            No priority{"   "}
-            {priority === "1" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="2">
-            Urgent{"   "}
-            {priority === "2" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="3">
-            High{"   "}
-            {priority === "3" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="4">
-            Medium{"   "}
-            {priority === "4" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="5">
-            Low{"   "}
-            {priority === "5" && <span className="ml-2">&#10003;</span>}
-          </option>
-        </select>
-      </div>
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Priority</div>
+            <Dropdown
+              options={PriorityOptions}
+              initialSelectedOption={initialSelectedPriorityOption}
+            />
+          </div>
 
-      <div className="mb-4 flex justify-start">
-        <div className="text-white w-[20%] mr-3">Assigne</div>
-        <div className="block appearance-none w-[30%]  h-7  bg-[rgb(15,19,29)] border border-gray-400 hover:border-gray-500 px-2 rounded shadow leading-tight focus:outline-none focus:border-blue-500 text-white">
-          {assigne}
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Assigne</div>
+            <Dropdown
+              options={AssigneOptions}
+              initialSelectedOption={initialSelectedAssigneOption}
+            />
+          </div>
+
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Cycle</div>
+            <Dropdown
+              options={cycleOptions}
+              initialSelectedOption={initialSelectedCycleOption}
+            />
+          </div>
+
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Labels</div>
+            <Dropdown
+              options={LabelOptions}
+              initialSelectedOption={initialSelectedLabelOption}
+            />
+          </div>
+
+          <hr class="w-[95%] h-1 mx-auto mb-5 mt-3 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-400"></hr>
+
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Project</div>
+            <Dropdown
+              options={projectOptions}
+              initialSelectedOption={initialSelectedProjectOption}
+            />
+          </div>
+
+          <div className="mb-4 flex justify-start items-center">
+            <div className="text-white w-[20%] mr-3">Due date</div>
+            <DatePicker
+              selected={dueDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="dd/MM/yyyy"
+              className="bg-gray-800 text-white py-1 px-4 rounded inline-flex items-center focus:outline-none w-40"
+            />
+          </div>
         </div>
-      </div>
-
-      <div className="mb-4 flex justify-start">
-        <div className="text-white w-[20%] mr-3">Cycle</div>
-        <select
-          value={cycle}
-          onChange={(e) => setCycle(e.target.value)}
-          className="block appearance-none w-[30%]  h-7  bg-[rgb(15,19,29)] border border-gray-400 hover:border-gray-500 px-2 rounded shadow leading-tight focus:outline-none focus:border-blue-500 text-white overflow-x-hidden"
+      ) : (
+        <div
+          className="bg-gray-900 w-full flex flex-row overflow-x-scroll overflow-y-hidden text-white p-3"
+          
         >
-          <option value="1">
-            Cycle 1{"   "}
-            {cycle === "1" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="2">
-            Cycle 2{"   "}
-            {cycle === "2" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="3">
-            Cycle 3{"   "}
-            {cycle === "3" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="4">
-            Cycle 4{"   "}
-            {cycle === "4" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="5">
-            Cycle 5{"   "}
-            {cycle === "5" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="6">
-            Cycle 6{"   "}
-            {cycle === "6" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="7">
-            Cycle 7{"   "}
-            {cycle === "7" && <span className="ml-2">&#10003;</span>}
-          </option>
-          <option value="8">
-            Cycle 8{"   "}
-            {cycle === "8" && <span className="ml-2">&#10003;</span>}
-          </option>
-          {/* Add duration options */}
-        </select>
-      </div>
+          <div className="mr-4 ml-7 flex justify-start items-center">
+            
+            <Dropdown
+              options={statusOptions}
+              initialSelectedOption={initialSelectedStatusOption}
+            />
+          </div>
 
-      <hr class="w-[95%] h-1 mx-auto mb-5 mt-3 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-400"></hr>
+          <div className="mr-4 flex justify-start items-center">
+            
+            <Dropdown
+              options={PriorityOptions}
+              initialSelectedOption={initialSelectedPriorityOption}
+            />
+          </div>
 
-      <div className="mb-4 flex justify-start">
-        <div className="text-white w-[20%] mr-3">Project</div>
-        <div className="block appearance-none w-[30%] h-7 bg-[rgb(15,19,29)] border border-gray-400 hover:border-gray-500 px-2 rounded shadow leading-tight focus:outline-none focus:border-blue-500 text-white overflow-x-hidden">
-          {project}
+          <div className="mr-4 flex justify-start items-center">
+            
+            <Dropdown
+              options={AssigneOptions}
+              initialSelectedOption={initialSelectedAssigneOption}
+            />
+          </div>
+
+          <div className="mr-4 flex justify-start items-center">
+            
+            <Dropdown
+              options={cycleOptions}
+              initialSelectedOption={initialSelectedCycleOption}
+            />
+          </div>
+
+          <div className="mr-4 flex justify-start items-center">
+            
+            <Dropdown
+              options={LabelOptions}
+              initialSelectedOption={initialSelectedLabelOption}
+            />
+          </div>
+
+
+          <div className="mr-4 flex justify-start items-center">
+            
+            <Dropdown
+              options={projectOptions}
+              initialSelectedOption={initialSelectedProjectOption}
+            />
+          </div>
+
+          <div className="mr-4 flex justify-start items-center">
+            
+            <DatePicker
+              selected={dueDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="dd/MM/yyyy"
+              className="bg-gray-800 text-white py-1 px-4 rounded inline-flex items-center focus:outline-none w-40"
+            />
+          </div>
         </div>
-      </div>
-
-      <div className="mb-4 flex justify-start">
-        <div className="text-white w-[20%] mr-3">Due date</div>
-        <DatePicker
-          selected={dueDate}
-          onChange={(date) => setDueDate(date)}
-          className=" bg-[rgb(15,19,29)]  h-7  border border-gray-400 hover:border-gray-500 px-2 rounded shadow leading-tight focus:outline-none focus:border-blue-500 text-white w-[8vw] "
-          placeholderText="Select Date"
-        />
-      </div>
+      )}
     </div>
   );
 }

@@ -2,7 +2,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import UserPopUp from "./component/userPopUp";
 import Modal from "../../../UI/Modal";
-import "./navbar.css";
 const Navbar = (props) => {
   return (
     <nav className="z-50 w-screen bg-[#171e28] border-b border-gray-200 dark:bg-[#171e28] dark:border-gray-700 h-16 custom-navbar">

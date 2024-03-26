@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { gapi } from "gapi-script";
 
-import Error from "./Error";
 import Login from "./Authantication/views/Login";
 import Registration from "./Authantication/views/Registration";
 import Email from "./Authantication/Forgetpassword/email";
@@ -19,16 +18,13 @@ import Board from "./Project/ProjectBoard/Board";
 import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
 
-import Project from "./Project/Current_cyc";
 import Workspace from "./Workspace/workspace";
 import WorkPage from "./Create_workspace/Components/WorkPage";
-import Createissue from "./Project/Createissue/Createissue";
 import MemberSetting from "./Workspace/Settings/Member/MemberSetting";
 import Profile from "./Workspace/Settings/Profile/Profile";
 import General from "./Workspace/Settings/General/General";
 
 import Invite from "./Invite/Invite";
-import InboxSidebar from "./Workspace/Inbox/InboxSidebar";
 
 // import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 // import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
@@ -86,12 +82,7 @@ function App() {
         <Route path="/newpassword" element={<Newpassword />} />
         <Route path="/" element={<Login />} />
 
-        <Route path="*" element={<Error />} />
-
         <Route path="/workspace" element={<Workspace />} />
-        {/* by Chetan */}
-        <Route path="/Current_cyc" element={<Project />} />
-
         <Route path="/workspace/project/board" element={<Board />} />
 
         {/* by Harsh */}
@@ -101,16 +92,16 @@ function App() {
         />
         <Route path="/workspace/project/board/issue" element={<IssueInfo />} />
 
-        <Route path="/workspace/settings/profile" element={<Profile />} />
-
-        {/*by khushboo*/}
-        <Route path="/Invite" element={<Invite />} />
-
         {/* by manav */}
         <Route
           path="/workspace/project/createissue"
           element={<Createissue />}
         />
+
+        <Route path="/create_workspace" element={<WorkPage />}>
+          {" "}
+        </Route>
+        {/* <Route component={PageError} /> */}
       </Routes>
     </>
   );
