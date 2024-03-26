@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import IssuesList from "./components/issuesList";
 import IssuePanel from "./components/issuePanel";
+import IssueCreate from "./components/issueCreate";
 import { LuCircleDashed } from "react-icons/lu";
 import { FaRegCircle } from "react-icons/fa6";
 import { FaCircleHalfStroke } from "react-icons/fa6";
@@ -8,13 +9,14 @@ import { FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import CreateNewProject from "../CreateNewProject/CreateNewProject";
 const WorkspaceIssues = () => {
+  const [showCreateOverlay, setShowCreateOverlay] = useState(false);
   const [toDoIssues, setToDoIssues] = useState([]);
   const [inProgressIssues, setInProgressIssues] = useState([]);
   const [backlogIssues, setBacklogIssues] = useState([]);
   const [doneIssues, setDoneIssues] = useState([]);
   const [cancelledIssues, setCancelledIssues] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [isopen,setIsOpen]=useState(false);
+  const [isopen, setIsOpen] = useState(false);
   useEffect(() => {
     const todoDummy = [];
     const inProgressDummy = [];
@@ -44,14 +46,17 @@ const WorkspaceIssues = () => {
     setDataLoaded(true);
   }, []);
 
+  const toggleCreateOverlay = () => {
+    setShowCreateOverlay((prev) => !prev);
+  };
+
   const moveIssue = (issueId, currentStatus, newStatus) => {
     console.log("Function moveIssue Called with status", { newStatus });
     let currentIssue;
     if (currentStatus === newStatus) {
       console.log("Current Status and New Status are the same");
       return 0;
-    } 
-    else {
+    } else {
       const removeFromStage = (issues, setter) => {
         currentIssue = issues.find((issue) => issue.id === issueId);
         console.log(currentIssue);
@@ -127,53 +132,60 @@ const WorkspaceIssues = () => {
 
   return (
     <div className=" mt-16 bg-[#171e28] overflow-x-scroll ">
-     
       {dataLoaded && (
-        <div className="flex flex-row w-screen">
-          <div className="w-[320px]">
-            <IssuePanel
-              statusName="Backlog"
-              issues={backlogIssues}
-              onMoveIssue={moveIssue}
-              icon={<LuCircleDashed />}
-            />
+        <>
+          <div className="flex flex-row w-screen">
+            <div className="w-[320px]">
+              <IssuePanel
+                statusName="Backlog"
+                issues={backlogIssues}
+                onMoveIssue={moveIssue}
+                icon={<LuCircleDashed />}
+                onToggleCreateOverlay={toggleCreateOverlay}
+              />
+            </div>
+            <div className="w-[320px]">
+              <IssuePanel
+                statusName="To Do"
+                issues={toDoIssues}
+                onMoveIssue={moveIssue}
+                icon={<FaRegCircle />}
+                onToggleCreateOverlay={toggleCreateOverlay}
+              />
+            </div>
+            <div className="w-[320px]">
+              <IssuePanel
+                statusName="In Progress"
+                issues={inProgressIssues}
+                onMoveIssue={moveIssue}
+                icon={<FaCircleHalfStroke />}
+                iconColor="text-yellow-400"
+                onToggleCreateOverlay={toggleCreateOverlay}
+              />
+            </div>
+            <div className="w-[320px]">
+              <IssuePanel
+                statusName="Done"
+                issues={doneIssues}
+                onMoveIssue={moveIssue}
+                icon={<FaRegCheckCircle />}
+                iconColor="text-green-400"
+                onToggleCreateOverlay={toggleCreateOverlay}
+              />
+            </div>
+            <div className="w-[320px]">
+              <IssuePanel
+                statusName="Cancelled"
+                issues={cancelledIssues}
+                onMoveIssue={moveIssue}
+                icon={<FaRegTimesCircle />}
+                iconColor="text-red-400"
+                onToggleCreateOverlay={toggleCreateOverlay}
+              />
+            </div>
           </div>
-          <div className="w-[320px]">
-            <IssuePanel
-              statusName="To Do"
-              issues={toDoIssues}
-              onMoveIssue={moveIssue}
-              icon={<FaRegCircle />}
-            />
-          </div>
-          <div className="w-[320px]">
-            <IssuePanel
-              statusName="In Progress"
-              issues={inProgressIssues}
-              onMoveIssue={moveIssue}
-              icon={<FaCircleHalfStroke />}
-              iconColor="text-yellow-400"
-            />
-          </div>
-          <div className="w-[320px]">
-            <IssuePanel
-              statusName="Done"
-              issues={doneIssues}
-              onMoveIssue={moveIssue}
-              icon={<FaRegCheckCircle />}
-              iconColor='text-green-400'
-            />
-          </div>
-          <div className="w-[320px]">
-            <IssuePanel
-              statusName="Cancelled"
-              issues={cancelledIssues}
-              onMoveIssue={moveIssue}
-              icon={<FaRegTimesCircle />}
-              iconColor='text-red-400'
-            />
-          </div>
-        </div>
+          {showCreateOverlay && <IssueCreate onClose={toggleCreateOverlay} />}
+        </>
       )}
     </div>
   );
