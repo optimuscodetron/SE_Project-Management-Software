@@ -3,6 +3,9 @@ import WorkspaceSidebar from "./components/workspaceSidebar/workspaceSidebar";
 import Navbar from "../Components/Layout/navbar/navbar";
 import { useState } from "react";
 import WorkspaceIssues from "./workspaceIssues/workspaceIssues";
+import Invite from "../Invite/Invite";
+import CreateNewProject from "./CreateNewProject/CreateNewProject";
+
 export default function Workspace() {
   const [showSideBar, setShowSideBar] = useState(false);
   const showSideBarHandler = () => {

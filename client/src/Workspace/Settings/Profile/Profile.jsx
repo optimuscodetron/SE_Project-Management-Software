@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import SettingsSidebar from "../Component/SettingsSidebar";
+import Navbar from "../../../Components/Layout/navbar/navbar";
+import { ToastContainer, toast } from "react-toastify";
 
 const Profile = () => {
-  // State variables to store form data
   const [formData, setFormData] = useState({
-    email: "user@example.com", // Default email
-    fullname: "John Doe", // Default full name
-    username: "johndoe123", // Default username
+    email: "", // Default email
+    fullname: "", // Default full name
+    username: "", // Default username
   });
   const [showSidebar, setShowSidebar] = useState(false);
 

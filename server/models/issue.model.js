@@ -6,19 +6,19 @@ const issueSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    description: String,
-    assigneeUserID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+    description:String,
+    assigneeUserID :{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'User'
     },
-    creator: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+    creator:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     },
-    stage: {
-      type: String,
-      enum: ["Backlog", "Todo", "Inprogress", "Done", "Cancelled"],
-      required: true,
+    stage:{
+        type:String,
+        enum:['Backlog','Todo','Inprogress','Done','Cancelled'],
+        required:true
     },
     label:
     {type:String
@@ -28,21 +28,20 @@ const issueSchema=new mongoose.Schema({
         enum:['Lowest','Low','High','Highest'],
         required:true
     },
-    cycleId: {
-      type: Schema.Types.ObjectId,
-      ref: "Cycle",
+    cycleId:{
+     type:mongoose.Schema.Types.ObjectId,
+     ref:'Cycle'
     },
-    dueDate: Date,
-    projectId: {
-      type: Schema.Types.ObjectId,
-      ref: "Project",
-      required: true,
+    dueDate:Date,
+    projectId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Project',
+        required:true
     },
-    creationDate: {
-      type: Date,
-      required: true,
-    },
-  },
-  { timestamps: true }
-);
-module.exports.Issue = mongoose.model("Issue", issueSchema);
+    creationDate:{
+    type:Date,
+    required:true
+    }
+
+},{timestamps: true})
+module.exports.Issue = mongoose.model('Issue', issueSchema);
