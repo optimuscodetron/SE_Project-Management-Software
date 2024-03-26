@@ -8,9 +8,6 @@ import { GoProjectRoadmap } from "react-icons/go";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import CreateNewProject from "../../../CreateNewProject/CreateNewProject";
 import Axios from "axios";
-
-import { useSelector,useDispatch } from "react-redux";
-
 const ProjectListSidebar = (props) => {
   const workspaceId=useSelector((state)=>state.workspaceId.value);
   console.log(workspaceId);
@@ -18,7 +15,6 @@ const ProjectListSidebar = (props) => {
 
   const [showProject, setShowProject] = useState(false);
   const [isopen, setisopen] = useState(false);
- 
 
   const showProjectHandler = () => {
     setShowProject((prevState) => !prevState);

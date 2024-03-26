@@ -6,20 +6,17 @@ import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import Axios from "axios";
 
-import { useSelector,useDispatch } from "react-redux";
-import {changeWorkspaceId} from "../../../../redux/WorkspaceData/WorkspaceIdSlice"
-
-
 
 const WorkspaceListSidebar = (props) => {
-  // const workspaceId=useSelector((state)=>state.workspaceId.value);
-  const dispatch = useDispatch()
-  // console.log(workspaceId);
 
   const [showWorkspaces, setShowWorkspaces] = useState(false);
   const showWorkspaceHandler = () => {
     setShowWorkspaces((prevState) => !prevState);
   }
+  const [workspaceData, setWorkspaceData] = useState();
+  const [userWorkspaces, setUserWorkspace] = useState(["Workspace 1", "Workspace 2", "Workspace 3"]);
+  const [currentWorkspace, setCurrentWorkspace] = useState(userWorkspaces[0]);
+  useEffect(() => {
   const [workspaceData, setWorkspaceData] = useState();
   const [userWorkspaces, setUserWorkspace] = useState(["Workspace 1", "Workspace 2", "Workspace 3"]);
   const [currentWorkspace, setCurrentWorkspace] = useState(userWorkspaces[0]);
