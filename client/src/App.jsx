@@ -18,9 +18,6 @@ import loginbutton from "./Authantication/views/Login";
 import Board from './Project/ProjectBoard/Board';
 import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
-
-
-import Project from "./Project/upcomingCycles";
 import Workspace from "./Workspace/workspace";
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import MemberSetting from './Workspace/Settings/Member/MemberSetting';
@@ -28,6 +25,7 @@ import Profile from "./Workspace/Settings/Profile/Profile";
 import General from "./Workspace/Settings/General/General";
 
 import Invite from "./Invite/Invite";
+import InboxSidebar from "./Workspace/Inbox/InboxSidebar";
 
 
 // import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
@@ -82,7 +80,6 @@ function App() {
                     <Route path="/workspace/create_new_project" element={<CreateNewProject/>}> </Route>
                     {/* by Priyanshu */}
                     <Route path="/workspace/settings/members" element={<MemberSetting/>}> </Route>
-                   <Route  path="/upcomingCycles" element={<Project/>} />
                   
                    
                    
@@ -105,6 +102,8 @@ function App() {
 
                     {/*by khushboo*/}
                     <Route path="/Invite" element={<Invite/>} />
+                    <Route path="/Workspace/Inbox" element={<InboxSidebar/>} />
+
 
 
                     </Routes>

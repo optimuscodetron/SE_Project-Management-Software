@@ -11,8 +11,10 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 require('./routes/user.routes')(app);
-// require('./routes/project.routes')(app);
-// require('./routes/task.routes')(app);
+require('./routes/workspace.routes')(app);
+require('./routes/project.routes')(app);
+require('./routes/issue.routes')(app);
+
 
 const server = app.listen(port, () =>
     console.log(`Listening on port: ${port}`)
