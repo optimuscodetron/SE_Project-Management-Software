@@ -1,8 +1,8 @@
-import IssueCard from "./issueCard";
+import UpcomingCard from "./upcomingCard";
 import { BsPlusCircle } from "react-icons/bs";
-const IssuePanel = (props) => {
+const UpcomingPanel = (props) => {
   return (
-    <div className=" ">
+    <div className="">
       <div className=" text-white font-normal  tracking-wider py-2 px-1 text-start font-sans justify-between  ">
         <div className="flex flex-row">
           <div
@@ -31,20 +31,19 @@ const IssuePanel = (props) => {
         {props.issues.length === 0
           ? "No Item Is Present Here"
           : props.issues.map((issue) => (
-              <IssueCard
+              <UpcomingCard
                 key={issue.id}
                 issue={issue}
                 onMoveIssue={props.onMoveIssue}
               />
             ))}
-          <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] ">
-            <div className="ml-[45%]">
-
-            <BsPlusCircle/>
-            </div>
+        <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] ">
+          <div className="ml-[45%]">
+            <BsPlusCircle />
           </div>
+        </div>
       </div>
     </div>
   );
 };
-export default IssuePanel;
+export default UpcomingPanel;

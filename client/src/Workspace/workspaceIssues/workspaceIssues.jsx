@@ -6,6 +6,7 @@ import { FaRegCircle } from "react-icons/fa6";
 import { FaCircleHalfStroke } from "react-icons/fa6";
 import { FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
+import CreateNewProject from "../CreateNewProject/CreateNewProject";
 const WorkspaceIssues = () => {
   const [toDoIssues, setToDoIssues] = useState([]);
   const [inProgressIssues, setInProgressIssues] = useState([]);
@@ -13,6 +14,7 @@ const WorkspaceIssues = () => {
   const [doneIssues, setDoneIssues] = useState([]);
   const [cancelledIssues, setCancelledIssues] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [isopen,setIsOpen]=useState(false);
   useEffect(() => {
     const todoDummy = [];
     const inProgressDummy = [];
@@ -124,7 +126,8 @@ const WorkspaceIssues = () => {
   };
 
   return (
-    <div className=" mt-16 bg-[#171e28] overflow-x-scroll ">
+    <div className="bg-[#171e28] overflow-x-scroll ">
+     
       {dataLoaded && (
         <div className="flex flex-row w-screen">
           <div className="w-[320px]">
