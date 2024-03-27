@@ -18,6 +18,8 @@ import loginbutton from "./Authantication/views/Login";
 import Board from './Project/ProjectBoard/Board';
 import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
+
+import Project from "./Project/Current_cyc";
 import Workspace from "./Workspace/workspace";
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import MemberSetting from './Workspace/Settings/Member/MemberSetting';
@@ -92,6 +94,9 @@ function App() {
 
 
                     <Route  path="/workspace" element={<Workspace />} />
+                    {/* by Chetan */}
+                    <Route  path="/Current_cyc" element={<Project/>} />
+
                     <Route  path="/workspace/project/board" element={<Board />} />
                       
                     {/* by Harsh */}
