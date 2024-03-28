@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { gapi } from 'gapi-script';
 
-
+import Error from './Error'
 import Login from './Authantication/views/Login';
 import Registration from './Authantication/views/Registration';
 import Email from './Authantication/Forgetpassword/email';
@@ -91,7 +91,8 @@ function App() {
                     <Route  path="/newpassword" element={<Newpassword />} />
                     <Route  path="/" element={<Login />} />
 
-
+                    <Route  path="*" element={<Error/>} />
+                
 
                     <Route  path="/workspace" element={<Workspace />} />
                     {/* by Chetan */}
