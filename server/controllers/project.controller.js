@@ -1,6 +1,8 @@
 const { Project } = require('../models/project.model');
 const express = require('express');
 const router = express.Router();
+const { User } = require('../models/user.model');
+const { Workspace } = require('../models/workspace.model');
 
 module.exports.getAllProjectOfUser = async (req, res) => {
     try {
@@ -33,4 +35,35 @@ module.exports.getAllProjectOfUser = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 
+}
+
+module.exports.createProject=async(req,res)=>{
+    // console.log("88");
+
+    console.log(req.body);
+    const { name, description, workspaceID, memberIDs, startDate, targetDate, status } = req.body;
+
+    try{
+        const newProject = new Project({
+            name,
+            description,
+            workspaceID,
+            memberIDs,
+            startDate,
+            targetDate,
+            status
+        });
+        const savedProject = await newProject.save();
+
+        await Workspace.findByIdAndUpdate(workspaceID, { $push: { projects: savedProject._id } });
+
+        res.status(201).json({message:"Project saved successfully"});
+
+
+    }
+    catch(err){
+        console.error('Error while creating project:', err);
+        res.status(500).json({ message: 'Internal server error' });
+
+    }
 }
