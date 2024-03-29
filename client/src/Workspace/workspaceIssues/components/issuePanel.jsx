@@ -1,6 +1,10 @@
+import React, { useState } from "react";
 import IssueCard from "./issueCard";
 import { BsPlusCircle } from "react-icons/bs";
+import IssueCreate from "./issueCreate";
 const IssuePanel = (props) => {
+  const [showCreateOverlay, setShowCreateOverlay] = useState(false); // Define state variable and setter function
+
   return (
     <div className=" ">
       <div className=" text-white font-normal  tracking-wider py-2 px-1 text-start font-sans justify-between  ">
@@ -37,13 +41,15 @@ const IssuePanel = (props) => {
                 onMoveIssue={props.onMoveIssue}
               />
             ))}
-          <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] ">
-            <div className="ml-[45%]">
-
-            <BsPlusCircle/>
-            </div>
+        <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] ">
+          <div className="ml-[45%]">
+            <BsPlusCircle onClick={() => setShowCreateOverlay(true)} />
           </div>
+        </div>
       </div>
+      {showCreateOverlay && (
+        <IssueCreate onClose={() => setShowCreateOverlay(false)} />
+      )}
     </div>
   );
 };
