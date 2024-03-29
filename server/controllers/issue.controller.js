@@ -40,3 +40,6 @@ module.exports.getAllIssueOfWorkspace = async (req, res) => {
     }
 
 }
+exports.cretaeIssue=async(req,res)=>{
+    
+}

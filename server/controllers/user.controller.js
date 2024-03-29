@@ -105,6 +105,7 @@ exports.userLogin = async (req, res) => {
       if (otpverification.otp === otp) {
           const preuser = await User.findOne({ email: email });
           let x = await User.findOne({ email: email });
+          // localStorage.setItem("email",email);
           // console.log(x);
 
           // token generate
@@ -203,8 +204,9 @@ exports.changeinfo = async (req, res) => {
   const email = req.body.email;
   let password=req.body.newPassword;
   console.log(password)
+  // localStorage.clear();
   
-  const client=new MongoClient("mongodb://127.0.0.1:27017/ragnar_SE")
+  const client=new MongoClient("mongodb+srv://Kushagra_18:bDFTOPZeMaygXAE3@cluster0.mxxglsz.mongodb.net/Demo?retryWrites=true&w=majority")
 
   try {
   //   if (!password || !email) {
@@ -215,14 +217,14 @@ exports.changeinfo = async (req, res) => {
       const collection = database.collection('users');
       // console.log(collection);
       const data = await User.findOne({ email: email });
-      console.log(data._id);
+      console.log(email);
       console.log(password)
       const hashedPassword = await bcrypt.hash(password, 10);
       // bcrypt.hash(password, 10)
       // .then(hash =>{
       //     password = hash;
       //     next();
-      // });
+      // // });
       const result = await collection.updateOne(
           {
               _id: data._id
@@ -234,9 +236,9 @@ exports.changeinfo = async (req, res) => {
         new:true
       }
       );
-      // console.log(data.password)
+      console.log(data.password)
       const us=await User.findOne({email:email});
-      console.log(us.password);
+      // console.log(us.password);
       
   
       // res.status(200).json({ message: "Password Reset Successfully"});

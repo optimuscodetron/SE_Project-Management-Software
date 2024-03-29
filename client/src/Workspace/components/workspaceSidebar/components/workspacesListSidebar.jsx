@@ -17,16 +17,16 @@ const WorkspaceListSidebar = () => {
 
     const [userWorkspaces,setUserWorkspace] = useState(["Workspace 1", "Workspace 2", "Workspace 3"]);
     const [currentWorkspace,setCurrentWorkspace] = useState(userWorkspaces[0]);
-    useEffect(()=>{
+    // useEffect(()=>{
 
-      props.headerInfo({headerIcon:<PiMonitorFill/>,
-      headerTitle:currentWorkspace});
-    },[]);
+    //   // props.headerInfo({headerIcon:<PiMonitorFill/>,
+    //   headerTitle:currentWorkspace});
+    // },[]);
     const chooseWorkspaceHandler=(item,index)=>{
         // console.log(index);
         const data={headerIcon:<PiMonitorFill/>,
         headerTitle:userWorkspaces[index]}
-        props.headerInfo(data);
+        // props.headerInfo(data);
         setCurrentWorkspace(userWorkspaces[index]);
         setShowWorkspaces(!showWorkspaces);
     }
