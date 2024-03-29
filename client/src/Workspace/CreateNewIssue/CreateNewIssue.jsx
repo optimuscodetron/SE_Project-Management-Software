@@ -119,7 +119,7 @@ const CreateNewIssue = (props) => {
         {iscancel && (
           <div className="bg-gray-900 text-white absolute ml-auto mr-auto md:mt-[40vh] mt-[50vh] md:w-[30%] w-[100%]  left-0 right-0 md:px-5 md:py-10 z-10 opacity-90 rounded-md ">
             <p className="text-gray-400 px-4">
-              Are you sure u want to discard this project?
+              Are you sure u want to discard this Issue?
             </p>
             <div className="flex justify-around justify-items-end mt-[4vh]">
               <button
@@ -227,13 +227,25 @@ const CreateNewIssue = (props) => {
 
                 {isSelect && (
                   <div className="flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 ">
-                    <button key={1} onClick={handleStatus}>
+                    <button
+                      key={1}
+                      onClick={handleStatus}
+                      className="block w-full hover:bg-gray-600"
+                    >
                       Bug
                     </button>
-                    <button key={2} onClick={handleStatus}>
+                    <button
+                      key={2}
+                      onClick={handleStatus}
+                      className="block w-full hover:bg-gray-600"
+                    >
                       Improvement
                     </button>
-                    <button key={3} onClick={handleStatus}>
+                    <button
+                      key={3}
+                      onClick={handleStatus}
+                      className="block w-full hover:bg-gray-600"
+                    >
                       Feature
                     </button>
                   </div>
@@ -250,12 +262,18 @@ const CreateNewIssue = (props) => {
 
                 {isSelect2 && (
                   <div className="overflow-x-hidden p-2 z-1 w-[25vw]  md:w-[8vw] flex flex-col items-start relative rounded-md top-[2vh] bg-gray-900 border-[1px]  border-gray-400">
-                    <button onClick={() => setAssignee("unassigned")}>
+                    <button
+                      onClick={() => setAssignee("unassigned")}
+                      className="block w-full hover:bg-gray-600"
+                    >
                       unassigned
                     </button>
                     {members.map((element) => {
                       return (
-                        <button onClick={() => setAssignee(element)}>
+                        <button
+                          onClick={() => setAssignee(element)}
+                          className="block w-full hover:bg-gray-600"
+                        >
                           {element}
                         </button>
                       );
@@ -275,19 +293,39 @@ const CreateNewIssue = (props) => {
 
                 {isSelect3 && (
                   <div className="flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 ">
-                    <button key={1} onClick={handlePriority}>
+                    <button
+                      key={1}
+                      onClick={handlePriority}
+                      className="block w-full hover:bg-gray-600"
+                    >
                       Urgent
                     </button>
-                    <button key={2} onClick={handlePriority}>
+                    <button
+                      key={2}
+                      onClick={handlePriority}
+                      className="block w-full hover:bg-gray-600"
+                    >
                       High
                     </button>
-                    <button key={3} onClick={handlePriority}>
+                    <button
+                      key={3}
+                      onClick={handlePriority}
+                      className="block w-full hover:bg-gray-600"
+                    >
                       Medium
                     </button>
-                    <button key={3} onClick={handlePriority}>
+                    <button
+                      key={3}
+                      onClick={handlePriority}
+                      className="block w-full hover:bg-gray-600"
+                    >
                       Low
                     </button>
-                    <button key={3} onClick={handlePriority}>
+                    <button
+                      key={3}
+                      onClick={handlePriority}
+                      className="block w-full hover:bg-gray-600"
+                    >
                       No Priority
                     </button>
                   </div>
@@ -304,10 +342,18 @@ const CreateNewIssue = (props) => {
 
                 {isSelect4 && (
                   <div className="flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 ">
-                    <button key={1} onClick={handleCycle}>
+                    <button
+                      key={1}
+                      onClick={handleCycle}
+                      className="block w-full hover:bg-gray-600"
+                    >
                       No Cycle
                     </button>
-                    <button key={2} onClick={handleCycle}>
+                    <button
+                      key={2}
+                      onClick={handleCycle}
+                      className="block w-full hover:bg-gray-600"
+                    >
                       Cycle 1
                     </button>
                   </div>

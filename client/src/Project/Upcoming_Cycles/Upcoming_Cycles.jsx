@@ -13,11 +13,9 @@ const UpcomingCycles = () => {
     upcomingList.forEach((issue) => {
       if (issue.status === "ToDo") {
         todoDummy.push(issue);
-      } 
-       else if (issue.status === "Backlog") {
+      } else if (issue.status === "Backlog") {
         backlogDummy.push(issue);
-      } 
-
+      }
     });
     setToDoIssues(todoDummy);
     setBacklogIssues(backlogDummy);
@@ -52,7 +50,7 @@ const UpcomingCycles = () => {
             removeFromStage(backlogIssues, setBacklogIssues);
           addToStage(toDoIssues, setToDoIssues);
           break;
-       
+
         default:
           break;
       }
@@ -79,7 +77,6 @@ const UpcomingCycles = () => {
               icon={<FaRegCircle />}
             />
           </div>
-          
         </div>
       )}
     </div>
