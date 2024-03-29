@@ -1,54 +1,38 @@
 import React, { useEffect, useRef, useState } from "react";
-import { GrProjects } from "react-icons/gr";
-import DatePicker from "react-datepicker";
+import {
+  FaArrowRight,
+  FaExclamationCircle,
+  FaSyncAlt,
+  FaUserTie,
+  FaUsers,
+} from "react-icons/fa";
+import { GrProjects, GrStatusDisabledSmall } from "react-icons/gr";
 import { BsFillCalendarDateFill } from "react-icons/bs";
-import "react-datepicker/dist/react-datepicker.css";
-import { FaUsers } from "react-icons/fa";
-import { FaUserTie } from "react-icons/fa";
-import { GrStatusDisabledSmall } from "react-icons/gr";
-import { FiHexagon } from "react-icons/fi";
-import { FaExclamationCircle } from "react-icons/fa";
-import { FaSyncAlt } from "react-icons/fa";
+import DatePicker from "react-datepicker";
 import Modal from "../../UI/Modal";
+import "react-datepicker/dist/react-datepicker.css";
 
 const CreateNewIssue = (props) => {
   const [isopen, setisopen] = useState(false);
-
-  //send by backend
-  const [Workspacename, Workspacesetname] = useState("Workspace");
-  const [Projectname, Projectsetname] = useState("Project");
-
+  const [Workspacename] = useState("Workspace");
   const [sDate, setsDate] = useState(false);
   const [eDate, seteDate] = useState(false);
-
   const [isSelect, setIsSelect] = useState(false);
   const [projectStatus, setIssueStatus] = useState("Issue Type");
-
   const [isSelect2, setIsSelect2] = useState(false);
   const [Assignee, setAssignee] = useState("Assignee");
-
   const [isSelect3, setIsSelect3] = useState(false);
   const [Priority, setPriority] = useState("Priority");
-
   const [isSelect4, setIsSelect4] = useState(false);
   const [Cycle, setCycle] = useState("Cycle");
-
+  const [isSelect5, setIsSelect5] = useState(false);
+  const [Priorit, setPriorit] = useState("Select Project");
   const [isEmpty, setIsEmpty] = useState(false);
-
   const [iscancel, setIsCancel] = useState(false);
-
   const projectName = useRef();
   const description = useRef();
-  // const projectStatus=useRef();
-  // const Assignee=useRef(null);
-
-  //use projectName.current.value , description.current.value ,
-
   const [startDate, setStartDate] = useState(null);
   const [targetDate, setTargetDate] = useState(null);
-  // const startDate=useRef();
-  // const endDate=useRef();
-
   const [members, setMembers] = useState([
     "Ayush Sahu",
     "Ayush Ji",
@@ -56,7 +40,6 @@ const CreateNewIssue = (props) => {
     "Ji Ayush",
     "Ayush Sahu Ji",
   ]);
-
   const [tempMembers, setTempMembers] = useState(members.sort());
   const [filteredMembers, setFilteredMembers] = useState([]);
 
@@ -65,15 +48,16 @@ const CreateNewIssue = (props) => {
   };
 
   const handledate = (num) => {
-    if (num == 1) setsDate(!sDate);
-    if (num == 2) seteDate(!eDate);
+    if (num === 1) setsDate(!sDate);
+    if (num === 2) seteDate(!eDate);
   };
 
   const handleSelect = (num) => {
-    if (num == 1) setIsSelect(!isSelect);
-    if (num == 2) setIsSelect2(!isSelect2);
-    if (num == 3) setIsSelect3(!isSelect3);
-    if (num == 4) setIsSelect4(!isSelect4);
+    if (num === 1) setIsSelect(!isSelect);
+    if (num === 2) setIsSelect2(!isSelect2);
+    if (num === 3) setIsSelect3(!isSelect3);
+    if (num === 4) setIsSelect4(!isSelect4);
+    if (num === 5) setIsSelect5(!isSelect5);
   };
 
   const handleMembers = (element, index) => {
@@ -98,7 +82,6 @@ const CreateNewIssue = (props) => {
 
   const handleCreateIssue = () => {
     if (!projectName.current.value) setIsEmpty(true);
-    //create project
     else setisopen(false);
   };
 
@@ -122,13 +105,15 @@ const CreateNewIssue = (props) => {
     setPriority(e?.target?.textContent);
   };
 
+  const handlePriorit = (e) => {
+    setPriorit(e?.target?.textContent);
+  };
+
   const handleCycle = (e) => {
     setCycle(e?.target?.textContent);
   };
-  return (
-    // <div className='bg-gray-800 h-screen min-w-full text-white '>
-    //     <button onClick={handlePopup}>Open Popup</button>
 
+  return (
     <Modal onClose={props.onCloseCreateIssue}>
       <div>
         {iscancel && (
@@ -158,12 +143,52 @@ const CreateNewIssue = (props) => {
             iscancel ? " pointer-events-none " : ""
           }bg-gray-900 opacity-100 absolute text-[13px] md:text-[17px] w-[100%] md:w-[100%]  h-full  text-white px-[1vw] py-[2vh] flex flex-col justify-between`}
         >
-          <h1 className="">
-            {" "}
+          <h1 className="flex items-center">
             <span className="md:p-[4px] md:px-[6px] p-[1px] bg-gray-600 rounded-sm border-[1px] border-gray-400">
               {Workspacename}
-            </span>{" "}
-            &gt;{Projectname}
+            </span>
+            <FaArrowRight className="ml-2" />
+            <div className="ml-2 relative">
+              <button
+                className="flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 "
+                onClick={(num) => handleSelect(5)}
+              >
+                <p className="overflow-hidden ">
+                  {props.isWorkspaceContext ? Priorit : "Project 1"}
+                </p>
+              </button>
+
+              {props.isWorkspaceContext && isSelect5 && (
+                <div className="absolute z-10 mt-2 w-[9vw] bg-gray-900 shadow-lg border border-gray-200 rounded-sm">
+                  <ul>
+                    <li>
+                      <button
+                        onClick={handlePriorit}
+                        className="block w-full text-left py-1 px-3 hover:bg-gray-600"
+                      >
+                        Project 1
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handlePriorit}
+                        className="block w-full text-left py-1 px-3 hover:bg-gray-600"
+                      >
+                        Project 2
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={handlePriorit}
+                        className="block w-full text-left py-1 px-3 hover:bg-gray-600"
+                      >
+                        Project 3
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </h1>
 
           <div className="flex flex-row">
@@ -300,9 +325,6 @@ const CreateNewIssue = (props) => {
                   />
                 </div>
               </div>
-
-              {/* {!eDate && <button className='bg-gray-700 p-1 md:w-[7vw] sm:w-1/3 h-[4vh] text-sm border-[1px] border-gray-400 flex justify-evenly items-center' onClick={(num)=>handledate(2)}><BsFillCalendarDateFill /> <p>Due Date</p></button>}
-                  {eDate && <input type='date' ref={endDate} className='bg-gray-700 md:w-[7vw] sm:w-1/3 h-[4vh] text-sm p-1 border-[1px] border-gray-400' onMouseLeave={(e,num)=>{if(!e.target.value)handledate(2)}}></input>} */}
             </div>
 
             <div className="border-t-[1px] mt-2 border-gray-500 ">
