@@ -40,6 +40,13 @@ module.exports.getAllIssueOfWorkspace = async (req, res) => {
     }
 
 }
-exports.cretaeIssue=async(req,res)=>{
+exports.createIssue=async(req,res)=>{
+    console.log(req.body);
+    Issue.create(req.body)
+    .then((Issue) => {
+        res
+          .json({ message: "Issue Successfully created!", issue:Issue });
+      })
+      .catch((err) => res.status(400).json(err));
     
 }
