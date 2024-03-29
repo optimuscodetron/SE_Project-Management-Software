@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useEffect } from "react";
 import { PiMonitorFill } from "react-icons/pi";
@@ -5,9 +6,8 @@ import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import Axios from "axios";
 
-const WorkspaceListSidebar = () => {
 
-
+const WorkspaceListSidebar = (props) => {
 
   const [showWorkspaces, setShowWorkspaces] = useState(false);
   const showWorkspaceHandler = () => {

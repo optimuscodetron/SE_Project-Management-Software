@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
@@ -6,19 +7,20 @@ import { RiTeamFill } from "react-icons/ri";
 import { GoProjectRoadmap } from "react-icons/go";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import CreateNewProject from "../../../CreateNewProject/CreateNewProject";
+import Axios from "axios";
 const ProjectListSidebar = (props) => {
   const workspaceId=useSelector((state)=>state.workspaceId.value);
   console.log(workspaceId);
   
 
   const [showProject, setShowProject] = useState(false);
-  const [isopen,setisopen]=useState(false);
+  const [isopen, setisopen] = useState(false);
 
   const showProjectHandler = () => {
     setShowProject((prevState) => !prevState);
   };
 
-  const handlePopup=()=>{
+  const handlePopup = () => {
     setisopen(!isopen);
   };
 
@@ -71,7 +73,7 @@ const ProjectListSidebar = (props) => {
             <MdFormatListBulletedAdd />
             <span className="flex-1 ms-3 font-medium whitespace-nowrap">
 
-            Create Project
+              Create Project
             </span>
           </div>
         </li>
@@ -81,8 +83,8 @@ const ProjectListSidebar = (props) => {
             onClick={showProjectHandler}
           >
             <div className="flex ">
-            <GoProjectRoadmap/>
-            <span className="ms-3 text-sm">All Projects</span>
+              <GoProjectRoadmap />
+              <span className="ms-3 text-sm ">All Projects</span>
             </div>
             {showProject ? <FaChevronUp /> : <FaChevronDown />}
           </div>

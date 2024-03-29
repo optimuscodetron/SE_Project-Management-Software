@@ -11,6 +11,7 @@ import { HiPlus } from "react-icons/hi";
 import Axios from "axios";
 
 import CreateNewProject from "../../CreateNewProject/CreateNewProject";
+
 const WorkspaceSidebar = (props) => {
   const [workspaceId, setWorkspaceId] = useState();
 
@@ -92,6 +93,19 @@ const WorkspaceSidebar = (props) => {
                 <HiPlus />
                 <span className="flex-1 ms-3 text-sm whitespace-nowrap">
                   Create Workspace
+                </span>
+              </div>
+            </li>
+
+            
+            <li>
+              <div
+                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group hover:cursor-pointer"
+                onClick={props.inboxOpened}
+              >
+                <FiInbox/>
+                <span className="flex-1 ms-3 text-sm whitespace-nowrap">
+                  Inbox
                 </span>
               </div>
             </li>

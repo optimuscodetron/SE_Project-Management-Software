@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import IssueCard from "./issueCard";
 import { BsPlusCircle } from "react-icons/bs";
 import CreateNewIssue from "../../CreateNewIssue/CreateNewIssue";
