@@ -89,7 +89,10 @@ const PSidebar = (props) => {
       </div>
       {/* Render CreateNewIssue component when showCreateIssuePanel is true */}
       {showCreateIssuePanel && (
-        <CreateNewIssue onCloseCreateIssue={closeCreateIssuePanel} />
+        <CreateNewIssue
+          onCloseCreateIssue={closeCreateIssuePanel}
+          isWorkspaceContext={false}
+        />
       )}
     </aside>
   );

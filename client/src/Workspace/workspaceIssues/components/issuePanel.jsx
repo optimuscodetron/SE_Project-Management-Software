@@ -65,7 +65,12 @@ const IssuePanel = (props) => {
           </div>
         </div>
       </div>
-      {createIssue && <CreateNewIssue onCloseCreateIssue={closeCreateIssue} />}
+      {createIssue && (
+        <CreateNewIssue
+          onCloseCreateIssue={closeCreateIssue}
+          isWorkspaceContext={true}
+        />
+      )}
     </div>
   );
 };
