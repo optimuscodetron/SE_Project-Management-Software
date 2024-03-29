@@ -7,6 +7,8 @@ import { FaUsers } from "react-icons/fa";
 import { FaUserTie } from "react-icons/fa";
 import { GrStatusDisabledSmall } from "react-icons/gr";
 import { FiHexagon } from "react-icons/fi";
+import { FaExclamationCircle } from "react-icons/fa";
+import { FaSyncAlt } from "react-icons/fa";
 import Modal from "../../UI/Modal";
 
 const CreateNewIssue = (props) => {
@@ -242,7 +244,7 @@ const CreateNewIssue = (props) => {
                   className="flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 "
                   onClick={(num) => handleSelect(3)}
                 >
-                  <GrStatusDisabledSmall />{" "}
+                  <FaExclamationCircle />{" "}
                   <p className="overflow-hidden ">{Priority}</p>
                 </button>
 
@@ -272,8 +274,7 @@ const CreateNewIssue = (props) => {
                   className="flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 "
                   onClick={(num) => handleSelect(4)}
                 >
-                  <GrStatusDisabledSmall />{" "}
-                  <p className="overflow-hidden ">{Cycle}</p>
+                  <FaSyncAlt /> <p className="overflow-hidden ">{Cycle}</p>
                 </button>
 
                 {isSelect4 && (
