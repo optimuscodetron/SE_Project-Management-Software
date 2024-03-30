@@ -1,5 +1,7 @@
 const { Issue } = require('../models/issue.model');
 const { Project } = require('../models/project.model');
+const { User } = require('../models/user.model');
+
 const express = require('express');
 const router = express.Router();
 
@@ -42,10 +44,13 @@ module.exports.getAllIssueOfWorkspace = async (req, res) => {
 }
 exports.createIssue=async(req,res)=>{
     console.log(req.body);
+    const id=req.body.creator;
+    const user=await User.findOne({_id:id});
+    console.log(user);
     Issue.create(req.body)
     .then((Issue) => {
         res
-          .json({ message: "Issue Successfully created!", issue:Issue });
+          .json({ message: "Issue Successfully created!", issue:Issue,user:user });
       })
       .catch((err) => res.status(400).json(err));
     
