@@ -1,13 +1,34 @@
-import React, { useEffect } from "react";
+import React,{useState} from "react";
+import { useEffect } from "react";
 import WorkspaceListSidebar from "./components/workspacesListSidebar";
 import ProjectListSidebar from "./components/projectListSidebar";
 import { NavLink } from "react-router-dom";
 import './workspaceSidebar.css';
+import { FiInbox } from "react-icons/fi";
 import { AiFillSetting } from "react-icons/ai"
 import { IoPersonAdd } from "react-icons/io5";
 import { HiPlus } from "react-icons/hi";
+import Axios from "axios";
+
 import CreateNewProject from "../../CreateNewProject/CreateNewProject";
+
 const WorkspaceSidebar = (props) => {
+
+  
+
+  
+  const [workspaceId,setWorkspaceId]=useState();
+
+  // useEffect(() => {
+
+  //   // fetchWorkspaceData();
+   
+  // }, []);
+
+  const getWorkspaceId=(id)=>{
+    console.log(id);
+    setWorkspaceId(id);
+  }
 
   return (
 
@@ -17,7 +38,7 @@ const WorkspaceSidebar = (props) => {
         <div className="h-full px-2 overflow-y-auto bg-[#171e28] dark:bg-[#171e28]">
           <ul className="space-y-2 font-medium pt-2">
             <li>
-              <WorkspaceListSidebar headerInfo={props.currentWorkspace} />
+              <WorkspaceListSidebar headerInfo={props.currentWorkspace} openWorkspace={props.openWorkspace} workspaceId={getWorkspaceId} />
             </li>
 
             <li>
@@ -35,11 +56,24 @@ const WorkspaceSidebar = (props) => {
 
             <li>
               <div
-                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group hover:cursor-pointer"
+                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group hover:cursor-pointer "
                 onClick={props.onOpenInviteMembers} 
               >
                 <IoPersonAdd/>
                 <span className="flex-1 ms-3 text-sm ">Invite Members</span>
+              </div>
+            </li>
+
+            
+            <li>
+              <div
+                className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group hover:cursor-pointer"
+                onClick={props.inboxOpened}
+              >
+                <FiInbox/>
+                <span className="flex-1 ms-3 text-sm whitespace-nowrap">
+                  Inbox
+                </span>
               </div>
             </li>
 
@@ -58,7 +92,7 @@ const WorkspaceSidebar = (props) => {
 
             <div className="border-b border-white my-2 w-full"></div>
             <li>
-              <ProjectListSidebar onOpenCreateProject={props.onOpenCreateProject}/>
+              <ProjectListSidebar onOpenCreateProject={props.onOpenCreateProject} workspaceId={workspaceId}/>
              
             </li>
           </ul>

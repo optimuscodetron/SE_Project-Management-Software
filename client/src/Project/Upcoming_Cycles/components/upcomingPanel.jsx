@@ -1,6 +1,27 @@
+import React, { useState } from "react";
 import UpcomingCard from "./upcomingCard";
 import { BsPlusCircle } from "react-icons/bs";
+import CreateNewIssue from "../../../Workspace/CreateNewIssue/CreateNewIssue";
 const UpcomingPanel = (props) => {
+  const [createIssue, setCreateIssue] = useState(false);
+
+  const openCreateIssue = () => {
+    setCreateIssue(true);
+  };
+
+  const closeCreateIssue = () => {
+    setCreateIssue(false);
+  };
+
+  const BsPlusCircleComponent = ({ onClick }) => {
+    return (
+      <BsPlusCircle
+        onClick={onClick} // Trigger the onClick function when clicked
+        style={{ cursor: "pointer" }} // Add pointer cursor to indicate clickable element
+      />
+    );
+  };
+
   return (
     <div className="">
       <div className=" text-white font-normal  tracking-wider py-2 px-1 text-start font-sans justify-between  ">
@@ -39,10 +60,16 @@ const UpcomingPanel = (props) => {
             ))}
         <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] ">
           <div className="ml-[45%]">
-            <BsPlusCircle />
+            <BsPlusCircleComponent onClick={openCreateIssue} />
           </div>
         </div>
       </div>
+      {createIssue && (
+        <CreateNewIssue
+          onCloseCreateIssue={closeCreateIssue}
+          isWorkspaceContext={false}
+        />
+      )}
     </div>
   );
 };

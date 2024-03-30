@@ -10,11 +10,6 @@ mongoose.connect("mongodb://127.0.0.1:27017/ragnar_SE", {
 })
     .then(() => {
         console.log("Established connection to the database")
-       
-       
-           
-
-
 
 })
     .catch(err => console.log("Something went wrong ", err));
