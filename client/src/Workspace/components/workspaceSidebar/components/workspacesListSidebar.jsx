@@ -6,7 +6,7 @@ import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import Axios from "axios";
 
-const WorkspaceListSidebar = () => {
+const WorkspaceListSidebar = (props) => {
 
 
 

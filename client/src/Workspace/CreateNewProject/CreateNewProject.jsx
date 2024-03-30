@@ -91,6 +91,7 @@ const CreateNewProject = (props) => {
       if(!projectName.current.value) setIsEmpty(true);
       //create project
       else setisopen(false);
+      // else props.onCloseCreateProject();
      
     }
 
