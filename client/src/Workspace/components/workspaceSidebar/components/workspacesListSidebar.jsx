@@ -30,42 +30,23 @@ const WorkspaceListSidebar = (props) => {
       const response = await Axios.get('http://localhost:8000/api/getAllWorkspaceOfUser', {
         withCredentials: true,
       });
-
       if (response.status === 200) {
         const data = await response.data;
         console.log(data.workspaces);
-
         setWorkspaceData(()=>{
           const workspaceNames = data.workspaces.map(workspace => workspace.name);
           setUserWorkspace(workspaceNames);
           setCurrentWorkspace(workspaceNames[0]);
           return data.workspaces
         });
-        console.log(workspaceData);
       } else {
         throw new Error('Internal server error');
       }
     } catch (error) {
+      
       console.error('Error fetching data:', error.message);
-      // Handle error here
+      throw new Error('Error fetching data:');
     }
-    // Axios.get('http://localhost:8000/api/getAllWorkspaceOfUser', {
-    //   withCredentials: true,
-    // })
-    //   .then(res => {
-    //     if (res.status === 200) {
-    //       const data = res.data;
-    //       console.log(data.workspaces);
-    //       setWorkspaceData(data.workspaces);
-    //       console.log(workspaceData);
-    //       // const workspaceNames = workspaceData.map(workspace => workspace.name);
-    //       // setUserWorkspace(workspaceNames);
-    //       // setCurrentWorkspace(workspaceNames[0]);
-    //     }
-    //     else {
-    //       console.log("error");
-    //     }
-    //   })
   };
 
 

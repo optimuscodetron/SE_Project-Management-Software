@@ -20,8 +20,6 @@ module.exports.getAllWorkspaceOfUser = async (req, res) => {
             name: workspace.name,
             id: workspace._id
         }));
-        
-        console.log(workspaceData);
         res.status(200).json({ workspaces: workspaceData });
 
     } catch (error) {
