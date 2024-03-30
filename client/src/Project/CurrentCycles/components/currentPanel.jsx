@@ -1,31 +1,9 @@
-import React, { useState } from "react";
-import IssueCard from "./issueCard";
+import CurrentCard from "./currentCard";
 import { BsPlusCircle } from "react-icons/bs";
-import CreateNewIssue from "../../CreateNewIssue/CreateNewIssue";
-
-const IssuePanel = (props) => {
-  const [createIssue, setCreateIssue] = useState(false);
-
-  const openCreateIssue = () => {
-    setCreateIssue(true);
-  };
-
-  const closeCreateIssue = () => {
-    setCreateIssue(false);
-  };
-
-  const BsPlusCircleComponent = ({ onClick }) => {
-    return (
-      <BsPlusCircle
-        onClick={onClick} // Trigger the onClick function when clicked
-        style={{ cursor: "pointer" }} // Add pointer cursor to indicate clickable element
-      />
-    );
-  };
-
+const CurrentPanel = (props) => {
   return (
-    <div className=" ">
-      <div className="text-white font-normal tracking-wider py-2 px-1 text-start font-sans justify-between">
+    <div className=" h-screen custom-sidebar-2 p-3 min-w-60 rounded-lg">
+      <div className=" text-white font-normal  tracking-wider py-2 px-1 text-start font-sans justify-between  ">
         <div className="flex flex-row">
           <div
             className={`align-self-center mr-2 ${
@@ -53,7 +31,7 @@ const IssuePanel = (props) => {
         {props.issues.length === 0
           ? "No Item Is Present Here"
           : props.issues.map((issue) => (
-              <IssueCard
+              <CurrentCard
                 key={issue.id}
                 issue={issue}
                 onMoveIssue={props.onMoveIssue}
@@ -61,18 +39,11 @@ const IssuePanel = (props) => {
             ))}
         <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] ">
           <div className="ml-[45%]">
-            <BsPlusCircleComponent onClick={openCreateIssue} />
+            <BsPlusCircle />
           </div>
         </div>
       </div>
-      {createIssue && (
-        <CreateNewIssue
-          onCloseCreateIssue={closeCreateIssue}
-          isWorkspaceContext={true}
-        />
-      )}
     </div>
   );
 };
-
-export default IssuePanel;
+export default CurrentPanel;
