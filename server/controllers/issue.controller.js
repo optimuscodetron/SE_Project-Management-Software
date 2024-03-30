@@ -42,16 +42,28 @@ module.exports.getAllIssueOfWorkspace = async (req, res) => {
     }
 
 }
-exports.createIssue=async(req,res)=>{
+exports.createIssue = async (req, res) => {
     console.log(req.body);
-    const id=req.body.creator;
-    const user=await User.findOne({_id:id});
-    console.log(user);
-    Issue.create(req.body)
-    .then((Issue) => {
-        res
-          .json({ message: "Issue Successfully created!", issue:Issue,user:user });
-      })
-      .catch((err) => res.status(400).json(err));
-    
+    const creatorId = req.body.creator;
+    const projectId = req.body.project;
+    try {
+
+        const user = await User.findOne({ _id: creatorId });
+        // console.log(user);
+ 
+        const newIssue = await Issue.create(req.body);
+        const project=await Project.findOne({_id:projectId});
+        console.log(project);
+
+
+        const updatedProject = await Project.findOneAndUpdate(
+            { _id: projectId },
+            { $push: { issuesIDs: newIssue._id } },
+            { new: true }
+        );
+
+        res.json({ message: "Issue Successfully created!", issue: newIssue, user: user, project: updatedProject });
+    } catch (err) {
+        res.status(400).json(err);
+    }
 }
