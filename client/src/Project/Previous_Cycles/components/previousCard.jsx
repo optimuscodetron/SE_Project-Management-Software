@@ -23,33 +23,35 @@ export default function PreviousCard({ issue, onMoveIssue }) {
       </div>
       <div className="mb-1 text-white">{issue.title}</div>
       <div className="flex justify-between items-center">
-        {issue.status !== "Backlog" && (
+        {issue.status !== "Forwarded" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.status, "Backlog")}
+            style={{ marginLeft: "8px" }}
+            onClick={() => onMoveIssue(issue.id, issue.status, "Forwarded")}
           >
-            Backlog
+            Forwarded
           </button>
         )}
-        {issue.status !== "ToDo" && (
+        {/* {issue.status !== "ToDo" && (
           <button
             className={btnstyle}
             onClick={() => onMoveIssue(issue.id, issue.status, "ToDo")}
           >
             ToDo
           </button>
-        )}
-        {issue.status !== "InProgress" && (
+        )} */}
+        {/* {issue.status !== "InProgress" && (
           <button
             className={btnstyle}
             onClick={() => onMoveIssue(issue.id, issue.status, "InProgress")}
           >
             InProgress
           </button>
-        )}
+        )} */}
         {issue.status !== "Done" && (
           <button
             className={btnstyle}
+            style={{ marginLeft: "8px" }}
             onClick={() => onMoveIssue(issue.id, issue.status, "Done")}
           >
             Done
@@ -58,6 +60,7 @@ export default function PreviousCard({ issue, onMoveIssue }) {
         {issue.status !== "Cancelled" && (
           <button
             className={btnstyle}
+            style={{ marginLeft: "8px" }}
             onClick={() => onMoveIssue(issue.id, issue.status, "Cancelled")}
           >
             Cancelled

@@ -6,28 +6,30 @@ import { FaRegCircle } from "react-icons/fa6";
 import { FaCircleHalfStroke } from "react-icons/fa6";
 import { FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
-import CreateNewProject from "../CreateNewProject/CreateNewProject";
+// import CreateNewProject from "../CreateNewProject/CreateNewProject";
 const PreviousCycles = () => {
-  const [toDoIssues, setToDoIssues] = useState([]);
-  const [inProgressIssues, setInProgressIssues] = useState([]);
-  const [backlogIssues, setBacklogIssues] = useState([]);
+  // const [toDoIssues, setToDoIssues] = useState([]);
+  // const [inProgressIssues, setInProgressIssues] = useState([]);
+  const [forwardedIssues, ForwardedIssues] = useState([]);
   const [doneIssues, setDoneIssues] = useState([]);
   const [cancelledIssues, setCancelledIssues] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [isopen, setIsOpen] = useState(false);
   useEffect(() => {
-    const todoDummy = [];
-    const inProgressDummy = [];
-    const backlogDummy = [];
+    // const todoDummy = [];
+    // const inProgressDummy = [];
+    const forwardedDummy = [];
     const doneDummy = [];
     const cancelledDummy = [];
     PreviousList.forEach((issue) => {
-      if (issue.status === "ToDo") {
-        todoDummy.push(issue);
-      } else if (issue.status === "InProgress") {
-        inProgressDummy.push(issue);
-      } else if (issue.status === "Backlog") {
-        backlogDummy.push(issue);
+      // if (issue.status === "ToDo") {
+      //   todoDummy.push(issue);
+      // } 
+      // else if (issue.status === "InProgress") {
+      //   inProgressDummy.push(issue);
+      // }
+       if (issue.status === "Forwarded") {
+        forwardedDummy.push(issue);
       } else if (issue.status === "Cancelled") {
         cancelledDummy.push(issue);
       } else if (issue.status === "Done") {
@@ -36,9 +38,9 @@ const PreviousCycles = () => {
     });
 
     // setFirstTime(false);
-    setToDoIssues(todoDummy);
-    setInProgressIssues(inProgressDummy);
-    setBacklogIssues(backlogDummy);
+    // setToDoIssues(todoDummy);
+    // setInProgressIssues(inProgressDummy);
+    ForwardedIssues(forwardedDummy);
     setCancelledIssues(cancelledDummy);
     setDoneIssues(doneDummy);
     setDataLoaded(true);
@@ -62,58 +64,43 @@ const PreviousCycles = () => {
         setter([...issues, currentIssue]);
       };
       switch (newStatus) {
-        case "Backlog":
-          if (currentStatus === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentStatus === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
-          else if (currentStatus === "Done")
+        case "Forwarded":
+          if (currentStatus === "Done")
             removeFromStage(doneIssues, setDoneIssues);
           else if (currentStatus === "Cancelled")
             removeFromStage(cancelledIssues, setCancelledIssues);
           // removeFromStage(Issues, setter);
-          addToStage(backlogIssues, setBacklogIssues);
+          addToStage(forwardedIssues, ForwardedIssues);
           break;
-        case "ToDo":
-          if (currentStatus === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentStatus === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
-          else if (currentStatus === "Done")
-            removeFromStage(doneIssues, setDoneIssues);
-          else if (currentStatus === "Cancelled")
-            removeFromStage(cancelledIssues, setCancelledIssues);
-          addToStage(toDoIssues, setToDoIssues);
-          break;
-        case "InProgress":
-          if (currentStatus === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentStatus === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentStatus === "Done")
-            removeFromStage(doneIssues, setDoneIssues);
-          else if (currentStatus === "Cancelled")
-            removeFromStage(cancelledIssues, setCancelledIssues);
-          addToStage(inProgressIssues, setInProgressIssues);
-          break;
+        // case "ToDo":
+        //   if (currentStatus === "Forwarded")
+        //     removeFromStage(forwardedIssues, ForwardedIssues);
+        //   // else if (currentStatus === "InProgress")
+        //   //   removeFromStage(inProgressIssues, setInProgressIssues);
+        //   else if (currentStatus === "Done")
+        //     removeFromStage(doneIssues, setDoneIssues);
+        //   else if (currentStatus === "Cancelled")
+        //     removeFromStage(cancelledIssues, setCancelledIssues);
+        //   addToStage(toDoIssues, setToDoIssues);
+        //   break;
         case "Done":
-          if (currentStatus === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentStatus === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentStatus === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
+          if (currentStatus === "Forwarded")
+            removeFromStage(forwardedIssues, ForwardedIssues);
+          // else if (currentStatus === "ToDo")
+          //   removeFromStage(toDoIssues, setToDoIssues);
+          // else if (currentStatus === "InProgress")
+          //   removeFromStage(inProgressIssues, setInProgressIssues);
           else if (currentStatus === "Cancelled")
             removeFromStage(cancelledIssues, setCancelledIssues);
           addToStage(doneIssues, setDoneIssues);
           break;
         case "Cancelled":
-          if (currentStatus === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentStatus === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentStatus === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
+          if (currentStatus === "Forwarded")
+            removeFromStage(forwardedIssues, ForwardedIssues);
+          // else if (currentStatus === "ToDo")
+          //   removeFromStage(toDoIssues, setToDoIssues);
+          // else if (currentStatus === "InProgress")
+          //   removeFromStage(inProgressIssues, setInProgressIssues);
           else if (currentStatus === "Done")
             removeFromStage(doneIssues, setDoneIssues);
           addToStage(cancelledIssues, setCancelledIssues);
@@ -130,21 +117,21 @@ const PreviousCycles = () => {
         <div className="flex flex-row w-screen">
           <div className="w-[320px]">
             <PreviousPanel
-              statusName="Backlog"
-              issues={backlogIssues}
+              statusName="Forwarded"
+              issues={forwardedIssues}
               onMoveIssue={moveIssue}
               icon={<LuCircleDashed />}
             />
           </div>
-          <div className="w-[320px]">
+          {/* <div className="w-[320px]">
             <PreviousPanel
               statusName="To Do"
               issues={toDoIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCircle />}
             />
-          </div>
-          <div className="w-[320px]">
+          </div> */}
+          {/* <div className="w-[320px]">
             <PreviousPanel
               statusName="In Progress"
               issues={inProgressIssues}
@@ -152,7 +139,7 @@ const PreviousCycles = () => {
               icon={<FaCircleHalfStroke />}
               iconColor="text-yellow-400"
             />
-          </div>
+          </div> */}
           <div className="w-[320px]">
             <PreviousPanel
               statusName="Done"

@@ -89,7 +89,7 @@ const UpcomingList = [
     title: "Issue 12",
     description: "Description 1",
     assignee: "Priyanshu Kumar",
-    status: "InProgress",
+    status: "ToDo",
   },
   // ...
   {
@@ -97,7 +97,7 @@ const UpcomingList = [
     title: "Issue 13",
     description: "Description 1",
     assignee: "Chetan Kamble",
-    status: "InProgress",
+    status: "Backlog",
   },
   // ...
   {
@@ -105,14 +105,14 @@ const UpcomingList = [
     title: "Issue 14",
     description: "Description 1",
     assignee: "Kushagra Sharma",
-    status: "InProgress",
+    status: "Backlog",
   },
   {
     id: 15,
     title: "Issue 15",
     description: "Description 1",
     assignee: "Chetan Kamble",
-    status: "Done",
+    status: "ToDo",
   },
   // ...
   {
@@ -120,14 +120,14 @@ const UpcomingList = [
     title: "Issue 16",
     description: "Description 1",
     assignee: "Chetan Kamble",
-    status: "Done",
+    status: "Backlog",
   },
   {
     id: 17,
     title: "Issue 17",
     description: "Description 1",
     assignee: "Kushagra Sharma",
-    status: "Cancelled",
+    status: "ToDo",
   },
   // ...
   {
@@ -135,7 +135,7 @@ const UpcomingList = [
     title: "Issue 18",
     description: "Description 1",
     assignee: "Nikhil Garg",
-    status: "Cancelled",
+    status: "Backlog",
   },
   // ...
   {
@@ -143,7 +143,7 @@ const UpcomingList = [
     title: "Issue 19",
     description: "Description 1",
     assignee: "Kushagra Sharma",
-    status: "Cancelled",
+    status: "Backlog",
   },
 ];
 

@@ -4,21 +4,21 @@ const PreviousList = [
     title: "Issue 1",
     description: "Description 1",
     assignee: "nikhil Garg",
-    status: "Backlog",
+    status: "Forwarded",
   },
   {
     id: 2,
     title: "Issue 2",
     description: "Description 1",
     assignee: "Het Patel",
-    status: "Backlog",
+    status: "Forwarded",
   },
   {
     id: 3,
     title: "Issue 3",
     description: "Description 1",
     assignee: "Priyanshu Kumar",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -26,7 +26,7 @@ const PreviousList = [
     title: "Issue 4",
     description: "Description 1",
     assignee: "Ayush Sahu",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -34,7 +34,7 @@ const PreviousList = [
     title: "Issue 5",
     description: "Description 1",
     assignee: "Het Patel",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -42,7 +42,7 @@ const PreviousList = [
     title: "Issue 6",
     description: "Description 1",
     assignee: "Nikhil Garg",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -50,7 +50,7 @@ const PreviousList = [
     title: "Issue 7",
     description: "Description 1",
     assignee: "Kushagra Sharma",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -58,7 +58,7 @@ const PreviousList = [
     title: "Issue 8",
     description: "Description 1",
     assignee: "Priyanshu Kumar",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -66,7 +66,7 @@ const PreviousList = [
     title: "Issue 9",
     description: "Description 1",
     assignee: "Nikhil Garg",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -74,7 +74,7 @@ const PreviousList = [
     title: "Issue 10",
     description: "Description 1",
     assignee: "Het Patel",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -82,14 +82,14 @@ const PreviousList = [
     title: "Issue 11",
     description: "Description 1",
     assignee: "Ayush Sahu",
-    status: "ToDo",
+    status: "Forwarded",
   },
   {
     id: 12,
     title: "Issue 12",
     description: "Description 1",
     assignee: "Priyanshu Kumar",
-    status: "InProgress",
+    status: "Done",
   },
   // ...
   {
@@ -97,7 +97,7 @@ const PreviousList = [
     title: "Issue 13",
     description: "Description 1",
     assignee: "Chetan Kamble",
-    status: "InProgress",
+    status: "Forwarded",
   },
   // ...
   {
@@ -105,7 +105,7 @@ const PreviousList = [
     title: "Issue 14",
     description: "Description 1",
     assignee: "Kushagra Sharma",
-    status: "InProgress",
+    status: "Done",
   },
   {
     id: 15,
