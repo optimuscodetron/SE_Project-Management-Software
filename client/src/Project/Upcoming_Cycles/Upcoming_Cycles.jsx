@@ -58,10 +58,10 @@ const UpcomingCycles = () => {
   };
 
   return (
-    <div className="bg-[#171e28] overflow-x-scroll px-3 ">
+    <div className="bg-[#171e28] overflow-x-scroll px-2 pt-2 ">
       {dataLoaded && (
         <div className="flex flex-row w-screen">
-          <div className="w-[320px]">
+          <div className="w-[320px] mx-1">
             <UpcomingPanel
               statusName="Backlog"
               issues={backlogIssues}
@@ -69,7 +69,7 @@ const UpcomingCycles = () => {
               icon={<LuCircleDashed />}
             />
           </div>
-          <div className="w-[320px]">
+          <div className="w-[320px] mx-1">
             <UpcomingPanel
               statusName="To Do"
               issues={toDoIssues}

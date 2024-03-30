@@ -126,11 +126,11 @@ const WorkspaceIssues = () => {
   };
 
   return (
-    <div className="bg-[#171e28] overflow-x-scroll ">
+    <div className="bg-[#171e28] overflow-x-scroll px-2 pt-2">
      
       {dataLoaded && (
         <div className="flex flex-row w-screen">
-          <div className="w-[320px]">
+          <div className="w-[320px] mx-1">
             <IssuePanel
               statusName="Backlog"
               issues={backlogIssues}
@@ -138,7 +138,7 @@ const WorkspaceIssues = () => {
               icon={<LuCircleDashed />}
             />
           </div>
-          <div className="w-[320px]">
+          <div className="w-[320px] mx-1">
             <IssuePanel
               statusName="To Do"
               issues={toDoIssues}
@@ -146,7 +146,7 @@ const WorkspaceIssues = () => {
               icon={<FaRegCircle />}
             />
           </div>
-          <div className="w-[320px]">
+          <div className="w-[320px] mx-1">
             <IssuePanel
               statusName="In Progress"
               issues={inProgressIssues}
@@ -155,7 +155,7 @@ const WorkspaceIssues = () => {
               iconColor="text-yellow-400"
             />
           </div>
-          <div className="w-[320px]">
+          <div className="w-[320px] mx-1">
             <IssuePanel
               statusName="Done"
               issues={doneIssues}
@@ -164,7 +164,7 @@ const WorkspaceIssues = () => {
               iconColor='text-green-400'
             />
           </div>
-          <div className="w-[320px]">
+          <div className="w-[320px] mx-1">
             <IssuePanel
               statusName="Cancelled"
               issues={cancelledIssues}
