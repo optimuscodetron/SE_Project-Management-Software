@@ -58,10 +58,10 @@ const General = () => {
       >
         {<SettingsSidebar showSideBar={showSidebar} />}
 
-        <div className="flex justify-center h-full w-full overflow-auto">
+        <div className="flex justify-center w-full overflow-auto h-[90%]">
           
           <div
-            className="w-[80vw] sm:w-[70vw] md:w-[43vw] mt-20  bg-gray-900 text-white p-4 overflow-y-scroll"
+            className="w-[80vw] sm:w-[70vw] md:w-[43vw] bg-gray-900 text-white p-4 overflow-y-scroll"
             
           >
            

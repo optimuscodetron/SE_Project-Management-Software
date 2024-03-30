@@ -15,11 +15,9 @@ import Newpassword from './Authantication/Forgetpassword/newpassword';
 // import Forgotpassword from './Authantication/Forgetpassword/forgotpassword';
 import loginbutton from "./Authantication/views/Login";
 
-import Board from './Project/ProjectBoard/Board';
-import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
+import Project from './Project/Project';
+import IssueInfo from "./Project/ProjectIssues/IssueInfo/IssueInfo";
 import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
-
-import Project from "./Project/Current_cyc";
 import Workspace from "./Workspace/workspace";
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import MemberSetting from './Workspace/Settings/Member/MemberSetting';
@@ -95,10 +93,8 @@ function App() {
                 
 
                     <Route  path="/workspace" element={<Workspace />} />
-                    {/* by Chetan */}
-                    <Route  path="/Current_cyc" element={<Project/>} />
 
-                    <Route  path="/workspace/project/board" element={<Board />} />
+                    <Route  path="/workspace/project" element={<Project />} />
                       
                     {/* by Harsh */}
                     <Route  path="/workspace/project/settings" element={<ProjectSettings />} />

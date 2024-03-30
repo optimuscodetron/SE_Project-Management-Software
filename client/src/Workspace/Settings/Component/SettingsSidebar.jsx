@@ -12,7 +12,7 @@ const SettingsSidebar = (props) => {
 
   return (
     <div
-      className={` fixed sm:relative custom-sidebar w-[12rem] md:w-[18rem] mt-16 z-10 overflow-hidden transition-transform ${
+      className={` fixed sm:relative custom-sidebar w-[12rem] md:w-[18rem] z-10 overflow-hidden transition-transform ${
         props.showSideBar ? "" : "-translate-x-full"
       } bg-gray-900 border-r border-gray-200 sm:translate-x-0`}
     >
