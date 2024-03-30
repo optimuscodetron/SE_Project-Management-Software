@@ -8,5 +8,4 @@ module.exports = function(app){
 
     // app.get('/api/getAllProjectOfUser', Workpsacecontroller.getAllOfUser);
     app.get('/api/getAllWorkspaceOfUser',authenticate, Workpsacecontroller.WorkspaceSetting);
-   
 }
