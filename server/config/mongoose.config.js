@@ -10,11 +10,6 @@ mongoose.connect("mongodb+srv://Kushagra_18:bDFTOPZeMaygXAE3@cluster0.mxxglsz.mo
 })
     .then(() => {
         console.log("Established connection to the database")
-       
-       
-           
-
-
 
 })
     .catch(err => console.log("Something went wrong ", err));
