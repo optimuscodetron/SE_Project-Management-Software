@@ -147,7 +147,7 @@ function MemberList() {
 
       <SettingsSidebar showSideBar={showSidebar}  />
       {/* <div className="bg-gray-800 h-screen flex flex-col px-8 py-8 w-full"> */}
-      <div className=" w-full overflow-auto h-full text-white flex justify-center mt-20 p-10">
+      <div className=" w-full overflow-auto h-full text-white flex justify-center p-10">
         <div className=" h-[100%] flex flex-col mb-4 w-full lg:w-[60%] bg-gray-900 p-3 ">
           <h1 className=" flex flex-col text-3xl tracking-wide font-semibold mb-3 border-b border-gray-600 pb-3">
             Members

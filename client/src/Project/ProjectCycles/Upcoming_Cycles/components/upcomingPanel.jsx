@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import UpcomingCard from "./upcomingCard";
 import { BsPlusCircle } from "react-icons/bs";
-import CreateNewIssue from "../../../Workspace/CreateNewIssue/CreateNewIssue";
+import CreateNewIssue from "../../../../Workspace/CreateNewIssue/CreateNewIssue";
 const UpcomingPanel = (props) => {
   const [createIssue, setCreateIssue] = useState(false);
 

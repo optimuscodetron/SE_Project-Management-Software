@@ -84,8 +84,8 @@ const Profile = () => {
       <div className=" bg-[#1f2937] fixed flex flex-row w-screen h-screen ">
         <SettingsSidebar showSideBar={showSidebar} />
 
-        <div className="flex justify-center h-full w-full overflow-auto  ">
-          <div className="w-[80vw] sm:w-[70vw] md:w-[50vw] mt-20  bg-[#111827] overflow-y-scroll py-5 px-16">
+        <div className="flex justify-center h-[90%] w-full overflow-auto  ">
+          <div className="w-[80vw] sm:w-[70vw] md:w-[50vw] bg-[#111827] overflow-y-scroll py-5 px-16">
             <div className=" rounded-lg shadow-md  text-white">
               <h1 className="text-3xl text-center font-normal tracking-wide mb-2 ">
                 Profile

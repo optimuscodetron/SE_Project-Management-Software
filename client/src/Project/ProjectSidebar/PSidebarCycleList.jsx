@@ -28,7 +28,7 @@ const PSidebarCycleList = (props) => {
               {cycleList[0]}
             </div>
           </li>
-          <li>
+          <li onClick={props.openCurrentCycle}>
             <div className="p-2 text-sm text-white text-decoration-none  rounded-lg hover:bg-gray-950 group ">
               {cycleList[1]}
             </div>

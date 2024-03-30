@@ -1,15 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import PSidebar from "../Components/PSidebar";
-import ProjectIssues from "./issues/ProjectIssues";
-import UpcomingCycles from "../Upcoming_Cycles/Upcoming_Cycles";
-import Navbar from "../../Components/Layout/navbar/navbar";
+import PSidebar from "./ProjectSidebar/PSidebar";
+import ProjectIssues from "./ProjectIssues/issues/ProjectIssues";
+import UpcomingCycles from "./ProjectCycles/Upcoming_Cycles/Upcoming_Cycles";
+import Navbar from "../Components/Layout/navbar/navbar";
+import CurrentCycles from "./ProjectCycles/CurrentCycles/CurrentCycles";
 
 
-export default function Board() {
-    const style = {
-        "backgroundColor": "rgb(31, 41, 55)",
-    }
+export default function Project() {
     const [showSideBar, setShowSideBar] = useState(true);
     const showSideBarHandler = () => {
         setShowSideBar((prevState) => !prevState);
@@ -17,11 +15,19 @@ export default function Board() {
     const [showUpcomingCycle,setShowUpcomingCycle]=useState(false);
     const openUpcomingCycleHandler=()=>{
         setShowIssues(false);
+        setShowCurrentCycle(false);
         setShowUpcomingCycle(true);
-    }
-    const [showIssues,setShowIssues]=useState(true);
-    const openIssuesHandler=()=>{
+      }
+      const [showCurrentCycle,setShowCurrentCycle]=useState(false);
+      const openCurrentCycleHandler=()=>{
+        setShowIssues(false);
         setShowUpcomingCycle(false);
+        setShowCurrentCycle(true);
+      }
+      const [showIssues,setShowIssues]=useState(true);
+      const openIssuesHandler=()=>{
+        setShowUpcomingCycle(false);
+        setShowCurrentCycle(false);
         setShowIssues(true);
     }
     return (
@@ -35,6 +41,7 @@ export default function Board() {
           <PSidebar
           showSideBar={showSideBar}
           openUpcomingCycle={openUpcomingCycleHandler}
+          openCurrentCycle={openCurrentCycleHandler}
           openIssues={openIssuesHandler}
           // className="sm:fixed sm:top-0 sm:left-0 sm:z-50 hidden"
       />
@@ -45,6 +52,7 @@ export default function Board() {
             {/* <Header headerInfo={headerInfo}/>/ */}
             {showIssues&&<ProjectIssues/>}     
             {showUpcomingCycle&& <UpcomingCycles/>}
+            {showCurrentCycle&& <CurrentCycles/>}
           </div>
           <div className="flex-1">
             {/* for popUps */}
