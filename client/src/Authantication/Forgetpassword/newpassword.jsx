@@ -12,6 +12,7 @@ import { passWordReset } from "../services/Apis";
 const NewPassword = () => {
 
   let email=localStorage.getItem("email");
+//   localStorage.clear();
 //   const [spiner, setSpiner] = useState(false);
   const navigate=useNavigate();
    
@@ -43,6 +44,7 @@ const NewPassword = () => {
             newPassword
             
         }
+        console.log(data);
         // setSpiner(true)
 
 
@@ -50,6 +52,7 @@ const NewPassword = () => {
             const response = await passWordReset(data);
             // console.log(response)
             if (response.status === 200) {
+                localStorage.clear();
     
               toast.success(response.data.message);
               setTimeout(() => {

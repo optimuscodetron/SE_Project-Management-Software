@@ -45,7 +45,8 @@ const Otp = () => {
             if (response.status === 200) {
                 //   localStorage.setItem("usertoken", response.data.userToken);
                 //   localStorage.setItem("name", response.data.myuser.fname);
-                // localStorage.setItem("email", response.data.myuser.email);
+                console.log(response.data.myuser.email);
+                localStorage.setItem("email", response.data.myuser.email);
                 //   localStorage.setItem("phone", response.data.myuser.phone);
                 //   localStorage.setItem("address", response.data.myuser.address);
                 toast.success(response.data.message);

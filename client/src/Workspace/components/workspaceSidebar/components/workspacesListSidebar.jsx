@@ -30,7 +30,6 @@ const WorkspaceListSidebar = (props) => {
       const response = await Axios.get('http://localhost:8000/api/getAllWorkspaceOfUser', {
         withCredentials: true,
       });
-
       if (response.status === 200) {
         const data = await response.data;
         console.log(data.workspaces);
