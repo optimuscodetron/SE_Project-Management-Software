@@ -1,9 +1,13 @@
 import React from "react";
 import { useState } from "react";
+import IssuePanel from "../../../Workspace/workspaceIssues/components/issuePanel";
 
-import IssueStage from "./IssueStage";
-
-export default function IssuesScreen() {
+import { LuCircleDashed } from "react-icons/lu";
+import { FaRegCircle } from "react-icons/fa6";
+import { FaCircleHalfStroke } from "react-icons/fa6";
+import { FaRegTimesCircle } from "react-icons/fa";
+import { FaRegCheckCircle } from "react-icons/fa";
+export default function ProjectIssues() {
     const [backlogIssues, setBacklogIssues] = useState([
         { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'John Doe', status: 'Backlog' },
         // ...
@@ -159,26 +163,52 @@ export default function IssuesScreen() {
 
     return (
         // issues={backlogIssues} onMoveIssue={moveIssue}
-        <div className="pt-4">
-            <div className="mx-auto overflow-auto">
-                <div className="flex flex-row gap-3 w-screen overflow-x-auto">
-                    <div className="w-[320px]">
-                        <IssueStage stageName="Backlog" issues={backlogIssues} onMoveIssue={moveIssue}/>
-                    </div>
-                    <div className=" w-[320px]">
-                        <IssueStage stageName="To Do" issues={toDoIssues} onMoveIssue={moveIssue}/>
-                    </div>
-                    <div className=" w-[320px]">
-                        <IssueStage stageName="In Progress" issues={inProgressIssues} onMoveIssue={moveIssue}/>
-                    </div>
-                    <div className=" w-[320px]">
-                        <IssueStage stageName="Done" issues={doneIssues} onMoveIssue={moveIssue}/>
-                    </div>
-                    <div className=" w-[320px]">
-                        <IssueStage stageName="Cancelled" issues={cancelledIssues} onMoveIssue={moveIssue}/>
-                    </div>
-                </div>
-            </div>
+        <div className="bg-[#171e28] overflow-x-scroll pt-2 px-2 ">
+            <div className="flex flex-row w-screen">
+          <div className="w-[320px] mx-1">
+            <IssuePanel
+              statusName="Backlog"
+              issues={backlogIssues}
+              onMoveIssue={moveIssue}
+              icon={<LuCircleDashed />}
+            />
+          </div>
+          <div className="w-[320px] mx-1">
+            <IssuePanel
+              statusName="To Do"
+              issues={toDoIssues}
+              onMoveIssue={moveIssue}
+              icon={<FaRegCircle />}
+            />
+          </div>
+          <div className="w-[320px] mx-1">
+            <IssuePanel
+              statusName="In Progress"
+              issues={inProgressIssues}
+              onMoveIssue={moveIssue}
+              icon={<FaCircleHalfStroke />}
+              iconColor="text-yellow-400"
+            />
+          </div>
+          <div className="w-[320px] mx-1">
+            <IssuePanel
+              statusName="Done"
+              issues={doneIssues}
+              onMoveIssue={moveIssue}
+              icon={<FaRegCheckCircle />}
+              iconColor='text-green-400'
+            />
+          </div>
+          <div className="w-[320px] mx-1">
+            <IssuePanel
+              statusName="Cancelled"
+              issues={cancelledIssues}
+              onMoveIssue={moveIssue}
+              icon={<FaRegTimesCircle />}
+              iconColor='text-red-400'
+            />
+          </div>
+        </div>
         </div>
     );
 }
