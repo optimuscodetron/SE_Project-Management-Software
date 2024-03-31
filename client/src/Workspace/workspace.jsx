@@ -13,6 +13,12 @@ export default function Workspace() {
     setShowSideBar((prevState) => !prevState);
   };
 
+  const [showFilterSidebar,setShowFilterSidebar]=useState(false);
+
+  const handleShowFilterSidebar=()=>{
+      setShowFilterSidebar(!showFilterSidebar);
+  }
+
   const [openInviteMembers , setOpenInviteMembers] = useState(false);
   const openInviteMembersHandler=() => {
     setOpenInviteMembers(true)
@@ -61,6 +67,7 @@ export default function Workspace() {
       <Navbar showSideBarHandler={showSideBarHandler} />
       </div>
       <div className="flex flex-row">
+        
         <div className="">
           {showSideBar&&
         <WorkspaceSidebar onOpenInviteMembers={openInviteMembersHandler} onOpenCreateProject={openCreateProject} showSideBar={showSideBar} currentWorkspace={currentWorkspaceHandler} inboxOpened={openInboxHandler} openWorkspace={openWorkspaceHandler} />
@@ -68,14 +75,23 @@ export default function Workspace() {
         </div>
         {/* Main content goes here */}
         <div className="overflow-x-scroll">
-          <Header headerInfo={headerInfo}/>
-          {openWorkspace&&<WorkspaceIssues/>}
+
+          <Header headerInfo={headerInfo} handleShowFilterSidebar={handleShowFilterSidebar}/>
+
+
+          
+          {openWorkspace&&<WorkspaceIssues showFilterSidebar={showFilterSidebar}/>}
           {openInbox&&<Inbox onCloseInbox={closeInboxHandler}/>}
+
         </div>
+
         <div className="flex-1">
         {openInviteMembers  && <Invite onCloseInviteMembers={closeInviteMembersHandler}/>}
         {createProject  && <CreateNewProject onCloseCreateProject={closeCreateProject}/>}
-      </div>
+       </div>
+
+          
+
       </div>
     </div>
   );

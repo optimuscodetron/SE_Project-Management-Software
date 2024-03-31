@@ -9,7 +9,6 @@ module.exports = function(app){
     app.post('/api/users/email', UserController.userOtpSend);
     app.post('/api/users/otp', UserController.userLogin);
     app.post('/api/users/newpassword', UserController.changeinfo);
-    app.post('/api/users/workspace', authenticate, Workspacecontroller.saveworskapce);
 
 
 

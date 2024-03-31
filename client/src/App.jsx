@@ -56,64 +56,63 @@ function App() {
         e.preventDefault();
     };
     return (
-       <>
-            <loginbutton />
-         
-                {/* <Redirect from="/" to="/register" noThrow /> */}
-                {/* <Route path='/user/otp' element={<Otp />} /> */}
+      <>
+        <loginbutton />
 
-                {/* <Registration path="/register" /> */}
-                {/* <Email path="/email" /> */}
-                {/* <Login path="/login" /> */}
-                {/* <Main path="/home" onSubmit={onSubmit} /> */}
-                {/* <Main path="/home/geer/:id" onSubmit={onSubmit} /> */}
-                {/* <NewUser path="/welcome" /> */}
-                <Routes>
-                    {/* <Route path="/authenticate" component={Authenticate} /> */}
-                    {/* <Route exact path="/register" element={< />} /> */}
-                    <Route  path="/register" element={<Registration />} />
-                    <Route  path="/email" element={<Email />} />
+        {/* <Redirect from="/" to="/register" noThrow /> */}
+        {/* <Route path='/user/otp' element={<Otp />} /> */}
 
-                   
-
-                    {/* by ayush */}
-                    <Route path="/create_workspace" element={<WorkPage/>}> </Route>
-                    <Route path="/workspace/settings/general" element={<General/>}> </Route>
-                    <Route path="/workspace/create_new_project" element={<CreateNewProject/>}> </Route>
-                    {/* by Priyanshu */}
-                    <Route path="/workspace/settings/members" element={<MemberSetting/>}> </Route>
-                  
-                   
-                   
-
-
-                    <Route  path="/otp" element={<Otp />} />
-                    <Route  path="/newpassword" element={<Newpassword />} />
-                    <Route  path="/" element={<Login />} />
-
-                    <Route  path="*" element={<Error/>} />
-                
-
-                    <Route  path="/workspace" element={<Workspace />} />
-                    {/* by Chetan */}
-                    <Route  path="/Current_cyc" element={<Project/>} />
-
-                    <Route  path="/workspace/project/board" element={<Board />} />
-                      
-                    {/* by Harsh */}
-                    <Route  path="/workspace/project/settings" element={<ProjectSettings />} />
-                    <Route  path="/workspace/project/board/issue" element={<IssueInfo />} />
-
-                    <Route path="/workspace/settings/profile" element={<Profile />} />  
-
-                    {/*by khushboo*/}
-                    <Route path="/Invite" element={<Invite/>} />
-                    <Route path="/Workspace/Inbox" element={<InboxSidebar/>} />
-
-
-
-                    </Routes>
-       </>
+        {/* <Registration path="/register" /> */}
+        {/* <Email path="/email" /> */}
+        {/* <Login path="/login" /> */}
+        {/* <Main path="/home" onSubmit={onSubmit} /> */}
+        {/* <Main path="/home/geer/:id" onSubmit={onSubmit} /> */}
+        {/* <NewUser path="/welcome" /> */}
+        <Routes>
+          {/* <Route path="/authenticate" component={Authenticate} /> */}
+          {/* <Route exact path="/register" element={< />} /> */}
+          <Route path="/register" element={<Registration />} />
+          <Route path="/email" element={<Email />} />
+          {/* by ayush */}
+          <Route path="/create_workspace" element={<WorkPage />}>
+            {" "}
+          </Route>
+          <Route path="/workspace/settings/general" element={<General />}>
+            {" "}
+          </Route>
+          <Route
+            path="/workspace/create_new_project"
+            element={<CreateNewProject />}
+          >
+            {" "}
+          </Route>
+          {/* by Priyanshu */}
+          <Route path="/workspace/settings/members" element={<MemberSetting />}>
+            {" "}
+          </Route>
+          <Route path="/otp" element={<Otp />} />
+          <Route path="/newpassword" element={<Newpassword />} />
+          <Route path="/" element={<Login />} />
+          <Route path="*" element={<Error />} />
+          <Route path="/workspace" element={<Workspace />} />
+          {/* by Chetan */}
+          <Route path="/Current_cyc" element={<Project />} />
+          <Route path="/workspace/project/board" element={<Board />} />
+          {/* by Harsh */}
+          <Route
+            path="/workspace/project/settings"
+            element={<ProjectSettings />}
+          />
+          <Route
+            path="/workspace/project/board/issue"
+            element={<IssueInfo />}
+          />
+          <Route path="/workspace/settings/profile" element={<Profile />} />
+          {/*by khushboo*/}
+          <Route path="/Invite" element={<Invite />} />
+          <Route path="/Workspace/Inbox" element={<InboxSidebar />} />
+        </Routes>
+      </>
     );
 };
 
