@@ -6,9 +6,15 @@ import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import Axios from "axios";
 
+import { useSelector,useDispatch } from "react-redux";
+import changeWorkspaceId from "../../../../redux/WorkspaceData/WorkspaceIdSlice"
+
 
 
 const WorkspaceListSidebar = (props) => {
+  // const workspaceId=useSelector((state)=>state.workspaceId.value);
+  const dispatch = useDispatch()
+  // console.log(workspaceId);
 
   const [showWorkspaces, setShowWorkspaces] = useState(false);
   const showWorkspaceHandler = () => {
@@ -53,7 +59,10 @@ const WorkspaceListSidebar = (props) => {
 
 
   const chooseWorkspaceHandler = (item, index) => {
-    {props.workspaceId(item.id)}
+    // {props.workspaceId(item.id)}
+    console.log(item.id);
+    dispatch(changeWorkspaceId(item.id));
+
     // console.log(index);
     const data = {
       headerIcon: <PiMonitorFill />,

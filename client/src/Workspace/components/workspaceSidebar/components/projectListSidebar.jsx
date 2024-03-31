@@ -85,7 +85,7 @@ const ProjectListSidebar = (props) => {
             <ul className={"flex row ml-8"}>
               {userProjects.map((item) => (
                 <li>
-                  <NavLink to={'/workspace/project/board'} className="text-decoration-none " >
+                  <NavLink to={'/workspace/project'} className="text-decoration-none " >
                     <div className=" text-sm font-semibold p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group truncate">
                       {item.name}
                     </div>
