@@ -12,7 +12,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
     "text-slate-300 hover:text-white border border-gray-800  rounded-lg text-xs px-1.5 py-1 text-center me-2 mb-2";
   const assigneeInitials = getInitials(issue.assignee);
   return (
-    <div className=" shadow-md p-2 mb-2 rounded-lg bg-[#273341]">
+    <div className=" shadow-md p-2 mb-2 rounded-lg bg-[#273341] hover:bg-[#36414d]">
       <div className="flex flex-row justify-between">
         <div className="text-xs text-[#acacac]">
           {issue.project ? issue.project : "P04"}-{issue.id}
@@ -22,7 +22,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
         </span>
       </div>
       <div className="mb-1 text-white">{issue.title}</div>
-      <div className="flex justify-between items-center">
+      <div className="flex items-center">
         {issue.status !== "Backlog" && (
           <button
             className={btnstyle}

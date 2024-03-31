@@ -24,8 +24,8 @@ const IssuePanel = (props) => {
   };
 
   return (
-    <div className=" ">
-      <div className="text-white font-normal tracking-wider py-2 px-1 text-start font-sans justify-between">
+    <div className="">
+      <div className="text-white font-normal tracking-wider py-2 px-1 text-start font-sans justify-between ">
         <div className="flex flex-row">
           <div
             className={`align-self-center mr-2 ${
@@ -59,7 +59,7 @@ const IssuePanel = (props) => {
                 onMoveIssue={props.onMoveIssue}
               />
             ))}
-        <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] ">
+        <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36414d] ">
           <div className="ml-[45%]">
             <BsPlusCircleComponent onClick={openCreateIssue} />
           </div>

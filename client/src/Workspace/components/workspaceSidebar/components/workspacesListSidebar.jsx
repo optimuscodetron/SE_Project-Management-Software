@@ -68,7 +68,7 @@ const WorkspaceListSidebar = (props) => {
 
   return (
     <>
-      <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between cursor-pointer" onClick={showWorkspaceHandler}>
+      <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group justify-between cursor-pointer" onClick={showWorkspaceHandler}>
         <div className="flex" onClick={props.openWorkspace}>
           <PiMonitorFill />
           <span className="text-sm ms-3">{currentWorkspace}</span>
@@ -78,7 +78,7 @@ const WorkspaceListSidebar = (props) => {
       {showWorkspaces && <ul className={"flex row ml-8"}>
         {workspaceData.map((item, index) => (
           <li key={index} >
-            <div className="p-2 text-sm font-semibold text-white text-decoration-none  rounded-lg hover:bg-gray-900 group " onClick={() => chooseWorkspaceHandler(item, index)}>
+            <div className="p-2 text-sm font-semibold text-white text-decoration-none  rounded-lg hover:bg-gray-950 group " onClick={() => chooseWorkspaceHandler(item, index)}>
               {item.name}
             </div>
           </li>

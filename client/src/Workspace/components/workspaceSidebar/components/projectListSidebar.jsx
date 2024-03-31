@@ -56,13 +56,13 @@ const ProjectListSidebar = (props) => {
 
   return (
     <>
-      <div className="flex items-center p-2 text-sm text-white text-decoration-none  rounded-lg hover:bg-gray-900 group">
+      <div className="flex items-center p-2 text-sm text-white text-decoration-none  rounded-lg hover:bg-gray-950 group">
         <RiTeamFill />
         <span className="flex-1 ms-3 whitespace-nowrap">{teamName}</span>
       </div>
       <ul>
         <li>
-          <div className="flex items-center text-sm p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group cursor-pointer" onClick={props.onOpenCreateProject}>
+          <div className="flex items-center text-sm p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group cursor-pointer" onClick={props.onOpenCreateProject}>
             <MdFormatListBulletedAdd />
             <span className="flex-1 ms-3 font-medium whitespace-nowrap">
 
@@ -72,7 +72,7 @@ const ProjectListSidebar = (props) => {
         </li>
         <li>
           <div
-            className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group justify-between cursor-pointer"
+            className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group justify-between cursor-pointer"
             onClick={showProjectHandler}
           >
             <div className="flex ">
@@ -86,7 +86,7 @@ const ProjectListSidebar = (props) => {
               {userProjects.map((item) => (
                 <li>
                   <NavLink to={'/workspace/project/board'} className="text-decoration-none " >
-                    <div className=" text-sm font-semibold p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-900 group truncate">
+                    <div className=" text-sm font-semibold p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group truncate">
                       {item.name}
                     </div>
                   </NavLink>

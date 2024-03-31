@@ -7,7 +7,7 @@ function getInitials(name) {
   }
   return initials;
 }
-export default function PreviousCard({ issue, onMoveIssue }) {
+export default function UpcomingCard({ issue, onMoveIssue }) {
   const btnstyle =
     "text-slate-300 hover:text-white border border-gray-800  rounded-lg text-xs px-1.5 py-1 text-center me-2 mb-2";
   const assigneeInitials = getInitials(issue.assignee);
@@ -22,48 +22,21 @@ export default function PreviousCard({ issue, onMoveIssue }) {
         </span>
       </div>
       <div className="mb-1 text-white">{issue.title}</div>
-      <div className="flex justify-between items-center">
-        {issue.status !== "Forwarded" && (
+      <div className="flex items-center">
+        {issue.status !== "Backlog" && (
           <button
             className={btnstyle}
-            style={{ marginLeft: "8px" }}
-            onClick={() => onMoveIssue(issue.id, issue.status, "Forwarded")}
+            onClick={() => onMoveIssue(issue.id, issue.status, "Backlog")}
           >
-            Forwarded
+            Backlog
           </button>
         )}
-        {/* {issue.status !== "ToDo" && (
+        {issue.status !== "ToDo" && (
           <button
             className={btnstyle}
             onClick={() => onMoveIssue(issue.id, issue.status, "ToDo")}
           >
             ToDo
-          </button>
-        )} */}
-        {/* {issue.status !== "InProgress" && (
-          <button
-            className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.status, "InProgress")}
-          >
-            InProgress
-          </button>
-        )} */}
-        {issue.status !== "Done" && (
-          <button
-            className={btnstyle}
-            style={{ marginLeft: "8px" }}
-            onClick={() => onMoveIssue(issue.id, issue.status, "Done")}
-          >
-            Done
-          </button>
-        )}
-        {issue.status !== "Cancelled" && (
-          <button
-            className={btnstyle}
-            style={{ marginLeft: "8px" }}
-            onClick={() => onMoveIssue(issue.id, issue.status, "Cancelled")}
-          >
-            Cancelled
           </button>
         )}
       </div>
