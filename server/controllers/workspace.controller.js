@@ -1,6 +1,7 @@
 const { Workspace }=require("../models/workspace.model");
 const express = require('express');
 const router = express.Router();
+const {User}=require("../models/user.model")
 
 module.exports.getAllWorkspaceOfUser = async (req, res) => {
     try {
@@ -35,13 +36,20 @@ exports.saveworskapce=async(req,res)=>{
     req.body.members=[];
     req.body.adminuserId=id;
     req.body.members.push(id);
-    // const data=await User.findById(req.adminuserId);
-    // console.log(data);
-    Workspace.create(req.body)
-    .then((Workspace) => {
-      res
-      
-        .json({ message: "Workspace Successfully created!", workspace: Workspace });
-    })
-    .catch((err) => res.status(400).json(err));
+    try {
+        // Create the workspace
+        const workspace = await Workspace.create(req.body);
+
+        // Update the user's workspaces array with the new workspace's ID
+        const user = await User.findOneAndUpdate(
+            { _id: id },
+            { $push: { workspaces: workspace._id } },
+            { new: true }
+        );
+
+        // Send response with workspace ID
+        res.json({ message: "Workspace Successfully created!", workspace: workspace });
+    } catch (err) {
+        res.status(400).json(err);
+    }
   }
