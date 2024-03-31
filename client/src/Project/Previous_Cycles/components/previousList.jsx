@@ -1,24 +1,24 @@
-const UpcomingList = [
+const PreviousList = [
   {
     id: 1,
     title: "Issue 1",
     description: "Description 1",
     assignee: "nikhil Garg",
-    status: "Backlog",
+    status: "Forwarded",
   },
   {
     id: 2,
     title: "Issue 2",
     description: "Description 1",
     assignee: "Het Patel",
-    status: "Backlog",
+    status: "Forwarded",
   },
   {
     id: 3,
     title: "Issue 3",
     description: "Description 1",
     assignee: "Priyanshu Kumar",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -26,7 +26,7 @@ const UpcomingList = [
     title: "Issue 4",
     description: "Description 1",
     assignee: "Ayush Sahu",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -34,7 +34,7 @@ const UpcomingList = [
     title: "Issue 5",
     description: "Description 1",
     assignee: "Het Patel",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -42,7 +42,7 @@ const UpcomingList = [
     title: "Issue 6",
     description: "Description 1",
     assignee: "Nikhil Garg",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -50,7 +50,7 @@ const UpcomingList = [
     title: "Issue 7",
     description: "Description 1",
     assignee: "Kushagra Sharma",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -58,7 +58,7 @@ const UpcomingList = [
     title: "Issue 8",
     description: "Description 1",
     assignee: "Priyanshu Kumar",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -66,7 +66,7 @@ const UpcomingList = [
     title: "Issue 9",
     description: "Description 1",
     assignee: "Nikhil Garg",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -74,7 +74,7 @@ const UpcomingList = [
     title: "Issue 10",
     description: "Description 1",
     assignee: "Het Patel",
-    status: "ToDo",
+    status: "Forwarded",
   },
   // ...
   {
@@ -82,14 +82,14 @@ const UpcomingList = [
     title: "Issue 11",
     description: "Description 1",
     assignee: "Ayush Sahu",
-    status: "ToDo",
+    status: "Forwarded",
   },
   {
     id: 12,
     title: "Issue 12",
     description: "Description 1",
     assignee: "Priyanshu Kumar",
-    status: "ToDo",
+    status: "Done",
   },
   // ...
   {
@@ -97,7 +97,7 @@ const UpcomingList = [
     title: "Issue 13",
     description: "Description 1",
     assignee: "Chetan Kamble",
-    status: "Backlog",
+    status: "Forwarded",
   },
   // ...
   {
@@ -105,14 +105,14 @@ const UpcomingList = [
     title: "Issue 14",
     description: "Description 1",
     assignee: "Kushagra Sharma",
-    status: "Backlog",
+    status: "Done",
   },
   {
     id: 15,
     title: "Issue 15",
     description: "Description 1",
     assignee: "Chetan Kamble",
-    status: "ToDo",
+    status: "Done",
   },
   // ...
   {
@@ -120,14 +120,14 @@ const UpcomingList = [
     title: "Issue 16",
     description: "Description 1",
     assignee: "Chetan Kamble",
-    status: "Backlog",
+    status: "Done",
   },
   {
     id: 17,
     title: "Issue 17",
     description: "Description 1",
     assignee: "Kushagra Sharma",
-    status: "ToDo",
+    status: "Cancelled",
   },
   // ...
   {
@@ -135,7 +135,7 @@ const UpcomingList = [
     title: "Issue 18",
     description: "Description 1",
     assignee: "Nikhil Garg",
-    status: "Backlog",
+    status: "Cancelled",
   },
   // ...
   {
@@ -143,8 +143,8 @@ const UpcomingList = [
     title: "Issue 19",
     description: "Description 1",
     assignee: "Kushagra Sharma",
-    status: "Backlog",
+    status: "Cancelled",
   },
 ];
 
-export default UpcomingList;
+export default PreviousList;
