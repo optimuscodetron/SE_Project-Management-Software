@@ -22,11 +22,10 @@ export default function PreviousCard({ issue, onMoveIssue }) {
         </span>
       </div>
       <div className="mb-1 text-white">{issue.title}</div>
-      <div className="flex justify-between items-center">
+      <div className="flex items-center">
         {issue.status !== "Forwarded" && (
           <button
             className={btnstyle}
-            style={{ marginLeft: "8px" }}
             onClick={() => onMoveIssue(issue.id, issue.status, "Forwarded")}
           >
             Forwarded
@@ -51,7 +50,6 @@ export default function PreviousCard({ issue, onMoveIssue }) {
         {issue.status !== "Done" && (
           <button
             className={btnstyle}
-            style={{ marginLeft: "8px" }}
             onClick={() => onMoveIssue(issue.id, issue.status, "Done")}
           >
             Done
@@ -60,7 +58,6 @@ export default function PreviousCard({ issue, onMoveIssue }) {
         {issue.status !== "Cancelled" && (
           <button
             className={btnstyle}
-            style={{ marginLeft: "8px" }}
             onClick={() => onMoveIssue(issue.id, issue.status, "Cancelled")}
           >
             Cancelled

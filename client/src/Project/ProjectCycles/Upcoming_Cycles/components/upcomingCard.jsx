@@ -22,11 +22,10 @@ export default function UpcomingCard({ issue, onMoveIssue }) {
         </span>
       </div>
       <div className="mb-1 text-white">{issue.title}</div>
-      <div className="flex justify-between items-center">
+      <div className="flex items-center">
         {issue.status !== "Backlog" && (
           <button
             className={btnstyle}
-            style={{ marginLeft: "8px" }}
             onClick={() => onMoveIssue(issue.id, issue.status, "Backlog")}
           >
             Backlog
@@ -35,7 +34,6 @@ export default function UpcomingCard({ issue, onMoveIssue }) {
         {issue.status !== "ToDo" && (
           <button
             className={btnstyle}
-            style={{ marginLeft: "8px" }}
             onClick={() => onMoveIssue(issue.id, issue.status, "ToDo")}
           >
             ToDo

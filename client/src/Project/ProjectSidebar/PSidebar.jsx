@@ -37,6 +37,7 @@ const PSidebar = (props) => {
             <PSidebarCycleList
               openUpcomingCycle={props.openUpcomingCycle}
               openCurrentCycle={props.openCurrentCycle}
+              openPreviousCycle={props.openPreviousCycle}
             />
           </li>
           <hr className="w-full h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-500" />

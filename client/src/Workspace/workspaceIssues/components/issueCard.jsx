@@ -22,7 +22,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
         </span>
       </div>
       <div className="mb-1 text-white">{issue.title}</div>
-      <div className="flex justify-between items-center">
+      <div className="flex items-center">
         {issue.status !== "Backlog" && (
           <button
             className={btnstyle}
