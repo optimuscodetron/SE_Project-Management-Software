@@ -25,12 +25,7 @@ const ProjectListSidebar = (props) => {
 
 
   useEffect(() => {
-
-    console.log('UseProject');
-
     fetchProjectData();
-
-
   }, [props.workspaceId]);
 
   const fetchProjectData = async () => {
@@ -46,16 +41,15 @@ const ProjectListSidebar = (props) => {
 
       if (response.status === 200) {
         const data = response.data;
-        console.log(data.project);
         setUserProject(data.project)
-        // console.log(userProjects)
-
       } else {
         throw new Error('Internal server error');
       }
     } catch (error) {
+      
       console.error('Error fetching data:', error.message);
-      // Handle error here
+      throw new Error('Error fetching data:');
+      
     }
   };
 

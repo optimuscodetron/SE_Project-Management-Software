@@ -40,7 +40,7 @@ module.exports.getAllProjectOfUser = async (req, res) => {
 module.exports.createProject=async(req,res)=>{
     // console.log("88");
 
-    console.log(req.body);
+    console.log("craeteProject Frontend Data"+req.body);
     const { name, description, workspaceID, memberIDs, startDate, targetDate, status } = req.body;
 
     try{
