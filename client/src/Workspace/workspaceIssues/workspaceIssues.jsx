@@ -7,7 +7,8 @@ import { FaCircleHalfStroke } from "react-icons/fa6";
 import { FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import CreateNewProject from "../CreateNewProject/CreateNewProject";
-const WorkspaceIssues = () => {
+import FilterSidebar from "./components/FilterSidebar";
+const WorkspaceIssues = (props) => {
   const [toDoIssues, setToDoIssues] = useState([]);
   const [inProgressIssues, setInProgressIssues] = useState([]);
   const [backlogIssues, setBacklogIssues] = useState([]);
@@ -15,6 +16,9 @@ const WorkspaceIssues = () => {
   const [cancelledIssues, setCancelledIssues] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [isopen,setIsOpen]=useState(false);
+
+    
+
   useEffect(() => {
     const todoDummy = [];
     const inProgressDummy = [];
@@ -126,6 +130,7 @@ const WorkspaceIssues = () => {
   };
 
   return (
+    
     <div className="bg-[#171e28] overflow-x-scroll ">
      
       {dataLoaded && (
@@ -173,9 +178,23 @@ const WorkspaceIssues = () => {
               iconColor='text-red-400'
             />
           </div>
+          {props.showFilterSidebar && <div className="overflow-y-scroll">
+         <div className=" fixed right-0 h-full overflow-y-scroll">
+        
+             <FilterSidebar/>
+         
+         </div>
+       </div>}
+
         </div>
+         
+        
       )}
-    </div>
+      
+      </div>
+
+       
+   
   );
 };
 export default WorkspaceIssues;
