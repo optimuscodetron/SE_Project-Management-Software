@@ -14,6 +14,10 @@ const ProjectSchema = new mongoose.Schema({
         ref:'Worskpace',
         required:true
     },
+    lead:{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     issuesIDs:[
         {
             type: Schema.Types.ObjectId,
@@ -33,6 +37,11 @@ const ProjectSchema = new mongoose.Schema({
     targetDate:{
         type:Date,
         required:true
+    },
+    isCycle:{
+        type:Boolean,
+        required:true,
+        default:false
     },
     cycleIDs:[{
         type:Schema.Types.ObjectId,

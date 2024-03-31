@@ -67,3 +67,53 @@ module.exports.createProject=async(req,res)=>{
 
     }
 }
+
+module.exports.projectInfo=async(req,res)=>{
+    try {
+        
+        const projectID = req.body.projectID || req.params.projectID;
+        if (!projectID) {
+            return res.status(400).json({ error: "Project ID is required" });
+        }
+        const project = await Project.findById(projectID);
+        if (!project) {
+            return res.status(404).json({ error: "Project not found" });
+        }
+        res.status(200).json({ project });
+    } catch (error) {
+        
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+    
+}
+
+module.exports.projectUpdateInfo=async(req,res)=>{
+    try {
+        
+        const projectID = req.body.projectID || req.params.projectID;
+        if (!projectID) {
+            return res.status(400).json({ error: "Project ID is required" });
+        }
+        let project = await Project.findById(projectID);
+        if (!project) {
+            return res.status(404).json({ error: "Project not found" });
+        }
+        if (req.body.name) {
+            project.name = req.body.name;
+        }
+        if (req.body.description) {
+            project.description = req.body.description;
+        }
+        if (req.body.status) {
+            project.status = req.body.status;
+        }
+        project = await project.save();
+        res.status(200).json({ project });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+    
+}
+
