@@ -117,3 +117,35 @@ module.exports.projectUpdateInfo=async(req,res)=>{
     
 }
 
+module.exports.getUser = async (req, res) => {
+    try {
+        // Retrieve userID from request parameters
+        const userID = req.body.userID || req.params.userID;
+
+        // Check if userID is provided
+        if (!userID) {
+            return res.status(400).json({ error: "User ID is required" });
+        }
+
+        // Find the user by userID
+        const user = await User.findById(userID);
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // If user is found, send userID, name, and email in the response
+        const userData = {
+            userID: user._id,
+            name: user.name,
+            email: user.email
+        };
+
+        res.status(200).json(userData);
+    } catch (error) {
+        // Handle errors
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
