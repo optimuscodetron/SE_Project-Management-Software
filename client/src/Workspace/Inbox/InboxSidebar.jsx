@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import "./Inbox.css";
+import IssueInfo from '../../Project/ProjectIssues/IssueInfo/IssueInfo';
 
 const Inbox = (props) => {
   const [messages, setMessages] = useState([
@@ -85,18 +86,24 @@ const Inbox = (props) => {
     // Add more messages as needed
   ]);
 
-  const [selectedMessageId, setSelectedMessageId] = useState(null);
 
+  const [selectedMessageId, setSelectedMessageId] = useState(null);
+  const [showIssueInfo, setShowIssueInfo] = useState(false);
   const handleSelectMessage = (messageId) => {
     setSelectedMessageId(messageId);
+    setShowIssueInfo(true); 
+  };
+
+  const handleCloseIssueInfo = () => {
+    setSelectedMessageId(null);
+    setShowIssueInfo(false); // Hide the IssueInfo component when closed
   };
 
   return (
     <div className="inbox-container bg-navy-700">
       <div className="inbox-content">
         <div className="message-list">
-          <br></br>
-          <br></br>
+          
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -133,10 +140,12 @@ const Inbox = (props) => {
             ))}
           </ul>
         </div>
-        {selectedMessageId && (
+        {showIssueInfo  && (
+          <div className="issue-info">
           <div className="message-details">
+            <IssueInfo  onCloseIssueInfo={handleCloseIssueInfo}/>
             <br></br>
-            <br></br>
+            <br></br>{/*
             <h1>{messages.find((m) => m.id === selectedMessageId)?.subject}</h1><br></br>
             <div className="message-task">
               <h2>Task Details:</h2><br></br>
@@ -149,8 +158,9 @@ const Inbox = (props) => {
               <h2>Message Body:</h2>
               <p>{messages.find((m) => m.id === selectedMessageId)?.body}</p>
             </div><br></br>
-           
-          </div>
+           */}
+        </div>
+        </div>
         )}
       </div>
     </div>
