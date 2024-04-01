@@ -8,9 +8,17 @@ import { GoProjectRoadmap } from "react-icons/go";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import CreateNewProject from "../../../CreateNewProject/CreateNewProject";
 import Axios from "axios";
+
+import { useSelector,useDispatch } from "react-redux";
+
 const ProjectListSidebar = (props) => {
+  const workspaceId=useSelector((state)=>state.workspaceId.value);
+  console.log(workspaceId);
+  
+
   const [showProject, setShowProject] = useState(false);
   const [isopen, setisopen] = useState(false);
+ 
 
   const showProjectHandler = () => {
     setShowProject((prevState) => !prevState);
@@ -26,14 +34,17 @@ const ProjectListSidebar = (props) => {
 
   useEffect(() => {
     fetchProjectData();
-  }, [props.workspaceId]);
+   
+
+  }, [workspaceId]);
 
   const fetchProjectData = async () => {
+   
 
     try {
-      
+
       const data = {
-        workspaceId: props.workspaceId,
+        workspaceId: workspaceId,
       }
       const response = await Axios.post('http://localhost:8000/api/getAllProjectOfUser', data, {
         withCredentials: true,

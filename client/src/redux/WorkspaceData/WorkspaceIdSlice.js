@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
-  value: 0,
-}
+// const initialState = {
+//   value: null,
+// }
 
-export const workspaceIdSlice = createSlice({
+const workspaceIdSlice = createSlice({
   name: 'workspaceId',
-  initialState,
+  initialState:{
+    value: 0,
+  },
   reducers: {
     changeWorkspaceId: (state,action) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -14,8 +16,10 @@ export const workspaceIdSlice = createSlice({
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
       // console.log(action.payload);
-      state.value = action.payload
+      state.value= action.payload
+      
     },
+
     
   },
 })
