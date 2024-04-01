@@ -19,6 +19,7 @@ import Project from './Project/Project';
 import IssueInfo from "./Project/ProjectIssues/IssueInfo/IssueInfo";
 import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
 import Workspace from "./Workspace/workspace";
+import ChartComponent from "./Project/chart";
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import MemberSetting from './Workspace/Settings/Member/MemberSetting';
 import Profile from "./Workspace/Settings/Profile/Profile";
@@ -93,6 +94,7 @@ function App() {
                 
 
                     <Route  path="/workspace" element={<Workspace />} />
+                    <Route path="/barchart" element={<ChartComponent/>}/>
 
                     <Route  path="/workspace/project" element={<Project />} />
                       
