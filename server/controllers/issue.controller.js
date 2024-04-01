@@ -46,11 +46,12 @@ exports.createIssue = async (req, res) => {
     console.log(req.body);
     const creatorId = req.body.creator;
     const projectId = req.body.project;
+  
     try {
 
         const user = await User.findOne({ _id: creatorId });
-        // console.log(user);
- 
+  
+       
         const newIssue = await Issue.create(req.body);
         const project=await Project.findOne({_id:projectId});
         console.log(project);

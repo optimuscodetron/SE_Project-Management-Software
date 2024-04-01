@@ -20,7 +20,9 @@ const issueSchema=new mongoose.Schema({
         enum:['Backlog','Todo','Inprogress','Done','Cancelled'],
         required:true
     },
-    label:String,
+    label:
+    {type:String
+    },
     priority:{
         type:String,
         enum:['Lowest','Low','High','Highest'],
