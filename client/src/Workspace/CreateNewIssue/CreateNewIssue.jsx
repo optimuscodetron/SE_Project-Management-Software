@@ -87,6 +87,26 @@ const CreateNewIssue = (props) => {
 
   const handleCreateIssue = async () => {
  
+      
+      const newIssue = {
+        projectName: projectName.current.value,
+        description: description.current.value,
+        startDate: startDate,
+        targetDate: targetDate,
+        assignee: Assignee,
+        creator:creatorid,
+        priority:Priority,
+        cycle:Cycle ,
+        projectId:projectId,
+        stage:IssueStatus,// Here, Assignee should be set based on user selection from the project members list
+        // Include other properties like priority, issue type, cycle, etc.
+      };
+
+      // Send the new issue data to the backend API
+      await Axios.post("http://localhost:8000/api/users/workspace/project/issue", newIssue, {
+        withCredentials: true
+      });
+
   };
 
   const handleCancel = () => {
