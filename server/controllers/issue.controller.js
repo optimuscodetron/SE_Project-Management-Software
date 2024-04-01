@@ -50,7 +50,24 @@ exports.createIssue = async (req, res) => {
     try {
 
         const user = await User.findOne({ _id: creatorId });
-        
+        const assignee=await User.findOne({username:username});
+        const project1=await Project.findOne({_id:projectId});
+        const data={
+            title:req.body.projectName,
+            description:req.body.description,
+            assigneeUserID:assignee._id,
+            creator:user._id,
+            stage:"Todo",
+            priority:"High",
+            projectId:project1._id,
+            creationDate:req.body.targetDate,
+            dueDate:req.body.targetDate,
+        }
+        console.log(data);
+ 
+        const newIssue = await Issue.create(data);
+        const project=await Project.findOne({_id:projectId});
+        console.log(project);
 
 
         const updatedProject = await Project.findOneAndUpdate(
