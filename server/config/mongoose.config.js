@@ -5,7 +5,7 @@ const { Workspace } = require('../models/workspace.model');
 
 
 
-mongoose.connect("mongodb://127.0.0.1:27017/ragnar_SE", {
+mongoose.connect("mongodb://127.0.0.1:27017/SE_Project", {
 
 
     useNewUrlParser: true,

@@ -12,7 +12,7 @@ import Axios from "axios";
 import { useSelector,useDispatch } from "react-redux";
 
 const ProjectListSidebar = (props) => {
-  const workspaceId=useSelector((state)=>state.workspaceId.value);
+  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);
   console.log(workspaceId);
   
 
