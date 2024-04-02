@@ -207,7 +207,8 @@ exports.changeinfo = async (req, res) => {
   // localStorage.clear();
   
 
-  const client=new MongoClient("mongodb+srv://Kushagra_18:bDFTOPZeMaygXAE3@cluster0.mxxglsz.mongodb.net/Demo?retryWrites=true&w=majority")
+
+  const client=new MongoClient("mongodb://127.0.0.1:27017/SE_Project")
 
 
   try {

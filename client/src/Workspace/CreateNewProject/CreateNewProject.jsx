@@ -9,8 +9,10 @@ import { GrStatusDisabledSmall } from "react-icons/gr";
 import { FiHexagon } from "react-icons/fi";
 import Modal from '../../UI/Modal';
 
+
 const CreateNewProject = (props) => {
     const [isopen,setisopen]=useState(false);
+
 
     //send by backend
     const [Workspacename,Workspacesetname]=useState("Workspace");

@@ -8,9 +8,17 @@ import { GoProjectRoadmap } from "react-icons/go";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import CreateNewProject from "../../../CreateNewProject/CreateNewProject";
 import Axios from "axios";
+
+import { useSelector,useDispatch } from "react-redux";
+
 const ProjectListSidebar = (props) => {
+  const workspaceId=useSelector((state)=>state.workspaceId.value);
+  console.log(workspaceId);
+  
+
   const [showProject, setShowProject] = useState(false);
   const [isopen, setisopen] = useState(false);
+ 
 
   const showProjectHandler = () => {
     setShowProject((prevState) => !prevState);
@@ -26,14 +34,17 @@ const ProjectListSidebar = (props) => {
 
   useEffect(() => {
     fetchProjectData();
-  }, [props.workspaceId]);
+   
+
+  }, [workspaceId]);
 
   const fetchProjectData = async () => {
+   
 
     try {
-      
+
       const data = {
-        workspaceId: props.workspaceId,
+        workspaceId: workspaceId,
       }
       const response = await Axios.post('http://localhost:8000/api/getAllProjectOfUser', data, {
         withCredentials: true,
@@ -85,7 +96,7 @@ const ProjectListSidebar = (props) => {
             <ul className={"flex row ml-8"}>
               {userProjects.map((item) => (
                 <li>
-                  <NavLink to={'/workspace/project/board'} className="text-decoration-none " >
+                  <NavLink to={'/workspace/project'} className="text-decoration-none " >
                     <div className=" text-sm font-semibold p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group truncate">
                       {item.name}
                     </div>

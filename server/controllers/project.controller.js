@@ -66,6 +66,7 @@ module.exports.createProject=async(req,res)=>{
 
     }
 }
+
 module.exports.fetchallmembers=async(req,res)=>{
     const projectId = req.body.projectid;
     console.log(req.body);
@@ -92,3 +93,87 @@ module.exports.fetchallmembers=async(req,res)=>{
 
 
 }
+
+
+module.exports.projectInfo=async(req,res)=>{
+    try {
+        
+        const projectID = req.body.projectID || req.params.projectID;
+        if (!projectID) {
+            return res.status(400).json({ error: "Project ID is required" });
+        }
+        const project = await Project.findById(projectID);
+        if (!project) {
+            return res.status(404).json({ error: "Project not found" });
+        }
+        res.status(200).json({ project });
+    } catch (error) {
+        
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+    
+}
+
+module.exports.projectUpdateInfo=async(req,res)=>{
+    try {
+        
+        const projectID = req.body.projectID || req.params.projectID;
+        if (!projectID) {
+            return res.status(400).json({ error: "Project ID is required" });
+        }
+        let project = await Project.findById(projectID);
+        if (!project) {
+            return res.status(404).json({ error: "Project not found" });
+        }
+        if (req.body.name) {
+            project.name = req.body.name;
+        }
+        if (req.body.description) {
+            project.description = req.body.description;
+        }
+        if (req.body.status) {
+            project.status = req.body.status;
+        }
+        project = await project.save();
+        res.status(200).json({ project });
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+    
+}
+
+module.exports.getUser = async (req, res) => {
+    try {
+        // Retrieve userID from request parameters
+        const userID = req.body.userID || req.params.userID;
+
+        // Check if userID is provided
+        if (!userID) {
+            return res.status(400).json({ error: "User ID is required" });
+        }
+
+        // Find the user by userID
+        const user = await User.findById(userID);
+
+        // Check if user exists
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        // If user is found, send userID, name, and email in the response
+        const userData = {
+            userID: user._id,
+            name: user.name,
+            email: user.email
+        };
+
+        res.status(200).json(userData);
+    } catch (error) {
+        // Handle errors
+        console.error("Error:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+

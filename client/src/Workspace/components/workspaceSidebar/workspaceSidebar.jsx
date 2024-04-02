@@ -21,16 +21,18 @@ const WorkspaceSidebar = (props) => {
 
   // }, []);
 
-  const getWorkspaceId = (id) => {
-    console.log(id);
-    setWorkspaceId(id);
-  };
+  // const getWorkspaceId = (id) => {
+  //   console.log(id);
+  //   setWorkspaceId(id);
+  // };
+  const [isHide, setIsHide] = useState(true);
+
+  setTimeout(() => setIsHide(false), 1000);
 
   return (
     <aside
-      className={`sm:relative w-64 h-full transition-transform ${
-        props.showSideBar ? "" : "-translate-x-full"
-      } bg-gray-800 border-r border-gray-200 sm:translate-x-0`}
+      className={`sm:relative w-64 h-full transition-transform ${props.showSideBar ? "" : "-translate-x-full"
+        } bg-gray-800 border-r border-gray-200 sm:translate-x-0`}
     >
       <div className="h-full px-2 overflow-y-auto bg-[#171e28] dark:bg-[#171e28]">
         <ul className="space-y-2 font-medium pt-2">
@@ -38,7 +40,7 @@ const WorkspaceSidebar = (props) => {
             <WorkspaceListSidebar
               headerInfo={props.currentWorkspace}
               openWorkspace={props.openWorkspace}
-              workspaceId={getWorkspaceId}
+              // workspaceId={getWorkspaceId}
             />
           </li>
 
@@ -94,10 +96,13 @@ const WorkspaceSidebar = (props) => {
 
           <div className="border-b border-white my-2 w-full"></div>
           <li>
-            <ProjectListSidebar
-              onOpenCreateProject={props.onOpenCreateProject}
-              workspaceId={workspaceId}
-            />
+            
+             { !isHide?  <ProjectListSidebar
+                  onOpenCreateProject={props.onOpenCreateProject}
+                  // workspaceId={workspaceId}
+                />:null}
+           
+
           </li>
         </ul>
       </div>
