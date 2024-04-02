@@ -5,6 +5,7 @@ import { PiMonitorFill } from "react-icons/pi";
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
 import Axios from "axios";
+import axios from "axios";
 
 
 const WorkspaceListSidebar = (props) => {

@@ -30,28 +30,55 @@ module.exports.getAllWorkspaceOfUser = async (req, res) => {
   }
 };
 
-}
+exports.saveworskapce = async (req, res) => {
+  // console.log(req.adminuserId)
+  const id = req.userId;
+  req.body.members = [];
+  req.body.adminuserId = id;
+  req.body.members.push(id);
+  // const data=await User.findById(req.adminuserId);
+  // console.log(data);
+  Workspace.create(req.body)
+    .then((Workspace) => {
+      res.json({
+        message: "Workspace Successfully created!",
+        workspace: Workspace,
+      });
+    })
+    .catch((err) => res.status(400).json(err));
+};
 
-exports.saveworskapce=async(req,res)=>{
-    // console.log(req.adminuserId)
-    const id=req.userId;
-    req.body.members=[];
-    req.body.adminuserId=id;
-    req.body.members.push(id);
-    try {
-        // Create the workspace
-        const workspace = await Workspace.create(req.body);
+exports.WorkspaceSetting = async (req, res) => {
+  try {
+    
+  } catch (error) {
 
-        // Update the user's workspaces array with the new workspace's ID
-        const user = await User.findOneAndUpdate(
-            { _id: id },
-            { $push: { workspaces: workspace._id } },
-            { new: true }
-        );
-
-        // Send response with workspace ID
-        res.json({ message: "Workspace Successfully created!", workspace: workspace });
-    } catch (err) {
-        res.status(400).json(err);
-    }
   }
+};
+
+module.exports.getActiveWorkspaceOfUser = async (req, res) => {
+  try {
+     const user_id = req.userId;
+    //  console.log(req.cookies);
+      // console.log("pk",user_id)
+      const activeWorkspaceId = req.query.activeWorkspaceId;
+
+      // Query the Workspace collection to find the active workspace
+      const workspace = await Workspace.findOne({
+          $or: [
+              { adminuserId: user_id, _id: activeWorkspaceId },
+              { members: user_id, _id: activeWorkspaceId },
+          ],
+      });
+
+      if (!workspace) {
+          return res.status(404).json({ message: "Active workspace not found" });
+      }
+
+      // Return the active workspace
+      res.status(200).json(workspace);
+  } catch (error) {
+      console.error("Error fetching active workspace:", error);
+      res.status(500).json({ message: "Internal server error" });
+  }
+};

@@ -1,47 +1,62 @@
 import React, { useEffect, useState } from "react";
 import SettingsSidebar from "../Component/SettingsSidebar";
 import Navbar from "../../../Components/Layout/navbar/navbar";
-
+import axios from "axios";
 
 const General = () => {
-  const [workspaceName, setWorkspaceName] = useState("Software");
-  const [workspaceUrl, setWorkspaceUrl] = useState("trackerX.app/Software");
+  const [workspaceName, setWorkspaceName] = useState("");
+  const [workspaceUrl, setWorkspaceUrl] = useState("");
   const [upload, setUpload] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
-
   const [imageSrc, setImageSrc] = useState(null);
-  const [previousImageSrc, setPreviousImageSrc] = useState(null);
 
-  const handleUploadChange = (event) => {
-    const file = event.target.files[0];
-    if(file){
-    const reader = new FileReader();
+  useEffect(() => {
+    fetchWorkspace(); // Fetch workspace data on component mount
+  }, []);
 
-    reader.onload = function (e) {
-      // console.log(e.target.result);
-      setPreviousImageSrc(imageSrc);
-      setImageSrc(e.target.result);
-    };
-
-    reader.readAsDataURL(file);
-  }
-    // else {
-    //   setImageSrc(null); 
-    // }
-
+  const fetchWorkspace = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/getActiveWorkspaceOfUser`,{
+        params: {
+          activeWorkspaceId: localStorage.getItem('activeWorkspaceId')
+        },
+        withCredentials: true,
+      });
+      const data =  response.data;
+      console.log(data.name);
+      setWorkspaceName(data.name);
+      setWorkspaceUrl(data.url);
+      // Assuming you also need to set the imageSrc here, update accordingly
+    } catch (error) {
+      console.error('Error fetching workspace:', error);
+      // Handle errors as needed
+    }
   };
 
   const handleInput = (e, n) => {
-    if (n == 1) setWorkspaceName(e.target.value);
-    else if (n == 2) setWorkspaceUrl(e.target.value);
+    if (n === 1) setWorkspaceName(e.target.value);
+    else if (n === 2) setWorkspaceUrl(e.target.value);
   };
 
   const handleUpdate = () => {
-    //write logic for sending in backend
+    // Write logic for sending data to backend for update
   };
 
   const handleSidebar = () => {
-    setShowSidebar((prevstate) => !prevstate);
+    setShowSidebar(prevstate => !prevstate);
+  };
+
+  const handleUploadChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        setImageSrc(e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleUpload = () => {
@@ -75,21 +90,6 @@ const General = () => {
 
           
               <div className="relative inline-flex rounded-lg w-auto auto mt-3 mb-2">
-              {/* <img
-                src="https://static.toiimg.com/thumb/msid-96054814,width-400,resizemode-4/96054814.jpg"
-                alt=""
-                onMouseOver={handleUpload}
-                onMouseOut={handleUpload}
-                className={`hover:cursor-pointer ${
-                  upload ? "brightness-50" : ""
-                } h-[60px] object-cover rounded-sm`}
-              />
-    
-              {upload && (
-                <button className="hover:cursor-pointer -m-14 z-10   text-white">
-                  upload
-                </button>
-              )} */}
                 <label htmlFor="fileInput" className="cursor-pointer ">
                   <input
                     id="fileInput"

@@ -103,7 +103,7 @@ function App() {
 
                     <Route  path="/workspace" element={<Workspace />} />
                     {/* by Chetan */}
-                    <Route  path="/Current_cyc" element={<Project/>} />
+                    {/* <Route  path="/Current_cyc" element={<Project/>} /> */}
 
                     <Route  path="/workspace/project/board" element={<Board />} />
                       
