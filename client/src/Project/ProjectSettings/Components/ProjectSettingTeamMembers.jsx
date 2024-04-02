@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ProjectSettingTeamMembers() {
+function ProjectSettingTeamMembers( { project } ) {
   // Array of team members
   const [teamMembers, setTeamMembers] = useState([
     { id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },
