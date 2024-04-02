@@ -8,6 +8,6 @@ module.exports = function(app){
 
     // app.get('/api/getAllProjectOfUser', Workpsacecontroller.getAllOfUser);
     app.get('/api/getActiveWorkspaceOfUser',authenticate, Workpsacecontroller.getActiveWorkspaceOfUser);
-    // app.put('/api/getAllWorkspaceOfUser',authenticate, Workpsacecontroller.updateWorkspaceSetting);
-    // app.delete('/api/getAllWorkspaceOfUser',authenticate, Workpsacecontroller.deleteWorkspaceSetting);
+    app.put('/api/getActiveWorkspaceOfUser',authenticate, Workpsacecontroller.updateWorkspaceSetting);
+    app.delete('/api/getActiveWorkspaceOfUser',authenticate, Workpsacecontroller.deleteWorkspaceSetting);
 }

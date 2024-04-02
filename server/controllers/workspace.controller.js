@@ -58,27 +58,89 @@ exports.WorkspaceSetting = async (req, res) => {
 
 module.exports.getActiveWorkspaceOfUser = async (req, res) => {
   try {
-     const user_id = req.userId;
+    const user_id = req.userId;
     //  console.log(req.cookies);
-      // console.log("pk",user_id)
-      const activeWorkspaceId = req.query.activeWorkspaceId;
+    // console.log("pk",user_id)
+    const activeWorkspaceId = req.query.activeWorkspaceId;
 
-      // Query the Workspace collection to find the active workspace
-      const workspace = await Workspace.findOne({
-          $or: [
-              { adminuserId: user_id, _id: activeWorkspaceId },
-              { members: user_id, _id: activeWorkspaceId },
-          ],
-      });
+    // Query the Workspace collection to find the active workspace
+    const workspace = await Workspace.findOne({
+      $or: [
+        { adminuserId: user_id, _id: activeWorkspaceId },
+        { members: user_id, _id: activeWorkspaceId },
+      ],
+    });
 
-      if (!workspace) {
-          return res.status(404).json({ message: "Active workspace not found" });
-      }
+    if (!workspace) {
+      return res.status(404).json({ message: "Active workspace not found" });
+    }
 
-      // Return the active workspace
-      res.status(200).json(workspace);
+    // Return the active workspace
+    res.status(200).json(workspace);
   } catch (error) {
-      console.error("Error fetching active workspace:", error);
-      res.status(500).json({ message: "Internal server error" });
+    console.error("Error fetching active workspace:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+module.exports.updateWorkspaceSetting = async (req, res) => {
+  try {
+    const userId = req.userId; // Assuming userId is set in the authentication middleware
+
+    // Extracting data from the request body
+    const { activeWorkspaceId, newName, newUrl } = req.body;
+
+    // Validate if all required fields are present
+    if (!activeWorkspaceId || !newName || !newUrl) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // Update the workspace
+    const updatedWorkspace = await Workspace.findOneAndUpdate(
+      { _id: activeWorkspaceId, adminuserId: userId }, // Query condition
+      { name: newName, url: newUrl }, // New data to be updated
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedWorkspace) {
+      return res
+        .status(404)
+        .json({
+          message: "Workspace not found or user is not authorized to update",
+        });
+    }
+
+    // Send the updated workspace as response
+    res.status(200).json(updatedWorkspace);
+  } catch (error) {
+    console.error("Error updating workspace settings:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+
+module.exports.deleteWorkspaceSetting = async (req, res) => {
+  try {
+    const userId = req.userId; // Assuming userId is set in the authentication middleware
+
+    // Extracting the active workspace ID from the request parameters or user's session
+    const activeWorkspaceId = req.query.activeWorkspaceId;
+
+    // Delete the workspace
+    const deletedWorkspace = await Workspace.findOneAndDelete({
+      _id: activeWorkspaceId,
+      adminuserId: userId
+    });
+
+    if (!deletedWorkspace) {
+      return res.status(404).json({ message: "Workspace not found or user is not authorized to delete" });
+    }
+
+    // Send success response
+    res.status(200).json({ message: "Workspace deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting workspace:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
