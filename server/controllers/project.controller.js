@@ -3,7 +3,6 @@ const express = require('express');
 const router = express.Router();
 const { User } = require('../models/user.model');
 const { Workspace } = require('../models/workspace.model');
-
 module.exports.getAllProjectOfUser = async (req, res) => {
     try {
         const { workspaceId } = req.body;
@@ -57,7 +56,7 @@ module.exports.createProject=async(req,res)=>{
 
         await Workspace.findByIdAndUpdate(workspaceID, { $push: { projects: savedProject._id } });
 
-        res.status(201).json({message:"Project saved successfully"});
+        res.status(201).json({message:"Project saved successfully",projectid:savedProject._id});
 
 
     }
@@ -67,6 +66,34 @@ module.exports.createProject=async(req,res)=>{
 
     }
 }
+
+module.exports.fetchallmembers=async(req,res)=>{
+    const projectId = req.body.projectid;
+    console.log(req.body);
+    const id=req.userId;
+    console.log(id);
+    try {
+
+        const project = await Project.findOne({ _id: projectId });
+        console.log(project)
+
+        const memberIds = project.memberIDs;
+        // console.log(memberIds);
+
+        const memberUsernames = await User.find({ _id: { $in: memberIds } }).select('username');
+        console.log(memberUsernames)
+
+        const usernames = memberUsernames.map(user => user.username);
+        // console.log(usernames);
+
+        res.json({ message: "Members list Successfully fetched!", members: usernames ,id:id});
+    } catch (err) {
+        res.status(400).json(err);
+    }
+
+
+}
+
 
 module.exports.projectInfo=async(req,res)=>{
     try {
@@ -149,3 +176,4 @@ module.exports.getUser = async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+

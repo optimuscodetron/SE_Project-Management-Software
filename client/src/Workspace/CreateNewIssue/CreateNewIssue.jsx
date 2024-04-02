@@ -10,7 +10,7 @@ import { GrProjects, GrStatusDisabledSmall } from "react-icons/gr";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import DatePicker from "react-datepicker";
 import Modal from "../../UI/Modal";
-import "react-datepicker/dist/react-datepicker.css";
+import Axios from 'axios';
 
 const CreateNewIssue = (props) => {
   const [isopen, setisopen] = useState(false);
@@ -18,9 +18,9 @@ const CreateNewIssue = (props) => {
   const [sDate, setsDate] = useState(false);
   const [eDate, seteDate] = useState(false);
   const [isSelect, setIsSelect] = useState(false);
-  const [projectStatus, setIssueStatus] = useState("Issue Type");
+  const [IssueStatus, setIssueStatus] = useState("Issue Type");
   const [isSelect2, setIsSelect2] = useState(false);
-  const [Assignee, setAssignee] = useState("Assignee");
+  const [Assignee, setAssignee] = useState(""); // Change to empty string
   const [isSelect3, setIsSelect3] = useState(false);
   const [Priority, setPriority] = useState("Priority");
   const [isSelect4, setIsSelect4] = useState(false);
@@ -33,15 +33,35 @@ const CreateNewIssue = (props) => {
   const description = useRef();
   const [startDate, setStartDate] = useState(null);
   const [targetDate, setTargetDate] = useState(null);
-  const [members, setMembers] = useState([
-    "Ayush Sahu",
-    "Ayush Ji",
-    "Ayush Ji Sahu",
-    "Ji Ayush",
-    "Ayush Sahu Ji",
-  ]);
-  const [tempMembers, setTempMembers] = useState(members.sort());
+  const [members, setMembers] = useState([]); // Empty array initially
   const [filteredMembers, setFilteredMembers] = useState([]);
+  let creatorid="65fc7fd43c074c40c8b0e62c";
+  let projectId="660874b0fc10a3741a5f70e3";
+
+  useEffect(() => {
+    fetchMembers(); // Fetch members when component mounts
+  }, []);
+
+  const fetchMembers = async () => {
+    try {
+      const data={
+        projectid:"660874b0fc10a3741a5f70e3"
+      }
+       Axios.post("http://localhost:8000/api/users/workspace/project/members", data,{
+        withCredentials:true// Replace with actual project ID
+      })
+      .then((res) => {
+        setMembers(res.data.members);
+        console.log(res.data.id);
+        // creatorid=res.data.id;
+        // window.location.reload();
+      })
+
+   
+    } catch (error) {
+      console.error("Error fetching members:", error);
+    }
+  };
 
   const handlePopup = () => {
     setisopen(!isopen);
@@ -60,29 +80,33 @@ const CreateNewIssue = (props) => {
     if (num === 5) setIsSelect5(!isSelect5);
   };
 
-  const handleMembers = (element, index) => {
-    const updatedTempMembers = [...tempMembers];
-    updatedTempMembers.splice(index, 1);
-    updatedTempMembers.sort();
-    setTempMembers(updatedTempMembers);
-    const updatedFilteredMembers = [...filteredMembers];
-    updatedFilteredMembers.push(element);
-    updatedFilteredMembers.sort();
-    setFilteredMembers(updatedFilteredMembers);
+  const handleAssigneeSelect = (username) => {
+    setAssignee(username);
+    setIsSelect2(false); // Close member selection dropdown
   };
 
-  const handleMembers2 = (element, index) => {
-    const updatedTempMembers = [...tempMembers];
-    updatedTempMembers.push(element);
-    setTempMembers(updatedTempMembers);
-    const updatedFilteredMembers = [...filteredMembers];
-    updatedFilteredMembers.splice(index, 1);
-    setFilteredMembers(updatedFilteredMembers);
-  };
+  const handleCreateIssue = async () => {
+ 
+      
+      const newIssue = {
+        projectName: projectName.current.value,
+        description: description.current.value,
+        startDate: startDate,
+        targetDate: targetDate,
+        assignee: Assignee,
+        creator:creatorid,
+        priority:Priority,
+        cycle:Cycle ,
+        projectId:projectId,
+        stage:IssueStatus,// Here, Assignee should be set based on user selection from the project members list
+        // Include other properties like priority, issue type, cycle, etc.
+      };
 
-  const handleCreateIssue = () => {
-    if (!projectName.current.value) setIsEmpty(true);
-    else setisopen(false);
+      // Send the new issue data to the backend API
+      await Axios.post("http://localhost:8000/api/users/workspace/project/issue", newIssue, {
+        withCredentials: true
+      });
+
   };
 
   const handleCancel = () => {
@@ -137,7 +161,7 @@ const CreateNewIssue = (props) => {
             </div>
           </div>
         )}
-
+  
         <div
           className={` ${
             iscancel ? " pointer-events-none " : ""
@@ -157,7 +181,7 @@ const CreateNewIssue = (props) => {
                   {props.isWorkspaceContext ? Priorit : "Project 1"}
                 </p>
               </button>
-
+  
               {props.isWorkspaceContext && isSelect5 && (
                 <div className="absolute z-10 mt-2 w-[9vw] bg-gray-900 shadow-lg border border-gray-200 rounded-sm">
                   <ul>
@@ -190,7 +214,7 @@ const CreateNewIssue = (props) => {
               )}
             </div>
           </h1>
-
+  
           <div className="flex flex-row">
             <GrProjects className="items-center mt-3" />
             <div className="flex flex-col ml-[1vw] w-full">
@@ -201,7 +225,7 @@ const CreateNewIssue = (props) => {
                 onChange={handleName}
                 className="outline-none bg-transparent md:text-xl text-sm placeholder:md:text-lg placeholder:text:sm p-1"
               ></input>
-
+  
               <textarea
                 placeholder="Description"
                 ref={description}
@@ -213,7 +237,7 @@ const CreateNewIssue = (props) => {
               ></textarea>
             </div>
           </div>
-
+  
           <div>
             <div className="flex justify-evenly md:justify-evenly gap-y-3 gap-x-2 flex-wrap  ">
               <div className="bg-white overflow-visible h-[4vh] w-1/3 md:w-[9vw] rounded-sm md:text-sm text-[10px]">
@@ -222,9 +246,9 @@ const CreateNewIssue = (props) => {
                   onClick={(num) => handleSelect(1)}
                 >
                   <GrStatusDisabledSmall />{" "}
-                  <p className="overflow-hidden ">{projectStatus}</p>
+                  <p className="overflow-hidden ">{IssueStatus}</p>
                 </button>
-
+  
                 {isSelect && (
                   <div className="flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 ">
                     <button
@@ -251,7 +275,7 @@ const CreateNewIssue = (props) => {
                   </div>
                 )}
               </div>
-
+  
               <div className=" h-[4vh] w-1/3 md:w-[8vw] rounded-sm overflow-visible md:text-sm text-[10px]">
                 <button
                   className="flex justify-evenly h-[4vh] w-full  items-center rounded-sm border-[1px] p-1 border-gray-400  bg-gray-700"
@@ -259,7 +283,7 @@ const CreateNewIssue = (props) => {
                 >
                   <FaUserTie /> <p>{Assignee}</p>
                 </button>
-
+  
                 {isSelect2 && (
                   <div className="overflow-x-hidden p-2 z-1 w-[25vw]  md:w-[8vw] flex flex-col items-start relative rounded-md top-[2vh] bg-gray-900 border-[1px]  border-gray-400">
                     <button
@@ -271,7 +295,7 @@ const CreateNewIssue = (props) => {
                     {members.map((element) => {
                       return (
                         <button
-                          onClick={() => setAssignee(element)}
+                          onClick={() => handleAssigneeSelect(element)}
                           className="block w-full hover:bg-gray-600"
                         >
                           {element}
@@ -281,7 +305,7 @@ const CreateNewIssue = (props) => {
                   </div>
                 )}
               </div>
-
+  
               <div className="bg-white overflow-visible h-[4vh] w-1/3 md:w-[9vw] rounded-sm md:text-sm text-[10px]">
                 <button
                   className="flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 "
@@ -290,7 +314,7 @@ const CreateNewIssue = (props) => {
                   <FaExclamationCircle />{" "}
                   <p className="overflow-hidden ">{Priority}</p>
                 </button>
-
+  
                 {isSelect3 && (
                   <div className="flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 ">
                     <button
@@ -331,7 +355,7 @@ const CreateNewIssue = (props) => {
                   </div>
                 )}
               </div>
-
+  
               <div className="bg-white overflow-visible h-[4vh] w-1/3 md:w-[9vw] rounded-sm md:text-sm text-[10px]">
                 <button
                   className="flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 "
@@ -339,7 +363,7 @@ const CreateNewIssue = (props) => {
                 >
                   <FaSyncAlt /> <p className="overflow-hidden ">{Cycle}</p>
                 </button>
-
+  
                 {isSelect4 && (
                   <div className="flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 ">
                     <button
@@ -359,7 +383,7 @@ const CreateNewIssue = (props) => {
                   </div>
                 )}
               </div>
-
+  
               <div className="bg-gray-700 overflow-hidden rounded-sm md:p-1 md:w-[8vw] w-2/5 h-[4vh] md:text-sm text-[10px] border-[1px]  border-gray-400 flex justify-evenly items-center">
                 <BsFillCalendarDateFill />
                 <div className="w-[80%]">
@@ -372,7 +396,7 @@ const CreateNewIssue = (props) => {
                 </div>
               </div>
             </div>
-
+  
             <div className="border-t-[1px] mt-2 border-gray-500 ">
               <div className="flex justify-end mt-3 mb-2 md:text-sm text-[10px]  ">
                 {isEmpty && (
@@ -398,8 +422,8 @@ const CreateNewIssue = (props) => {
         </div>
       </div>
     </Modal>
-    // </div>
   );
+  
 };
 
 export default CreateNewIssue;

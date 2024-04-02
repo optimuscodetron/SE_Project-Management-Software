@@ -45,13 +45,27 @@ module.exports.getAllIssueOfWorkspace = async (req, res) => {
 exports.createIssue = async (req, res) => {
     console.log(req.body);
     const creatorId = req.body.creator;
-    const projectId = req.body.project;
+    const projectId = req.body.projectId;
+    const username=req.body.assignee;
     try {
 
         const user = await User.findOne({ _id: creatorId });
-        // console.log(user);
+        const assignee=await User.findOne({username:username});
+        const project1=await Project.findOne({_id:projectId});
+        const data={
+            title:req.body.projectName,
+            description:req.body.description,
+            assigneeUserID:assignee._id,
+            creator:user._id,
+            stage:"Todo",
+            priority:"High",
+            projectId:project1._id,
+            creationDate:req.body.targetDate,
+            dueDate:req.body.targetDate,
+        }
+        console.log(data);
  
-        const newIssue = await Issue.create(req.body);
+        const newIssue = await Issue.create(data);
         const project=await Project.findOne({_id:projectId});
         console.log(project);
 
