@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import "./Inbox.css";
-import IssueInfo from '../../Project/ProjectIssues/IssueInfo/IssueInfo';
+import IssueInfo from './Issue_Info';
 
 const Inbox = (props) => {
   const [messages, setMessages] = useState([
     {
       id: 6,
-      sender: 'Pallavi Kashyap ',
-      subject: 'Meet Schedule',
+      sender: 'Issue 1 ',
+      subject: 'Alert',
       body: 'This is a message about upcoming meeting. Answer the poll for deciding meeting date.',
       isRead: false,
       relatedTask: {
@@ -20,8 +20,8 @@ const Inbox = (props) => {
     },
     {
       id: 5,
-      sender: 'Tanu',
-      subject: 'Need info',
+      sender: 'Issue 2',
+      subject: 'Alert',
       body: 'This is a message to ask info about your branch of the project.',
       isRead: true,
       relatedTask: {
@@ -33,8 +33,8 @@ const Inbox = (props) => {
     },
     {
       id: 1,
-      sender: 'Khushboo Gupta',
-      subject: 'Project Update',
+      sender: 'Issue 3',
+      subject: 'Alert',
       body: 'This is a message about a project update.',
       isRead: false,
       relatedTask: {
@@ -46,8 +46,8 @@ const Inbox = (props) => {
     },
     {
       id: 2,
-      sender: 'Kushagra Sharma',
-      subject: 'Task Reminder',
+      sender: 'Issue 4',
+      subject: 'Alert',
       body: 'This is a message to remind you about a task.',
       isRead: true,
       relatedTask: {
@@ -59,8 +59,8 @@ const Inbox = (props) => {
     },
     {
       id: 3,
-      sender: 'Nikhil Garg',
-      subject: 'Deadline Extension',
+      sender: 'Issue 5',
+      subject: 'Alert',
       body: 'The deadline for the UI redesign task has been extended to next week.',
       isRead: false,
       relatedTask: {
@@ -72,8 +72,8 @@ const Inbox = (props) => {
     },
     {
       id: 4,
-      sender: 'Het Patel',
-      subject: 'Vacation Request',
+      sender: 'Issue 6',
+      subject: 'Alert',
       body: 'I need to request some time off next month.',
       isRead: false,
       relatedTask: {
@@ -103,7 +103,6 @@ const Inbox = (props) => {
     <div className="inbox-container bg-navy-700">
       <div className="inbox-content">
         <div className="message-list">
-          
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

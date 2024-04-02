@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import TitleDescrip from "./Components/TitleDescrip";
-import Comment from "./Components/Comment";
-import RightBar from "./Components/RightBar";
+import TitleDescrip from "../../Project/ProjectIssues/IssueInfo/Components/TitleDescrip";
+import Comment from "../../Project/ProjectIssues/IssueInfo/Components/Comment";
+import RightBar from "../../Project/ProjectIssues/IssueInfo/Components/RightBar";
+
+//import "./IssueInfo.css"; // Import the CSS file
 
 function IssueInfo() {
   const [isMediumScreen, setIsMediumScreen] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMediumScreen(window.innerWidth <= 768);
+      setIsMediumScreen(window.innerWidth <= 1024);
     };
 
     handleResize(); // Initial check
@@ -23,12 +25,14 @@ function IssueInfo() {
     window.history.back();
   };
 
+  
+
 
   
   return (
-    <div class="flex flex-row h-screen w-screen">
-      <aside className="z-1 bg-transparent px-2 py-3 translate-x-0 fixed">
-        <button onClick={handleGoBack} className=" cursor-pointer ">
+    <div class="flex flex-row h-screen w-screen overflow-hidden">
+      <aside className="z-1 bg-transparent px-0 py-0 translate-x-0 fixed">
+       { /*<button onClick={handleGoBack} className=" cursor-pointer ">
           <svg
             className=" h-8 w-8 text-gray-500 "
             viewBox="0 0 24 24"
@@ -40,13 +44,13 @@ function IssueInfo() {
           >
             <path d="M15 18l-6-6 6-6" />
           </svg>
-        </button>
+  </button>*/}
       </aside>
-      <div className="flex flex-col w-full h-screen">
+      <div className="flex flex-col w-full h-screen overflow-hidden">
         {isMediumScreen && <RightBar  />}
-      <div className="bg-gray-800 z-0 w-full h-full text-white justify-center p-10">
+      <div className=" z-0 w-full h-full text-white justify-center p-0">
         <div
-          className="flex flex-col rounded overflow-auto mx-auto h-[100%] mb-4 w-[90%] bg-gray-900"
+          className="flex flex-col rounded overflow-auto mx-auto h-[100%] mb-4 w-[90%] "
           style={{
             scrollbarWidth: "thin",
             scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
@@ -68,3 +72,4 @@ function IssueInfo() {
 }
 
 export default IssueInfo;
+
