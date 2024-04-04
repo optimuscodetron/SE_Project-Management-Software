@@ -1,4 +1,6 @@
 const { Workspace } = require("../models/workspace.model");
+const { Project } = require("../models/project.model");
+
 const express = require("express");
 const router = express.Router();
 
@@ -73,7 +75,20 @@ module.exports.getActiveWorkspaceOfUser = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+module.exports.getAllIssuesWorkspace = async (req, res) => {
+  try {
+    const activeWorkspaceId = req.query.activeWorkspaceId;
+  
+    const projects = await Project.find({ workspaceId: activeWorkspaceId });
 
+    const allIssues = await Issue.find({ projectId: { $in: projects.map(project => project._id) } });
+
+    res.status(200).json(allIssues);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 module.exports.updateWorkspaceSetting = async (req, res) => {
   try {
     const userId = req.userId; // Assuming userId is set in the authentication middleware
