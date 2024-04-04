@@ -4,13 +4,13 @@ import { createSlice } from '@reduxjs/toolkit'
 //   value: null,
 // }
 
-const workspaceIdSlice = createSlice({
-  name: 'workspaceId',
+const workspaceNameIdSlice = createSlice({
+  name: 'workspaceNameId',
   initialState:{
-    value: 0,
+    value: {},
   },
   reducers: {
-    changeWorkspaceId: (state,action) => {
+    changeWorkspaceNameId: (state,action) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
@@ -19,12 +19,15 @@ const workspaceIdSlice = createSlice({
       state.value= action.payload
       
     },
+    changeWorkspaceName: (state, action) => {
+      state.value.name = action.payload; // Update only the name
+    },
 
     
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { changeWorkspaceId } = workspaceIdSlice.actions
+export const { changeWorkspaceNameId,changeWorkspaceName } = workspaceNameIdSlice.actions
 
-export default workspaceIdSlice.reducer
+export default workspaceNameIdSlice.reducer

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import workspaceIdReducer from './WorkspaceData/WorkspaceIdSlice'
+import workspaceNameIdReducer from './WorkspaceData/WorkspaceNameIdSlice'
 
 export const store = configureStore({
   reducer: {
-    workspaceId: workspaceIdReducer,
+    workspaceNameId: workspaceNameIdReducer,
   },
 })
