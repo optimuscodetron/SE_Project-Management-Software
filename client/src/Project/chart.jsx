@@ -1,42 +1,72 @@
-import React, { useEffect, useRef } from 'react';
-import Chart from 'chart.js/auto';
+import React, { useEffect, useRef, useState } from "react";
+import Chart from "chart.js/auto";
 
 const ChartComponent = () => {
   const barChartRef = useRef(null);
   const pieChartRef = useRef(null);
+  const [isLandscape, setIsLandscape] = useState(
+    window.innerWidth > window.innerHeight
+  );
 
   useEffect(() => {
-    const barChartCtx = barChartRef.current.getContext('2d');
-    const pieChartCtx = pieChartRef.current.getContext('2d');
+    const handleResize = () => {
+      setIsLandscape(window.innerWidth > window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const barChartCtx = barChartRef.current.getContext("2d");
+    const pieChartCtx = pieChartRef.current.getContext("2d");
     let barChartInstance = null;
     let pieChartInstance = null;
 
     // Dummy data
     const barChartData = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-      datasets: [{
-        label: 'Sales',
-        data: [65, 59, 80, 81, 56, 55],
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1
-      }]
+      labels: [
+        "Backlog",
+        "Todo",
+        "In Progress",
+        "Done",
+        "Cancelled",
+        "Forwarded",
+      ],
+      datasets: [
+        {
+          label: "Number of Issues",
+          data: [10, 20, 15, 30, 5, 8],
+          backgroundColor: "rgba(255, 99, 132, 0.2)",
+          borderColor: "rgba(255, 99, 132, 1)",
+          borderWidth: 1,
+        },
+      ],
     };
 
     const pieChartData = {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'red',
-          'blue',
-          'yellow',
-          'green',
-          'purple',
-          'orange'
-        ],
-        borderWidth: 1
-      }]
+      labels: [
+        "Backlog",
+        "Todo",
+        "In Progress",
+        "Done",
+        "Cancelled",
+        "Forwarded",
+      ],
+      datasets: [
+        {
+          data: [10, 20, 15, 30, 5, 8],
+          backgroundColor: [
+            "red",
+            "blue",
+            "yellow",
+            "green",
+            "purple",
+            "orange",
+          ],
+          borderWidth: 1,
+        },
+      ],
     };
 
     const drawBarChart = () => {
@@ -44,18 +74,25 @@ const ChartComponent = () => {
       if (barChartInstance) {
         barChartInstance.destroy();
       }
-      
+
       // Draw new bar chart
       barChartInstance = new Chart(barChartCtx, {
-        type: 'bar',
+        type: "bar",
         data: barChartData,
         options: {
           scales: {
             y: {
-              beginAtZero: true
-            }
-          }
-        }
+              beginAtZero: true,
+            },
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position: "top",
+            },
+          },
+          responsive: true,
+        },
       });
     };
 
@@ -64,17 +101,34 @@ const ChartComponent = () => {
       if (pieChartInstance) {
         pieChartInstance.destroy();
       }
-      
+
       // Draw new pie chart
       pieChartInstance = new Chart(pieChartCtx, {
-        type: 'pie',
-        data: pieChartData
+        type: "pie",
+        data: pieChartData,
+        options: {
+          plugins: {
+            legend: {
+              display: true,
+              position: "top",
+            },
+          },
+          responsive: true,
+        },
       });
     };
 
+    const updateChartSize = () => {
+      // Update canvas size based on landscape/portrait orientation
+      const newSize = isLandscape ? window.innerWidth / 2 : window.innerWidth;
+      barChartRef.current.width = newSize;
+      pieChartRef.current.width = newSize;
+      drawBarChart();
+      drawPieChart();
+    };
+
     // Initial drawing of charts
-    drawBarChart();
-    drawPieChart();
+    updateChartSize();
 
     // Cleanup function
     return () => {
@@ -86,14 +140,18 @@ const ChartComponent = () => {
         pieChartInstance.destroy();
       }
     };
-  }, []);
+  }, [isLandscape]);
 
   return (
-    <div className="flex justify-center space-x-4">
-      <div className="w-1/2">
+    <div
+      className={`flex flex-col lg:flex-row justify-center space-y-4 lg:space-y-0 lg:space-x-4 ${
+        isLandscape ? "lg:flex-1" : ""
+      }`}
+    >
+      <div className={`w-full ${isLandscape ? "lg:w-1/2" : ""}`}>
         <canvas ref={barChartRef}></canvas>
       </div>
-      <div className="w-1/2">
+      <div className={`w-full ${isLandscape ? "lg:w-1/2" : ""}`}>
         <canvas ref={pieChartRef}></canvas>
       </div>
     </div>
