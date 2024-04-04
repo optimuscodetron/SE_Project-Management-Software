@@ -56,10 +56,10 @@ module.exports.createProject=async(req,res)=>{
             status,
             lead
         });
-        // console.log()
-        // const savedProject = await newProject.save();
+        console.log()
+        const savedProject = await newProject.save();
 
-        // await Workspace.findByIdAndUpdate(workspaceID, { $push: { projects: savedProject._id } });
+        await Workspace.findByIdAndUpdate(workspaceID, { $push: { projects: savedProject._id } });
 
         res.status(201).json({message:"Project created successfully"});
 

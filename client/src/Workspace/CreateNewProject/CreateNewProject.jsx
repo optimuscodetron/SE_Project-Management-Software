@@ -12,11 +12,15 @@ import Modal from '../../UI/Modal';
 import Axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
+import { useSelector, useDispatch } from "react-redux";
+
 const CreateNewProject = (props) => {
+  const workspaceId = useSelector((state) => state.workspaceNameId.value.id);
+  const workspaceName=useSelector((state) => state.workspaceNameId.value.name);
+  console.log("&&&" + workspaceId);
   const [isopen, setisopen] = useState(false);
 
-  //send by backend
-  const [Workspacename, Workspacesetname] = useState("Workspace");
+ 
 
   const [sDate, setsDate] = useState(false);
   const [eDate, seteDate] = useState(false);
@@ -47,13 +51,13 @@ const CreateNewProject = (props) => {
   // const startDate=useRef();
   // const endDate=useRef();
 
-  const [members, setMembers] = useState([
-    "Ayush Sahu", "Ayush Ji", "Ayush Ji Sahu", "Ji Ayush", "Ayush Sahu Ji"
-  ]);
+  const [members, setMembers] = useState([]);
+
+  const [workspaceMemberData,setWorkspaceData]=useState([]);
 
   const [tempMembers, setTempMembers] = useState(members.sort());
   const [filteredMembers, setFilteredMembers] = useState([]);
-  const [errMsg,setErrMsg]=useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   const handlePopup = () => {
     setisopen(!isopen);
@@ -90,14 +94,14 @@ const CreateNewProject = (props) => {
     updatedFilteredMembers.splice(index, 1);
     setFilteredMembers(updatedFilteredMembers);
   }
-  
+
   const handleCreateProject = async () => {
     // console.log(projectName);
     if (!projectName.current.value) {
       setErrMsg("ProjectName")
       setIsEmpty(true);
     }
-    else if(lead==="Lead") {
+    else if (lead === "Lead") {
       setErrMsg("Leadname")
       setIsEmpty(true);
     }
@@ -105,42 +109,29 @@ const CreateNewProject = (props) => {
     //create project
     else {
       
-
+      const filteredIds = workspaceMemberData.filter(member => filteredMembers.includes(member.username))
+                                       .map(member => member._id);
+      let modifyLead = "";
+      for(let i=0;i<workspaceMemberData.length;i++){
+        if(workspaceMemberData[i].username===lead){
+          modifyLead=workspaceMemberData[i]._id;
+          break;
+        }
+      }
       const data = {
-        workspaceID: "65fc632fd70364c8633c67dd",
+        workspaceID: workspaceId,
         name: projectName.current.value,
         description: description.current.value,
-        memberIDs: filteredMembers,
+        memberIDs: filteredIds,
         status: projectStatus,
         startDate: startDate,
         targetDate: targetDate,
-        lead: lead
+        lead: modifyLead
       }
       console.log(data);
-      // axios.post("http://localhost:8000/api/createProject",data).then((res)=>{
-      //   if(res.status===201){
-      //     console.log(res.message);
-      //     // toast.success(res.message);
-      //   }
-      //   else{
-      //     // toast.error("Error updating profile!");
-      //   }
-
-      // })
-      const response = await Axios.post('http://localhost:8000/api/createProject', data, {
-        withCredentials: true,
-      });
-
-      if(response.status === 201){
-        console.log(response.data.message);
-        toast.success(response.data.message); // Notify user about successful update
-        // window. location. reload();
-      }
-      else{
-        toast.error(response.data.message);
-
-      }
+      storeProject(data);
       setisopen(false);
+      props.onCloseCreateProject();
     }
   }
 
@@ -155,10 +146,65 @@ const CreateNewProject = (props) => {
   const handlediscard = () => {
 
     setIsCancel(false);
+
+
   }
 
   const handleStatus = (e) => {
     setProjectStatus(e?.target?.textContent);
+  }
+
+  useEffect(() => {
+    fetchallmembersOfWorkspace();
+  }, [workspaceId]);
+
+  const fetchallmembersOfWorkspace = async () => {
+    try {
+      // Replace 'your_workspace_id' with the actual workspace ID
+      const data = {
+        workspaceId: workspaceId
+      }
+      const response = await Axios.post('http://localhost:8000/workspace/members', data, {
+        withCredentials: true,
+      });
+
+      if (response.status === 200) {
+        const Memberdata = await response.data.members;
+        // setMembers(data.members);
+        console.log(Memberdata);
+        const usernames = Memberdata.map(member => member.username);
+        console.log(usernames);
+        setWorkspaceData(Memberdata);
+        setMembers(usernames);
+        setTempMembers(usernames);
+      }
+      else {
+        throw new Error('Failed to fetch members of the workspace');
+      }
+    } catch (error) {
+      console.error('Error fetching members:', error);
+    }
+
+  }
+
+  const storeProject=async(data)=>{
+    try{
+      const response = await Axios.post('http://localhost:8000/api/createProject', data, {
+        withCredentials: true,
+      });
+
+      if (response.status === 201) {
+        console.log(response.data.message);
+        toast.success(response.data.message); // Notify user about successful update
+        // window. location. reload();
+      }
+      else {
+        toast.error(response.data.message);
+      }
+    }catch (error) {
+      console.error('Error while storeing Project:', error);
+    }
+
   }
 
 
@@ -182,7 +228,7 @@ const CreateNewProject = (props) => {
         <div className={` ${iscancel ? ' pointer-events-none ' : ''}bg-gray-900 opacity-100 absolute text-[13px] md:text-[17px] w-[100%] md:w-[100%]  h-full  text-white px-[1vw] py-[2vh] flex flex-col justify-between`}>
 
 
-          <h1 className=''> <span className='md:p-[4px] md:px-[6px] p-[1px] bg-gray-600 rounded-sm border-[1px] border-gray-400'>{Workspacename}</span> &gt; New project</h1>
+          <h1 className=''> <span className='md:p-[4px] md:px-[6px] p-[1px] bg-gray-600 rounded-sm border-[1px] border-gray-400'>{workspaceName}</span> &gt; New project</h1>
 
           <div className='flex flex-row'>
             <GrProjects className='items-center mt-3' />
