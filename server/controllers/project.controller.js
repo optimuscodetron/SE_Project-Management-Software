@@ -187,21 +187,44 @@ module.exports.allIssues = async (req, res) => {
     try {
         const { projectId } = req.body;
 
-        // Check if projectId is provided
-        if (!projectId) {
-            return res.status(400).json({ message: 'Project ID is required' });
-        }
-
-        // Find all issues with the given projectId
+        // Fetch all issues associated with the provided projectId
         const issues = await Issue.find({ projectId });
 
-        // Check if issues are found
-        if (!issues || issues.length === 0) {
-            return res.status(404).json({ message: 'No issues found for the project' });
-        }
+        // Get usernames of creator and assignee users
+        const issuesWithUsernames = await Promise.all(issues.map(async (issue) => {
+            // console.log(issue.creator);
+            const creatorUser = await User.findById(issue.creator);
+            const assigneeUser = await User.findById(issue.assigneeUserID);
+            // console.log(assigneeUser.username);
 
-        // Return the list of issues
-        res.status(200).json({ issues });
+
+            // Add creator's username to the issue object
+            issue.creatorUsername = creatorUser ? creatorUser.username : null;
+
+            // Add assignee's username to the issue object
+            issue.assigneeUsername = assigneeUser ? assigneeUser.username : null;
+            
+
+             return {
+                _id: issue._id,
+                title: issue.title,
+                description: issue.description,
+                assigneeUserID: issue.assigneeUserID,
+                assigneeUsername: assigneeUser ? assigneeUser.username : null, // Assuming username field in User model
+                creator: issue.creator,
+                creatorUsername: creatorUser ? creatorUser.username : null, // Assuming username field in User model
+                stage: issue.stage,
+                label: issue.label,
+                priority: issue.priority,
+                cycleId: issue.cycleId,
+                dueDate: issue.dueDate,
+                projectId: issue.projectId,
+                creationDate: issue.creationDate
+            }; // Convert to plain JavaScript object
+        }));
+
+        // Return the modified list of issues with usernames
+        res.status(200).json({issues:issuesWithUsernames});
     
     } catch (error) {
         console.error('Error fetching project names:', error);
