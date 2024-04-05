@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { User } = require('../models/user.model');
 const { Workspace } = require('../models/workspace.model');
+const { Issue } = require('../models/issue.model');
 module.exports.getAllProjectOfUser = async (req, res) => {
     try {
         const { workspaceId } = req.body;
@@ -182,3 +183,29 @@ module.exports.getUser = async (req, res) => {
     }
 };
 
+module.exports.allIssues = async (req, res) => {
+    try {
+        const { projectId } = req.body;
+
+        // Check if projectId is provided
+        if (!projectId) {
+            return res.status(400).json({ message: 'Project ID is required' });
+        }
+
+        // Find all issues with the given projectId
+        const issues = await Issue.find({ projectId });
+
+        // Check if issues are found
+        if (!issues || issues.length === 0) {
+            return res.status(404).json({ message: 'No issues found for the project' });
+        }
+
+        // Return the list of issues
+        res.status(200).json({ issues });
+    
+    } catch (error) {
+        console.error('Error fetching project names:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+
+}
