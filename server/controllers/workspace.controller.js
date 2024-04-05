@@ -150,3 +150,33 @@ module.exports.deleteWorkspaceSetting = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
+module.exports.getAllMemberOfWorkspace = async (req, res) => {
+  try {
+    const { workspaceId } = req.body;
+    if (!workspaceId) {
+      return res.status(400).json({ message: 'Workspace ID is required' });
+    }
+
+    // Find the workspace by ID
+    const workspace = await Workspace.findById(workspaceId).populate('members', 'username');
+
+    if (!workspace) {
+      return res.status(404).json({ message: 'Workspace not found' });
+    }
+
+    // Get the members array from the workspace
+    const members = workspace.members.map(member => ({
+      _id: member._id,
+      username: member.username
+    }));
+    console.log(members);
+    res.status(200).json({ members:members });
+  } catch (error) {
+    console.error('Error fetching workspace members:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+  
+
+}        

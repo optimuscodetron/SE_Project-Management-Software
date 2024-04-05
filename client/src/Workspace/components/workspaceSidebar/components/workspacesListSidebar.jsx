@@ -8,7 +8,12 @@ import Axios from "axios";
 import axios from "axios";
 
 
+import { useSelector,useDispatch } from "react-redux";
+import {changeWorkspaceNameId} from "../../../../redux/WorkspaceData/WorkspaceNameIdSlice"
+
 const WorkspaceListSidebar = (props) => {
+
+  const dispatch = useDispatch()
 
   const [showWorkspaces, setShowWorkspaces] = useState(false);
   const showWorkspaceHandler = () => {
@@ -40,6 +45,7 @@ const WorkspaceListSidebar = (props) => {
           const workspaceNames = data.workspaces.map(workspace => workspace.name);
           setUserWorkspace(workspaceNames);
           setCurrentWorkspace(workspaceNames[0]);
+          dispatch(changeWorkspaceNameId({name:data.workspaces[0].name,id:data.workspaces[0].id}));
           return data.workspaces
         });
         console.log(workspaceData);
@@ -55,23 +61,24 @@ const WorkspaceListSidebar = (props) => {
 
 
   const chooseWorkspaceHandler = (item, index) => {
-    localStorage.setItem('activeWorkspaceId', item.id);
-    console.log(item.id);
-      // Make a request to the server with activeWorkspaceId included
-  axios.get('/api/getActiveWorkspaceOfUser', {
-    params: {
-      activeWorkspaceId: item.id  // Include activeWorkspaceId in the query parameters
-    },
-    withCredentials: true,
-  })
-  .then(response => {
-    // Handle response data here
-    console.log(response.data);
-  })
-  .catch(error => {
-    console.error('Error fetching workspace:', error);
-    // Handle errors as needed
-  });
+  //   localStorage.setItem('activeWorkspaceId', item.id);
+  //   console.log(item.id);
+  //     // Make a request to the server with activeWorkspaceId included
+  // axios.get('/api/getActiveWorkspaceOfUser', {
+  //   params: {
+  //     activeWorkspaceId: item.id  // Include activeWorkspaceId in the query parameters
+  //   },
+  //   withCredentials: true,
+  // })
+  // .then(response => {
+  //   // Handle response data here
+  //   console.log(response.data);
+  // })
+  // .catch(error => {
+  //   console.error('Error fetching workspace:', error);
+  //   // Handle errors as needed
+  // });
+    dispatch(changeWorkspaceNameId({name:item.name,id:item.id}));
 
     const data = {
       headerIcon: <PiMonitorFill />,

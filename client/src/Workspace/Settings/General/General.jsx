@@ -3,16 +3,26 @@ import SettingsSidebar from "../Component/SettingsSidebar";
 import Navbar from "../../../Components/Layout/navbar/navbar";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
+import { useSelector,useDispatch } from "react-redux";
+import {changeWorkspaceName} from "../../../redux/WorkspaceData/WorkspaceNameIdSlice"
 
 const General = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate();
   const [workspaceName, setWorkspaceName] = useState("");
   const [workspaceUrl, setWorkspaceUrl] = useState("");
   const [upload, setUpload] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [imageSrc, setImageSrc] = useState(null);
+  const workspaceReduxName=useSelector((state)=>state.workspaceNameId.value.name);
+  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);
+
 
   useEffect(() => {
     fetchWorkspace(); // Fetch workspace data on component mount
+    // setWorkspaceName(workspaceReduxName);
   }, []);
 
   const fetchWorkspace = async () => {
@@ -21,7 +31,7 @@ const General = () => {
         `http://localhost:8000/api/getActiveWorkspaceOfUser`,
         {
           params: {
-            activeWorkspaceId: localStorage.getItem("activeWorkspaceId"),
+            activeWorkspaceId: workspaceId,
           },
           withCredentials: true,
         }
@@ -49,7 +59,7 @@ const General = () => {
       await axios.put(
         "http://localhost:8000/api/getActiveWorkspaceOfUser",
         {
-          activeWorkspaceId: localStorage.getItem("activeWorkspaceId"),
+          activeWorkspaceId: workspaceId,
           newName: workspaceName,
           newUrl: workspaceUrl,
         },
@@ -57,17 +67,18 @@ const General = () => {
           withCredentials: true,
         }
       );
-
+        dispatch(changeWorkspaceName(workspaceName));
       // Handle success
-      toast.success("Workspace settings updated successfully!");
-      console.log("Workspace settings updated successfully");
-      // Reload the page after 2-3 seconds
-      setTimeout(() => {
-        window.location.reload(true);
-      }, Math.floor(Math.random() * 1000) + 2000);
+      
+      toast.success("Workspace  updated successfully!");
+      console.log("Workspace  updated successfully");
+     
+      setTimeout(function () { navigate("/workspace")},  3000);
+     
+      
     } catch (error) {
-      toast.error("Error updating workspace settings!");
-      console.error("Error updating workspace settings:", error);
+      toast.error("Error updating workspace !");
+      console.error("Error updating workspace :", error);
       // Handle errors as needed
     }
   };
@@ -82,7 +93,7 @@ const General = () => {
           "http://localhost:8000/api/getActiveWorkspaceOfUser",
           {
             params: {
-              activeWorkspaceId: localStorage.getItem("activeWorkspaceId"),
+              activeWorkspaceId: workspaceId,
             },
             withCredentials: true,
           }
@@ -90,12 +101,12 @@ const General = () => {
 
         // Handle success
         console.log("Workspace deleted successfully");
-        toast.success("Workspace settings updated successfully!");
+        toast.success("Workspace deleted successfully!");
+        setTimeout(function () { navigate("/workspace")},  3000);
+
 
         // Reload the page after 2-3 seconds
-        setTimeout(() => {
-          window.location.reload(true);
-        }, Math.floor(Math.random() * 1000) + 2000);
+        
       }
     } catch (error) {
       toast.error("Error deleting workspace!");
@@ -133,7 +144,7 @@ const General = () => {
         {<SettingsSidebar showSideBar={showSidebar} />}
 
         <div className="flex justify-center h-full w-full overflow-auto">
-          <div className="w-[80vw] sm:w-[70vw] md:w-[43vw] mt-20  bg-gray-900 text-white p-4 overflow-y-scroll">
+          <div className="w-[80vw] sm:w-[70vw] md:w-[43vw]   bg-gray-900 text-white p-4 overflow-y-scroll">
             <p className="text-3xl tracking-wide font-normal my-2">Workspace</p>
             <p className="text-[rgb(107,114,128)] text-[15px] border-b-[1px] border-gray-500 pb-4 ">
               Manage your workspace settings

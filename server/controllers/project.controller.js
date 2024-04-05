@@ -39,8 +39,11 @@ module.exports.getAllProjectOfUser = async (req, res) => {
 module.exports.createProject=async(req,res)=>{
     // console.log("88");
 
-    console.log("craeteProject Frontend Data"+req.body);
-    const { name, description, workspaceID, memberIDs, startDate, targetDate, status } = req.body;
+    console.log(req.body);
+    const { name, description, workspaceID, memberIDs, startDate, targetDate, status,lead } = req.body;
+    if(memberIDs.includes(lead)===false){
+        memberIDs.push(lead);
+    }
 
     try{
         const newProject = new Project({
@@ -50,13 +53,15 @@ module.exports.createProject=async(req,res)=>{
             memberIDs,
             startDate,
             targetDate,
-            status
+            status,
+            lead
         });
+        console.log()
         const savedProject = await newProject.save();
 
         await Workspace.findByIdAndUpdate(workspaceID, { $push: { projects: savedProject._id } });
 
-        res.status(201).json({message:"Project saved successfully",projectid:savedProject._id});
+        res.status(201).json({message:"Project created successfully"});
 
 
     }

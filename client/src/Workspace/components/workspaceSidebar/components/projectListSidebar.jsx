@@ -12,7 +12,7 @@ import Axios from "axios";
 import { useSelector,useDispatch } from "react-redux";
 
 const ProjectListSidebar = (props) => {
-  const workspaceId=useSelector((state)=>state.workspaceId.value);
+  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);
   console.log(workspaceId);
   
 
@@ -76,7 +76,6 @@ const ProjectListSidebar = (props) => {
           <div className="flex items-center text-sm p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group cursor-pointer" onClick={props.onOpenCreateProject}>
             <MdFormatListBulletedAdd />
             <span className="flex-1 ms-3 font-medium whitespace-nowrap">
-
               Create Project
             </span>
           </div>
