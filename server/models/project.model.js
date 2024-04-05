@@ -32,11 +32,11 @@ const ProjectSchema = new mongoose.Schema({
     ],
     startDate:{
         type:Date,
-        required:true
+        // required:true
     },
     targetDate:{
         type:Date,
-        required:true
+        // required:true
     },
     isCycle:{
         type:Boolean,
