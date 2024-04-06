@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
+import Header from "./Header";
 
 const ChartComponent = () => {
-  const barChartRef = useRef(null);
   const pieChartRef = useRef(null);
   const [isLandscape, setIsLandscape] = useState(
     window.innerWidth > window.innerHeight
@@ -18,33 +18,10 @@ const ChartComponent = () => {
   }, []);
 
   useEffect(() => {
-    const barChartCtx = barChartRef.current.getContext("2d");
     const pieChartCtx = pieChartRef.current.getContext("2d");
-    let barChartInstance = null;
     let pieChartInstance = null;
 
-    // Bar chart data
-    const barChartData = {
-      labels: [
-        "Backlog",
-        "Todo",
-        "In Progress",
-        "Done",
-        "Cancelled",
-        "Forwarded",
-      ],
-      datasets: [
-        {
-          label: "Number of Issues",
-          data: [10, 20, 15, 30, 5, 8],
-          backgroundColor: "rgba(255, 99, 132, 0.2)",
-          borderColor: "rgba(255, 99, 132, 1)",
-          borderWidth: 1,
-        },
-      ],
-    };
-
-    // Pie chart data
+    // Dummy data
     const pieChartData = {
       labels: [
         "Backlog",
@@ -58,36 +35,16 @@ const ChartComponent = () => {
         {
           data: [10, 20, 15, 30, 5, 8],
           backgroundColor: [
-            "red",
-            "blue",
-            "yellow",
-            "green",
-            "purple",
-            "orange",
+            "#FF6384", // Red
+            "#36A2EB", // Blue
+            "#FFCE56", // Yellow
+            "#4CAF50", // Green
+            "#9C27B0", // Purple
+            "#FF9800", // Orange
           ],
           borderWidth: 1,
         },
       ],
-    };
-
-    const drawBarChart = () => {
-      // Destroy previous chart instance if exists
-      if (barChartInstance) {
-        barChartInstance.destroy();
-      }
-
-      // Draw new bar chart
-      barChartInstance = new Chart(barChartCtx, {
-        type: "bar",
-        data: barChartData,
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
-      });
     };
 
     const drawPieChart = () => {
@@ -100,15 +57,26 @@ const ChartComponent = () => {
       pieChartInstance = new Chart(pieChartCtx, {
         type: "pie",
         data: pieChartData,
+        options: {
+          plugins: {
+            legend: {
+              display: true,
+              position: "top",
+            },
+          },
+          responsive: true,
+          maintainAspectRatio: false,
+        },
       });
     };
 
     const updateChartSize = () => {
       // Update canvas size based on landscape/portrait orientation
-      const newSize = isLandscape ? window.innerWidth / 2 : window.innerWidth;
-      barChartRef.current.width = newSize;
+      const newSize = isLandscape
+        ? window.innerHeight / 2
+        : window.innerWidth / 2;
       pieChartRef.current.width = newSize;
-      drawBarChart();
+      pieChartRef.current.height = newSize;
       drawPieChart();
     };
 
@@ -118,9 +86,6 @@ const ChartComponent = () => {
     // Cleanup function
     return () => {
       // Ensure proper cleanup by destroying chart instances
-      if (barChartInstance) {
-        barChartInstance.destroy();
-      }
       if (pieChartInstance) {
         pieChartInstance.destroy();
       }
@@ -128,16 +93,25 @@ const ChartComponent = () => {
   }, [isLandscape]);
 
   return (
-    <div
-      className={`flex flex-col lg:flex-row justify-center space-y-4 lg:space-y-0 lg:space-x-4 ${
-        isLandscape ? "lg:flex-1" : ""
-      }`}
-    >
-      <div className={`w-full ${isLandscape ? "lg:w-1/2" : ""}`}>
-        <canvas ref={barChartRef}></canvas>
-      </div>
-      <div className={`w-full ${isLandscape ? "lg:w-1/2" : ""}`}>
-        <canvas ref={pieChartRef}></canvas>
+    <div>
+      <Header />
+      <div
+        style={{ backgroundColor: "#171e28", width: "100vw", height: "100vh" }}
+      >
+        <div
+          className={`flex flex-col ${
+            isLandscape ? "lg:flex-row" : ""
+          } justify-center space-y-4 lg:space-y-0 lg:space-x-4`}
+        >
+          <div
+            className={`w-full ${
+              isLandscape ? "lg:w-1/2" : ""
+            } bg-gray-200 p-4 rounded-md shadow-md`}
+            style={{ height: "400px" }}
+          >
+            <canvas ref={pieChartRef}></canvas>
+          </div>
+        </div>
       </div>
     </div>
   );
