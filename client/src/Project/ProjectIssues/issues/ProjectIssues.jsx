@@ -163,7 +163,7 @@ export default function ProjectIssues() {
 
     return (
         // issues={backlogIssues} onMoveIssue={moveIssue}
-        <div className="bg-[#171e28] overflow-x-scroll pt-2 px-2 ">
+        <div className="bg-[#171e28] overflow-x-scroll pt-2 px-2 h-full ">
             <div className="flex flex-row w-screen">
           <div className="w-[320px] mx-1">
             <IssuePanel
