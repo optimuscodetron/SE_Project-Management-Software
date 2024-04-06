@@ -1,78 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-function ProjectSettingTeamMembers( { project } ) {
+function ProjectSettingTeamMembers({ project,teamMembers, setTeamMembers}) {
   // Array of team members
-  const [teamMembers, setTeamMembers] = useState([
-    { id: 1, name: "John Doe", email: "john@example.com", role: "Admin" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", role: "Member" },
-    {
-      id: 3,
-      name: "Ayush Sahu",
-      email: "2021csb1077@iitrpr.ac.in",
-      role: "Member",
-    },
-    {
-      id: 4,
-      name: "Chetan Kamble",
-      email: "2021csb1079@iitrpr.ac.in",
-      role: "Member",
-    },
-    {
-      id: 5,
-      name: "Khusboo Gupta",
-      email: "2021csb1105@iitrpr.ac.in",
-      role: "Member",
-    },
-    {
-      id: 6,
-      name: "Kushagra Sharma",
-      email: "2021csb1107@iitrpr.ac.in",
-      role: "Member",
-    },
-    {
-      id: 7,
-      name: "Manav Chauhan",
-      email: "2021csb1108@iitrpr.ac.in",
-      role: "Member",
-    },
-    {
-      id: 8,
-      name: "Nikhil Garg",
-      email: "2021csb1077@iitrpr.ac.in",
-      role: "Member",
-    },
-    {
-      id: 9,
-      name: "Patel Het",
-      email: "2021csb1119@iitrpr.ac.in",
-      role: "Member",
-    },
-    {
-      id: 10,
-      name: "Piyush Kumar",
-      email: "2021csb1123@iitrpr.ac.in",
-      role: "Member",
-    },
-    {
-      id: 11,
-      name: "Priyanshu Kumar",
-      email: "2021csb1125@iitrpr.ac.in",
-      role: "Member",
-    },
-    {
-      id: 12,
-      name: "Sushil Kumar",
-      email: "2021csb1136@iitrpr.ac.in",
-      role: "Member",
-    },
-    {
-      id: 13,
-      name: "Vavadiya Harsh",
-      email: "2021csb1139@iitrpr.ac.in",
-      role: "Member",
-    },
-    // Add more team members as needed
-  ]);
+  console.log(teamMembers);
 
   // State for project
   const [workspaceName, setWorkspaceName] = useState("IIT_Ropar");

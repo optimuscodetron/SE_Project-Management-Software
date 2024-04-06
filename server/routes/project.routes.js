@@ -11,8 +11,6 @@ module.exports = function(app){
 
     app.post('/api/projectInfo',authenticate, Projectcontroller.projectInfo);
     app.put('/api/projectUpdateInfo',authenticate, Projectcontroller.projectUpdateInfo);
-    app.get('/api/getUser',authenticate, Projectcontroller.getUser);
-
     
 }
 
