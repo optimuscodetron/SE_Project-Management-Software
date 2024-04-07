@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { User } = require('../models/user.model');
 const { Workspace } = require('../models/workspace.model');
+const { Issue } = require('../models/issue.model');
 module.exports.getAllProjectOfUser = async (req, res) => {
     try {
         const { workspaceId } = req.body;
@@ -182,3 +183,52 @@ module.exports.getUser = async (req, res) => {
     }
 };
 
+module.exports.allIssues = async (req, res) => {
+    try {
+        const { projectId } = req.body;
+
+        // Fetch all issues associated with the provided projectId
+        const issues = await Issue.find({ projectId });
+
+        // Get usernames of creator and assignee users
+        const issuesWithUsernames = await Promise.all(issues.map(async (issue) => {
+            // console.log(issue.creator);
+            const creatorUser = await User.findById(issue.creator);
+            const assigneeUser = await User.findById(issue.assigneeUserID);
+            // console.log(assigneeUser.username);
+
+
+            // Add creator's username to the issue object
+            issue.creatorUsername = creatorUser ? creatorUser.username : null;
+
+            // Add assignee's username to the issue object
+            issue.assigneeUsername = assigneeUser ? assigneeUser.username : null;
+            
+
+             return {
+                _id: issue._id,
+                title: issue.title,
+                description: issue.description,
+                assigneeUserID: issue.assigneeUserID,
+                assigneeUsername: assigneeUser ? assigneeUser.username : null, // Assuming username field in User model
+                creator: issue.creator,
+                creatorUsername: creatorUser ? creatorUser.username : null, // Assuming username field in User model
+                stage: issue.stage,
+                label: issue.label,
+                priority: issue.priority,
+                cycleId: issue.cycleId,
+                dueDate: issue.dueDate,
+                projectId: issue.projectId,
+                creationDate: issue.creationDate
+            }; // Convert to plain JavaScript object
+        }));
+
+        // Return the modified list of issues with usernames
+        res.status(200).json({issues:issuesWithUsernames});
+    
+    } catch (error) {
+        console.error('Error fetching project names:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+
+}
