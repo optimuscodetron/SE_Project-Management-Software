@@ -35,8 +35,8 @@ const CreateNewIssue = (props) => {
   const [targetDate, setTargetDate] = useState(null);
   const [members, setMembers] = useState([]); // Empty array initially
   const [filteredMembers, setFilteredMembers] = useState([]);
-  let creatorid="65fc7fd43c074c40c8b0e62c";
-  let projectId="660874b0fc10a3741a5f70e3";
+  let creatorid="65f6fa08015c8857c862d6c8";
+  let projectId="66112171aee8555698f9d15e";
 
   useEffect(() => {
     fetchMembers(); // Fetch members when component mounts
@@ -45,7 +45,7 @@ const CreateNewIssue = (props) => {
   const fetchMembers = async () => {
     try {
       const data={
-        projectid:"660874b0fc10a3741a5f70e3"
+        projectid:"66112171aee8555698f9d15e"
       }
        Axios.post("http://localhost:8000/api/users/workspace/project/members", data,{
         withCredentials:true// Replace with actual project ID
