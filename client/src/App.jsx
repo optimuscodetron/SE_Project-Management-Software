@@ -14,7 +14,6 @@ import Newpassword from "./Authantication/Forgetpassword/newpassword";
 
 // import Forgotpassword from './Authantication/Forgetpassword/forgotpassword';
 import loginbutton from "./Authantication/views/Login";
-import Loader from "./loading";
 import Project from "./Project/Project";
 import IssueInfo from "./Project/ProjectIssues/IssueInfo/IssueInfo";
 import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
@@ -107,8 +106,7 @@ function App() {
         {/*by khushboo*/}
         <Route path="/Invite" element={<Invite />} />
         <Route path="/Workspace/Inbox" element={<InboxSidebar />} />
-        {/* with love from chetan */}
-        <Route path="/chetan" element={<Loader />} />
+  
       </Routes>
     </>
   );
