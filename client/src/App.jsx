@@ -27,6 +27,7 @@ import General from "./Workspace/Settings/General/General";
 import Invite from "./Invite/Invite";
 import InboxSidebar from "./Workspace/Inbox/InboxSidebar";
 
+import ChartComponent from "./ChartComponent";
 
 // import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 // import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
@@ -106,6 +107,7 @@ function App() {
                     <Route path="/Invite" element={<Invite/>} />
                     <Route path="/Workspace/Inbox" element={<InboxSidebar/>} />
 
+                    <Route path="/c" element={<ChartComponent/>} />
 
 
                     </Routes>
