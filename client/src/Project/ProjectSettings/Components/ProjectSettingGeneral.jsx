@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Dropdown from "../../../Components/Layout/DropDown/dropdown";
+import axios from "axios";
 
 function ProjectSettingGeneral({ project }) {
   const [workspaceName, setWorkspaceName] = useState("IIT_Ropar");
@@ -12,6 +13,7 @@ function ProjectSettingGeneral({ project }) {
     "Cancelled",
   ];
   const initialSelectedStatus = project.status;
+  const [currentStatus, setCurrentStatus] = useState(project.status);
   const [aboutProject, setAboutProject] = useState(project.description);
   const [inputValue, setInputValue] = useState(projectName);
 
@@ -24,6 +26,29 @@ function ProjectSettingGeneral({ project }) {
     setAboutProject(event.target.value);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(
+        "http://localhost:8000/api/projectUpdateInfo",
+        {
+          projectID: project._id,
+          name: projectName,
+          description: aboutProject,
+          status: currentStatus,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      // Handle success, maybe show a success message or redirect to another page
+      console.log("Project updated successfully");
+    } catch (error) {
+      // Handle error, maybe show an error message to the user
+      console.error("Error updating project:", error);
+    }
+  };
+
   return (
     <div className="bg-gray-800 w-full h-screen text-white flex justify-center p-10">
       <form
@@ -33,7 +58,7 @@ function ProjectSettingGeneral({ project }) {
           scrollbarWidth: "thin",
           scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
         }}
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit}
       >
         <div className="text-gray-400 text-base mb-2">
           {workspaceName} <span className="mx-2"> / </span> Projects{" "}
@@ -67,6 +92,7 @@ function ProjectSettingGeneral({ project }) {
           <Dropdown
             options={projectStatusOptions}
             initialSelectedOption={initialSelectedStatus}
+            setCurrentStatus={setCurrentStatus}
             width="64"
           />
         </div>
@@ -87,6 +113,7 @@ function ProjectSettingGeneral({ project }) {
           <button
             type="submit"
             class="inline-flex items-center px-4 py-2 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition"
+            onClick={() => window.location.reload()}
           >
             Submit
           </button>
