@@ -26,6 +26,7 @@ import General from "./Workspace/Settings/General/General";
 import Invite from "./Invite/Invite";
 import InboxSidebar from "./Workspace/Inbox/InboxSidebar";
 
+
 // import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 // import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
 
@@ -35,6 +36,7 @@ const clientid =
   "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
 function App() {
+
   useEffect(() => {
     function start() {
       gapi.client.init({
@@ -111,5 +113,6 @@ function App() {
     </>
   );
 }
+
 
 export default App;

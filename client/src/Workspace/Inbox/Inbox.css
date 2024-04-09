@@ -23,6 +23,7 @@
     padding: 20px;
     margin-right:0;
     width: 100vw;
+   overflow: hidden;/*  Hide any overflow content */
   }
   .message-list-container {
     background-color: #f0f0f0; /* Light gray background */
@@ -106,6 +107,7 @@
   .message-details {
     flex: 1;
     padding: 20px;
+    overflow-y: auto;
   }
   
   .message-details h2 {
@@ -144,6 +146,24 @@
   }
 }
 
+.message-details {
+  flex: 1;
+  overflow-y: auto; /* Allow scrolling if the content overflows vertically */
+  /* Adjust padding as needed */
+  padding:0;
+  margin:0;
+}
+
+/* Adjust the size of IssueInfo component */
+.issue-info {
+  max-width: 80%; /* Adjust the maximum width as needed */
+  margin: 0 auto; /* Center the IssueInfo component */
+  padding:0;
+}
   
 
-  
+@media only screen and (max-width: 1024px) {
+  .issue-info {
+    max-width: 100%; /* Set maximum width to 100% for smaller screens */
+  }
+}
