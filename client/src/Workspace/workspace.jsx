@@ -15,9 +15,14 @@ export default function Workspace() {
 
   const [showFilterSidebar, setShowFilterSidebar] = useState(false);
 
-  const handleShowFilterSidebar = () => {
-    setShowFilterSidebar(!showFilterSidebar);
-  };
+
+
+
+  const handleShowFilterSidebar=(event)=>{
+      event.preventDefault();
+      setShowFilterSidebar(!showFilterSidebar);
+  }
+
 
   const [openInviteMembers, setOpenInviteMembers] = useState(false);
   const openInviteMembersHandler = () => {
