@@ -169,7 +169,7 @@ module.exports.projectUpdateInfo=async(req,res)=>{
 
 module.exports.allIssues = async (req, res) => {
     try {
-        const { projectId } = req.body;
+        const { projectId } = req.params;
 
         // Fetch all issues associated with the provided projectId
         const issues = await Issue.find({ projectId });
