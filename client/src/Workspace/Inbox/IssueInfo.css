@@ -1,0 +1,39 @@
+/* IssueInfo.css */
+
+body {
+  margin: 0;
+  overflow: hidden; /* Prevent scrolling */
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.bg-transparent {
+  background-color: transparent !important;
+}
+
+.text-white {
+  color: white;
+}
+
+.w-screen {
+  width: 100vw;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.overflow-auto {
+  overflow: auto; /* Add scrollbars if content overflows */
+}
+
+.px-4 {
+  padding-left: 1rem; /* Adjust padding on the sides */
+  padding-right: 1rem;
+}
+
+.max-w-full {
+  max-width: 100%; /* Ensure content doesn't exceed screen width */
+}
