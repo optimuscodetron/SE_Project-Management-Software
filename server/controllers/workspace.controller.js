@@ -1,5 +1,6 @@
 const { Workspace } = require("../models/workspace.model");
 const { Project } = require("../models/project.model");
+const {Issue}=require("../models/issue.model")
 
 const express = require("express");
 const router = express.Router();

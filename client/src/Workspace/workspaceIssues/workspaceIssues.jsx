@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import IssuesList from "./components/issuesList";
+// import IssuesList from "./components/issuesList";
 import IssuePanel from "./components/issuePanel";
 import { LuCircleDashed } from "react-icons/lu";
 import { FaRegCircle } from "react-icons/fa6";
@@ -8,6 +8,11 @@ import { FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import CreateNewProject from "../CreateNewProject/CreateNewProject";
 import FilterSidebar from "./components/FilterSidebar";
+import { useSelector,useDispatch } from "react-redux";
+
+// import { Axios } from "axios";
+import axios from "axios";
+
 const WorkspaceIssues = (props) => {
   const [toDoIssues, setToDoIssues] = useState([]);
   const [inProgressIssues, setInProgressIssues] = useState([]);
@@ -16,36 +21,63 @@ const WorkspaceIssues = (props) => {
   const [cancelledIssues, setCancelledIssues] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [isopen,setIsOpen]=useState(false);
+  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);
+  console.log(workspaceId);
+
 
     
 
   useEffect(() => {
-    const todoDummy = [];
-    const inProgressDummy = [];
-    const backlogDummy = [];
-    const doneDummy = [];
-    const cancelledDummy = [];
-    IssuesList.forEach((issue) => {
-      if (issue.status === "ToDo") {
-        todoDummy.push(issue);
-      } else if (issue.status === "InProgress") {
-        inProgressDummy.push(issue);
-      } else if (issue.status === "Backlog") {
-        backlogDummy.push(issue);
-      } else if (issue.status === "Cancelled") {
-        cancelledDummy.push(issue);
-      } else if (issue.status === "Done") {
-        doneDummy.push(issue);
+    const fetchIssues = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/users/workspace/issues`,
+          {
+            params: {
+              activeWorkspaceId: workspaceId,
+            },
+            withCredentials: true,
+          }
+        );
+        const data = response.data;
+        console.log(data);
+  
+        const todoDummy = [];
+        const inProgressDummy = [];
+        const backlogDummy = [];
+        const doneDummy = [];
+        const cancelledDummy = [];
+  
+        data.forEach((issue) => {
+          console.log(issue);
+          if (issue.stage === "Todo") {
+            todoDummy.push(issue);
+          } else if (issue.status === "InProgress") {
+            inProgressDummy.push(issue);
+          } else if (issue.status === "Backlog") {
+            backlogDummy.push(issue);
+          } else if (issue.status === "Cancelled") {
+            cancelledDummy.push(issue);
+          } else if (issue.status === "Done") {
+            doneDummy.push(issue);
+          }
+        });
+        console.log(todoDummy);
+  
+        setToDoIssues(todoDummy);
+        console.log(toDoIssues);
+        setInProgressIssues(inProgressDummy);
+        setBacklogIssues(backlogDummy);
+        setCancelledIssues(cancelledDummy);
+        setDoneIssues(doneDummy);
+        setDataLoaded(true);
+      } catch (error) {
+        console.error("Error fetching Issues:", error);
+        // Handle errors as needed
       }
-    });
-
-    // setFirstTime(false);
-    setToDoIssues(todoDummy);
-    setInProgressIssues(inProgressDummy);
-    setBacklogIssues(backlogDummy);
-    setCancelledIssues(cancelledDummy);
-    setDoneIssues(doneDummy);
-    setDataLoaded(true);
+    };
+  
+    fetchIssues();
   }, []);
 
   const moveIssue = (issueId, currentStatus, newStatus) => {
