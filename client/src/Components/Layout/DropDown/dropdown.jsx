@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Dropdown = ({ options, initialSelectedOption , width}) => {
+const Dropdown = ({ options, initialSelectedOption,currentStatus,setCurrentStatus , width}) => {
   const [selectedOption, setSelectedOption] = useState(initialSelectedOption);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -11,6 +11,8 @@ const Dropdown = ({ options, initialSelectedOption , width}) => {
 
   const selectOption = (option) => {
     setSelectedOption(option);
+    setCurrentStatus(option);
+    console.log(option);
     setIsOpen(false);
   };
 
