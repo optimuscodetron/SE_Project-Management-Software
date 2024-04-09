@@ -17,7 +17,7 @@ const PSidebar = (props) => {
   };
   return (
     <aside
-      className={`sm:relative w-64 h-full transition-transform ${
+      className={`sm:relative w-64 h-screen transition-transform ${
         props.showSideBar ? "" : "-translate-x-full"
       } bg-gray-800 border-r border-gray-200 sm:translate-x-0`}
     >

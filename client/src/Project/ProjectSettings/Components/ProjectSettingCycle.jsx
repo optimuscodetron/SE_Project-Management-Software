@@ -3,10 +3,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Switch from "react-switch";
 
-function ProjectSettingCycle() {
+function ProjectSettingCycle( { project } ) {
   const [workspaceName, setWorkspaceName] = useState("IIT_Ropar");
   const [projectName, setProjectName] = useState("SE Project");
-  const [cycleEnabled, setCycleEnabled] = useState(false);
+  const [cycleEnabled, setCycleEnabled] = useState(project.isCycle);
   const [cycleLasts, setCycleLasts] = useState("1");
   const [cooldownDuration, setCooldownDuration] = useState("1");
   const [cycleStarts, setCycleStarts] = useState(null);

@@ -60,13 +60,13 @@ const ProjectSettingSidebar = ({ updateLoc, loc }) => {
                 </svg>
               </button>
             </div>
-            <hr className="w-full h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-500" />
+            <hr className="w-full h-1 mx-auto my-4  border-0 rounded md:my-10 bg-gray-500" />
             <ul class="space-y-2 font-medium ">
               <li>
                 <div
                   class={`flex items-center cursor-pointer p-2 ${
                     loc == "1" ? "bg-gray-700" : ""
-                  } text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white group no-underline hover:no-underline`}
+                  }  rounded-lg text-white  hover:bg-gray-700  group no-underline hover:no-underline`}
                   onClick={() => {
                     updateLoc("1");
                   }}
@@ -87,7 +87,7 @@ const ProjectSettingSidebar = ({ updateLoc, loc }) => {
                 <div
                   class={`flex items-center cursor-pointer p-2 ${
                     loc == "2" ? "bg-gray-700" : ""
-                  } text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white group no-underline hover:no-underline`}
+                  } rounded-lg text-white  hover:bg-gray-700  group no-underline hover:no-underline`}
                   onClick={() => {
                     updateLoc("2");
                   }}
@@ -114,7 +114,7 @@ const ProjectSettingSidebar = ({ updateLoc, loc }) => {
                 <div
                   class={`flex items-center cursor-pointer p-2 ${
                     loc == "3" ? "bg-gray-700" : ""
-                  } text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white group no-underline hover:no-underline`}
+                  } rounded-lg text-white  hover:bg-gray-700  group no-underline hover:no-underline`}
                   onClick={() => {
                     updateLoc("3");
                   }}

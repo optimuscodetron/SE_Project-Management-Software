@@ -103,16 +103,31 @@ module.exports.fetchallmembers=async(req,res)=>{
 
 module.exports.projectInfo=async(req,res)=>{
     try {
-        
-        const projectID = req.body.projectID || req.params.projectID;
+    
+        const projectID = req.body.projectID;
+        console.log(projectID+"**");
         if (!projectID) {
             return res.status(400).json({ error: "Project ID is required" });
         }
+        console.log("*");
         const project = await Project.findById(projectID);
         if (!project) {
             return res.status(404).json({ error: "Project not found" });
         }
-        res.status(200).json({ project });
+        const projectMembers = await Project.findById(projectID).populate({
+            path: 'memberIDs',
+            select: 'name email _id' // Only select name and email fields, excluding _id
+        });
+        const members = projectMembers.memberIDs.map(member => ({
+            id: member._id,
+            name: member.name,
+            email: member.email,
+            role: member._id.equals(project.lead) ? 'Admin' : 'Member' // Check if member is lead or not
+        }));
+        res.status(200).json({ 
+            project:project, 
+            members:members
+        });
     } catch (error) {
         
         console.error("Error:", error);
@@ -124,7 +139,7 @@ module.exports.projectInfo=async(req,res)=>{
 module.exports.projectUpdateInfo=async(req,res)=>{
     try {
         
-        const projectID = req.body.projectID || req.params.projectID;
+        const projectID = req.body.projectID;
         if (!projectID) {
             return res.status(400).json({ error: "Project ID is required" });
         }
@@ -150,38 +165,7 @@ module.exports.projectUpdateInfo=async(req,res)=>{
     
 }
 
-module.exports.getUser = async (req, res) => {
-    try {
-        // Retrieve userID from request parameters
-        const userID = req.body.userID || req.params.userID;
 
-        // Check if userID is provided
-        if (!userID) {
-            return res.status(400).json({ error: "User ID is required" });
-        }
-
-        // Find the user by userID
-        const user = await User.findById(userID);
-
-        // Check if user exists
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
-
-        // If user is found, send userID, name, and email in the response
-        const userData = {
-            userID: user._id,
-            name: user.name,
-            email: user.email
-        };
-
-        res.status(200).json(userData);
-    } catch (error) {
-        // Handle errors
-        console.error("Error:", error);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-};
 
 module.exports.allIssues = async (req, res) => {
     try {
@@ -232,3 +216,4 @@ module.exports.allIssues = async (req, res) => {
     }
 
 }
+
