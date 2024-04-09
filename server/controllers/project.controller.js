@@ -166,6 +166,7 @@ module.exports.projectUpdateInfo=async(req,res)=>{
 }
 
 
+
 module.exports.allIssues = async (req, res) => {
     try {
         const { projectId } = req.body;
@@ -215,3 +216,4 @@ module.exports.allIssues = async (req, res) => {
     }
 
 }
+

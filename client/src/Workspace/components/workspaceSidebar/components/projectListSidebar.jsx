@@ -109,6 +109,7 @@ const ProjectListSidebar = (props) => {
                   </div>
                 </NavLink>
               </li>
+
               ))}
             </ul>
           )}
