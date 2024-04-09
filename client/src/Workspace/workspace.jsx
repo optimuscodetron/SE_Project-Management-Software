@@ -15,7 +15,8 @@ export default function Workspace() {
 
   const [showFilterSidebar,setShowFilterSidebar]=useState(false);
 
-  const handleShowFilterSidebar=()=>{
+  const handleShowFilterSidebar=(event)=>{
+      event.preventDefault();
       setShowFilterSidebar(!showFilterSidebar);
   }
 

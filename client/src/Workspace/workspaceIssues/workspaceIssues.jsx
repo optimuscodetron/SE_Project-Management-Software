@@ -8,6 +8,7 @@ import { FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import CreateNewProject from "../CreateNewProject/CreateNewProject";
 import FilterSidebar from "./components/FilterSidebar";
+
 const WorkspaceIssues = (props) => {
   const [toDoIssues, setToDoIssues] = useState([]);
   const [inProgressIssues, setInProgressIssues] = useState([]);
@@ -17,7 +18,38 @@ const WorkspaceIssues = (props) => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [isopen,setIsOpen]=useState(false);
 
-    
+  const[name,setname]=useState("Ayush");
+  const [filteredList,setFilteredList]=useState(IssuesList);
+
+  const handleFilterAssignee=(name)=>{
+     setFilteredList(IssuesList.filter((member,idx)=>{
+                  return member.assignee.toLowerCase()===name.toLowerCase();
+                })
+     );
+    //  console.log(IssuesList);
+    //  console.log(filteredList);
+    // console.log(name);
+  }
+
+  const handleFilterPriority=(priority)=>{
+    // console.log(IssuesList[0].priority);
+    setFilteredList(IssuesList.filter((member,idx)=>{
+      return member?.priority?.toLowerCase()===priority?.toLowerCase();
+    }))
+  }
+
+  const handleFilterProject=(projectid)=>{
+    // console.log(IssuesList[0].priority);
+    setFilteredList(IssuesList.filter((member,idx)=>{
+      return member?.projectid===projectid;
+    }))
+  }
+
+
+
+  const handleClear=()=>{
+    setFilteredList(IssuesList);
+  }
 
   useEffect(() => {
     const todoDummy = [];
@@ -25,7 +57,8 @@ const WorkspaceIssues = (props) => {
     const backlogDummy = [];
     const doneDummy = [];
     const cancelledDummy = [];
-    IssuesList.forEach((issue) => {
+
+    filteredList.forEach((issue) => {
       if (issue.status === "ToDo") {
         todoDummy.push(issue);
       } else if (issue.status === "InProgress") {
@@ -46,7 +79,7 @@ const WorkspaceIssues = (props) => {
     setCancelledIssues(cancelledDummy);
     setDoneIssues(doneDummy);
     setDataLoaded(true);
-  }, []);
+  }, [filteredList]);
 
   const moveIssue = (issueId, currentStatus, newStatus) => {
     console.log("Function moveIssue Called with status", { newStatus });
@@ -141,6 +174,7 @@ const WorkspaceIssues = (props) => {
               onMoveIssue={moveIssue}
               icon={<LuCircleDashed />}
             />
+             {/* <button className="text-white" onClick={()=>handleFilterAssignee("Priyanshu Kumar")}>Hello Click Me</button> */}
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
@@ -180,9 +214,11 @@ const WorkspaceIssues = (props) => {
           {props.showFilterSidebar && <div className="overflow-y-scroll">
          <div className=" fixed right-0 h-full overflow-y-scroll">
         
-             <FilterSidebar/>
+             <FilterSidebar handleFilterAssignee={handleFilterAssignee} handleClear={handleClear} handleFilterPriority={handleFilterPriority} handleFilterProject={handleFilterProject}/>
+             {/* <FilterSidebar /> */}
          
          </div>
+        
        </div>}
 
         </div>
