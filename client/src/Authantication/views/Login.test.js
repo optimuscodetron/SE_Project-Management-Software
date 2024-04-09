@@ -6,25 +6,7 @@ import { screen, render } from '@testing-library/react';
 jest.mock('./auth.jpg', () => 'client/src/Authantication/views/auth.jpg');
 jest.mock('react-router-dom');
 
-// test("render text account in Login", () => {
-//   render(<Login />);
 
-//   const accountText = screen.getAllByText(/Forgot/i);
-//   const accountTextPresent = accountText.some(element =>
-//     element.closest('body')
-//   );
-//   expect(accountTextPresent).toBe(true);
-
-//   // const elementText = screen.getByText('account', {selector: 'div'});
-//   // expect(elementText).toBeInTheDocument();
-// });
-
-
-
-
-
-// import { render, screen } from '@testing-library/react';
-// import Login from './Login';
 
 test('renders TrackerX test', () => {
   render(<Login/>);
@@ -35,8 +17,8 @@ test('renders TrackerX test', () => {
 
 test('renders forgot test', () => {
   render(<Login/>);
-  const linkElement = screen.getByText(/Forgot/i);
-  expect(linkElement).toBeInTheDocument();
+  const forgot=screen.getByTestId('forgot', {  name: /forgot/i})
+expect(forgot).toBeInTheDocument();
 });
 
 test('renders log in test', () => {
@@ -47,27 +29,32 @@ test('renders log in test', () => {
 
 test('renders account test', () => {
   render(<Login/>);
-  const linkElement = screen.getByText(/account/i);
+  const linkElement = screen.getByTestId('dontHaveAccount',{name:/account/i});
   expect(linkElement).toBeInTheDocument();
 });
 
 
 test('renders password test', () => {
   render(<Login/>);
-  const linkElement = screen.getByText(/password/i);
+  const linkElement = screen.getByPlaceholderText(/enter password/i);
+  expect(linkElement).toBeInTheDocument();
+});
+test('renders email test', () => {
+  render(<Login/>);
+  const linkElement = screen.getByPlaceholderText(/enter email/i);
   expect(linkElement).toBeInTheDocument();
 });
 
 test('renders continue test', () => {
   render(<Login/>);
-  const linkElement = screen.getByText(/continue/i);
+  const linkElement = screen.getByRole('button', {  name: /continue/i})
   expect(linkElement).toBeInTheDocument();
 });
 
 
 test('renders sign test', () => {
   render(<Login/>);
-  const linkElement = screen.getByText(/Sign/i);
+  const linkElement = screen.getByTestId('testSignUp', {  name: /sign up/i})
   expect(linkElement).toBeInTheDocument();
 });
 
