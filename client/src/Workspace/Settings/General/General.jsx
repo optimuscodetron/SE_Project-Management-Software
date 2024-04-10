@@ -143,7 +143,7 @@ const General = () => {
       <div className="bg-gray-800 fixed h-screen w-screen flex flex-row ">
         {<SettingsSidebar showSideBar={showSidebar} />}
 
-        <div className="flex justify-center h-full w-full overflow-auto">
+        <div className="flex justify-center h-full w-full overflow-auto my-8">
           <div className="w-[80vw] sm:w-[70vw] md:w-[43vw]   bg-gray-900 text-white p-4 overflow-y-scroll">
             <p className="text-3xl tracking-wide font-normal my-2">Workspace</p>
             <p className="text-[rgb(107,114,128)] text-[15px] border-b-[1px] border-gray-500 pb-4 ">
@@ -243,9 +243,9 @@ const General = () => {
             </div>
 
             <div className="mt-4">
-              <p className="text-[20px] tracking-wide font-normal">
-                Delete Workspace
-              </p>
+            <div className="text-center">
+              <p className="text-[20px] tracking-wide font-normal">Delete Workspace</p>
+            </div>
               <p className="text-[rgb(107,114,128)] text-[15px] ">
                 If you want to permanently delete this workspace and all of its
                 data, including but not limited to users, issues, and comments,
