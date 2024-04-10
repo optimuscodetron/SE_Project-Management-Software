@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import "./Inbox.css";
+import InboxIssues from './InboxIssues';
 
 const Inbox = (props) => {
   const [messages, setMessages] = useState([

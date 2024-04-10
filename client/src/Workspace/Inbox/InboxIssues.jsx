@@ -8,10 +8,17 @@ const InboxIssues = () => {
     // Add your initial issue data here
     {
       title: 'Fix navigation bar bug',
-      assignee: 'John Doe',
+      assignee: 'Nikhil Garg',
       dueDate: '2024-03-25',
       status: 'Active',
     },
+    {
+        title: 'Improve UI for Inbox Page',
+        assignee: 'Khushboo Gupta',
+        dueDate: '2024-03-25',
+        status: 'InProgress',
+      },
+    
     // Add more issue objects
   ])
   const [filter, setFilter] = useState('')
