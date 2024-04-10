@@ -13,7 +13,7 @@ import { GrProjects, GrStatusDisabledSmall } from "react-icons/gr";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import DatePicker from "react-datepicker";
 import Modal from "../../UI/Modal";
-import Axios from 'axios';
+// import Axios from 'axios';
 
 const CreateNewIssue = (props) => {
   const [isopen, setisopen] = useState(false);
