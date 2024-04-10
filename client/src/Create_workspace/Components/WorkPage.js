@@ -50,14 +50,14 @@ const WorkPage = () => {
 
             <form onSubmit={handleclick} className='bg-gray-900 p-3 rounded-md mt-4'>
                 <p className='my-2'>Workspace name</p>
-                <input name='myInput' placeholder='' type='text'  ref={name1} className='bg-gray-900 border-[1px] p-2 hover:border-[3px] w-full rounded-md mt-[-3px]  h-8' autoFocus  onChange={handle}></input>
+                <input data-testid="textbox1" name='myInput' placeholder='' type='text'  ref={name1} className='bg-gray-900 border-[1px] p-2 hover:border-[3px] w-full rounded-md mt-[-3px]  h-8' autoFocus  onChange={handle}></input>
 
 
                 <p className='mt-3 mb-2'>Workspace url</p>
-                <input placeholder='' value={url} className='bg-gray-900 mt-[-3px] border-[1px] p-2 hover:border-[3px] w-full rounded-md  h-8'></input>
+                <input data-testid="textbox2" placeholder='' value={url} className='bg-gray-900 mt-[-3px] border-[1px] p-2 hover:border-[3px] w-full rounded-md  h-8'></input>
 
                 <p className='mb-2 mt-3'>How large is your Company</p>
-                <select className='bg-gray-900 border-[1px] w-full rounded-md hover:border-[3px] mt-[-3px] h-8'>
+                <select data-testid="combobox1" className='bg-gray-900 border-[1px] w-full rounded-md hover:border-[3px] mt-[-3px] h-8'>
                     <option>Just me</option>
                     <option>1-100 members</option>
                     <option>100-1000 members</option>
@@ -65,7 +65,7 @@ const WorkPage = () => {
                 </select>
 
                 <p className='mt-3 mb-2'>What is your role?</p>
-                <select className='bg-gray-900 border-[1px] hover:border-[3px] w-full rounded-md mt-[-3px] mb-10 h-8'>
+                <select data-testid="combobox2" className='bg-gray-900 border-[1px] hover:border-[3px] w-full rounded-md mt-[-3px] mb-10 h-8'>
                   <option>Select your role in company</option>
                     <option>Founder or leadership team</option>
                     <option>Engineering Manager</option>
