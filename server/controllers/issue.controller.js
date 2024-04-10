@@ -57,7 +57,7 @@ exports.createIssue = async (req, res) => {
             description:req.body.description,
             assigneeUserID:assignee._id,
             creator:user._id,
-            stage:"Todo",
+            stage:"Inprogress",
             priority:"High",
             projectId:project1._id,
             creationDate:req.body.targetDate,
