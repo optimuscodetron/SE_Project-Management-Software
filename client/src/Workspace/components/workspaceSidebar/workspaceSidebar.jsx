@@ -44,21 +44,22 @@ const WorkspaceSidebar = (props) => {
             />
           </li>
 
-          <li>
+          <li data-testid="testWorkspaceSettings" >
             <NavLink
               to={"/workspace/settings/general"}
               className={"text-decoration-none "}
+              
             >
-              <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group">
+              <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group" >
                 <AiFillSetting />
-                <span className="flex row ms-3 text-sm  whitespace-nowrap text-decoration-none">
+                <span className="flex row ms-3 text-sm  whitespace-nowrap text-decoration-none" >
                   Workspace Settings
                 </span>
               </div>
             </NavLink>
           </li>
 
-          <li>
+          <li data-testid="testInviteMembers">
             <div
               className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group hover:cursor-pointer "
               onClick={props.onOpenInviteMembers}
@@ -68,7 +69,7 @@ const WorkspaceSidebar = (props) => {
             </div>
           </li>
 
-          <li>
+          <li data-testid="testInbox">
             <div
               className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group hover:cursor-pointer"
               onClick={props.inboxOpened}
@@ -80,7 +81,7 @@ const WorkspaceSidebar = (props) => {
             </div>
           </li>
 
-          <li>
+          <li data-testid="testCreateWorkspace">
             <NavLink
               to={"/create_workspace"}
               className={"text-decoration-none "}

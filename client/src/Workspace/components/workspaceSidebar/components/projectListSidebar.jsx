@@ -7,13 +7,13 @@ import { RiTeamFill } from "react-icons/ri";
 import { GoProjectRoadmap } from "react-icons/go";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import CreateNewProject from "../../../CreateNewProject/CreateNewProject";
-import Axios from "axios";
+import Axios from "axios";//commented for testing 
 
 import { useSelector,useDispatch } from "react-redux";
 
 const ProjectListSidebar = (props) => {
-  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);
-  console.log(workspaceId);
+  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);//commented for testing
+  console.log(workspaceId);//commented for testing
   
 
   const [showProject, setShowProject] = useState(false);
@@ -37,6 +37,7 @@ const ProjectListSidebar = (props) => {
    
 
   }, [workspaceId]);
+  //commented for testing
 
   const fetchProjectData = async () => {
    

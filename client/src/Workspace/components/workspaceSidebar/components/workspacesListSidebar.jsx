@@ -4,8 +4,7 @@ import { useEffect } from "react";
 import { PiMonitorFill } from "react-icons/pi";
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
-import Axios from "axios";
-import axios from "axios";
+import Axios from "axios";//comment for testing
 
 
 import { useSelector,useDispatch } from "react-redux";
@@ -13,7 +12,7 @@ import {changeWorkspaceNameId} from "../../../../redux/WorkspaceData/WorkspaceNa
 
 const WorkspaceListSidebar = (props) => {
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch()//comment for testing
 
   const [showWorkspaces, setShowWorkspaces] = useState(false);
   const showWorkspaceHandler = () => {
@@ -31,7 +30,7 @@ const WorkspaceListSidebar = (props) => {
     fetchWorkspaceData();
   }, []);
 
-  const fetchWorkspaceData = async () => {
+  const fetchWorkspaceData = async () => { // comment for testing
     try {
       const response = await Axios.get('http://localhost:8000/api/getAllWorkspaceOfUser', {
         withCredentials: true,
@@ -78,13 +77,13 @@ const WorkspaceListSidebar = (props) => {
   //   console.error('Error fetching workspace:', error);
   //   // Handle errors as needed
   // });
-    dispatch(changeWorkspaceNameId({name:item.name,id:item.id}));
+    dispatch(changeWorkspaceNameId({name:item.name,id:item.id}));// comment for testing
 
     const data = {
       headerIcon: <PiMonitorFill />,
       headerTitle: userWorkspaces[index]
     }
-    props.headerInfo(data);
+    props.headerInfo(data);//comment for testing
     setCurrentWorkspace(userWorkspaces[index]);
     setShowWorkspaces(!showWorkspaces);
   }
