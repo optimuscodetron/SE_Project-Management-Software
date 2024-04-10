@@ -5,6 +5,9 @@ const IssuesList = [
     description: "Description 1",
     assignee: "nikhil Garg",
     status: "Backlog",
+    priority:"Urgent",
+    projectid:1,
+
   },
   {
     id: 2,
@@ -12,6 +15,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Het Patel",
     status: "Backlog",
+    priority:"High",
+    projectid:2,
   },
   {
     id: 3,
@@ -19,6 +24,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Priyanshu Kumar",
     status: "ToDo",
+    priority:"Medium",
+    projectid:3,
   },
   // ...
   {
@@ -27,6 +34,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Ayush Sahu",
     status: "ToDo",
+    priority:"Urgent",
+    projectid:2,
   },
   // ...
   {
@@ -35,6 +44,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Het Patel",
     status: "ToDo",
+    priority:"Medium",
+    projectid:1,
   },
   // ...
   {
@@ -43,6 +54,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Nikhil Garg",
     status: "ToDo",
+    priority:"High",
+    projectid:3,
   },
   // ...
   {
@@ -51,6 +64,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Kushagra Sharma",
     status: "ToDo",
+    priority:"Urgent",
+    projectid:2,
   },
   // ...
   {
@@ -59,6 +74,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Priyanshu Kumar",
     status: "ToDo",
+    priority:"High",
+    projectid:1,
   },
   // ...
   {
@@ -67,6 +84,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Nikhil Garg",
     status: "ToDo",
+    priority:"High",
+    projectid:3,
   },
   // ...
   {
@@ -75,6 +94,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Het Patel",
     status: "ToDo",
+    priority:"Medium",
+    projectid:2,
   },
   // ...
   {
@@ -83,6 +104,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Ayush Sahu",
     status: "ToDo",
+    priority:"Medium",
+    projectid:3,
   },
   {
     id: 12,
@@ -90,6 +113,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Priyanshu Kumar",
     status: "InProgress",
+    priority:"Urgent",
+    projectid:1,
   },
   // ...
   {
@@ -98,6 +123,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Chetan Kamble",
     status: "InProgress",
+    priority:"Medium",
+    projectid:2,
   },
   // ...
   {
@@ -106,6 +133,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Kushagra Sharma",
     status: "InProgress",
+    priority:"Urgent",
+    projectid:1,
   },
   {
     id: 15,
@@ -113,6 +142,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Chetan Kamble",
     status: "Done",
+    priority:"Medium",
+    projectid:3,
   },
   // ...
   {
@@ -121,6 +152,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Chetan Kamble",
     status: "Done",
+    priority:"High",
+    projectid:1,
   },
   {
     id: 17,
@@ -128,6 +161,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Kushagra Sharma",
     status: "Cancelled",
+    priority:"Urgent",
+    projectid:2,
   },
   // ...
   {
@@ -136,6 +171,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Nikhil Garg",
     status: "Cancelled",
+    priority:"High",
+    projectid:3,
   },
   // ...
   {
@@ -144,6 +181,8 @@ const IssuesList = [
     description: "Description 1",
     assignee: "Kushagra Sharma",
     status: "Cancelled",
+    priority:"Medium",
+    projectid:2,
   },
 ];
 
