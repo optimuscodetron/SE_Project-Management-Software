@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { User } = require('../models/user.model');
 const { Workspace } = require('../models/workspace.model');
+const { Issue } = require('../models/issue.model');
 module.exports.getAllProjectOfUser = async (req, res) => {
     try {
         const { workspaceId } = req.body;
@@ -102,16 +103,31 @@ module.exports.fetchallmembers=async(req,res)=>{
 
 module.exports.projectInfo=async(req,res)=>{
     try {
-        
-        const projectID = req.body.projectID || req.params.projectID;
+    
+        const projectID = req.body.projectID;
+        console.log(projectID+"**");
         if (!projectID) {
             return res.status(400).json({ error: "Project ID is required" });
         }
+        console.log("*");
         const project = await Project.findById(projectID);
         if (!project) {
             return res.status(404).json({ error: "Project not found" });
         }
-        res.status(200).json({ project });
+        const projectMembers = await Project.findById(projectID).populate({
+            path: 'memberIDs',
+            select: 'name email _id' // Only select name and email fields, excluding _id
+        });
+        const members = projectMembers.memberIDs.map(member => ({
+            id: member._id,
+            name: member.name,
+            email: member.email,
+            role: member._id.equals(project.lead) ? 'Admin' : 'Member' // Check if member is lead or not
+        }));
+        res.status(200).json({ 
+            project:project, 
+            members:members
+        });
     } catch (error) {
         
         console.error("Error:", error);
@@ -123,7 +139,7 @@ module.exports.projectInfo=async(req,res)=>{
 module.exports.projectUpdateInfo=async(req,res)=>{
     try {
         
-        const projectID = req.body.projectID || req.params.projectID;
+        const projectID = req.body.projectID;
         if (!projectID) {
             return res.status(400).json({ error: "Project ID is required" });
         }
@@ -149,36 +165,55 @@ module.exports.projectUpdateInfo=async(req,res)=>{
     
 }
 
-module.exports.getUser = async (req, res) => {
+
+
+module.exports.allIssues = async (req, res) => {
     try {
-        // Retrieve userID from request parameters
-        const userID = req.body.userID || req.params.userID;
+        const { projectId } = req.body;
 
-        // Check if userID is provided
-        if (!userID) {
-            return res.status(400).json({ error: "User ID is required" });
-        }
+        // Fetch all issues associated with the provided projectId
+        const issues = await Issue.find({ projectId });
 
-        // Find the user by userID
-        const user = await User.findById(userID);
+        // Get usernames of creator and assignee users
+        const issuesWithUsernames = await Promise.all(issues.map(async (issue) => {
+            // console.log(issue.creator);
+            const creatorUser = await User.findById(issue.creator);
+            const assigneeUser = await User.findById(issue.assigneeUserID);
+            // console.log(assigneeUser.username);
 
-        // Check if user exists
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
 
-        // If user is found, send userID, name, and email in the response
-        const userData = {
-            userID: user._id,
-            name: user.name,
-            email: user.email
-        };
+            // Add creator's username to the issue object
+            issue.creatorUsername = creatorUser ? creatorUser.username : null;
 
-        res.status(200).json(userData);
+            // Add assignee's username to the issue object
+            issue.assigneeUsername = assigneeUser ? assigneeUser.username : null;
+            
+
+             return {
+                _id: issue._id,
+                title: issue.title,
+                description: issue.description,
+                assigneeUserID: issue.assigneeUserID,
+                assigneeUsername: assigneeUser ? assigneeUser.username : null, // Assuming username field in User model
+                creator: issue.creator,
+                creatorUsername: creatorUser ? creatorUser.username : null, // Assuming username field in User model
+                stage: issue.stage,
+                label: issue.label,
+                priority: issue.priority,
+                cycleId: issue.cycleId,
+                dueDate: issue.dueDate,
+                projectId: issue.projectId,
+                creationDate: issue.creationDate
+            }; // Convert to plain JavaScript object
+        }));
+
+        // Return the modified list of issues with usernames
+        res.status(200).json({issues:issuesWithUsernames});
+    
     } catch (error) {
-        // Handle errors
-        console.error("Error:", error);
-        res.status(500).json({ error: "Internal Server Error" });
+        console.error('Error fetching project names:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
-};
+
+}
 

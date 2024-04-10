@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import Dropdown from "./dropdown";
+import Dropdown from "../../../../Components/Layout/DropDown/dropdown";
 import "react-datepicker/dist/react-datepicker.css";
 
 function formatDate(dateString) {
@@ -74,14 +74,16 @@ function RightBar() {
             <Dropdown
               options={statusOptions}
               initialSelectedOption={initialSelectedStatusOption}
+              width="40"
             />
           </div>
 
           <div className="mb-4 flex justify-start items-center">
-            <div className="text-white w-[20%] mr-3">Priority</div>
+            <div className="text-white w-[20%] mr-3 ">Priority</div>
             <Dropdown
               options={PriorityOptions}
               initialSelectedOption={initialSelectedPriorityOption}
+              width="40"
             />
           </div>
 
@@ -90,6 +92,7 @@ function RightBar() {
             <Dropdown
               options={AssigneOptions}
               initialSelectedOption={initialSelectedAssigneOption}
+              width="40"
             />
           </div>
 
@@ -98,6 +101,7 @@ function RightBar() {
             <Dropdown
               options={cycleOptions}
               initialSelectedOption={initialSelectedCycleOption}
+              width="40"
             />
           </div>
 
@@ -106,6 +110,7 @@ function RightBar() {
             <Dropdown
               options={LabelOptions}
               initialSelectedOption={initialSelectedLabelOption}
+              width="40"
             />
           </div>
 
@@ -116,6 +121,7 @@ function RightBar() {
             <Dropdown
               options={projectOptions}
               initialSelectedOption={initialSelectedProjectOption}
+              width="40"
             />
           </div>
 
@@ -139,6 +145,7 @@ function RightBar() {
             <Dropdown
               options={statusOptions}
               initialSelectedOption={initialSelectedStatusOption}
+              width="40"
             />
           </div>
 
@@ -147,6 +154,7 @@ function RightBar() {
             <Dropdown
               options={PriorityOptions}
               initialSelectedOption={initialSelectedPriorityOption}
+              width="40"
             />
           </div>
 
@@ -155,6 +163,7 @@ function RightBar() {
             <Dropdown
               options={AssigneOptions}
               initialSelectedOption={initialSelectedAssigneOption}
+              width="40"
             />
           </div>
 
@@ -163,6 +172,7 @@ function RightBar() {
             <Dropdown
               options={cycleOptions}
               initialSelectedOption={initialSelectedCycleOption}
+              width="40"
             />
           </div>
 
@@ -171,6 +181,7 @@ function RightBar() {
             <Dropdown
               options={LabelOptions}
               initialSelectedOption={initialSelectedLabelOption}
+              width="40"
             />
           </div>
 
@@ -180,6 +191,7 @@ function RightBar() {
             <Dropdown
               options={projectOptions}
               initialSelectedOption={initialSelectedProjectOption}
+              width="40"
             />
           </div>
 

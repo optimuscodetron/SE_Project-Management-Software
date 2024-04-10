@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Dropdown = ({ options, initialSelectedOption }) => {
+const Dropdown = ({ options, initialSelectedOption,currentStatus,setCurrentStatus , width}) => {
   const [selectedOption, setSelectedOption] = useState(initialSelectedOption);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -11,6 +11,8 @@ const Dropdown = ({ options, initialSelectedOption }) => {
 
   const selectOption = (option) => {
     setSelectedOption(option);
+    setCurrentStatus(option);
+    console.log(option);
     setIsOpen(false);
   };
 
@@ -28,10 +30,10 @@ const Dropdown = ({ options, initialSelectedOption }) => {
   }, []);
 
   return (
-    <div className="relative " ref={dropdownRef}>
+    <div className={`relative w-${width}`} ref={dropdownRef}>
       {/* Display selected option */}
       <button
-        className="bg-gray-800 text-white py-1 px-4 rounded inline-flex justify-between items-center focus:outline-none w-40"
+        className={`bg-gray-800 text-white py-1 px-4 rounded inline-flex justify-between items-center focus:outline-none h-10 w-${width}`}
         onClick={toggleDropdown}
       >
         {selectedOption}
@@ -53,7 +55,7 @@ const Dropdown = ({ options, initialSelectedOption }) => {
       <ul
         className={`absolute ${
           isOpen ? 'block' : 'hidden'
-        } bg-gray-800 text-white py-1 z-1 w-40  rounded-md shadow-lg`}
+        } bg-gray-800 text-white py-1 z-1 w-${width}  rounded-md shadow-lg`}
         
       >
         {options.map((option) => (

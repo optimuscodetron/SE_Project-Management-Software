@@ -7,11 +7,14 @@ import { RiTeamFill } from "react-icons/ri";
 import { GoProjectRoadmap } from "react-icons/go";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import CreateNewProject from "../../../CreateNewProject/CreateNewProject";
-import Axios from "axios";//commented for testing 
+import {changeActiveProject} from "../../../../redux/ProjectData/activeProjectSlice"
+import Axios from "axios";//comment for testing
+
 
 import { useSelector,useDispatch } from "react-redux";
 
 const ProjectListSidebar = (props) => {
+  const dispatch = useDispatch()
   const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);//commented for testing
   console.log(workspaceId);//commented for testing
   
@@ -65,6 +68,11 @@ const ProjectListSidebar = (props) => {
     }
   };
 
+  const projectClickHandler = (item) => {
+    // Dispatch the action to set the active project
+    dispatch(changeActiveProject({name: item.name, id: item.id}));
+  };
+
 
   return (
     <>
@@ -96,12 +104,13 @@ const ProjectListSidebar = (props) => {
             <ul className={"flex row ml-8"}>
               {userProjects.map((item) => (
                 <li>
-                  <NavLink to={'/workspace/project'} className="text-decoration-none " >
-                    <div className=" text-sm font-semibold p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group truncate">
-                      {item.name}
-                    </div>
-                  </NavLink>
-                </li>
+                <NavLink to={'/workspace/project'} className="text-decoration-none " onClick={() => projectClickHandler(item)}>
+                  <div className=" text-sm font-semibold p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group truncate">
+                    {item.name}
+                  </div>
+                </NavLink>
+              </li>
+
               ))}
             </ul>
           )}

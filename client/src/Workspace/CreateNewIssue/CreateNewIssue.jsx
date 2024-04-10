@@ -1,4 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from 'react-redux';
+import { userIdSlice } from './../../redux/userId/userIdSlice'; // import the slice
+import { activeProjectSlice } from "../../redux/ProjectData/activeProjectSlice";
 import {
   FaArrowRight,
   FaExclamationCircle,
@@ -35,8 +38,13 @@ const CreateNewIssue = (props) => {
   const [targetDate, setTargetDate] = useState(null);
   const [members, setMembers] = useState([]); // Empty array initially
   const [filteredMembers, setFilteredMembers] = useState([]);
-  let creatorid="65fc7fd43c074c40c8b0e62c";
-  let projectId="660874b0fc10a3741a5f70e3";
+
+  const userId = useSelector((state) => state.userId.value);
+  const activeProject = useSelector((state) => state.activeProject.value);
+  let creatorid = userId; // Get the user ID from the session
+  console.log("sfjbhdsbxhjb", creatorid);
+  let projectId=activeProject.id;
+  
 
   useEffect(() => {
     fetchMembers(); // Fetch members when component mounts
@@ -45,7 +53,7 @@ const CreateNewIssue = (props) => {
   const fetchMembers = async () => {
     try {
       const data={
-        projectid:"660874b0fc10a3741a5f70e3"
+        projectid:activeProject.id,
       }
        Axios.post("http://localhost:8000/api/users/workspace/project/members", data,{
         withCredentials:true// Replace with actual project ID
@@ -103,9 +111,14 @@ const CreateNewIssue = (props) => {
       };
 
       // Send the new issue data to the backend API
-      await Axios.post("http://localhost:8000/api/users/workspace/project/issue", newIssue, {
-        withCredentials: true
-      });
+      try {
+        const response = await Axios.post("http://localhost:8000/api/users/workspace/project/issue", newIssue, {
+          withCredentials: true
+        });
+        console.log('New issue added successfully:', response.data);
+      } catch (error) {
+        console.error('Error adding new issue:', error);
+      }
 
   };
 
@@ -136,6 +149,8 @@ const CreateNewIssue = (props) => {
   const handleCycle = (e) => {
     setCycle(e?.target?.textContent);
   };
+
+
 
   return (
     <Modal onClose={props.onCloseCreateIssue}>
