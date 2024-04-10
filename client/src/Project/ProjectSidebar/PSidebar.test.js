@@ -1,9 +1,8 @@
-import { render, screen, configure } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import PSidebar from "./PSidebar";
 
 jest.mock('react-router-dom');
 
-configure({testIdAttribute: 'data-testid'})
 
 
 beforeEach(
@@ -88,26 +87,3 @@ test('test of setting Text',()=>{
     const element = screen.getByTestId('setting', {name: /setting/i});
     expect(element).toBeInTheDocument();
 });
-
-
-
-// test('renders forgot test', () => {
-//     render(<Login/>);
-//     const forgot=screen.getByTestId('forgot', {  name: /forgot/i})
-//   expect(forgot).toBeInTheDocument();
-//   });
-
-// test('test of Issues Text 1', async () => {
-//     render(<PSidebar />);
-//     const element = await screen.findByTestId("issuesspan");
-//     expect(element).toBeInTheDocument();
-// });
-
-
-// test('test of Issues Text 2',()=>{
-
-//     render(<PSidebar/>);
-
-//     const element = screen.getByTestId("issuesspan");
-//     expect(element).toBeInTheDocument()
-// });
