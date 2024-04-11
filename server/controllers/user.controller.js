@@ -205,7 +205,11 @@ exports.changeinfo = async (req, res) => {
   let password=req.body.newPassword;
   console.log(password)
   
-  const client=new MongoClient("mongodb+srv://2021csb1139:iitropar@demo.lehpdcx.mongodb.net/?retryWrites=true&w=majority&appName=demo")
+
+
+  const client=new MongoClient("mongodb+srv://Kushagra_18:bDFTOPZeMaygXAE3@cluster0.mxxglsz.mongodb.net/Demo?retryWrites=true&w=majority")
+
+
 
   try {
   //   if (!password || !email) {
