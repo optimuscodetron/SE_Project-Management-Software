@@ -16,7 +16,7 @@ const PSidebarCycleList = (props) => {
       >
         <div className="flex">
           <FaRecycle />
-          <span class="text-sm ms-3">Cycles</span>
+          <span className="text-sm ms-3">Cycles</span>
         </div>
         {showCyclesList ? <FaChevronUp /> : <FaChevronDown />}
       </div>
