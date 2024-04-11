@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
-import Header from "./Header";
+import CurrentList from "./ProjectCycles/CurrentCycles/components/currentList"; // Importing the CurrentList data
 
 const ChartComponent = () => {
   const barChartRef = useRef(null);
+  const pieChartRef = useRef(null);
   const [isLandscape, setIsLandscape] = useState(
     window.innerWidth > window.innerHeight
   );
@@ -19,22 +20,22 @@ const ChartComponent = () => {
 
   useEffect(() => {
     const barChartCtx = barChartRef.current.getContext("2d");
+    const pieChartCtx = pieChartRef.current.getContext("2d");
     let barChartInstance = null;
+    let pieChartInstance = null;
 
-    // Dummy data
+    // Aggregate data based on status
+    const statusCounts = CurrentList.reduce((acc, curr) => {
+      acc[curr.status] = (acc[curr.status] || 0) + 1;
+      return acc;
+    }, {});
+
     const barChartData = {
-      labels: [
-        "Backlog",
-        "Todo",
-        "In Progress",
-        "Done",
-        "Cancelled",
-        "Forwarded",
-      ],
+      labels: Object.keys(statusCounts),
       datasets: [
         {
           label: "Number of Issues",
-          data: [10, 20, 15, 30, 5, 8],
+          data: Object.values(statusCounts),
           backgroundColor: [
             "rgba(255, 99, 132, 0.5)",
             "rgba(54, 162, 235, 0.5)",
@@ -56,13 +57,29 @@ const ChartComponent = () => {
       ],
     };
 
+    const pieChartData = {
+      labels: Object.keys(statusCounts),
+      datasets: [
+        {
+          data: Object.values(statusCounts),
+          backgroundColor: [
+            "#FF6384", // Red
+            "#36A2EB", // Blue
+            "#FFCE56", // Yellow
+            "#4CAF50", // Green
+            "#9C27B0", // Purple
+            "#FF9800", // Orange
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
+
     const drawBarChart = () => {
-      // Destroy previous chart instance if exists
       if (barChartInstance) {
         barChartInstance.destroy();
       }
 
-      // Draw new bar chart
       barChartInstance = new Chart(barChartCtx, {
         type: "bar",
         data: barChartData,
@@ -80,53 +97,80 @@ const ChartComponent = () => {
           },
           responsive: true,
           maintainAspectRatio: false,
-          // Adjust the bar thickness here
-          barThickness: isLandscape ? 40 : 20, // Decrease the size of bars as per your requirement
+          barThickness: isLandscape ? 40 : 20,
+        },
+      });
+    };
+
+    const drawPieChart = () => {
+      if (pieChartInstance) {
+        pieChartInstance.destroy();
+      }
+
+      pieChartInstance = new Chart(pieChartCtx, {
+        type: "pie",
+        data: pieChartData,
+        options: {
+          plugins: {
+            legend: {
+              display: true,
+              position: "top",
+            },
+          },
+          responsive: true,
+          maintainAspectRatio: false,
         },
       });
     };
 
     const updateChartSize = () => {
-      // Update canvas size based on landscape/portrait orientation
       const newSize = isLandscape
         ? window.innerHeight / 2
         : window.innerWidth / 2;
       barChartRef.current.width = newSize;
       barChartRef.current.height = newSize;
+      pieChartRef.current.width = newSize;
+      pieChartRef.current.height = newSize;
       drawBarChart();
+      drawPieChart();
     };
 
-    // Initial drawing of charts
     updateChartSize();
 
-    // Cleanup function
     return () => {
-      // Ensure proper cleanup by destroying chart instances
       if (barChartInstance) {
         barChartInstance.destroy();
+      }
+      if (pieChartInstance) {
+        pieChartInstance.destroy();
       }
     };
   }, [isLandscape]);
 
   return (
-    <div>
-      <Header />
+    <div
+      style={{ backgroundColor: "#171e28", width: "100vw", height: "100vh" }}
+    >
       <div
-        style={{ backgroundColor: "#171e28", width: "100vw", height: "100vh" }}
+        className={`flex flex-col ${
+          isLandscape ? "lg:flex-row" : ""
+        } justify-center space-y-4 lg:space-y-0 lg:space-x-4`}
       >
         <div
-          className={`flex flex-col ${
-            isLandscape ? "lg:flex-row" : ""
-          } justify-center space-y-4 lg:space-y-0 lg:space-x-4`}
+          className={`w-full ${
+            isLandscape ? "lg:w-1/2" : ""
+          } bg-gray-200 p-4 rounded-md shadow-md`}
+          style={{ height: "400px" }}
         >
-          <div
-            className={`w-full ${
-              isLandscape ? "lg:w-1/2" : ""
-            } bg-gray-200 p-4 rounded-md shadow-md`}
-            style={{ height: "400px" }}
-          >
-            <canvas ref={barChartRef}></canvas>
-          </div>
+          <canvas ref={barChartRef}></canvas>
+        </div>
+        <div
+          className={`w-full ${
+            isLandscape ? "lg:w-1/2" : ""
+          } bg-gray-200 p-4 rounded-md shadow-md`}
+          style={{ height: "400px" }}
+        >
+          <canvas ref={pieChartRef}></canvas>
         </div>
       </div>
     </div>
