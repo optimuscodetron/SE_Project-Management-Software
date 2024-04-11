@@ -2,40 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import backgroundImage from './auth.jpg';
-
-// import "./All.css";
+import { useDispatch } from 'react-redux';
+import { setUserId } from './../../redux/userId/userIdSlice'; // import the action
 
 import { NavLink } from "react-router-dom";
-
-
-// const clientid = "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
-
-// function login() {
-//   const onSuccess = (res) => {
-//     console.log("Login Success! Current User: ", res.profileObj);
-//   }
-//   const onFailure = (res) => {
-//     console.log("login Failed res: ", res);
-//   }
-//   return (
-//     <div id="siginbutton">
-//       <GoogleLogin
-//         clientId={clientid}
-//         buttonText='Login with Google'
-//         onSuccess={onSuccess}
-//         onFailure={onFailure}
-//         cookiePolicy={'single_host_origin'}
-//         isSignedIn={true}
-//       />
-//     </div>
-
-//   )
-// }
 
 const Login = (props) => {
 
 
-  
+  const dispatch = useDispatch(); 
   const navigate = useNavigate();
 
 
@@ -63,7 +38,9 @@ const Login = (props) => {
       withCredentials: true,
     })
       .then((res) => {
+        console.log(`login succesful`,res.data.user._id);
         console.log(`login succesful`);
+        dispatch(setUserId(res.data.user._id));
         navigate("/workspace");
         // window.location.reload();
       })

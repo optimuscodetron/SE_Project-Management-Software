@@ -6,9 +6,9 @@ module.exports.authenticate = function(req, res, next){
         // console.log(req.cookies.usertoken);
 
         const decode=jwt.verify(req.cookies.usertoken, "abcdef");
-        // console.log("0000");
+        console.log("0000");
         req.userId = decode.id;
-        // console.log()
+        // console.log(req.userId)
         next();
     }catch(e){
         console.log("Unauthorized");

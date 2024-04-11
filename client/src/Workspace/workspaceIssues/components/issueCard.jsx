@@ -10,7 +10,7 @@ function getInitials(name) {
 export default function IssueCard({ issue, onMoveIssue }) {
   const btnstyle =
     "text-slate-300 hover:text-white border border-gray-800  rounded-lg text-xs px-1.5 py-1 text-center me-2 mb-2";
-  const assigneeInitials = getInitials(issue.assignee);
+  const assigneeInitials = getInitials(issue.assigneeUserID);
   return (
     <div className=" shadow-md p-2 mb-2 rounded-lg bg-[#273341] hover:bg-[#36414d]">
       <div className="flex flex-row justify-between">
@@ -23,42 +23,42 @@ export default function IssueCard({ issue, onMoveIssue }) {
       </div>
       <div className="mb-1 text-white">{issue.title}</div>
       <div className="flex items-center">
-        {issue.status !== "Backlog" && (
+        {issue.stage !== "Backlog" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.status, "Backlog")}
+            onClick={() => onMoveIssue(issue.id, issue.stage, "Backlog")}
           >
             Backlog
           </button>
         )}
-        {issue.status !== "ToDo" && (
+        {issue.stage !== "Todo" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.status, "ToDo")}
+            onClick={() => onMoveIssue(issue.id, issue.stage, "Todo")}
           >
-            ToDo
+            Todo
           </button>
         )}
-        {issue.status !== "InProgress" && (
+        {issue.stage !== "InProgress" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.status, "InProgress")}
+            onClick={() => onMoveIssue(issue.id, issue.stage, "InProgress")}
           >
             InProgress
           </button>
         )}
-        {issue.status !== "Done" && (
+        {issue.stage !== "Done" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.status, "Done")}
+            onClick={() => onMoveIssue(issue.id, issue.stage, "Done")}
           >
             Done
           </button>
         )}
-        {issue.status !== "Cancelled" && (
+        {issue.stage !== "Cancelled" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.status, "Cancelled")}
+            onClick={() => onMoveIssue(issue.id, issue.stage, "Cancelled")}
           >
             Cancelled
           </button>

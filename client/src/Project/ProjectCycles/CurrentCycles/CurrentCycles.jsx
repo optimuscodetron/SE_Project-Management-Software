@@ -124,7 +124,7 @@ const CurrentCycles    = () => {
   };
 
   return (
-    <div className="bg-[#171e28] overflow-x-scroll ">
+    <div className="bg-[#171e28] overflow-x-scroll h-screen ">
       {dataLoaded && (
         <div className="flex flex-row w-screen">
           <div className="w-[320px]">

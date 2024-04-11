@@ -112,7 +112,7 @@ const PreviousCycles = () => {
   };
 
   return (
-    <div className="bg-[#171e28] overflow-x-scroll pt-2 px-2">
+    <div className="bg-[#171e28] overflow-x-scroll pt-2 px-2 h-screen">
       {dataLoaded && (
         <div className="flex flex-row w-screen">
           <div className="w-[320px]">

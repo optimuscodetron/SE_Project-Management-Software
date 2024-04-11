@@ -1,24 +1,52 @@
 import React, { useState } from "react";
+import Dropdown from "../../../Components/Layout/DropDown/dropdown";
+import axios from "axios";
 
-const ProjectSettingGeneral = () => {
+function ProjectSettingGeneral({ project }) {
   const [workspaceName, setWorkspaceName] = useState("IIT_Ropar");
-  const [projectName, setProjectName] = useState("SE_Project");
-  const [projectUrl, setProjectUrl] = useState(
-    "www.trackerx.app/" + projectName
-  );
-  const [aboutProject, setAboutProject] = useState(
-    "Description of the project"
-  );
+  const [projectName, setProjectName] = useState(project.name);
+  const projectStatusOptions = [
+    "Backlog",
+    "Planned",
+    "In Progress",
+    "Completed",
+    "Cancelled",
+  ];
+  const initialSelectedStatus = project.status;
+  const [currentStatus, setCurrentStatus] = useState(project.status);
+  const [aboutProject, setAboutProject] = useState(project.description);
   const [inputValue, setInputValue] = useState(projectName);
 
   const handleInputChangeProjectName = (event) => {
     const changedValue = event.target.value;
     setProjectName(changedValue);
-    setProjectUrl("www.trackerx.app/" + changedValue);
     setInputValue(event.target.value);
   };
   const handleAboutProjectChange = (event) => {
     setAboutProject(event.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(
+        "http://localhost:8000/api/projectUpdateInfo",
+        {
+          projectID: project._id,
+          name: projectName,
+          description: aboutProject,
+          status: currentStatus,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      // Handle success, maybe show a success message or redirect to another page
+      console.log("Project updated successfully");
+    } catch (error) {
+      // Handle error, maybe show an error message to the user
+      console.error("Error updating project:", error);
+    }
   };
 
   return (
@@ -30,7 +58,7 @@ const ProjectSettingGeneral = () => {
           scrollbarWidth: "thin",
           scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
         }}
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleSubmit}
       >
         <div className="text-gray-400 text-base mb-2">
           {workspaceName} <span className="mx-2"> / </span> Projects{" "}
@@ -57,12 +85,15 @@ const ProjectSettingGeneral = () => {
           )}
         </div>
 
-        <div class="mb-4">
-          <label class="block text-lg text-white mt-10 ">Project URL</label>
-          <input
-            name="url"
-            class="h-10 w-[60%] lg:w-[17vw] px-2 rounded-sm border-[1px] border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base"
-            value={projectUrl}
+        <div className="mb-4 ">
+          <label for="form-field-17" class="block text-lg text-white  mt-10">
+            Status
+          </label>
+          <Dropdown
+            options={projectStatusOptions}
+            initialSelectedOption={initialSelectedStatus}
+            setCurrentStatus={setCurrentStatus}
+            width="64"
           />
         </div>
 
@@ -82,6 +113,7 @@ const ProjectSettingGeneral = () => {
           <button
             type="submit"
             class="inline-flex items-center px-4 py-2 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition"
+            onClick={() => window.location.reload()}
           >
             Submit
           </button>
@@ -95,5 +127,5 @@ const ProjectSettingGeneral = () => {
       </form>
     </div>
   );
-};
+}
 export default ProjectSettingGeneral;
