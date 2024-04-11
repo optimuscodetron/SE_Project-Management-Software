@@ -17,7 +17,7 @@ const issueSchema=new mongoose.Schema({
     },
     stage:{
         type:String,
-        enum:['Backlog','Todo','Inprogress','Done','Cancelled'],
+        enum:['Backlog','ToDo','InProgress','Done','Cancelled'],
         required:true
     },
     label:

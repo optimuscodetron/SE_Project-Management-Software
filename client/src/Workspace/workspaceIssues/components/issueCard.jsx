@@ -26,7 +26,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
         {issue.stage !== "Backlog" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.stage, "Backlog")}
+            onClick={() => onMoveIssue(issue._id, issue.status, "Backlog")}
           >
             Backlog
           </button>
@@ -34,7 +34,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
         {issue.stage !== "Todo" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.stage, "Todo")}
+            onClick={() => onMoveIssue(issue._id, issue.status, "ToDo")}
           >
             Todo
           </button>
@@ -42,7 +42,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
         {issue.stage !== "InProgress" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.stage, "InProgress")}
+            onClick={() => onMoveIssue(issue._id, issue.status, "InProgress")}
           >
             InProgress
           </button>
@@ -50,7 +50,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
         {issue.stage !== "Done" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.stage, "Done")}
+            onClick={() => onMoveIssue(issue._id, issue.status, "Done")}
           >
             Done
           </button>
@@ -58,7 +58,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
         {issue.stage !== "Cancelled" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue.id, issue.stage, "Cancelled")}
+            onClick={() => onMoveIssue(issue._id, issue.status, "Cancelled")}
           >
             Cancelled
           </button>

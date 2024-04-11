@@ -194,10 +194,10 @@ module.exports.allIssues = async (req, res) => {
                 title: issue.title,
                 description: issue.description,
                 assigneeUserID: issue.assigneeUserID,
-                assigneeUsername: assigneeUser ? assigneeUser.username : null, // Assuming username field in User model
+                assignee: assigneeUser ? assigneeUser.username : null, // Assuming username field in User model
                 creator: issue.creator,
                 creatorUsername: creatorUser ? creatorUser.username : null, // Assuming username field in User model
-                stage: issue.stage,
+                status: issue.stage,
                 label: issue.label,
                 priority: issue.priority,
                 cycleId: issue.cycleId,
