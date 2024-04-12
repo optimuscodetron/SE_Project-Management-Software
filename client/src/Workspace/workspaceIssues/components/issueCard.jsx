@@ -14,7 +14,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
   const dispatch = useDispatch();
   const btnstyle =
     "text-slate-300 hover:text-white border border-gray-800  rounded-lg text-xs px-1.5 py-1 text-center me-2 mb-2";
-  const assigneeInitials = getInitials(issue.assigneeUserID);
+  const assigneeInitials = getInitials(issue.assignee);
   return (
     <div className=" shadow-md p-2 mb-2 rounded-lg bg-[#273341] hover:bg-[#36414d]">
       <div className="flex flex-row justify-between">
@@ -34,15 +34,15 @@ export default function IssueCard({ issue, onMoveIssue }) {
         {issue.stage !== "Backlog" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue._id, issue.status, "Backlog")}
+            onClick={() => onMoveIssue(issue._id, issue.stage, "Backlog")}
           >
             Backlog
           </button>
         )}
-        {issue.stage !== "Todo" && (
+        {issue.stage !== "ToDo" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue._id, issue.status, "ToDo")}
+            onClick={() => onMoveIssue(issue._id, issue.stage, "ToDo")}
           >
             Todo
           </button>
@@ -50,7 +50,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
         {issue.stage !== "InProgress" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue._id, issue.status, "InProgress")}
+            onClick={() => onMoveIssue(issue._id, issue.stage, "InProgress")}
           >
             InProgress
           </button>
@@ -58,7 +58,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
         {issue.stage !== "Done" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue._id, issue.status, "Done")}
+            onClick={() => onMoveIssue(issue._id, issue.stage, "Done")}
           >
             Done
           </button>
@@ -66,7 +66,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
         {issue.stage !== "Cancelled" && (
           <button
             className={btnstyle}
-            onClick={() => onMoveIssue(issue._id, issue.status, "Cancelled")}
+            onClick={() => onMoveIssue(issue._id, issue.stage, "Cancelled")}
           >
             Cancelled
           </button>

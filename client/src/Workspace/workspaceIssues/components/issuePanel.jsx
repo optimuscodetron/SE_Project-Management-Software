@@ -55,7 +55,7 @@ const IssuePanel = (props) => {
           ? "No Item Is Present Here"
           : props.issues.map((issue) => (
               <IssueCard
-                key={issue.id}
+                key={issue._id}
                 issue={issue}
                 onMoveIssue={props.onMoveIssue}
               />

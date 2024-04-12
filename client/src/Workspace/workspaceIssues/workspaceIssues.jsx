@@ -86,9 +86,9 @@ const WorkspaceIssues = (props) => {
 
         data.forEach((issue) => {
           console.log(issue);
-          if (issue.stage === "Todo") {
+          if (issue.stage === "ToDo") {
             todoDummy.push(issue);
-          } else if (issue.stage === "Inprogress") {
+          } else if (issue.stage === "InProgress") {
             inProgressDummy.push(issue);
           } else if (issue.stage === "Backlog") {
             backlogDummy.push(issue);

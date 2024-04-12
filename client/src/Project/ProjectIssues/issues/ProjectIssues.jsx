@@ -46,7 +46,9 @@ export default function ProjectIssues() {
 
   };
   useEffect(() => {
-    fetchProjectIssue();
+    // console.log("hello"+projectId);
+    if(projectId)
+   { fetchProjectIssue();}
   }, [projectId, changeStatusVar]);
 
   const fetchProjectIssue = async () => {
@@ -74,7 +76,7 @@ export default function ProjectIssues() {
       const cancelledIssues = [];
 
       modifiedIssues.forEach(issue => {
-        switch (issue.status) {
+        switch (issue.stage) {
           case 'Backlog':
             backlogIssues.push(issue);
             break;
@@ -127,7 +129,7 @@ export default function ProjectIssues() {
             <div className="flex flex-row w-screen">
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Backlog"
+              stageName="Backlog"
               issues={backlogIssues}
               onMoveIssue={moveIssue}
               icon={<LuCircleDashed />}
@@ -135,7 +137,7 @@ export default function ProjectIssues() {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="To Do"
+              stageName="To Do"
               issues={toDoIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCircle />}
@@ -143,7 +145,7 @@ export default function ProjectIssues() {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="In Progress"
+              stageName="In Progress"
               issues={inProgressIssues}
               onMoveIssue={moveIssue}
               icon={<FaCircleHalfStroke />}
@@ -152,7 +154,7 @@ export default function ProjectIssues() {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Done"
+              stageName="Done"
               issues={doneIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCheckCircle />}
@@ -161,7 +163,7 @@ export default function ProjectIssues() {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Cancelled"
+              stageName="Cancelled"
               issues={cancelledIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegTimesCircle />}
