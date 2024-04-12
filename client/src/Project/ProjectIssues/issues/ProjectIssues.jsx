@@ -9,8 +9,11 @@ import { FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import Axios from "axios";
+import { changeActiveProjectIssue } from "../../../redux/ProjectData/activeProjectIssuesSlice";
+
 
 export default function ProjectIssues() {
+  const dispatch = useDispatch()
   const projectId = useSelector((state) => state.activeProject.value.id);
   console.log(projectId)
   const [ changeStatusVar, setChangeStatusVar ] = useState(false);
@@ -62,6 +65,7 @@ export default function ProjectIssues() {
       console.log(response.data);
       // Do something with the data received from the backend
       const { issues } = response.data;
+      dispatch(changeActiveProjectIssue(issues));
       const modifiedIssues = issues.map(issue => {
         // Extract the last four characters from the ID string
         const lastFourDigits = issue._id.slice(-4);

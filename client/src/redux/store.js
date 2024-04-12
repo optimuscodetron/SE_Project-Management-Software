@@ -2,6 +2,7 @@ import { configureStore,combineReducers } from '@reduxjs/toolkit'
 import workspaceNameIdReducer from './WorkspaceData/WorkspaceNameIdSlice'
 import activeProjectReducer from './ProjectData/activeProjectSlice'
 import userIdReducer from './userId/userIdSlice' // import the new reducer
+import activeProjectIssuesReducer from './ProjectData/activeProjectIssuesSlice'
 
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -10,7 +11,8 @@ const persistConfig = {
   key: 'root',
   storage,
 }
-const rootReducer = combineReducers({ 
+const rootReducer = combineReducers({
+  activeProjectIssues:activeProjectIssuesReducer,
   workspaceNameId: workspaceNameIdReducer,
   activeProject: activeProjectReducer,
   userId: userIdReducer,
