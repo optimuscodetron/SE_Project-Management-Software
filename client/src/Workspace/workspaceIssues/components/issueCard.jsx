@@ -10,7 +10,7 @@ function getInitials(name) {
 export default function IssueCard({ issue, onMoveIssue }) {
   const btnstyle =
     "text-slate-300 hover:text-white border border-gray-800  rounded-lg text-xs px-1.5 py-1 text-center me-2 mb-2";
-  const assigneeInitials = getInitials(issue.assigneeUserID);
+  const assigneeInitials = getInitials(issue.assigneeusername);
   return (
     <div className=" shadow-md p-2 mb-2 rounded-lg bg-[#273341] hover:bg-[#36414d]">
       <div className="flex flex-row justify-between">

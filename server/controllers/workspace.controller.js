@@ -1,6 +1,8 @@
 const { Workspace } = require("../models/workspace.model");
 const { Project } = require("../models/project.model");
 const {Issue}=require("../models/issue.model")
+const {User}=require("../models/user.model")
+
 
 
 const express = require("express");
@@ -79,13 +81,29 @@ module.exports.getActiveWorkspaceOfUser = async (req, res) => {
 };
 module.exports.getAllIssuesWorkspace = async (req, res) => {
   try {
-    const activeWorkspaceId = req.query.activeWorkspaceId;
-  
-    const projects = await Project.find({ workspaceId: activeWorkspaceId });
+    const activeWorkspaceId1 = req.query.activeWorkspaceId;
 
-    const allIssues = await Issue.find({ projectId: { $in: projects.map(project => project._id) } });
+    // Fetch all projects in the active workspace
+    const projects = await Project.find({ workspaceID: activeWorkspaceId1 });
 
-    res.status(200).json(allIssues);
+    // Fetch all issues related to the projects in the active workspace
+    const allIssues = await Issue.find({ projectId: { $in: projects.map(project => project._id) } })
+      .populate('assigneeUserID', 'username') // Populate assigneeUserID with username field from User model
+      .populate('creator', 'username'); // Populate creator with username field from User model
+
+    // Map over allIssues and add assignee and creator usernames to each issue
+    const modifiedIssues = await Promise.all(allIssues.map(async issue => {
+      const assignee = await User.findById(issue.assigneeUserID).select('username');
+      const creator = await User.findById(issue.creator).select('username');
+      return {
+        ...issue.toObject(),
+        assigneeusername: assignee.username,
+        creatorusername: creator.username
+      };
+    }));
+    // console.log(modifiedIssues);
+
+    res.status(200).json(modifiedIssues);
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).json({ error: "Internal Server Error" });
