@@ -9,6 +9,8 @@ module.exports = function(app){
     app.get('/api/users/workspace/issues',authenticate, Workspacecontroller.getAllIssuesWorkspace);
 
     app.post('/workspace/members', authenticate, Workspacecontroller.getAllMemberOfWorkspace);
+    // app.post('/workspace/modifiedIssue', authenticate, Workspacecontroller.);
+
 
 
 

@@ -25,10 +25,18 @@ const WorkspaceIssues = (props) => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [isopen, setIsOpen] = useState(false);
   const workspaceId = useSelector((state) => state.workspaceNameId.value.id);
+  const [IssuesList, setIssueList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
+  const [selectedAssignee, setSelectedAssignee] = useState(null);
+  const [selectedPriority, setSelectedPriority] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
+
+  // const [isopen, setIsOpen] = useState(false);
+  // const workspaceId = useSelector((state) => state.workspaceNameId.value.id);
   console.log(workspaceId);
 
   const [name, setname] = useState("Ayush");
-  const [filteredList, setFilteredList] = useState(IssuesList);
+  
 
   const handleFilterAssignee = (name) => {
     setFilteredList(
@@ -278,4 +286,5 @@ const WorkspaceIssues = (props) => {
     </div>
   );
 };
+
 export default WorkspaceIssues;
