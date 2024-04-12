@@ -89,19 +89,22 @@ module.exports.getAllIssuesWorkspace = async (req, res) => {
     // Fetch all issues related to the projects in the active workspace
     const allIssues = await Issue.find({ projectId: { $in: projects.map(project => project._id) } })
       .populate('assigneeUserID', 'username') // Populate assigneeUserID with username field from User model
-      .populate('creator', 'username'); // Populate creator with username field from User model
+      .populate('creator', 'username')
+      .populate('projectId','name') // Populate creator with username field from User model
 
     // Map over allIssues and add assignee and creator usernames to each issue
     const modifiedIssues = await Promise.all(allIssues.map(async issue => {
       const assignee = await User.findById(issue.assigneeUserID).select('username');
       const creator = await User.findById(issue.creator).select('username');
+      const project=await Project.findById(issue.projectId).select('name');
       return {
         ...issue.toObject(),
         assigneeusername: assignee.username,
-        creatorusername: creator.username
+        creatorusername: creator.username,
+        projectname:project.name
       };
     }));
-    // console.log(modifiedIssues);
+    console.log(modifiedIssues);
 
     res.status(200).json(modifiedIssues);
   } catch (error) {

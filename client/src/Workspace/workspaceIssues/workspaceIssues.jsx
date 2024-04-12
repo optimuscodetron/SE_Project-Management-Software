@@ -122,7 +122,7 @@ const WorkspaceIssues = (props) => {
       }
       if (selectedProject) {
         filteredList = filteredList.filter(
-          (issue) => issue?.projectid === selectedProject
+          (issue) => issue?.projectname === selectedProject
         );
       }
 

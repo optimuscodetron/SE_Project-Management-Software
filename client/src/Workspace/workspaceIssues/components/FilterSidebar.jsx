@@ -54,6 +54,35 @@ const FilterSidebar = (props) => {
     }
 
   }
+  useEffect(() => {
+    fetchallprojectsofuser();
+  }, [workspaceId]);
+
+  const fetchallprojectsofuser = async () => {
+    try {
+      // Replace 'your_workspace_id' with the actual workspace ID
+      const data = {
+        workspaceId: workspaceId
+      }
+      const response = await Axios.post('http://localhost:8000/api/getAllProjectOfUser', data, {
+        withCredentials: true,
+      });
+
+      if (response.status === 200) {
+        const projectdata = await response.data.project;
+        console.log(projectdata);
+        const formattedproject = projectdata.map(project => ({name: project.name }));
+        setProjects(formattedproject);
+        
+      }
+      else {
+        throw new Error('Failed to fetch projects of the workspace');
+      }
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+
+  }
 
   const handleButton=(num)=>{
       setnum(num);
@@ -80,7 +109,7 @@ const FilterSidebar = (props) => {
 
 
   const [projects,setProjects]=useState([
-    {name:"Project1",id:1,issues:6}, {name:"Project2",id:2,issues:7}, {name:"Project3",id:3,issues:6},
+
   ])
 
   const [priority,setPriority]=useState([
@@ -178,7 +207,7 @@ const FilterSidebar = (props) => {
 
             {projects.map((project,idx)=>{
               return (
-                <button className=' w-full text-left p-2 group  hover:bg-gray-700 flex justify-between' onClick={(e)=>handleFilterSidebarProject(e,project.id,idx)}>
+                <button className=' w-full text-left p-2 group  hover:bg-gray-700 flex justify-between' onClick={(e)=>handleFilterSidebarProject(e,project.name,idx)}>
                 <div className='flex items-center'><GrProjects /><p className='ml-3'>{project.name}</p></div>
                   <div className='text-gray-400 group flex w-[34%] justify-between'>{button3==idx? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>}<p>{project.issues}</p> </div>
                 </button>
