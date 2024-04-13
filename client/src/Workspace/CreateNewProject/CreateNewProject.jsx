@@ -19,6 +19,7 @@ const CreateNewProject = (props) => {
   const workspaceName = useSelector(
     (state) => state.workspaceNameId.value.name
   );
+  const workspaceMemberList = useSelector((state) => state.WorkspaceMemberList.value);
   console.log("&&&" + workspaceId);
   const [isopen, setisopen] = useState(false);
 
@@ -52,7 +53,7 @@ const CreateNewProject = (props) => {
 
   const [members, setMembers] = useState([]);
 
-  const [workspaceMemberData, setWorkspaceData] = useState([]);
+  const [workspaceMemberData,setWorkspaceMemberData]=useState([]);
 
   const [tempMembers, setTempMembers] = useState(members.sort());
   const [filteredMembers, setFilteredMembers] = useState([]);
@@ -150,39 +151,12 @@ const CreateNewProject = (props) => {
   };
 
   useEffect(() => {
-    fetchallmembersOfWorkspace();
-  }, [workspaceId]);
-
-  const fetchallmembersOfWorkspace = async () => {
-    try {
-      // Replace 'your_workspace_id' with the actual workspace ID
-      const data = {
-        workspaceId: workspaceId,
-      };
-      const response = await Axios.post(
-        "http://localhost:8000/workspace/members",
-        data,
-        {
-          withCredentials: true,
-        }
-      );
-
-      if (response.status === 200) {
-        const Memberdata = await response.data.members;
-        // setMembers(data.members);
-        console.log(Memberdata);
-        const usernames = Memberdata.map((member) => member.username);
+    const usernames = workspaceMemberList.map(member => member.username);
         console.log(usernames);
-        setWorkspaceData(Memberdata);
+        setWorkspaceMemberData(workspaceMemberList);
         setMembers(usernames);
         setTempMembers(usernames);
-      } else {
-        throw new Error("Failed to fetch members of the workspace");
-      }
-    } catch (error) {
-      console.error("Error fetching members:", error);
-    }
-  };
+  }, [workspaceId]);
 
   const storeProject = async (data) => {
     try {

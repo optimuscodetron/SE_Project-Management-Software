@@ -9,11 +9,13 @@ import Axios from "axios";//comment for testing
 
 import { useSelector,useDispatch } from "react-redux";
 import {changeWorkspaceNameId} from "../../../../redux/WorkspaceData/WorkspaceNameIdSlice"
+import {changeworkspaceMemberList} from "../../../../redux/WorkspaceData/WorkspaceMemberListSlice";
 
 const WorkspaceListSidebar = (props) => {
 
   const dispatch = useDispatch()//comment for testing
-
+  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);
+  
   const [showWorkspaces, setShowWorkspaces] = useState(false);
   const showWorkspaceHandler = () => {
     setShowWorkspaces((prevState) => !prevState);
@@ -22,7 +24,6 @@ const WorkspaceListSidebar = (props) => {
   const [userWorkspaces, setUserWorkspace] = useState(["Workspace 1", "Workspace 2", "Workspace 3"]);
   const [currentWorkspace, setCurrentWorkspace] = useState(userWorkspaces[0]);
   useEffect(() => {
-
     props.headerInfo({
       headerIcon: <PiMonitorFill />,
       headerTitle: currentWorkspace
@@ -44,7 +45,7 @@ const WorkspaceListSidebar = (props) => {
           const workspaceNames = data.workspaces.map(workspace => workspace.name);
           setUserWorkspace(workspaceNames);
           setCurrentWorkspace(workspaceNames[0]);
-          dispatch(changeWorkspaceNameId({name:data.workspaces[0].name,id:data.workspaces[0].id}));
+          dispatch(changeWorkspaceNameId({name:data.workspaces[0].name,id:data.workspaces[0].id,url:data.workspaces[0].url}));
           return data.workspaces
         });
         console.log(workspaceData);
@@ -60,24 +61,8 @@ const WorkspaceListSidebar = (props) => {
 
 
   const chooseWorkspaceHandler = (item, index) => {
-  //   localStorage.setItem('activeWorkspaceId', item.id);
-  //   console.log(item.id);
-  //     // Make a request to the server with activeWorkspaceId included
-  // axios.get('/api/getActiveWorkspaceOfUser', {
-  //   params: {
-  //     activeWorkspaceId: item.id  // Include activeWorkspaceId in the query parameters
-  //   },
-  //   withCredentials: true,
-  // })
-  // .then(response => {
-  //   // Handle response data here
-  //   console.log(response.data);
-  // })
-  // .catch(error => {
-  //   console.error('Error fetching workspace:', error);
-  //   // Handle errors as needed
-  // });
-    dispatch(changeWorkspaceNameId({name:item.name,id:item.id}));// comment for testing
+  
+    dispatch(changeWorkspaceNameId({name:item.name,id:item.id,url:item.url}));// comment for testing
 
     const data = {
       headerIcon: <PiMonitorFill />,
@@ -86,6 +71,32 @@ const WorkspaceListSidebar = (props) => {
     props.headerInfo(data);//comment for testing
     setCurrentWorkspace(userWorkspaces[index]);
     setShowWorkspaces(!showWorkspaces);
+    fetchallmembersOfWorkspace();
+
+  }
+  const fetchallmembersOfWorkspace = async () => {
+    try {
+      // Replace 'your_workspace_id' with the actual workspace ID
+      const data = {
+        workspaceId: workspaceId
+      }
+      const response = await Axios.post('http://localhost:8000/workspace/members', data, {
+        withCredentials: true,
+      });
+
+      if (response.status === 200) {
+        const Memberdata = await response.data.members;
+        // setMembers(data.members);
+        console.log(Memberdata);
+        dispatch(changeworkspaceMemberList(Memberdata));
+      }
+      else {
+        throw new Error('Failed to fetch members of the workspace');
+      }
+    } catch (error) {
+      console.error('Error fetching members:', error);
+    }
+
   }
   
 
