@@ -35,7 +35,7 @@ const IssuePanel = (props) => {
             {props.icon}
           </div>
           <div className="text-lg align-self-center mr-2">
-            {props.statusName}
+            {props.stageName}
           </div>
           <div className="text-sm text-[#acacac] align-self-center mr-2">
             {props.issues.length}
@@ -54,7 +54,7 @@ const IssuePanel = (props) => {
           ? "No Item Is Present Here"
           : props.issues.map((issue) => (
               <IssueCard
-                key={issue.id}
+                key={issue._id}
                 issue={issue}
                 onMoveIssue={props.onMoveIssue}
               />

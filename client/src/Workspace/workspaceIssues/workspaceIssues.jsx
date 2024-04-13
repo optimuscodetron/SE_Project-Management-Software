@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import IssuesList from "./components/issuesList";
+import IssuesList from "./components/issuesList";
 import IssuePanel from "./components/issuePanel";
 import { LuCircleDashed } from "react-icons/lu";
 import { FaRegCircle } from "react-icons/fa6";
@@ -84,9 +84,9 @@ const WorkspaceIssues = (props) => {
   
         data.forEach((issue) => {
           console.log(issue);
-          if (issue.stage === "Todo") {
+          if (issue.stage === "ToDo") {
             todoDummy.push(issue);
-          } else if (issue.stage === "Inprogress") {
+          } else if (issue.stage === "InProgress") {
             inProgressDummy.push(issue);
           } else if (issue.stage === "Backlog") {
             backlogDummy.push(issue);
@@ -117,83 +117,6 @@ const WorkspaceIssues = (props) => {
 
   const moveIssue = (issueId, currentstage, newstage) => {
     console.log("Function moveIssue Called with stage", { newstage });
-    let currentIssue;
-    if (currentstage === newstage) {
-      console.log("Current stage and New stage are the same");
-      return 0;
-    } 
-    else {
-      const removeFromStage = (issues, setter) => {
-        currentIssue = issues.find((issue) => issue.id === issueId);
-        console.log(currentIssue);
-        currentIssue.stage = newstage;
-        const updatedIssues = issues.filter((issue) => issue.id !== issueId);
-        setter(updatedIssues);
-      };
-      const addToStage = (issues, setter) => {
-        setter([...issues, currentIssue]);
-      };
-      switch (newstage) {
-        case "Backlog":
-          if (currentstage === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentstage === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
-          else if (currentstage === "Done")
-            removeFromStage(doneIssues, setDoneIssues);
-          else if (currentstage === "Cancelled")
-            removeFromStage(cancelledIssues, setCancelledIssues);
-          // removeFromStage(Issues, setter);
-          addToStage(backlogIssues, setBacklogIssues);
-          break;
-        case "ToDo":
-          if (currentstage === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentstage === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
-          else if (currentstage === "Done")
-            removeFromStage(doneIssues, setDoneIssues);
-          else if (currentstage === "Cancelled")
-            removeFromStage(cancelledIssues, setCancelledIssues);
-          addToStage(toDoIssues, setToDoIssues);
-          break;
-        case "InProgress":
-          if (currentstage === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentstage === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentstage === "Done")
-            removeFromStage(doneIssues, setDoneIssues);
-          else if (currentstage === "Cancelled")
-            removeFromStage(cancelledIssues, setCancelledIssues);
-          addToStage(inProgressIssues, setInProgressIssues);
-          break;
-        case "Done":
-          if (currentstage === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentstage === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentstage === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
-          else if (currentstage === "Cancelled")
-            removeFromStage(cancelledIssues, setCancelledIssues);
-          addToStage(doneIssues, setDoneIssues);
-          break;
-        case "Cancelled":
-          if (currentstage === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentstage === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentstage === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
-          else if (currentstage === "Done")
-            removeFromStage(doneIssues, setDoneIssues);
-          addToStage(cancelledIssues, setCancelledIssues);
-          break;
-        default:
-          break;
-      }
-    }
   };
 
   return (
