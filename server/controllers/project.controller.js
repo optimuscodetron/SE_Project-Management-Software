@@ -169,7 +169,7 @@ module.exports.projectUpdateInfo=async(req,res)=>{
 
 module.exports.allIssues = async (req, res) => {
     try {
-        const { projectId } = req.body;
+        const { projectId } = req.params;
 
         // Fetch all issues associated with the provided projectId
         const issues = await Issue.find({ projectId });
@@ -194,7 +194,7 @@ module.exports.allIssues = async (req, res) => {
                 title: issue.title,
                 description: issue.description,
                 assigneeUserID: issue.assigneeUserID,
-                assigneeUsername: assigneeUser ? assigneeUser.username : null, // Assuming username field in User model
+                assignee: assigneeUser ? assigneeUser.username : null, // Assuming username field in User model
                 creator: issue.creator,
                 creatorUsername: creatorUser ? creatorUser.username : null, // Assuming username field in User model
                 stage: issue.stage,

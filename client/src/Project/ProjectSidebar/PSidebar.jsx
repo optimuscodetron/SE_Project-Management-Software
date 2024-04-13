@@ -23,11 +23,11 @@ const PSidebar = (props) => {
     >
       <div className="h-full px-2 overflow-y-auto bg-[#171e28] dark:bg-[#171e28]">
         <ul className="space-y-2 font-medium pt-2">
-          <li onClick={props.openIssues}>
+          <li data-testid = "issues" onClick={props.openIssues}>
             <NavLink className={"text-decoration-none "}>
               <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group">
                 <BsFillInboxesFill />
-                <span className="flex row ms-3 text-sm  whitespace-nowrap text-decoration-none">
+                <span  className="flex row ms-3 text-sm  whitespace-nowrap text-decoration-none">
                   Issues
                 </span>
               </div>
@@ -41,7 +41,7 @@ const PSidebar = (props) => {
             />
           </li>
           <hr className="w-full h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-500" />
-          <li onClick={openCreateIssuePanel}>
+          <li data-testid = "createissue" onClick={openCreateIssuePanel}>
             <NavLink className={"text-decoration-none "}>
               <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group">
                 <AiFillPlusCircle />
@@ -51,7 +51,7 @@ const PSidebar = (props) => {
               </div>
             </NavLink>
           </li>
-          <li>
+          <li data-testid = "setting">
             <NavLink
               to={"/workspace/project/settings"}
               className="text-decoration-none"

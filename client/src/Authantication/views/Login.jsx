@@ -134,6 +134,7 @@ const Login = (props) => {
                     justifyContent: "flex-start",
                     paddingTop: "0.1rem",
                   }}
+                  data-testid="forgot"
                 >
                   <NavLink
                     to="/email"
@@ -142,6 +143,7 @@ const Login = (props) => {
                       textDecoration: "none",
                       fontSize: "0.8rem",
                     }}
+                    
                   >
                     Forgot Password
                   </NavLink>
@@ -171,8 +173,8 @@ const Login = (props) => {
                 />
               </div> */}
               <br />
-              <div className="text-center">
-                <span style={{ color: "#dcdcdc" }}>
+              <div className="text-center" data-testid="testSignUp">
+                <span style={{ color: "#dcdcdc" }} data-testid="dontHaveAccount">
                   Don't have an account?&nbsp;  
                   <NavLink
                     to="/register"

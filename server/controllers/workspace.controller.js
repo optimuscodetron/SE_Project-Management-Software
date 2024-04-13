@@ -1,6 +1,8 @@
 const { Workspace } = require("../models/workspace.model");
 const { Project } = require("../models/project.model");
-const { Issue } = require('../models/issue.model');
+const {Issue}=require("../models/issue.model")
+const {User}=require("../models/user.model")
+
 
 const express = require("express");
 const router = express.Router();
@@ -78,13 +80,45 @@ module.exports.getActiveWorkspaceOfUser = async (req, res) => {
 };
 module.exports.getAllIssuesWorkspace = async (req, res) => {
   try {
-    const activeWorkspaceId = req.query.activeWorkspaceId;
+    const activeWorkspaceId1= req.query.activeWorkspaceId;
   
-    const projects = await Project.find({ workspaceId: activeWorkspaceId });
+    const projects = await Project.find({ workspaceID: activeWorkspaceId1 });
 
     const allIssues = await Issue.find({ projectId: { $in: projects.map(project => project._id) } });
 
-    res.status(200).json(allIssues);
+    const issuesWithUsernames = await Promise.all(allIssues.map(async (issue) => {
+      // console.log(issue.creator);
+      const creatorUser = await User.findById(issue.creator);
+      const assigneeUser = await User.findById(issue.assigneeUserID);
+      // console.log(assigneeUser.username);
+
+
+      // Add creator's username to the issue object
+      issue.creatorUsername = creatorUser ? creatorUser.username : null;
+
+      // Add assignee's username to the issue object
+      issue.assigneeUsername = assigneeUser ? assigneeUser.username : null;
+      
+
+       return {
+          _id: issue._id,
+          title: issue.title,
+          description: issue.description,
+          assigneeUserID: issue.assigneeUserID,
+          assignee: assigneeUser ? assigneeUser.username : null, // Assuming username field in User model
+          creator: issue.creator,
+          creatorUsername: creatorUser ? creatorUser.username : null, // Assuming username field in User model
+          stage: issue.stage,
+          label: issue.label,
+          priority: issue.priority,
+          cycleId: issue.cycleId,
+          dueDate: issue.dueDate,
+          projectId: issue.projectId,
+          creationDate: issue.creationDate
+      }; // Convert to plain JavaScript object
+  }));
+  console.log("hhh"+issuesWithUsernames);
+    res.status(200).json(issuesWithUsernames);
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).json({ error: "Internal Server Error" });

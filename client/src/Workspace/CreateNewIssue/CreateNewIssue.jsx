@@ -39,11 +39,13 @@ const CreateNewIssue = (props) => {
   const [members, setMembers] = useState([]); // Empty array initially
   const [filteredMembers, setFilteredMembers] = useState([]);
 
+
   const userId = useSelector((state) => state.userId.value);
   const activeProject = useSelector((state) => state.activeProject.value);
   let creatorid = userId; // Get the user ID from the session
   console.log("sfjbhdsbxhjb", creatorid);
-  let projectId = activeProject.id;
+
+  let projectId=activeProject.id;
 
   useEffect(() => {
     fetchMembers(); // Fetch members when component mounts
@@ -51,16 +53,17 @@ const CreateNewIssue = (props) => {
 
   const fetchMembers = async () => {
     try {
-      const data = {
-        projectid: activeProject.id,
-      };
-      Axios.post(
-        "http://localhost:8000/api/users/workspace/project/members",
-        data,
-        {
-          withCredentials: true, // Replace with actual project ID
-        }
-      ).then((res) => {
+
+      const data={
+
+        projectid:activeProject.id,
+
+      }
+       Axios.post("http://localhost:8000/api/users/workspace/project/members", data,{
+        withCredentials:true// Replace with actual project ID
+      })
+      .then((res) => {
+
         setMembers(res.data.members);
         console.log(res.data.id);
         // creatorid=res.data.id;

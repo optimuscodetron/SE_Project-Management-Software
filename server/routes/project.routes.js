@@ -5,7 +5,7 @@ module.exports = function(app){
     
     app.post('/api/getAllProjectOfUser',authenticate, Projectcontroller.getAllProjectOfUser);
     app.post('/api/createProject',authenticate, Projectcontroller.createProject);
-    app.get('/project/allIssues',authenticate, Projectcontroller.allIssues);
+    app.get('/project/allIssues/:projectId',authenticate, Projectcontroller.allIssues);
 
     app.post('/api/users/workspace/project/members',authenticate,Projectcontroller.fetchallmembers);
 

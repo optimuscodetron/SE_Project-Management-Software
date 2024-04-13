@@ -9,6 +9,12 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import CreateNewProject from "../CreateNewProject/CreateNewProject";
 import FilterSidebar from "./components/FilterSidebar";
 
+import { useSelector,useDispatch } from "react-redux";
+
+// import { Axios } from "axios";
+import axios from "axios";
+
+
 const WorkspaceIssues = (props) => {
   const [toDoIssues, setToDoIssues] = useState([]);
   const [inProgressIssues, setInProgressIssues] = useState([]);
@@ -17,6 +23,9 @@ const WorkspaceIssues = (props) => {
   const [cancelledIssues, setCancelledIssues] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
   const [isopen,setIsOpen]=useState(false);
+  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);
+  console.log(workspaceId);
+
 
   const[name,setname]=useState("Ayush");
   const [filteredList,setFilteredList]=useState(IssuesList);
@@ -52,114 +61,62 @@ const WorkspaceIssues = (props) => {
   }
 
   useEffect(() => {
-    const todoDummy = [];
-    const inProgressDummy = [];
-    const backlogDummy = [];
-    const doneDummy = [];
-    const cancelledDummy = [];
 
-    filteredList.forEach((issue) => {
-      if (issue.status === "ToDo") {
-        todoDummy.push(issue);
-      } else if (issue.status === "InProgress") {
-        inProgressDummy.push(issue);
-      } else if (issue.status === "Backlog") {
-        backlogDummy.push(issue);
-      } else if (issue.status === "Cancelled") {
-        cancelledDummy.push(issue);
-      } else if (issue.status === "Done") {
-        doneDummy.push(issue);
+    const fetchIssues = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/users/workspace/issues`,
+          {
+            params: {
+              activeWorkspaceId: workspaceId,
+            },
+            withCredentials: true,
+          }
+        );
+        const data = response.data;
+        console.log(data);
+  
+        const todoDummy = [];
+        const inProgressDummy = [];
+        const backlogDummy = [];
+        const doneDummy = [];
+        const cancelledDummy = [];
+  
+        data.forEach((issue) => {
+          console.log(issue);
+          if (issue.stage === "ToDo") {
+            todoDummy.push(issue);
+          } else if (issue.stage === "InProgress") {
+            inProgressDummy.push(issue);
+          } else if (issue.stage === "Backlog") {
+            backlogDummy.push(issue);
+          } else if (issue.stage === "Cancelled") {
+            cancelledDummy.push(issue);
+          } else if (issue.stage === "Done") {
+            doneDummy.push(issue);
+          }
+        });
+        console.log(todoDummy);
+  
+        setToDoIssues(todoDummy);
+        console.log(toDoIssues);
+        setInProgressIssues(inProgressDummy);
+        setBacklogIssues(backlogDummy);
+        setCancelledIssues(cancelledDummy);
+        setDoneIssues(doneDummy);
+        setDataLoaded(true);
+      } catch (error) {
+        console.error("Error fetching Issues:", error);
+        // Handle errors as needed
       }
-    });
+    };
+  
+    fetchIssues();
+  }, []);
 
-    // setFirstTime(false);
-    setToDoIssues(todoDummy);
-    setInProgressIssues(inProgressDummy);
-    setBacklogIssues(backlogDummy);
-    setCancelledIssues(cancelledDummy);
-    setDoneIssues(doneDummy);
-    setDataLoaded(true);
-  }, [filteredList]);
 
-  const moveIssue = (issueId, currentStatus, newStatus) => {
-    console.log("Function moveIssue Called with status", { newStatus });
-    let currentIssue;
-    if (currentStatus === newStatus) {
-      console.log("Current Status and New Status are the same");
-      return 0;
-    } 
-    else {
-      const removeFromStage = (issues, setter) => {
-        currentIssue = issues.find((issue) => issue.id === issueId);
-        console.log(currentIssue);
-        currentIssue.status = newStatus;
-        const updatedIssues = issues.filter((issue) => issue.id !== issueId);
-        setter(updatedIssues);
-      };
-      const addToStage = (issues, setter) => {
-        setter([...issues, currentIssue]);
-      };
-      switch (newStatus) {
-        case "Backlog":
-          if (currentStatus === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentStatus === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
-          else if (currentStatus === "Done")
-            removeFromStage(doneIssues, setDoneIssues);
-          else if (currentStatus === "Cancelled")
-            removeFromStage(cancelledIssues, setCancelledIssues);
-          // removeFromStage(Issues, setter);
-          addToStage(backlogIssues, setBacklogIssues);
-          break;
-        case "ToDo":
-          if (currentStatus === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentStatus === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
-          else if (currentStatus === "Done")
-            removeFromStage(doneIssues, setDoneIssues);
-          else if (currentStatus === "Cancelled")
-            removeFromStage(cancelledIssues, setCancelledIssues);
-          addToStage(toDoIssues, setToDoIssues);
-          break;
-        case "InProgress":
-          if (currentStatus === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentStatus === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentStatus === "Done")
-            removeFromStage(doneIssues, setDoneIssues);
-          else if (currentStatus === "Cancelled")
-            removeFromStage(cancelledIssues, setCancelledIssues);
-          addToStage(inProgressIssues, setInProgressIssues);
-          break;
-        case "Done":
-          if (currentStatus === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentStatus === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentStatus === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
-          else if (currentStatus === "Cancelled")
-            removeFromStage(cancelledIssues, setCancelledIssues);
-          addToStage(doneIssues, setDoneIssues);
-          break;
-        case "Cancelled":
-          if (currentStatus === "Backlog")
-            removeFromStage(backlogIssues, setBacklogIssues);
-          else if (currentStatus === "ToDo")
-            removeFromStage(toDoIssues, setToDoIssues);
-          else if (currentStatus === "InProgress")
-            removeFromStage(inProgressIssues, setInProgressIssues);
-          else if (currentStatus === "Done")
-            removeFromStage(doneIssues, setDoneIssues);
-          addToStage(cancelledIssues, setCancelledIssues);
-          break;
-        default:
-          break;
-      }
-    }
+  const moveIssue = (issueId, currentstage, newstage) => {
+    console.log("Function moveIssue Called with stage", { newstage });
   };
 
   return (
@@ -169,7 +126,7 @@ const WorkspaceIssues = (props) => {
         <div className="flex flex-row w-screen">
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Backlog"
+              stageName="Backlog"
               issues={backlogIssues}
               onMoveIssue={moveIssue}
               icon={<LuCircleDashed />}
@@ -178,7 +135,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="To Do"
+              stageName="To Do"
               issues={toDoIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCircle />}
@@ -186,7 +143,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="In Progress"
+              stageName="In Progress"
               issues={inProgressIssues}
               onMoveIssue={moveIssue}
               icon={<FaCircleHalfStroke />}
@@ -195,7 +152,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Done"
+              stageName="Done"
               issues={doneIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCheckCircle />}
@@ -204,7 +161,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Cancelled"
+              stageName="Cancelled"
               issues={cancelledIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegTimesCircle />}

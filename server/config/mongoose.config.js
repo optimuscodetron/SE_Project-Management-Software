@@ -2,7 +2,12 @@ const mongoose = require('mongoose');
 const { Workspace } = require('../models/workspace.model');
 // const db=process.env.DB
 
-mongoose.connect("mongodb+srv://2021csb1139:iitropar@demo.lehpdcx.mongodb.net/?retryWrites=true&w=majority&appName=demo", {
+
+
+
+
+mongoose.connect("mongodb://127.0.0.1:27017/SE_Project", {
+
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,

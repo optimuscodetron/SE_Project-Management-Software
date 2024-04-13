@@ -167,7 +167,7 @@ const Registration = (props) => {
                   </button>
                 </div>
               </form>
-              <div className="text-center">
+              <div className="text-center" data-testid="testLogin">
                 <span style={{ color: "#dcdcdc" }}>
                   Already have an account?&nbsp;
                   <NavLink
