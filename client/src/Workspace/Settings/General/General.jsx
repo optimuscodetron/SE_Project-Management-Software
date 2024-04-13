@@ -202,10 +202,11 @@ const General = () => {
               <p className="text-[20px] font-normal tracking-wide my-2">
                 General
               </p>
-              <h6 className="text-gray-300 text-[15px] font-normal tracking-wide my-2">
+              <label className="text-gray-300 text-[15px] font-normal tracking-wide my-2" for="workspaceName">
                 Workspace name
-              </h6>
+              </label>
               <input
+                id={"workspaceName"}
                 value={workspaceName}
                 className="bg-[rgb(15,19,29)] w-[35vw] md:w-[19vw] border-[1px] px-2 py-[2px]  border-gray-600 rounded-sm"
                 onChange={(e) => handleInput(e, 1)}
@@ -218,10 +219,11 @@ const General = () => {
                 ""
               )}
 
-              <h6 className="text-gray-300 tracking-wide text-[15px] mt-4 font-normal my-2">
+              <label className="text-gray-300 tracking-wide text-[15px] mt-4 font-normal my-2" for='workspaceURL'>
                 Workspace URL
-              </h6>
+              </label>
               <input
+                id='workspaceURL'
                 value={workspaceUrl}
                 className="bg-[rgb(15,19,29)] w-[35vw] md:w-[19vw]  border-[1px] px-2 py-[2px]  border-gray-600 rounded-sm"
                 onChange={(e) => handleInput(e, 2)}
