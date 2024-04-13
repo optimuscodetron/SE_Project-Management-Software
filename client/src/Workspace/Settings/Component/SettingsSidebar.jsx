@@ -5,10 +5,10 @@ import { FaUsers } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 
 const SettingsSidebar = (props) => {
- const location = useLocation();
- const array=location.pathname.split("/");
- const section=array[array.length-1];
- console.log(section);
+  const location = useLocation();
+  const array = location.pathname.split("/");
+  const section = array[array.length - 1];
+  console.log(section);
 
   return (
     <div
@@ -21,38 +21,43 @@ const SettingsSidebar = (props) => {
           <h1 className="text-3xl tracking-wide font-medium mb-3">Settings</h1>
         </div>
 
-        <div className="flex flex-col ml-[2vw] my-4 mr-1">
-
-          <Link to="/workspace/settings/general"  className={`flex items-center justify-around p-2 ${ section==="general" ? "bg-gray-700" : "" 
+        <div
+          className="flex flex-col ml-[2vw] my-4 mr-1 generalTestClass"
+          data-testid="generalTest"
+        >
+          <Link
+            to="/workspace/settings/general"
+            className={`flex items-center justify-around p-2 ${
+              section === "general" ? "bg-gray-700" : ""
             } hover:bg-gray-700 text-white h-12 my-[6px] rounded-md no-underline hover:no-underline`}
           >
-            <MdWorkspacesOutline  />
-            <div>
-              General
-            </div>
-            <div></div>
+            <MdWorkspacesOutline />
+            <div>General</div>
           </Link>
 
-          <Link to="/workspace/settings/members"  className={`flex items-center  justify-around p-2 ${ section==="members" ? "bg-gray-700" : "" 
-            } hover:bg-gray-700 text-white h-12 my-[6px] rounded-md no-underline hover:no-underline`}
-          >
-            <FaUsers />
-            <div className="pl-1">
-              Members
-          </div>
-          <div></div>
+          <div data-testid="membersTest">
+            <Link
+              to="/workspace/settings/members"
+              className={`flex items-center  justify-around p-2 ${
+                section === "members" ? "bg-gray-700" : ""
+              } hover:bg-gray-700 text-white h-12 my-[6px] rounded-md no-underline hover:no-underline`}
+            >
+              <FaUsers />
+              <div className="pl-1">Members</div>
             </Link>
+          </div>
 
-            <Link to="/workspace/settings/profile"  className={`flex items-center  justify-around p-2 ${ section==="profile" ? "bg-gray-700" : "" 
-            } hover:bg-gray-700 text-white h-12 my-[6px] rounded-md no-underline hover:no-underline`}
-          >
-            <CgProfile  />
-           <div className="pr-3">
-              Profile
-          </div>
-          <div></div>
-          
+          <div data-testid="profileTest">
+            <Link
+              to="/workspace/settings/profile"
+              className={`flex items-center  justify-around p-2 ${
+                section === "profile" ? "bg-gray-700" : ""
+              } hover:bg-gray-700 text-white h-12 my-[6px] rounded-md no-underline hover:no-underline`}
+            >
+              <CgProfile />
+              <div className="pr-3">Profile</div>
             </Link>
+          </div>
         </div>
       </div>
     </div>
