@@ -161,14 +161,17 @@ module.exports.projectInfo=async(req,res)=>{
         }
         const projectMembers = await Project.findById(projectID).populate({
             path: 'memberIDs',
-            select: 'name email _id' // Only select name and email fields, excluding _id
+            select: 'name email _id username' // Only select name and email fields, excluding _id
         });
         const members = projectMembers.memberIDs.map(member => ({
             id: member._id,
             name: member.name,
             email: member.email,
+            username:member.username,
             role: member._id.equals(project.lead) ? 'Admin' : 'Member' // Check if member is lead or not
         }));
+        console.log(members);
+        console.log(project);
         res.status(200).json({ 
             project:project, 
             members:members

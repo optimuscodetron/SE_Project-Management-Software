@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useSelector,useDispatch } from "react-redux";
 
-function ProjectSettingTeamMembers({ project,teamMembers, setTeamMembers}) {
+function ProjectSettingTeamMembers({ project,teamMembers}) {
   // Array of team members
   console.log(teamMembers);
 
   // State for project
-  const [workspaceName, setWorkspaceName] = useState("IIT_Ropar");
-  const [projectName, setProjectName] = useState("SE Project");
+  
+  const workspaceName=useSelector((state) => state.workspaceNameId.value.name);
+  const projectName=useSelector((state) => state.activeProject.value.name);
 
   // State for search query
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,9 +42,9 @@ function ProjectSettingTeamMembers({ project,teamMembers, setTeamMembers}) {
 
   // Function to confirm removal of a team member
   const confirmRemoveMember = () => {
-    setTeamMembers((prevMembers) =>
-      prevMembers.filter((member) => member.id !== memberToRemove)
-    );
+    // setTeamMembers((prevMembers) =>
+    //   prevMembers.filter((member) => member.id !== memberToRemove)
+    // );
     setShowRemoveConfirmation(false);
   };
 
@@ -55,7 +57,7 @@ function ProjectSettingTeamMembers({ project,teamMembers, setTeamMembers}) {
     <div className="bg-gray-800 w-full h-screen text-white justify-center p-10">
       <div className="flex flex-col rounded mx-auto h-[100%] mb-4 w-full lg:w-[60%] bg-gray-900 p-3 ">
         <div className="text-gray-400 text-base mb-2">
-          {workspaceName} <span className="mx-2"> / </span> Projects{" "}
+          {workspaceName}
           <span className="mx-2"> / </span> {projectName}
         </div>
         <h1 className="text-3xl tracking-wide font-semibold mb-4 border-b border-gray-600 pb-3">
@@ -123,7 +125,7 @@ function ProjectSettingTeamMembers({ project,teamMembers, setTeamMembers}) {
                 className="bg-gray-900 mx-4 border-b border-gray-600 pb-[-10px] flex justify-between items-center"
               >
                 <div className="flex flex-col ">
-                  <h2 className="text-lg ">{member.name}</h2>
+                  <h2 className="text-lg ">{member.name} </h2>
                   <p className="text-gray-600 w-[10vw]">{member.email}</p>
                 </div>
                 <div>

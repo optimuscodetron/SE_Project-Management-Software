@@ -8,14 +8,18 @@ import { GoProjectRoadmap } from "react-icons/go";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import CreateNewProject from "../../../CreateNewProject/CreateNewProject";
 import {changeActiveProject} from "../../../../redux/ProjectData/activeProjectSlice"
+import { changeActiveProjectIssue } from "../../../../redux/ProjectData/activeProjectIssuesSlice";
 import Axios from "axios";//comment for testing
 
 
 import { useSelector,useDispatch } from "react-redux";
+import { changeActiveProjectAllMember } from "../../../../redux/ProjectData/activeProjectAllMemberSlice";
 
 const ProjectListSidebar = (props) => {
   const dispatch = useDispatch()
-  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);//commented for testing
+  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);
+  const projectId = useSelector((state) => state.activeProject.value.id);
+  //commented for testing
   console.log(workspaceId);//commented for testing
   
 
@@ -71,8 +75,56 @@ const ProjectListSidebar = (props) => {
   const projectClickHandler = (item) => {
     // Dispatch the action to set the active project
     dispatch(changeActiveProject({name: item.name, id: item.id}));
+    if(projectId)
+   {
+    fetchActiveProjectIssue();
+    fetchAllMemberOfProject();
+  }
+
   };
 
+  const fetchActiveProjectIssue = async () => {
+    try {
+      // Use Axios to make a GET request with query parameters
+      const response = await Axios.get(`http://localhost:8000/project/allIssues/${projectId}`, {
+        withCredentials: true,
+      }
+      );
+      // Handle the response from the backend
+      console.log(response.data);
+      // Do something with the data received from the backend
+      const { issues } = response.data;
+      dispatch(changeActiveProjectIssue(issues));
+    } catch (error) {
+      // Handle errors
+      console.error('Error fetching issues:', error);
+    }
+  }
+
+  const fetchAllMemberOfProject= async()=>{
+    try{
+      const response = await Axios.post(
+        "http://localhost:8000/api/projectInfo",
+        {
+          projectID: projectId, // Pass the projectID in the request body
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      // Extract project and members data from the response
+      const { project, members } = response.data;
+      console.log(members);
+      dispatch(changeActiveProjectAllMember(members));
+      console.log(project);
+      dispatch(changeActiveProject(project));
+
+    }
+    catch(error){
+      console.error('Error fetching all memeber:', error);
+    }
+  }
 
   return (
     <>
