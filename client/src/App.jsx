@@ -98,7 +98,7 @@ function App() {
         <Route path="/workspace" element={<Workspace />} />
         <Route path="/barpie" element={<ChartComponent />} />
         <Route path="/barchart" element={<Barchart_Mem />} />
-        <Route path="/barpie" element={<ChartComponent />} />
+        
         <Route path="/piemem" element={<PieMem />} />
 
         <Route path="/workspace/project" element={<Project />} />
