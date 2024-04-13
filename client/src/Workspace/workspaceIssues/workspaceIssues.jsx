@@ -108,6 +108,8 @@ const WorkspaceIssues = (props) => {
         setDoneIssues(doneDummy);
         setDataLoaded(true);
       } catch (error) {
+        console.log("in");
+   fetchDummyIssues();
         console.error("Error fetching Issues:", error);
         // Handle errors as needed
       }
