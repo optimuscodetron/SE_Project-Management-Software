@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-// import IssuesList from "./components/issuesList";
+import IssuesList from "./components/issuesList";
 import IssuePanel from "./components/issuePanel";
 import { LuCircleDashed } from "react-icons/lu";
 import { FaRegCircle } from "react-icons/fa6";
