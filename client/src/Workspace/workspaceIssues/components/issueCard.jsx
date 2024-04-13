@@ -1,4 +1,6 @@
 import React from "react";
+import { TbAntennaBars2,TbAntennaBars3,TbAntennaBars4,TbAntennaBars5 } from "react-icons/tb";
+
 function getInitials(name) {
   const words = name.split(" ");
   let initials = "";
@@ -9,13 +11,20 @@ function getInitials(name) {
 }
 export default function IssueCard({ issue, onMoveIssue }) {
   const btnstyle =
-    "text-slate-300 hover:text-white border border-gray-800  rounded-lg text-xs px-1.5 py-1 text-center me-2 mb-2";
-  const assigneeInitials = getInitials(issue.assignee);
+    "text-slate-300 hover:text-white border border-gray-800  rounded-lg text-xs px-1 py-1 text-center me-1 mb-2";
+  
+  const priorities={
+    Low:<TbAntennaBars2 size={15}/>,
+    Medium:<TbAntennaBars3 size={15}/>,
+    High: <TbAntennaBars4 size={15}/>,
+    Urgent: <TbAntennaBars5 size={15}/>,
+  };
+    const assigneeInitials = getInitials(issue.assignee);
   return (
     <div className=" shadow-md p-2 mb-2 rounded-lg bg-[#273341] hover:bg-[#36414d]">
       <div className="flex flex-row justify-between">
         <div className="text-xs text-[#acacac]">
-          {issue.project ? issue.project : "P04"}-{issue.id}
+          {issue.projectCode ? issue.projectCode : "P04"}-{issue.id}
         </div>
         <span className="bg-purple-600 rounded-full px-[4px] py-[3px] text-white text-[10px]  ">
           {assigneeInitials}
@@ -63,6 +72,13 @@ export default function IssueCard({ issue, onMoveIssue }) {
             Cancelled
           </button>
         )}
+        {issue.projectCode&&
+          <button
+          className={btnstyle}
+        >
+          {priorities[issue.priority]}
+        </button>
+        }
       </div>
     </div>
   );
