@@ -99,7 +99,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
           )}
           {dropdownOpen && (
             <div
-              className=" right-0 absolute w-20 rounded-md shadow-lg bg-[rgb(21,26,35)] text-white"
+              className=" right-0 z-10 absolute w-20 rounded-md shadow-lg bg-[rgb(21,26,35)] text-white"
             >
               <div className="py-1" role="none">
                 {Object.keys(priorities).map((priority) => (
