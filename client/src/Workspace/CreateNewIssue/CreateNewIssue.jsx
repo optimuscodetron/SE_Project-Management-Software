@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from 'react-redux';
-import { userIdSlice } from './../../redux/userId/userIdSlice'; // import the slice
+import { useSelector } from "react-redux";
+import { userIdSlice } from "./../../redux/userId/userIdSlice"; // import the slice
 import { activeProjectSlice } from "../../redux/ProjectData/activeProjectSlice";
 import {
   FaArrowRight,
@@ -13,7 +13,7 @@ import { GrProjects, GrStatusDisabledSmall } from "react-icons/gr";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import DatePicker from "react-datepicker";
 import Modal from "../../UI/Modal";
-import Axios from 'axios';
+import Axios from "axios";
 
 const CreateNewIssue = (props) => {
   const [isopen, setisopen] = useState(false);
@@ -43,8 +43,7 @@ const CreateNewIssue = (props) => {
   const activeProject = useSelector((state) => state.activeProject.value);
   let creatorid = userId; // Get the user ID from the session
   console.log("sfjbhdsbxhjb", creatorid);
-  let projectId=activeProject.id;
-  
+  let projectId = activeProject.id;
 
   useEffect(() => {
     fetchMembers(); // Fetch members when component mounts
@@ -52,20 +51,21 @@ const CreateNewIssue = (props) => {
 
   const fetchMembers = async () => {
     try {
-      const data={
-        projectid:activeProject.id,
-      }
-       Axios.post("http://localhost:8000/api/users/workspace/project/members", data,{
-        withCredentials:true// Replace with actual project ID
-      })
-      .then((res) => {
+      const data = {
+        projectid: activeProject.id,
+      };
+      Axios.post(
+        "http://localhost:8000/api/users/workspace/project/members",
+        data,
+        {
+          withCredentials: true, // Replace with actual project ID
+        }
+      ).then((res) => {
         setMembers(res.data.members);
         console.log(res.data.id);
         // creatorid=res.data.id;
         // window.location.reload();
-      })
-
-   
+      });
     } catch (error) {
       console.error("Error fetching members:", error);
     }
@@ -94,32 +94,33 @@ const CreateNewIssue = (props) => {
   };
 
   const handleCreateIssue = async () => {
- 
-      
-      const newIssue = {
-        projectName: projectName.current.value,
-        description: description.current.value,
-        startDate: startDate,
-        targetDate: targetDate,
-        assignee: Assignee,
-        creator:creatorid,
-        priority:Priority,
-        cycle:Cycle ,
-        projectId:projectId,
-        stage:IssueStatus,// Here, Assignee should be set based on user selection from the project members list
-        // Include other properties like priority, issue type, cycle, etc.
-      };
+    const newIssue = {
+      projectName: projectName.current.value,
+      description: description.current.value,
+      startDate: startDate,
+      targetDate: targetDate,
+      assignee: Assignee,
+      creator: creatorid,
+      priority: Priority,
+      cycle: Cycle,
+      projectId: projectId,
+      stage: IssueStatus, // Here, Assignee should be set based on user selection from the project members list
+      // Include other properties like priority, issue type, cycle, etc.
+    };
 
-      // Send the new issue data to the backend API
-      try {
-        const response = await Axios.post("http://localhost:8000/api/users/workspace/project/issue", newIssue, {
-          withCredentials: true
-        });
-        console.log('New issue added successfully:', response.data);
-      } catch (error) {
-        console.error('Error adding new issue:', error);
-      }
-
+    // Send the new issue data to the backend API
+    try {
+      const response = await Axios.post(
+        "http://localhost:8000/api/users/workspace/project/issue",
+        newIssue,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("New issue added successfully:", response.data);
+    } catch (error) {
+      console.error("Error adding new issue:", error);
+    }
   };
 
   const handleCancel = () => {
@@ -150,8 +151,6 @@ const CreateNewIssue = (props) => {
     setCycle(e?.target?.textContent);
   };
 
-
-
   return (
     <Modal onClose={props.onCloseCreateIssue}>
       <div>
@@ -162,12 +161,14 @@ const CreateNewIssue = (props) => {
             </p>
             <div className="flex justify-around justify-items-end mt-[4vh]">
               <button
+                data-testid="dropdowncancel"
                 className="px-2 py-1 bg-gray-600 rounded-sm"
                 onClick={handleCancel}
               >
                 Cancel
               </button>
               <button
+                data-testid="dropdowndiscard"
                 className="bg-purple-500 px-2 py-1 rounded-sm"
                 onClick={props.onCloseCreateIssue}
               >
@@ -176,7 +177,7 @@ const CreateNewIssue = (props) => {
             </div>
           </div>
         )}
-  
+
         <div
           className={` ${
             iscancel ? " pointer-events-none " : ""
@@ -189,6 +190,7 @@ const CreateNewIssue = (props) => {
             <FaArrowRight className="ml-2" />
             <div className="ml-2 relative">
               <button
+                data-testid="combobox5"
                 className="flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 "
                 onClick={(num) => handleSelect(5)}
               >
@@ -196,7 +198,7 @@ const CreateNewIssue = (props) => {
                   {props.isWorkspaceContext ? Priorit : "Project 1"}
                 </p>
               </button>
-  
+
               {props.isWorkspaceContext && isSelect5 && (
                 <div className="absolute z-10 mt-2 w-[9vw] bg-gray-900 shadow-lg border border-gray-200 rounded-sm">
                   <ul>
@@ -229,19 +231,21 @@ const CreateNewIssue = (props) => {
               )}
             </div>
           </h1>
-  
+
           <div className="flex flex-row">
             <GrProjects className="items-center mt-3" />
             <div className="flex flex-col ml-[1vw] w-full">
               <input
+                data-testid="textbox1"
                 type="text"
                 placeholder="Issue name "
                 ref={projectName}
                 onChange={handleName}
                 className="outline-none bg-transparent md:text-xl text-sm placeholder:md:text-lg placeholder:text:sm p-1"
               ></input>
-  
+
               <textarea
+                data-testid="textbox2"
                 placeholder="Description"
                 ref={description}
                 className=" bg-transparent text-gray-400  placeholder:md:text-sm placeholder:text-[10px] p-1 resize-none "
@@ -252,18 +256,19 @@ const CreateNewIssue = (props) => {
               ></textarea>
             </div>
           </div>
-  
+
           <div>
             <div className="flex justify-evenly md:justify-evenly gap-y-3 gap-x-2 flex-wrap  ">
               <div className="bg-white overflow-visible h-[4vh] w-1/3 md:w-[9vw] rounded-sm md:text-sm text-[10px]">
                 <button
+                  data-testid="combobox1"
                   className="flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 "
                   onClick={(num) => handleSelect(1)}
                 >
                   <GrStatusDisabledSmall />{" "}
                   <p className="overflow-hidden ">{IssueStatus}</p>
                 </button>
-  
+
                 {isSelect && (
                   <div className="flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 ">
                     <button
@@ -290,15 +295,16 @@ const CreateNewIssue = (props) => {
                   </div>
                 )}
               </div>
-  
+
               <div className=" h-[4vh] w-1/3 md:w-[8vw] rounded-sm overflow-visible md:text-sm text-[10px]">
                 <button
+                  data-testid="combobox2"
                   className="flex justify-evenly h-[4vh] w-full  items-center rounded-sm border-[1px] p-1 border-gray-400  bg-gray-700"
                   onClick={(num) => handleSelect(2)}
                 >
                   <FaUserTie /> <p>{Assignee}</p>
                 </button>
-  
+
                 {isSelect2 && (
                   <div className="overflow-x-hidden p-2 z-1 w-[25vw]  md:w-[8vw] flex flex-col items-start relative rounded-md top-[2vh] bg-gray-900 border-[1px]  border-gray-400">
                     <button
@@ -320,16 +326,17 @@ const CreateNewIssue = (props) => {
                   </div>
                 )}
               </div>
-  
+
               <div className="bg-white overflow-visible h-[4vh] w-1/3 md:w-[9vw] rounded-sm md:text-sm text-[10px]">
                 <button
+                  data-testid="combobox3"
                   className="flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 "
                   onClick={(num) => handleSelect(3)}
                 >
                   <FaExclamationCircle />{" "}
                   <p className="overflow-hidden ">{Priority}</p>
                 </button>
-  
+
                 {isSelect3 && (
                   <div className="flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 ">
                     <button
@@ -370,15 +377,16 @@ const CreateNewIssue = (props) => {
                   </div>
                 )}
               </div>
-  
+
               <div className="bg-white overflow-visible h-[4vh] w-1/3 md:w-[9vw] rounded-sm md:text-sm text-[10px]">
                 <button
+                  data-testid="combobox4"
                   className="flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 "
                   onClick={(num) => handleSelect(4)}
                 >
                   <FaSyncAlt /> <p className="overflow-hidden ">{Cycle}</p>
                 </button>
-  
+
                 {isSelect4 && (
                   <div className="flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 ">
                     <button
@@ -398,11 +406,12 @@ const CreateNewIssue = (props) => {
                   </div>
                 )}
               </div>
-  
+
               <div className="bg-gray-700 overflow-hidden rounded-sm md:p-1 md:w-[8vw] w-2/5 h-[4vh] md:text-sm text-[10px] border-[1px]  border-gray-400 flex justify-evenly items-center">
                 <BsFillCalendarDateFill />
                 <div className="w-[80%]">
                   <DatePicker
+                    data-testid="date-picker"
                     selected={targetDate}
                     onChange={(date) => setTargetDate(date)}
                     className="bg-transparent placeholder:text-white outline-none"
@@ -411,7 +420,7 @@ const CreateNewIssue = (props) => {
                 </div>
               </div>
             </div>
-  
+
             <div className="border-t-[1px] mt-2 border-gray-500 ">
               <div className="flex justify-end mt-3 mb-2 md:text-sm text-[10px]  ">
                 {isEmpty && (
@@ -438,7 +447,6 @@ const CreateNewIssue = (props) => {
       </div>
     </Modal>
   );
-  
 };
 
 export default CreateNewIssue;
