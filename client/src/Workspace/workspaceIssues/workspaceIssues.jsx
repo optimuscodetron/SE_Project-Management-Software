@@ -35,20 +35,15 @@ const WorkspaceIssues = (props) => {
                   return member.assignee.toLowerCase()===name.toLowerCase();
                 })
      );
-    //  console.log(IssuesList);
-    //  console.log(filteredList);
-    // console.log(name);
   }
 
   const handleFilterPriority=(priority)=>{
-    // console.log(IssuesList[0].priority);
     setFilteredList(IssuesList.filter((member,idx)=>{
       return member?.priority?.toLowerCase()===priority?.toLowerCase();
     }))
   }
 
   const handleFilterProject=(projectid)=>{
-    // console.log(IssuesList[0].priority);
     setFilteredList(IssuesList.filter((member,idx)=>{
       return member?.projectid===projectid;
     }))
@@ -106,6 +101,8 @@ const WorkspaceIssues = (props) => {
         setDoneIssues(doneDummy);
         setDataLoaded(true);
       } catch (error) {
+        console.log("in");
+   fetchDummyIssues();
         console.error("Error fetching Issues:", error);
         // Handle errors as needed
       }
@@ -113,7 +110,43 @@ const WorkspaceIssues = (props) => {
   
     fetchIssues();
   }, []);
+  const fetchDummyIssues =() => {
+    console.log("inin");
+    const dummybacklogIssues = [];
+      const dummytoDoIssues = [];
+      const dummyinProgressIssues = [];
+      const dummydoneIssues = [];
+      const dummycancelledIssues = [];
+      IssuesList.forEach(issue => {
+        switch (issue.stage) {
+          case 'Backlog':
+            dummybacklogIssues.push(issue);
+            break;
+          case 'ToDo':
+            dummytoDoIssues.push(issue);
+            break;
+          case 'InProgress':
+            dummyinProgressIssues.push(issue);
+            break;
+          case 'Done':
+            dummydoneIssues.push(issue);
+            break;
+          case 'Cancelled':
+            dummycancelledIssues.push(issue);
+            break;
+          default:
+            break;
+        }
+      });
 
+      setBacklogIssues(dummybacklogIssues);
+      setToDoIssues(dummytoDoIssues);
+      setInProgressIssues(dummyinProgressIssues);
+      setDoneIssues(dummydoneIssues);
+      setCancelledIssues(dummycancelledIssues);
+      setDataLoaded(true);
+
+  };
 
   const moveIssue = (issueId, currentstage, newstage) => {
     console.log("Function moveIssue Called with stage", { newstage });
