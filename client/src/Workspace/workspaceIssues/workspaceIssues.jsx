@@ -212,6 +212,7 @@ const WorkspaceIssues = (props) => {
   }
 
   return (
+    
     <div className="bg-[#171e28] overflow-x-scroll px-2 pt-2">
       {dataLoaded && (
         <div className="flex flex-row w-screen">

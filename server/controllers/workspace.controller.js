@@ -24,6 +24,7 @@ module.exports.getAllWorkspaceOfUser = async (req, res) => {
     const workspaceData = workspaces.map((workspace) => ({
       name: workspace.name,
       id: workspace._id,
+      url:workspace.url
     }));
 
     console.log(workspaceData);
@@ -216,19 +217,36 @@ module.exports.getAllMemberOfWorkspace = async (req, res) => {
     }
 
     // Find the workspace by ID
-    const workspace = await Workspace.findById(workspaceId).populate('members', 'username');
+    const workspace = await Workspace.findById(workspaceId)
+      .populate('adminuserId', 'id name email username') // Populate admin details with username
+      .populate('members', 'id name email username'); // Populate members details with username
 
     if (!workspace) {
       return res.status(404).json({ message: 'Workspace not found' });
     }
 
-    // Get the members array from the workspace
+    // Extract admin details
+    // const admin = {
+    //   id: workspace.adminuserId._id,
+    //   name: workspace.adminuserId.name,
+    //   email: workspace.adminuserId.email,
+    //   username: workspace.adminuserId.username,
+    //   role: 'admin'
+    // };
+
+    // Extract members details with their roles
     const members = workspace.members.map(member => ({
-      _id: member._id,
-      username: member.username
+      id: member._id,
+      name: member.name,
+      email: member.email,
+      username: member.username,
+      role: member._id.equals(workspace.adminuserId._id) ? 'admin' : 'member'
     }));
-    console.log(members);
-    res.status(200).json({ members:members });
+
+    // Combine admin and members into a single array
+    // const allMembers = [admin, ...members];
+
+    res.status(200).json({ members: members });
   } catch (error) {
     console.error('Error fetching workspace members:', error);
     res.status(500).json({ message: 'Internal server error' });
