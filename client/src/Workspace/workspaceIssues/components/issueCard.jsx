@@ -2,6 +2,14 @@ import React from "react";
 import { useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { changeActiveIssue } from '../../../redux/issueId/activeIssueSlice'
+import React, { useState } from "react";
+import {
+  TbAntennaBars2,
+  TbAntennaBars3,
+  TbAntennaBars4,
+  TbAntennaBars5,
+} from "react-icons/tb";
+
 function getInitials(name) {
   const words = name.split(" ");
   let initials = "";
@@ -13,15 +21,29 @@ function getInitials(name) {
 export default function IssueCard({ issue, onMoveIssue }) {
   const dispatch = useDispatch();
   const btnstyle =
-    "text-slate-300 hover:text-white border border-gray-800  rounded-lg text-xs px-1 py-1 text-center me-1 mb-2";
-  
-  const priorities={
-    Low:<TbAntennaBars2 size={15}/>,
-    Medium:<TbAntennaBars3 size={15}/>,
-    High: <TbAntennaBars4 size={15}/>,
-    Urgent: <TbAntennaBars5 size={15}/>,
+    "text-slate-300 hover:text-white border border-gray-800 rounded-lg text-xs px-1 py-1 text-center me-1 mb-1";
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const priorities = {
+    Low: <TbAntennaBars2 size={15} />,
+    Medium: <TbAntennaBars3 size={15} />,
+    High: <TbAntennaBars4 size={15} />,
+    Urgent: <TbAntennaBars5 size={15} />,
   };
-    const assigneeInitials = getInitials(issue.assignee);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handlePrioritySelect = (priority) => {
+    // Handle priority selection here
+    setDropdownOpen(!dropdownOpen);
+    console.log("Selected priority:", priority);
+    // You can add logic here to handle the selected priority, like updating state or performing any other action
+  };
+
+  const assigneeInitials = getInitials(issue.assignee);
   return (
     <div className=" shadow-md p-2 mb-2 rounded-lg bg-[#273341] hover:bg-[#36414d]">
       <div className="flex flex-row justify-between">
@@ -78,13 +100,31 @@ export default function IssueCard({ issue, onMoveIssue }) {
             Cancelled
           </button>
         )}
-        {issue.projectCode&&
-          <button
-          className={btnstyle}
-        >
-          {priorities[issue.priority]}
-        </button>
-        }
+        <div className="relative">
+          {issue.projectCode && (
+            <button onClick={toggleDropdown} className={btnstyle}>
+              {priorities[issue.priority]}
+            </button>
+          )}
+          {dropdownOpen && (
+            <div
+              className=" right-0 absolute w-20 rounded-md shadow-lg bg-[rgb(21,26,35)] text-white"
+            >
+              <div className="py-1" role="none">
+                {Object.keys(priorities).map((priority) => (
+                  <button
+                    key={priority}
+                    className="flex justify-start items-center w-full px-2 text-sm  hover:bg-gray-700 hover:text-gray-200"
+                    onClick={() => handlePrioritySelect(priority)}
+                  >
+                    {priorities[priority]}
+                     {priority}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
