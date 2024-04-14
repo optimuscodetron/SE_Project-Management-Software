@@ -13,7 +13,7 @@ import Loader from '../../../loading';
 
 export default function ProjectIssues() {
   const dispatch = useDispatch()
-  const projectId = useSelector((state) => state.activeProject.value.id);
+  const projectId = useSelector((state) => state.activeProject.value._id);
   const activeProjectAllIssues = useSelector((state) => state.activeProjectIssues.value);
   console.log(projectId)
   const [changeStatusVar, setChangeStatusVar] = useState(false);
