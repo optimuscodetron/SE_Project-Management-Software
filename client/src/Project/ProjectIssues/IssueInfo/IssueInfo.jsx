@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
 import TitleDescrip from "./Components/TitleDescrip";
 import Comment from "./Components/Comment";
 import RightBar from "./Components/RightBar";
+import axios from 'axios';
+import { activeIssueSlice } from '../../../redux/issueId/activeIssueSlice'
 
 function IssueInfo() {
   const [isMediumScreen, setIsMediumScreen] = useState(false);
+  const activeIssue = useSelector((state) => state.activeIssue.value);
+  console.log("active issue",activeIssue._id);
 
   useEffect(() => {
     const handleResize = () => {

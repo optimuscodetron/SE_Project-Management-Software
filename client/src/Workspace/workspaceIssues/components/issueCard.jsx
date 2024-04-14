@@ -1,4 +1,7 @@
 import React from "react";
+import { useDispatch } from 'react-redux';
+import { NavLink } from "react-router-dom";
+import { changeActiveIssue } from '../../../redux/issueId/activeIssueSlice'
 function getInitials(name) {
   const words = name.split(" ");
   let initials = "";
@@ -8,6 +11,7 @@ function getInitials(name) {
   return initials;
 }
 export default function IssueCard({ issue, onMoveIssue }) {
+  const dispatch = useDispatch();
   const btnstyle =
     "text-slate-300 hover:text-white border border-gray-800  rounded-lg text-xs px-1.5 py-1 text-center me-2 mb-2";
   const assigneeInitials = getInitials(issue.assigneeUserID);
@@ -21,7 +25,11 @@ export default function IssueCard({ issue, onMoveIssue }) {
           {assigneeInitials}
         </span>
       </div>
-      <div className="mb-1 text-white">{issue.title}</div>
+      <NavLink to = "/workspace/project/board/issue"
+      style={{ textDecoration: "none", cursor: "pointer" }}>
+
+      <div className="mb-1 text-white" onClick={() => dispatch(changeActiveIssue(issue))}>{issue.title}</div>
+      </NavLink>
       <div className="flex items-center">
         {issue.stage !== "Backlog" && (
           <button

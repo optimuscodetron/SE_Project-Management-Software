@@ -36,6 +36,7 @@ const IssuePanel = (props) => {
           </div>
           <div className="text-lg align-self-center mr-2">
             {props.statusName}
+            
           </div>
           <div className="text-sm text-[#acacac] align-self-center mr-2">
             {props.issues.length}

@@ -1,14 +1,17 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useSelector } from 'react-redux';
 import { useState } from "react";
-
+// import { activeIssueSlice } from '../../../redux/issueId/activeIssueSlice'
 function Comment() {
   const [commentInput, addCommentInput] = useState("");
-
+  const activeIssue = useSelector((state) => state.activeIssue.value);
+  console.log("active issue",activeIssue._id);
   const assigneeChange = (e) => {
     e.preventDefault();
     console.log("assignee");
   };
-
+const [assigne,setAssigne] = useState("");
   const [commentList, commentListAdd] = useState([
     "Apple",
     "Banana",
@@ -57,6 +60,29 @@ function Comment() {
     // border: "1px solid gray ",
   };
 
+  useEffect(() => {
+    const fetchIssue = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/api/workspace/issue/description`, {
+          
+            params: {
+              activeIssueId: activeIssue._id,
+            },
+            withCredentials: true,
+          }
+        );
+    
+        const assigneeUsername = response.data;
+        const username = assigneeUsername.assigneeUser.username;
+        setAssigne(username)
+        console.log("details",assigneeUsername.assigneeUser.username);
+      } catch (error) {
+        console.error('Failed to fetch issue:', error);
+      }
+    };
+  
+    fetchIssue();
+  }, []);
   return (
     <div className="bg-gray-900 h-full m-2 mt-0">
       <div className="p-2">
@@ -73,7 +99,7 @@ function Comment() {
               className="text-xs ml-2 p-1 rounded-sm hover:bg-gray-800"
               onClick={assigneeChange}
             >
-              assignee
+              {assigne}
             </button>
           </div>
         </div>

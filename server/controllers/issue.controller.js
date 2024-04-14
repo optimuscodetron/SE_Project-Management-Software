@@ -81,3 +81,38 @@ exports.createIssue = async (req, res) => {
         res.status(400).json(err);
     }
 }
+
+
+exports.getIssue = async (req, res) => {
+  const { activeIssueId } = req.query;
+
+  try {
+    // Find the issue by activeIssueId
+    const issue = await Issue.findById(activeIssueId).exec();
+
+    if (!issue) {
+      return res.status(404).json({ message: 'Issue not found' });
+    }
+
+    // Extract the assigneeUserID from the issue
+    const assigneeUserId = issue.assigneeUserID;
+
+    if (!assigneeUserId) {
+      return res.status(404).json({ message: 'Assignee not found for this issue' });
+    }
+
+    // Find the user by assigneeUserId
+    const user = await User.findOne({ _id: assigneeUserId }).exec();
+
+    if (!user) {
+      return res.status(404).json({ message: 'Assignee user not found' });
+    }
+
+    // Return the issue and the assignee user
+    return res.status(200).json({ issue, assigneeUser: user });
+  } catch (error) {
+    console.error('Error fetching issue:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
