@@ -10,7 +10,6 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import CreateNewProject from "../CreateNewProject/CreateNewProject";
 import FilterSidebar from "./components/FilterSidebar";
 
-
 import { useSelector, useDispatch } from "react-redux";
 // import { Axios } from "axios";
 import axios from "axios";
@@ -212,7 +211,6 @@ const WorkspaceIssues = (props) => {
   }
 
   return (
-    
     <div className="bg-[#171e28] overflow-x-scroll px-2 pt-2">
       {dataLoaded && (
         <div className="flex flex-row w-screen">
@@ -288,5 +286,4 @@ const WorkspaceIssues = (props) => {
     </div>
   );
 };
-
 export default WorkspaceIssues;
