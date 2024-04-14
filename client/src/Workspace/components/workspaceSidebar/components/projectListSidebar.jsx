@@ -74,16 +74,16 @@ const ProjectListSidebar = (props) => {
 
   const projectClickHandler = (item) => {
     // Dispatch the action to set the active project
-    dispatch(changeActiveProject({name: item.name, id: item.id}));
-    if(projectId)
-   {
-    fetchActiveProjectIssue();
-    fetchAllMemberOfProject();
-  }
+    // dispatch(changeActiveProject({name: item.name, id: item.id}));
+  //   if(projectId)
+  //  {
+    fetchActiveProjectIssue(item.id);
+    fetchAllMemberOfProject(item.id);
+  // }
 
   };
 
-  const fetchActiveProjectIssue = async () => {
+  const fetchActiveProjectIssue = async (projectId) => {
     try {
       // Use Axios to make a GET request with query parameters
       const response = await Axios.get(`http://localhost:8000/project/allIssues/${projectId}`, {
@@ -101,7 +101,7 @@ const ProjectListSidebar = (props) => {
     }
   }
 
-  const fetchAllMemberOfProject= async()=>{
+  const fetchAllMemberOfProject= async(projectId)=>{
     try{
       const response = await Axios.post(
         "http://localhost:8000/api/projectInfo",

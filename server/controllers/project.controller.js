@@ -20,7 +20,7 @@ module.exports.getAllProjectOfUser = async (req, res) => {
         // Query projects based on workspaceId and userId
         const projects = await Project.find({
             workspaceID: workspaceId,
-            memberIDs:   userId 
+            memberIDs: userId
         });
 
 
@@ -31,7 +31,7 @@ module.exports.getAllProjectOfUser = async (req, res) => {
         }));
         console.log(projectData);
         // Send the list of project names as a response
-        res.status(200).json({ project : projectData });
+        res.status(200).json({ project: projectData });
     } catch (error) {
         console.error('Error fetching project names:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -39,16 +39,16 @@ module.exports.getAllProjectOfUser = async (req, res) => {
 
 }
 
-module.exports.createProject=async(req,res)=>{
+module.exports.createProject = async (req, res) => {
     // console.log("88");
 
     console.log(req.body);
-    const { name, description, workspaceID, memberIDs, startDate, targetDate, status,lead } = req.body;
-    if(memberIDs.includes(lead)===false){
+    const { name, description, workspaceID, memberIDs, startDate, targetDate, status, lead } = req.body;
+    if (memberIDs.includes(lead) === false) {
         memberIDs.push(lead);
     }
 
-    try{
+    try {
         const newProject = new Project({
             name,
             description,
@@ -64,11 +64,11 @@ module.exports.createProject=async(req,res)=>{
 
         await Workspace.findByIdAndUpdate(workspaceID, { $push: { projects: savedProject._id } });
 
-        res.status(201).json({message:"Project created successfully"});
+        res.status(201).json({ message: "Project created successfully" });
 
 
     }
-    catch(err){
+    catch (err) {
         console.error('Error while creating project:', err);
         res.status(500).json({ message: 'Internal server error' });
 
@@ -118,10 +118,53 @@ module.exports.createCycle=async(req,res)=>{
     }
 };
 
-module.exports.fetchallmembers=async(req,res)=>{
+module.exports.createCycle=async(req,res)=>{
+    try {
+        const { projectID, name, currentCycleStartDate, currentCycleEndDate } = req.body;
+        const userId = req.userId;
+
+        // Check if projectId is provided
+        if (!projectID) {
+            return res.status(400).json({ error: 'Project ID is required' });
+        }
+
+        // Find the project by projectId
+        const project = await Project.findById(projectID);
+
+        // If project doesn't exist, return error
+        if (!project) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+        else if(project.lead!=userId){
+            return res.status(405).json({ error: 'Only lead can create cycle' });
+        }
+
+        // Create the new cycle
+        const cycle = new Cycle({
+            projectID,
+            name,
+            currentCycleStartDate,
+            currentCycleEndDate
+        });
+
+        // Save the cycle
+        await cycle.save();
+
+        // Update the project with the new cycle
+        project.cycleIDs.push(cycle._id);
+        await project.save();
+
+        res.status(201).json({ message: 'Cycle created successfully', cycle: cycle });
+    } catch (error) {
+        console.error('Failed to create cycle:', error);
+        res.status(500).json({ error: 'Failed to create cycle' });
+    }
+};
+
+module.exports.fetchallmembers = async (req, res) => {
     const projectId = req.body.projectid;
     console.log(req.body);
-    const id=req.userId;
+    const id = req.userId;
     console.log(id);
     try {
 
@@ -137,7 +180,7 @@ module.exports.fetchallmembers=async(req,res)=>{
         const usernames = memberUsernames.map(user => user.username);
         // console.log(usernames);
 
-        res.json({ message: "Members list Successfully fetched!", members: usernames ,id:id});
+        res.json({ message: "Members list Successfully fetched!", members: usernames, id: id });
     } catch (err) {
         res.status(400).json(err);
     }
@@ -146,11 +189,11 @@ module.exports.fetchallmembers=async(req,res)=>{
 }
 
 
-module.exports.projectInfo=async(req,res)=>{
+module.exports.projectInfo = async (req, res) => {
     try {
-    
+
         const projectID = req.body.projectID;
-        console.log(projectID+"**");
+        console.log(projectID + "**");
         if (!projectID) {
             return res.status(400).json({ error: "Project ID is required" });
         }
@@ -167,26 +210,26 @@ module.exports.projectInfo=async(req,res)=>{
             id: member._id,
             name: member.name,
             email: member.email,
-            username:member.username,
+            username: member.username,
             role: member._id.equals(project.lead) ? 'Admin' : 'Member' // Check if member is lead or not
         }));
         console.log(members);
         console.log(project);
-        res.status(200).json({ 
-            project:project, 
-            members:members
+        res.status(200).json({
+            project: project,
+            members: members
         });
     } catch (error) {
-        
+
         console.error("Error:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
-    
+
 }
 
-module.exports.projectUpdateInfo=async(req,res)=>{
+module.exports.projectUpdateInfo = async (req, res) => {
     try {
-        
+
         const projectID = req.body.projectID;
         if (!projectID) {
             return res.status(400).json({ error: "Project ID is required" });
@@ -210,7 +253,7 @@ module.exports.projectUpdateInfo=async(req,res)=>{
         console.error("Error:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
-    
+
 }
 
 
@@ -235,9 +278,9 @@ module.exports.allIssues = async (req, res) => {
 
             // Add assignee's username to the issue object
             issue.assigneeUsername = assigneeUser ? assigneeUser.username : null;
-            
 
-             return {
+
+            return {
                 _id: issue._id,
                 title: issue.title,
                 description: issue.description,
@@ -256,8 +299,8 @@ module.exports.allIssues = async (req, res) => {
         }));
 
         // Return the modified list of issues with usernames
-        res.status(200).json({issues:issuesWithUsernames});
-    
+        res.status(200).json({ issues: issuesWithUsernames });
+
     } catch (error) {
         console.error('Error fetching project names:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -265,3 +308,81 @@ module.exports.allIssues = async (req, res) => {
 
 }
 
+
+module.exports.addMemberToProject = async (req, res) => {
+
+    try {
+        const { projectId, email } = req.body;
+        console.log(req.body);
+        const userId = req.userId;
+
+        // Find the user by email to get the userId
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Add the userId to the project's memberIDs array
+        const project = await Project.findById(projectId);
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+        if (project.lead.toString() !== userId) {
+            return res.status(403).json({ message: 'Only the project lead can add members' });
+        }
+
+        // Check if the user is already a member of the project
+        if (project.memberIDs.includes(user._id)) {
+            return res.status(400).json({ message: 'User is already a member of the project' });
+        }
+        const member = {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            username: user.username,
+            role: 'member',
+          };      
+
+        // Add the userId to the project's memberIDs array
+        project.memberIDs.push(user._id);
+        await project.save();
+
+        res.status(200).json({ message: 'Member added to the project successfully' ,member});
+    } catch (error) {
+        console.error('Error adding member to project:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+
+};
+
+exports.removeMemberFromProject = async (req, res) => {
+    try {
+        console.log('hello');
+        const { projectId, memberId } = req.body;
+        const userId = req.userId;
+        console.log(memberId);
+        console.log(typeof(memberId));
+    
+        // Find the project by ID
+        const project = await Project.findById(projectId);
+    
+        if (!project) {
+          return res.status(404).json({ message: 'Project not found' });
+        }
+        if (project.lead.toString() !== userId) {
+            return res.status(403).json({ message: 'Only the project lead can remove members' });
+          }
+    
+        // Remove the member from the project's memberIDs array
+        project.memberIDs = await project.memberIDs.filter(id => id.toString() !== memberId);
+        console.log(project.memberIDs);
+    
+        // Save the updated project
+        await project.save();
+    
+        res.status(200).json({ message: 'Member removed from project successfully' });
+      } catch (error) {
+        console.error('Error removing member from project:', error);
+        res.status(500).json({ message: 'Internal server error' });
+      }
+  };

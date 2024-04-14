@@ -23,8 +23,6 @@ function ProjectSettings() {
     } else if (loc === "2") {
       return (
         <ProjectSettingTeamMembers
-          project={project}
-          teamMembers={teamMembers}
         />
       );
     } else if (loc === "3") {
