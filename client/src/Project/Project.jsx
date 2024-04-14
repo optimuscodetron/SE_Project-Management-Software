@@ -59,7 +59,7 @@ export default function Project() {
           )}
         </div>
         {/* Main content goes here */}
-        <div className="overflow-x-scroll">
+        <div className="overflow-x-auto">
           {/* <Header headerInfo={headerInfo}/>/ */}
           {showIssues && <ProjectIssues />}
           {showUpcomingCycle && <UpcomingCycles />}

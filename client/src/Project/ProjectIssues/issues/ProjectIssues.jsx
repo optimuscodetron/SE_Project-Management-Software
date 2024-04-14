@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import IssuePanel from "../../../Workspace/workspaceIssues/components/issuePanel";
-
+import IssuesList from "../../../Workspace/workspaceIssues/components/issuesList";
 import { LuCircleDashed } from "react-icons/lu";
 import { FaRegCircle } from "react-icons/fa6";
 import { FaCircleHalfStroke } from "react-icons/fa6";
@@ -18,29 +18,11 @@ export default function ProjectIssues() {
   console.log(projectId)
   const [ changeStatusVar, setChangeStatusVar ] = useState(false);
 
-  const [backlogIssues, setBacklogIssues] = useState([
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'John Doe', status: 'Backlog' },
-    // ...
-    { id: 2, title: 'Issue 1', description: 'Description 1', assignee: 'John Doe', status: 'Backlog' },
-    // ...
-  ]);
-  const [toDoIssues, setToDoIssues] = useState([
-    { id: 3, title: 'Issue 3', description: 'Description 1', assignee: 'John Doe', status: 'ToDo' },
-
-  ]);
-  const [inProgressIssues, setInProgressIssues] = useState([
-    { id: 12, title: 'Issue 12', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' },
-    // ...
-
-  ]);
-  const [doneIssues, setDoneIssues] = useState([
-    { id: 15, title: 'Issue 51', description: 'Description 1', assignee: 'John Doe', status: 'Done' },
-
-  ]);
-  const [cancelledIssues, setCancelledIssues] = useState([
-    { id: 17, title: 'Issue 17', description: 'Description 1', assignee: 'John Doe', status: 'Cancelled' },
-
-  ]);
+  const [backlogIssues, setBacklogIssues] = useState([]);
+  const [toDoIssues, setToDoIssues] = useState([]);
+  const [inProgressIssues, setInProgressIssues] = useState([]);
+  const [doneIssues, setDoneIssues] = useState([]);
+  const [cancelledIssues, setCancelledIssues] = useState([]);
 
   const moveIssue = (issueId, currentStatus, newStatus) => {
     console.log("Function moveIssue Called with status", { newStatus });
@@ -52,6 +34,9 @@ export default function ProjectIssues() {
     // console.log("hello"+projectId);
     if(projectId)
    { fetchProjectIssue();}
+   else{
+   fetchDummyIssues();
+   }
   }, [projectId, changeStatusVar]);
 
   const fetchProjectIssue = async () => {
@@ -112,6 +97,40 @@ export default function ProjectIssues() {
     }
   }
 
+  const fetchDummyIssues =() => {
+    const dummybacklogIssues = [];
+      const dummytoDoIssues = [];
+      const dummyinProgressIssues = [];
+      const dummydoneIssues = [];
+      const dummycancelledIssues = [];
+      IssuesList.forEach(issue => {
+        switch (issue.stage) {
+          case 'Backlog':
+            dummybacklogIssues.push(issue);
+            break;
+          case 'ToDo':
+            dummytoDoIssues.push(issue);
+            break;
+          case 'InProgress':
+            dummyinProgressIssues.push(issue);
+            break;
+          case 'Done':
+            dummydoneIssues.push(issue);
+            break;
+          case 'Cancelled':
+            dummycancelledIssues.push(issue);
+            break;
+          default:
+            break;
+        }
+      });
+
+      setBacklogIssues(dummybacklogIssues);
+      setToDoIssues(dummytoDoIssues);
+      setInProgressIssues(dummyinProgressIssues);
+      setDoneIssues(dummydoneIssues);
+      setCancelledIssues(dummycancelledIssues);
+  };
   const updateIssueStatus = async (issueId, newStatus) => {
     try {
       // Send a PATCH request to update the issue status
