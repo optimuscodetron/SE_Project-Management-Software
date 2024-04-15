@@ -15,10 +15,16 @@ const workspaceMemberListSlice = createSlice({
       state.value= action.payload
       
     }, 
+    addMemberToWorkspace: (state, action) => {
+      state.value.push(action.payload); // Push the new member to the value array
+    },
+    removeMemberFromWorkspace: (state, action) => {
+      state.value = state.value.filter(member => member.id !== action.payload.id); // Filter out the member with the specified ID
+    },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { changeworkspaceMemberList } = workspaceMemberListSlice.actions
+export const { changeworkspaceMemberList,addMemberToWorkspace,removeMemberFromWorkspace } = workspaceMemberListSlice.actions
 
 export default workspaceMemberListSlice.reducer
