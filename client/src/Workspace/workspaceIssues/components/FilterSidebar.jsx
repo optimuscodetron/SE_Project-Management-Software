@@ -21,6 +21,8 @@ const FilterSidebar = (props) => {
     //  {name: "Ayush Ji",issues:7},
     //  {name:"Sushil Kumar",issues:7},{name:"Vavadiya Harsh",issues:6},{name: "Ayush Sahu",issues:17},
     ]);
+  const workspacename = useSelector((state) => state.workspaceNameId.value.name);
+
 
   useEffect(() => {
     fetchallmembersOfWorkspace();
@@ -154,7 +156,7 @@ const FilterSidebar = (props) => {
 
           <div className='flex items-center mt-4  '>
               <AiFillSetting/>
-              <p className='ml-3'>Workspace name</p>
+              <p className='ml-3'>{workspacename}</p>
           </div>
         </div>
 
