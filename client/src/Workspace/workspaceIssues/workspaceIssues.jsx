@@ -50,8 +50,17 @@ const WorkspaceIssues = (props) => {
             }
           );
           const data = response.data;
-          setIssueList(data);
-          setFilteredList(data);
+          const modifiedIssues = data.map(issue => {
+            // Extract the last four characters from the ID string
+            const lastFourDigits = issue._id.slice(-4);
+            const projectname=issue.projectname;
+            // console.log(projectname);
+    
+            // Return the issue object with the modified ID
+            return { ...issue, id: lastFourDigits,projectname:projectname };
+          });
+          setIssueList(modifiedIssues);
+          setFilteredList(modifiedIssues);
 
           const todoDummy = [];
           const inProgressDummy = [];
@@ -60,7 +69,7 @@ const WorkspaceIssues = (props) => {
           const cancelledDummy = [];
 
 
-          data.forEach((issue) => {
+          modifiedIssues.forEach((issue) => {
             if (issue.stage === "ToDo") {
               todoDummy.push(issue);
             } else if (issue.stage === "InProgress") {
