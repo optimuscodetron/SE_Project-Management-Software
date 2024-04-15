@@ -2,17 +2,22 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import SettingsSidebar from "../Component/SettingsSidebar";
 import Navbar from "../../../Components/Layout/navbar/navbar";
+import { ToastContainer, toast } from 'react-toastify';
+import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import { removeMemberFromWorkspace } from "../../../redux/WorkspaceData/WorkspaceMemberListSlice";
 
 
 function MemberList() {
   const workspaceName = useSelector((state) => state.workspaceNameId.value.name);
+  const workspaceId = useSelector((state) => state.workspaceNameId.value.id);
   const workspaceUrl = useSelector((state) => state.workspaceNameId.value.url);
   const workspaceMemberList = useSelector((state) => state.WorkspaceMemberList.value);
+  const dispatch = useDispatch()
   // Array of team members
-  const [teamMembers, setTeamMembers] = useState(
-    workspaceMemberList
-  );
+  // const [teamMembers, setTeamMembers] = useState(
+  //   workspaceMemberList
+  // );
 
 
   // State for search query
@@ -32,16 +37,57 @@ function MemberList() {
   // Function to get Gravatar image URL based on email
 
   // Function to handle adding a new member
-  const handleAddMember = () => {
+  const handleAddMember = async() => {
     // If newMemberEmail is not empty, proceed to add member
     if (newMemberEmail.trim() !== "") {
       // Add logic to add new member to the team
       console.log("Adding new member with email:", newMemberEmail);
       // Clear the email input and close the popup
+      await addMember();
       setNewMemberEmail("");
       setShowAddMemberPopup(false);
     }
   };
+  const addMember = async () => {
+    const data={
+      workspaceId: workspaceId,
+      email: newMemberEmail,
+
+    }
+    try {
+      // Make a POST request to the backend API endpoint
+      const response = await Axios.post('http://localhost:8000/addMemberByEmail', data,{
+        withCredentials: true,
+      });
+  
+      // Check the response status
+      if (response.status === 200) {
+        console.log('Email invitation sent successfully');
+        // Display a success toast notification
+        toast.success('Email invitation sent successfully');
+      } else {
+        // Display an error toast notification
+        console.error('Error sending email invitation');
+        toast.error('Error sending email invitation');
+      }
+    } catch (error) {
+      // Handle error
+      console.error('Error adding member:', error);
+  
+      // Display an error toast notification based on the error type
+      if (error.response && error.response.status === 404) {
+        console.error(error.response.data.message);
+        toast.error(error.response.data.message);
+      } else if (error.response && error.response.status === 403) {
+        console.error(error.response.data.message);
+        toast.error(error.response.data.message);
+      } else {
+        console.error('Unexpected error occurred:', error.message);
+        toast.error('An unexpected error occurred');
+      }
+    }
+
+  }
 
   // Function to remove a team member
   const handleRemoveMember = (memberId) => {
@@ -50,11 +96,44 @@ function MemberList() {
   };
 
   // Function to confirm removal of a team member
-  const confirmRemoveMember = () => {
-    setTeamMembers((prevMembers) =>
-      prevMembers.filter((member) => member.id !== memberToRemove)
-    );
+  const confirmRemoveMember = async() => {
+    await removeMember(memberToRemove);
     setShowRemoveConfirmation(false);
+  };
+  const removeMember = async (memberId) => {
+    const data = {
+      workspaceId: workspaceId,
+      memberId: memberId
+    };
+    try {
+      const response = await Axios.post('http://localhost:8000/removeMemberFromWorkspace', data, {
+        withCredentials: true,
+      });
+
+      if (response.status === 200) {
+        console.log('Member removed from workspace successfully');
+        // Dispatch action to update Redux state and remove member from the project
+        dispatch(removeMemberFromWorkspace({ id: memberId }));
+        toast.success(response.data.message);
+      } else {
+        console.log('Error:', response.status);
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+
+      if (error.response && error.response.status === 404) {
+        console.log(error.response.data.message);
+        toast.error(error.response.data.message);
+      }
+      else if (error.response && error.response.status === 403) {
+        console.log(error.response.data.message);
+        toast.error(error.response.data.message);
+      }
+      else {
+        console.error('Error removing member from project:', error.message);
+        toast.error('Error removing member from project', error.message);
+      }
+    }
   };
 
   // Function to generate a new invite link
@@ -69,7 +148,7 @@ function MemberList() {
   };
 
   // Filter team members based on search query
-  const filteredTeamMembers = teamMembers.filter((member) =>
+  const filteredTeamMembers = workspaceMemberList.filter((member) =>
     member.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -88,6 +167,7 @@ function MemberList() {
 
 
   return (
+    <>
     <div>
       <Navbar showSideBarHandler={handleSidebar} />
 
@@ -196,7 +276,7 @@ function MemberList() {
                       {/* Profile Image */}
 
                       <div className="flex flex-col ">
-                        <h2 className="text-lg font-normal  ">{member.name} <span> ({member.username})</span> </h2>
+                        <h2 className="text-lg font-normal  ">{member.name} </h2>
                         <p className="text-gray-500 w-[10vw]">{member.email}</p>
                       </div>
 
@@ -255,6 +335,8 @@ function MemberList() {
         </div>
       </div>
     </div>
+    <ToastContainer />
+    </>
   );
 }
 

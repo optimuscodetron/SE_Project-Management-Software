@@ -372,6 +372,9 @@ exports.removeMemberFromProject = async (req, res) => {
         if (project.lead.toString() !== userId) {
             return res.status(403).json({ message: 'Only the project lead can remove members' });
           }
+          if(project.lead.toString()===memberId){
+            return res.status(403).json({ message: 'Delete project!Project lead can not assign' });
+          }
     
         // Remove the member from the project's memberIDs array
         project.memberIDs = await project.memberIDs.filter(id => id.toString() !== memberId);

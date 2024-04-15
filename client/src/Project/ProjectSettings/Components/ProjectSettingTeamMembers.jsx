@@ -134,8 +134,8 @@ function ProjectSettingTeamMembers() {
         toast.error('Project not found');
       }
       else if (error.response && error.response.status === 403) {
-        console.log('Only the project lead can remove members');
-        toast.error('Only the project lead can remove members');
+        console.log(error.response.data.message);
+        toast.error(error.response.data.message);
       }
       else {
         console.error('Error removing member from project:', error.message);
