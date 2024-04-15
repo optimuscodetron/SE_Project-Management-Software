@@ -4,6 +4,7 @@ const router = express.Router();
 const { User } = require('../models/user.model');
 const { Workspace } = require('../models/workspace.model');
 const { Issue } = require('../models/issue.model');
+const { Cycle } = require('../models/cycle.model');
 module.exports.getAllProjectOfUser = async (req, res) => {
     try {
         const { workspaceId } = req.body;
@@ -73,6 +74,49 @@ module.exports.createProject=async(req,res)=>{
 
     }
 }
+
+module.exports.createCycle=async(req,res)=>{
+    try {
+        const { projectID, name, currentCycleStartDate, currentCycleEndDate } = req.body;
+        const userId = req.userId;
+
+        // Check if projectId is provided
+        if (!projectID) {
+            return res.status(400).json({ error: 'Project ID is required' });
+        }
+
+        // Find the project by projectId
+        const project = await Project.findById(projectID);
+
+        // If project doesn't exist, return error
+        if (!project) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+        else if(project.lead!=userId){
+            return res.status(405).json({ error: 'Only lead can create cycle' });
+        }
+
+        // Create the new cycle
+        const cycle = new Cycle({
+            projectID,
+            name,
+            currentCycleStartDate,
+            currentCycleEndDate
+        });
+
+        // Save the cycle
+        await cycle.save();
+
+        // Update the project with the new cycle
+        project.cycleIDs.push(cycle._id);
+        await project.save();
+
+        res.status(201).json({ message: 'Cycle created successfully', cycle: cycle });
+    } catch (error) {
+        console.error('Failed to create cycle:', error);
+        res.status(500).json({ error: 'Failed to create cycle' });
+    }
+};
 
 module.exports.fetchallmembers=async(req,res)=>{
     const projectId = req.body.projectid;

@@ -7,17 +7,17 @@ const cycleSchema=new mongoose.Schema({
         ref:'Project',
         required:true
     },
-    period:{
-        type:[Date],
+    name:{
+        type:String,
         required:true
     },
-    number:{
-        type:Number,
-        required:true
-    },
-    startDate:{
+    currentCycleStartDate:{
         type:Date,
         required:true
+    },
+    currentCycleEndDate:{
+        type:Date,
+        required:true,
     },
     issueId:[{
         type:mongoose.Schema.Types.ObjectId,
