@@ -54,9 +54,9 @@ const WorkspaceIssues = (props) => {
 
 
           data.forEach((issue) => {
-            if (issue.stage === "Todo") {
+            if (issue.stage === "ToDo") {
               todoDummy.push(issue);
-            } else if (issue.stage === "Inprogress") {
+            } else if (issue.stage === "InProgress") {
               inProgressDummy.push(issue);
             } else if (issue.stage === "Backlog") {
               backlogDummy.push(issue);
@@ -82,6 +82,7 @@ const WorkspaceIssues = (props) => {
       fetchIssues();
     }
   }, [workspaceId]);
+  console.log(IssuesList)
 
 
   const handleFilterAssignee = (name) => {
@@ -133,10 +134,10 @@ const WorkspaceIssues = (props) => {
 
       filteredList.forEach((issue) => {
         switch (issue.stage) {
-          case "Todo":
+          case "ToDo":
             todoDummy.push(issue);
             break;
-          case "Inprogress":
+          case "InProgress":
 
             inProgressDummy.push(issue);
             break;
@@ -175,7 +176,7 @@ const WorkspaceIssues = (props) => {
         <div className="flex flex-row w-screen">
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Backlog"
+              stageName="Backlog"
               issues={backlogIssues}
               onMoveIssue={moveIssue}
               icon={<LuCircleDashed />}
@@ -183,7 +184,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="To Do"
+              stageName="To Do"
               issues={toDoIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCircle />}
@@ -191,7 +192,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="In Progress"
+              stageName="In Progress"
               issues={inProgressIssues}
               onMoveIssue={moveIssue}
               icon={<FaCircleHalfStroke />}
@@ -200,7 +201,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Done"
+              stageName="Done"
               issues={doneIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCheckCircle />}
@@ -209,7 +210,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Cancelled"
+              stageName="Cancelled"
               issues={cancelledIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegTimesCircle />}
