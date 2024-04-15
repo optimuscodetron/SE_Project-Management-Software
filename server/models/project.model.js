@@ -38,11 +38,6 @@ const ProjectSchema = new mongoose.Schema({
         type:Date,
         // required:true
     },
-    isCycle:{
-        type:Boolean,
-        required:true,
-        default:false
-    },
     cycleIDs:[{
         type:Schema.Types.ObjectId,
        ref:'Cycle'
