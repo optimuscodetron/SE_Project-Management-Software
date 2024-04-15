@@ -20,6 +20,7 @@ import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
 import Workspace from "./Workspace/workspace";
 import ChartComponent from "./Project/chart_status"
 import Barchart_Mem from "./Project/barchart_member";
+import PieMem from "./Project/Pie_Mem";
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import MemberSetting from "./Workspace/Settings/Member/MemberSetting";
 import Profile from "./Workspace/Settings/Profile/Profile";
@@ -96,7 +97,7 @@ function App() {
 
         <Route path="/workspace" element={<Workspace />} />
         <Route path="/barpie" element={<ChartComponent />} />
-        <Route path="/barchart" element={<Barchart_Mem />} />
+        <Route path="/piemem" element={<PieMem />} />
 
         <Route path="/workspace/project" element={<Project />} />
 
