@@ -1,165 +1,150 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import IssuePanel from "../../../Workspace/workspaceIssues/components/issuePanel";
-
+import IssuesList from "../../../Workspace/workspaceIssues/components/issuesList";
 import { LuCircleDashed } from "react-icons/lu";
 import { FaRegCircle } from "react-icons/fa6";
 import { FaCircleHalfStroke } from "react-icons/fa6";
 import { FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import Axios from "axios";
+import { changeActiveProjectIssue } from "../../../redux/ProjectData/activeProjectIssuesSlice";
+
+
 export default function ProjectIssues() {
-    const [backlogIssues, setBacklogIssues] = useState([
-        { id: 1, title: 'Issue 1', description: 'Description 1', assigneeUserID: 'John Doe', status: 'Backlog' },
-        // ...
-        { id: 2, title: 'Issue 1', description: 'Description 1', assigneeUserID: 'John Doe', status: 'Backlog' },
-        // ...
-    ]);
-    const [toDoIssues, setToDoIssues] = useState([
-        { id: 3, title: 'Issue 3', description: 'Description 1', assigneeUserID: 'John Doe', status: 'ToDo' },
-        // ...
-        { id: 4, title: 'Issue 4', description: 'Description 1', assigneeUserID: 'John Doe', status: 'ToDo' },
-        // ...
-        { id: 5, title: 'Issue 5', description: 'Description 1', assigneeUserID: 'John Doe', status: 'ToDo' },
-        // ...
-        { id: 6, title: 'Issue 6', description: 'Description 1', assigneeUserID: 'John Doe', status: 'ToDo' },
-        // ...
-        { id: 7, title: 'Issue 7', description: 'Description 1', assigneeUserID: 'John Doe', status: 'ToDo' },
-        // ...
-        { id: 8, title: 'Issue 8', description: 'Description 1', assigneeUserID: 'John Doe', status: 'ToDo' },
-        // ...
-        { id: 9, title: 'Issue 9', description: 'Description 1', assigneeUserID: 'John Doe', status: 'ToDo' },
-        // ...
-        { id: 10, title: 'Issue 10', description: 'Description 1', assigneeUserID: 'John Doe', status: 'ToDo' },
-        // ...
-        { id: 11, title: 'Issue 11', description: 'Description 1', assigneeUserID: 'John Doe', status: 'ToDo' },
-        // ...
-    ]);
-    const [inProgressIssues, setInProgressIssues] = useState([
-        { id: 12, title: 'Issue 12', description: 'Description 1', assigneeUserID: 'John Doe', status: 'InProgress' },
-        // ...
-        { id: 13, title: 'Issue 13', description: 'Description 1', assigneeUserID: 'John Doe', status: 'InProgress' },
-        // ...
-        { id: 14, title: 'Issue 14', description: 'Description 1', assigneeUserID: 'John Doe', status: 'InProgress' },
-        // ...
-    ]);
-    const [doneIssues, setDoneIssues] = useState([
-        { id: 15, title: 'Issue 51', description: 'Description 1', assigneeUserID: 'John Doe', status: 'Done' },
-        // ...
-        { id: 16, title: 'Issue 16', description: 'Description 1', assigneeUserID: 'John Doe', status: 'Done' },
-        // ...
-    ]);
-    const [cancelledIssues, setCancelledIssues] = useState([
-        { id: 17, title: 'Issue 17', description: 'Description 1', assigneeUserID: 'John Doe', status: 'Cancelled' },
-        // ...
-        { id: 18, title: 'Issue 18', description: 'Description 1', assigneeUserID: 'John Doe', status: 'Cancelled' },
-        // ...
-        { id: 19, title: 'Issue 19', description: 'Description 1', assigneeUserID: 'John Doe', status: 'Cancelled' },
-        // ...
-    ]);
+  const dispatch = useDispatch()
+  const projectId = useSelector((state) => state.activeProject.value.id);
+  console.log(projectId)
+  const [ changeStatusVar, setChangeStatusVar ] = useState(false);
 
-    const moveIssue = (issueId, currentStatus, newStatus) => {
-        console.log("Function moveIssue Called with status", { newStatus });
-        let currentIssue;
-        if (currentStatus === newStatus) {
-            console.log("Current Status and New Status are the same");
-            return 0;
+  const [backlogIssues, setBacklogIssues] = useState([]);
+  const [toDoIssues, setToDoIssues] = useState([]);
+  const [inProgressIssues, setInProgressIssues] = useState([]);
+  const [doneIssues, setDoneIssues] = useState([]);
+  const [cancelledIssues, setCancelledIssues] = useState([]);
+
+  const moveIssue = (issueId, currentStatus, newStatus) => {
+    console.log("Function moveIssue Called with status", { newStatus });
+    console.log(issueId);
+    updateIssueStatus(issueId, newStatus);
+
+  };
+  useEffect(() => {
+    // console.log("hello"+projectId);
+    if(projectId)
+   { fetchProjectIssue();}
+   else{
+   fetchDummyIssues();
+   }
+  }, [projectId, changeStatusVar]);
+
+  const fetchProjectIssue = async () => {
+    try {
+      // Use Axios to make a GET request with query parameters
+      const response = await Axios.get(`http://localhost:8000/project/allIssues/${projectId}`, {
+        withCredentials: true,
+      }
+      );
+      // Handle the response from the backend
+      console.log(response.data);
+      // Do something with the data received from the backend
+      const { issues } = response.data;
+      dispatch(changeActiveProjectIssue(issues));
+      const modifiedIssues = issues.map(issue => {
+        // Extract the last four characters from the ID string
+        const lastFourDigits = issue._id.slice(-4);
+
+        // Return the issue object with the modified ID
+        return { ...issue, id: lastFourDigits };
+      });
+      const backlogIssues = [];
+      const toDoIssues = [];
+      const inProgressIssues = [];
+      const doneIssues = [];
+      const cancelledIssues = [];
+
+      modifiedIssues.forEach(issue => {
+        switch (issue.stage) {
+          case 'Backlog':
+            backlogIssues.push(issue);
+            break;
+          case 'ToDo':
+            toDoIssues.push(issue);
+            break;
+          case 'InProgress':
+            inProgressIssues.push(issue);
+            break;
+          case 'Done':
+            doneIssues.push(issue);
+            break;
+          case 'Cancelled':
+            cancelledIssues.push(issue);
+            break;
+          default:
+            break;
         }
-        else {
-            const removeFromStage = (issues, setter) => {
-                currentIssue=issues.find(issue => issue.id === issueId);
-                console.log(currentIssue);
-                currentIssue.status=newStatus;
-                const updatedIssues = issues.filter(issue => issue.id !== issueId);
-                setter(updatedIssues);
-            };
+      });
 
-            // // Add the issue to the new stage
-            const addToStage = (issues, setter) => {
-                // const issueToMove = allIssues.find(issue => issue.id === issueId);
-                // if (issueToMove) {
-                //     setter([...issues, issueToMove]);
-                // }
-                setter([...issues, currentIssue]);
-                console.log(backlogIssues);
-            };
-            switch (newStatus) {
-                case 'Backlog':
-                    // setter+=currentStatus;
-                    // setter+="Issues";
-                    // console.log(setter);
-                    // Issues=currentStatus.charAt(0).toLowerCase() + currentStatus.slice(1);
-                    // Issues+="Issues";
-                    // console.log(Issues);
-                    if(currentStatus==="ToDo")removeFromStage(toDoIssues, setToDoIssues);
-                    else if(currentStatus==="InProgress")removeFromStage(inProgressIssues, setInProgressIssues);
-                    else if(currentStatus==="Done")removeFromStage(doneIssues, setDoneIssues);
-                    else if(currentStatus==="Cancelled")removeFromStage(cancelledIssues, setCancelledIssues);
-                    // removeFromStage(Issues, setter);
-                    addToStage(backlogIssues, setBacklogIssues);
-                    break;
-                case 'ToDo':
-                    // setter+=currentStatus;
-                    // setter+="Issues";
+      setBacklogIssues(backlogIssues);
+      setToDoIssues(toDoIssues);
+      setInProgressIssues(inProgressIssues);
+      setDoneIssues(doneIssues);
+      setCancelledIssues(cancelledIssues);
+    } catch (error) {
+      // Handle errors
+      console.error('Error fetching issues:', error);
+    }
+  }
 
-                    // console.log(setter);
-                    // Issues=currentStatus.charAt(0).toLowerCase() + currentStatus.slice(1);
-                    // Issues+="Issues";
-                    // console.log(Issues);
-                    if(currentStatus==="Backlog")removeFromStage(backlogIssues, setBacklogIssues);
-                    else if(currentStatus==="InProgress")removeFromStage(inProgressIssues, setInProgressIssues);
-                    else if(currentStatus==="Done")removeFromStage(doneIssues, setDoneIssues);
-                    else if(currentStatus==="Cancelled")removeFromStage(cancelledIssues, setCancelledIssues);
-                    addToStage(toDoIssues, setToDoIssues);
-                    break;
-                case 'InProgress':
-                    // setter+=currentStatus;
-                    // setter+="Issues";
-
-                    // console.log(setter);
-                    // Issues=currentStatus.charAt(0).toLowerCase() + currentStatus.slice(1);
-                    // Issues+="Issues";
-                    // console.log(Issues);
-                     if(currentStatus==="Backlog")removeFromStage(backlogIssues, setBacklogIssues);
-                    else if(currentStatus==="ToDo")removeFromStage(toDoIssues, setToDoIssues);
-                    else if(currentStatus==="Done")removeFromStage(doneIssues, setDoneIssues);
-                    else if(currentStatus==="Cancelled")removeFromStage(cancelledIssues, setCancelledIssues);
-                    addToStage(inProgressIssues, setInProgressIssues);
-                    break;
-                case 'Done':
-                    // setter+=currentStatus;
-                    // setter+="Issues";
-
-                    // console.log(setter);
-                    // Issues=currentStatus.charAt(0).toLowerCase() + currentStatus.slice(1);
-                    // Issues+="Issues";
-                    // console.log(Issues);
-                    if(currentStatus==="Backlog")removeFromStage(backlogIssues, setBacklogIssues);
-                    else if(currentStatus==="ToDo")removeFromStage(toDoIssues, setToDoIssues);
-                    else if(currentStatus==="InProgress")removeFromStage(inProgressIssues, setInProgressIssues);
-                    else if(currentStatus==="Cancelled")removeFromStage(cancelledIssues, setCancelledIssues);
-                    addToStage(doneIssues, setDoneIssues);
-                    break;
-                case 'Cancelled':
-                    // setter+=currentStatus;
-                    // setter+="Issues";
-
-                    // console.log(setter);
-                    // Issues=currentStatus.charAt(0).toLowerCase() + currentStatus.slice(1);
-                    // Issues+="Issues";
-                    // console.log(Issues);
-                    // console.log(Issues);
-                     if(currentStatus==="Backlog")removeFromStage(backlogIssues, setBacklogIssues);
-                     else if(currentStatus==="ToDo")removeFromStage(toDoIssues, setToDoIssues);
-                     else if(currentStatus==="InProgress")removeFromStage(inProgressIssues, setInProgressIssues);
-                     else if(currentStatus==="Done")removeFromStage(doneIssues, setDoneIssues);
-                        addToStage(cancelledIssues, setCancelledIssues);
-                    break;
-                default:
-                    break;
-            }
+  const fetchDummyIssues =() => {
+    const dummybacklogIssues = [];
+      const dummytoDoIssues = [];
+      const dummyinProgressIssues = [];
+      const dummydoneIssues = [];
+      const dummycancelledIssues = [];
+      IssuesList.forEach(issue => {
+        switch (issue.stage) {
+          case 'Backlog':
+            dummybacklogIssues.push(issue);
+            break;
+          case 'ToDo':
+            dummytoDoIssues.push(issue);
+            break;
+          case 'InProgress':
+            dummyinProgressIssues.push(issue);
+            break;
+          case 'Done':
+            dummydoneIssues.push(issue);
+            break;
+          case 'Cancelled':
+            dummycancelledIssues.push(issue);
+            break;
+          default:
+            break;
         }
-    };
+      });
 
+      setBacklogIssues(dummybacklogIssues);
+      setToDoIssues(dummytoDoIssues);
+      setInProgressIssues(dummyinProgressIssues);
+      setDoneIssues(dummydoneIssues);
+      setCancelledIssues(dummycancelledIssues);
+  };
+  const updateIssueStatus = async (issueId, newStatus) => {
+    try {
+      // Send a PATCH request to update the issue status
+      const response = await Axios.patch(`http://localhost:8000/issues/${issueId}/changeStatus`, { newStatus });
+      // Handle the response
+      if (response.status === 200) {
+        console.log(response.data);
+        setChangeStatusVar(previousValue => !previousValue);
+      }
+    } catch (error) {
+      // Handle errors
+      console.error('Error updating issue status:', error);
+    }
+  }
 
     return (
         // issues={backlogIssues} onMoveIssue={moveIssue}
@@ -167,7 +152,7 @@ export default function ProjectIssues() {
             <div className="flex flex-row w-screen">
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Backlog"
+              stageName="Backlog"
               issues={backlogIssues}
               onMoveIssue={moveIssue}
               icon={<LuCircleDashed />}
@@ -175,7 +160,7 @@ export default function ProjectIssues() {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="To Do"
+              stageName="To Do"
               issues={toDoIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCircle />}
@@ -183,7 +168,7 @@ export default function ProjectIssues() {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="In Progress"
+              stageName="In Progress"
               issues={inProgressIssues}
               onMoveIssue={moveIssue}
               icon={<FaCircleHalfStroke />}
@@ -192,7 +177,7 @@ export default function ProjectIssues() {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Done"
+              stageName="Done"
               issues={doneIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCheckCircle />}
@@ -201,7 +186,7 @@ export default function ProjectIssues() {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Cancelled"
+              stageName="Cancelled"
               issues={cancelledIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegTimesCircle />}

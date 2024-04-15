@@ -3,7 +3,7 @@ const CurrentList = [
     id: 1,
     title: "Issue 1",
     description: "Description 1",
-    assignee: "nikhil Garg",
+    assignee: "Nikhil Garg",
     status: "Backlog",
   },
   {

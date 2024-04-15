@@ -81,6 +81,7 @@ module.exports.getActiveWorkspaceOfUser = async (req, res) => {
 };
 module.exports.getAllIssuesWorkspace = async (req, res) => {
   try {
+
     const activeWorkspaceId1 = req.query.activeWorkspaceId;
 
     // Fetch all projects in the active workspace
@@ -99,14 +100,15 @@ module.exports.getAllIssuesWorkspace = async (req, res) => {
       const project=await Project.findById(issue.projectId).select('name');
       return {
         ...issue.toObject(),
-        assigneeusername: assignee.username,
-        creatorusername: creator.username,
+        assignee: assignee.username,
+        creatorUsername: creator.username,
         projectname:project.name
       };
     }));
     console.log(modifiedIssues);
 
     res.status(200).json(modifiedIssues);
+
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).json({ error: "Internal Server Error" });
