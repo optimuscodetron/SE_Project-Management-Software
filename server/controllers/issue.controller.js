@@ -44,7 +44,7 @@ module.exports.getAllIssueOfWorkspace = async (req, res) => {
 }
 exports.createIssue = async (req, res) => {
     console.log(req.body);
-    const creatorId = req.body.creator;
+    const creatorId = req.userId;
     const projectId = req.body.projectId;
     const username=req.body.assignee;
     try {

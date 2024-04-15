@@ -4,6 +4,7 @@ const {Issue}=require("../models/issue.model")
 const {User}=require("../models/user.model")
 
 
+
 const express = require("express");
 const router = express.Router();
 
@@ -80,45 +81,34 @@ module.exports.getActiveWorkspaceOfUser = async (req, res) => {
 };
 module.exports.getAllIssuesWorkspace = async (req, res) => {
   try {
-    const activeWorkspaceId1= req.query.activeWorkspaceId;
-  
+
+    const activeWorkspaceId1 = req.query.activeWorkspaceId;
+
+    // Fetch all projects in the active workspace
     const projects = await Project.find({ workspaceID: activeWorkspaceId1 });
 
-    const allIssues = await Issue.find({ projectId: { $in: projects.map(project => project._id) } });
+    // Fetch all issues related to the projects in the active workspace
+    const allIssues = await Issue.find({ projectId: { $in: projects.map(project => project._id) } })
+      .populate('assigneeUserID', 'username') // Populate assigneeUserID with username field from User model
+      .populate('creator', 'username')
+      .populate('projectId','name') // Populate creator with username field from User model
 
-    const issuesWithUsernames = await Promise.all(allIssues.map(async (issue) => {
-      // console.log(issue.creator);
-      const creatorUser = await User.findById(issue.creator);
-      const assigneeUser = await User.findById(issue.assigneeUserID);
-      // console.log(assigneeUser.username);
+    // Map over allIssues and add assignee and creator usernames to each issue
+    const modifiedIssues = await Promise.all(allIssues.map(async issue => {
+      const assignee = await User.findById(issue.assigneeUserID).select('username');
+      const creator = await User.findById(issue.creator).select('username');
+      const project=await Project.findById(issue.projectId).select('name');
+      return {
+        ...issue.toObject(),
+        assignee: assignee.username,
+        creatorUsername: creator.username,
+        projectname:project.name
+      };
+    }));
+    console.log(modifiedIssues);
 
+    res.status(200).json(modifiedIssues);
 
-      // Add creator's username to the issue object
-      issue.creatorUsername = creatorUser ? creatorUser.username : null;
-
-      // Add assignee's username to the issue object
-      issue.assigneeUsername = assigneeUser ? assigneeUser.username : null;
-      
-
-       return {
-          _id: issue._id,
-          title: issue.title,
-          description: issue.description,
-          assigneeUserID: issue.assigneeUserID,
-          assignee: assigneeUser ? assigneeUser.username : null, // Assuming username field in User model
-          creator: issue.creator,
-          creatorUsername: creatorUser ? creatorUser.username : null, // Assuming username field in User model
-          stage: issue.stage,
-          label: issue.label,
-          priority: issue.priority,
-          cycleId: issue.cycleId,
-          dueDate: issue.dueDate,
-          projectId: issue.projectId,
-          creationDate: issue.creationDate
-      }; // Convert to plain JavaScript object
-  }));
-  console.log("hhh"+issuesWithUsernames);
-    res.status(200).json(issuesWithUsernames);
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).json({ error: "Internal Server Error" });

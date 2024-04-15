@@ -9,6 +9,7 @@ module.exports.getAllProjectOfUser = async (req, res) => {
         const { workspaceId } = req.body;
 
         const userId = req.userId;
+        console.log(1234);
         console.log(userId);
         console.log(workspaceId);
 
