@@ -58,7 +58,7 @@ exports.createIssue = async (req, res) => {
             assigneeUserID:assignee._id,
             creator:user._id,
             stage:"InProgress",
-            priority:"High",
+            priority:req.body.priority,
             projectId:project1._id,
             creationDate:req.body.targetDate,
             dueDate:req.body.targetDate,
