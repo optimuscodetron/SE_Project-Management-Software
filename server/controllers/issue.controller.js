@@ -92,6 +92,7 @@ exports.changeIssueStatus = async (req, res) => {
 
         // Find the issue by its ID
         const issue = await Issue.findById(issueId);
+        console.log(issue);
 
         // Check if the issue exists
         if (!issue) {

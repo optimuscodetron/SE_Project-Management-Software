@@ -26,7 +26,14 @@ const WorkspaceIssues = (props) => {
   const [selectedAssignee, setSelectedAssignee] = useState(null);
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [ changeStatusVar, setChangeStatusVar] = useState(false);
 
+ const moveIssue = (issueId, currentStatus, newStatus) => {
+    console.log("Function moveIssue Called with status", { newStatus });
+    console.log(issueId);
+    updateIssueStatus(issueId, newStatus);
+
+  };
   console.log(workspaceId);
 
   useEffect(() => {
@@ -81,7 +88,7 @@ const WorkspaceIssues = (props) => {
 
       fetchIssues();
     }
-  }, [workspaceId]);
+  }, [workspaceId,changeStatusVar]);
   console.log(IssuesList)
 
 
@@ -165,9 +172,21 @@ const WorkspaceIssues = (props) => {
       setDataLoaded(true);
     }
   }, [IssuesList, selectedAssignee, selectedPriority, selectedProject]);
-  const moveIssue = (issueId, currentstage, newstage) => {
-    console.log("Function moveIssue Called with stage", { newstage });
-  };
+
+  const updateIssueStatus = async (issueId, newStatus) => {
+    try {
+      // Send a PATCH request to update the issue status
+      const response = await axios.patch(`http://localhost:8000/issues/${issueId}/changeStatus`, { newStatus });
+      // Handle the response
+      if (response.status === 200) {
+        console.log(response.data);
+        setChangeStatusVar(previousValue => !previousValue);
+      }
+    } catch (error) {
+      // Handle errors
+      console.error('Error updating issue status:', error);
+    }
+  }
 
 
   return (
