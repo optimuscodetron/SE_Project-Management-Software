@@ -206,9 +206,7 @@ exports.changeinfo = async (req, res) => {
   console.log(password)
   
 
-
-  const client=new MongoClient("mongodb://127.0.0.1:27017/ragnar_SE")
-
+  const client=new MongoClient("mongodb+srv://Kushagra_18:bDFTOPZeMaygXAE3@cluster0.mxxglsz.mongodb.net/Demo?retryWrites=true&w=majority")
 
 
   try {
