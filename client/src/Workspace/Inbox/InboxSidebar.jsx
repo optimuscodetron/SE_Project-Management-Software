@@ -264,9 +264,27 @@ const handleFilterProject = (projectId) => {
         </div>
         {showIssueInfo && (
           <div className="issue-info">
-            <div className="message-details">
+            {/* Map over messages array and render each message's details */}
+            {messages.map(message => (
+              <div key={message.id}>
+                  <h1>{message.title}</h1><br></br>
+                  <div className="message-task">
+                      <h2>Task Details:</h2><br></br>
+                      <p><strong>Task ID:</strong> {message.id}</p><br></br>
+                      <p><strong>Task Name:</strong> {message.title}</p><br></br>
+                      <p><strong>Deadline:</strong> {message.dueDate}</p><br></br>
+                      <p><strong>Status:</strong> {message.stage}</p><br></br>
+                  </div>
+                  <div className="message-body">
+                      <h2>Message Body:</h2>
+                      <p>{message.description}</p>
+                  </div>
+              </div>
+            ))}
+
+            {/*<div className="message-details">
               <IssueInfo onCloseIssueInfo={handleCloseIssueInfo}/>
-            </div>
+          </div>*/}
           </div>
         )}
       </div>
