@@ -10,11 +10,13 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import Axios from "axios";
 import Loader from '../../../loading';
+import { changeIssueStage } from "../../../redux/ProjectData/activeProjectIssuesSlice";
 
 export default function ProjectIssues() {
   const dispatch = useDispatch()
   const projectId = useSelector((state) => state.activeProject.value._id);
   const activeProjectAllIssues = useSelector((state) => state.activeProjectIssues.value);
+  console.log("asuidgfuigasdf"+activeProjectAllIssues);
   console.log(projectId)
   const [changeStatusVar, setChangeStatusVar] = useState(false);
 
@@ -28,7 +30,6 @@ export default function ProjectIssues() {
     console.log("Function moveIssue Called with status", { newStatus });
     console.log(issueId);
     updateIssueStatus(issueId, newStatus);
-
   };
   useEffect(() => {
     // console.log("hello"+projectId);
@@ -82,7 +83,9 @@ export default function ProjectIssues() {
       // Handle the response
       if (response.status === 200) {
         console.log(response.data);
+        dispatch(changeIssueStage({ issueId: issueId, newStage: newStatus }));
         setChangeStatusVar(previousValue => !previousValue);
+        console.log("hellokwdjgc");
       }
     } catch (error) {
       // Handle errors
