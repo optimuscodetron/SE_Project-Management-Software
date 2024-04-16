@@ -9,14 +9,16 @@ import { FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import Axios from "axios";
-import { changeActiveProjectIssue } from "../../../redux/ProjectData/activeProjectIssuesSlice";
-
+import Loader from '../../../loading';
+import { changeIssueStage } from "../../../redux/ProjectData/activeProjectIssuesSlice";
 
 export default function ProjectIssues() {
   const dispatch = useDispatch()
-  const projectId = useSelector((state) => state.activeProject.value.id);
+  const projectId = useSelector((state) => state.activeProject.value._id);
+  const activeProjectAllIssues = useSelector((state) => state.activeProjectIssues.value);
+  console.log("asuidgfuigasdf"+activeProjectAllIssues);
   console.log(projectId)
-  const [ changeStatusVar, setChangeStatusVar ] = useState(false);
+  const [changeStatusVar, setChangeStatusVar] = useState(false);
 
   const [backlogIssues, setBacklogIssues] = useState([]);
   const [toDoIssues, setToDoIssues] = useState([]);
@@ -28,30 +30,11 @@ export default function ProjectIssues() {
     console.log("Function moveIssue Called with status", { newStatus });
     console.log(issueId);
     updateIssueStatus(issueId, newStatus);
-
   };
   useEffect(() => {
     // console.log("hello"+projectId);
-    if(projectId)
-   { fetchProjectIssue();}
-   else{
-   fetchDummyIssues();
-   }
-  }, [projectId, changeStatusVar]);
-
-  const fetchProjectIssue = async () => {
-    try {
-      // Use Axios to make a GET request with query parameters
-      const response = await Axios.get(`http://localhost:8000/project/allIssues/${projectId}`, {
-        withCredentials: true,
-      }
-      );
-      // Handle the response from the backend
-      console.log(response.data);
-      // Do something with the data received from the backend
-      const { issues } = response.data;
-      dispatch(changeActiveProjectIssue(issues));
-      const modifiedIssues = issues.map(issue => {
+    if (projectId) {
+      const modifiedIssues = activeProjectAllIssues.map(issue => {
         // Extract the last four characters from the ID string
         const lastFourDigits = issue._id.slice(-4);
 
@@ -91,46 +74,8 @@ export default function ProjectIssues() {
       setInProgressIssues(inProgressIssues);
       setDoneIssues(doneIssues);
       setCancelledIssues(cancelledIssues);
-    } catch (error) {
-      // Handle errors
-      console.error('Error fetching issues:', error);
     }
-  }
-
-  const fetchDummyIssues =() => {
-    const dummybacklogIssues = [];
-      const dummytoDoIssues = [];
-      const dummyinProgressIssues = [];
-      const dummydoneIssues = [];
-      const dummycancelledIssues = [];
-      IssuesList.forEach(issue => {
-        switch (issue.stage) {
-          case 'Backlog':
-            dummybacklogIssues.push(issue);
-            break;
-          case 'ToDo':
-            dummytoDoIssues.push(issue);
-            break;
-          case 'InProgress':
-            dummyinProgressIssues.push(issue);
-            break;
-          case 'Done':
-            dummydoneIssues.push(issue);
-            break;
-          case 'Cancelled':
-            dummycancelledIssues.push(issue);
-            break;
-          default:
-            break;
-        }
-      });
-
-      setBacklogIssues(dummybacklogIssues);
-      setToDoIssues(dummytoDoIssues);
-      setInProgressIssues(dummyinProgressIssues);
-      setDoneIssues(dummydoneIssues);
-      setCancelledIssues(dummycancelledIssues);
-  };
+  }, [projectId, changeStatusVar]);
   const updateIssueStatus = async (issueId, newStatus) => {
     try {
       // Send a PATCH request to update the issue status
@@ -138,7 +83,9 @@ export default function ProjectIssues() {
       // Handle the response
       if (response.status === 200) {
         console.log(response.data);
+        dispatch(changeIssueStage({ issueId: issueId, newStage: newStatus }));
         setChangeStatusVar(previousValue => !previousValue);
+        console.log("hellokwdjgc");
       }
     } catch (error) {
       // Handle errors
@@ -146,54 +93,58 @@ export default function ProjectIssues() {
     }
   }
 
-    return (
-        // issues={backlogIssues} onMoveIssue={moveIssue}
+  return (
+    // issues={backlogIssues} onMoveIssue={moveIssue}
+    <>
+      {{ projectId } ?
         <div className="bg-[#171e28] overflow-x-scroll pt-2 px-2 h-full ">
-            <div className="flex flex-row w-screen">
-          <div className="w-[320px] mx-1">
-            <IssuePanel
-              stageName="Backlog"
-              issues={backlogIssues}
-              onMoveIssue={moveIssue}
-              icon={<LuCircleDashed />}
-            />
+          <div className="flex flex-row w-screen">
+            <div className="w-[320px] mx-1">
+              <IssuePanel
+                stageName="Backlog"
+                issues={backlogIssues}
+                onMoveIssue={moveIssue}
+                icon={<LuCircleDashed />}
+              />
+            </div>
+            <div className="w-[320px] mx-1">
+              <IssuePanel
+                stageName="To Do"
+                issues={toDoIssues}
+                onMoveIssue={moveIssue}
+                icon={<FaRegCircle />}
+              />
+            </div>
+            <div className="w-[320px] mx-1">
+              <IssuePanel
+                stageName="In Progress"
+                issues={inProgressIssues}
+                onMoveIssue={moveIssue}
+                icon={<FaCircleHalfStroke />}
+                iconColor="text-yellow-400"
+              />
+            </div>
+            <div className="w-[320px] mx-1">
+              <IssuePanel
+                stageName="Done"
+                issues={doneIssues}
+                onMoveIssue={moveIssue}
+                icon={<FaRegCheckCircle />}
+                iconColor='text-green-400'
+              />
+            </div>
+            <div className="w-[320px] mx-1">
+              <IssuePanel
+                stageName="Cancelled"
+                issues={cancelledIssues}
+                onMoveIssue={moveIssue}
+                icon={<FaRegTimesCircle />}
+                iconColor='text-red-400'
+              />
+            </div>
           </div>
-          <div className="w-[320px] mx-1">
-            <IssuePanel
-              stageName="To Do"
-              issues={toDoIssues}
-              onMoveIssue={moveIssue}
-              icon={<FaRegCircle />}
-            />
-          </div>
-          <div className="w-[320px] mx-1">
-            <IssuePanel
-              stageName="In Progress"
-              issues={inProgressIssues}
-              onMoveIssue={moveIssue}
-              icon={<FaCircleHalfStroke />}
-              iconColor="text-yellow-400"
-            />
-          </div>
-          <div className="w-[320px] mx-1">
-            <IssuePanel
-              stageName="Done"
-              issues={doneIssues}
-              onMoveIssue={moveIssue}
-              icon={<FaRegCheckCircle />}
-              iconColor='text-green-400'
-            />
-          </div>
-          <div className="w-[320px] mx-1">
-            <IssuePanel
-              stageName="Cancelled"
-              issues={cancelledIssues}
-              onMoveIssue={moveIssue}
-              icon={<FaRegTimesCircle />}
-              iconColor='text-red-400'
-            />
-          </div>
-        </div>
-        </div>
-    );
+        </div> : <Loader />
+      }
+    </>
+  );
 }

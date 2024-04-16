@@ -2,11 +2,24 @@ const { Workspace } = require("../models/workspace.model");
 const { Project } = require("../models/project.model");
 const {Issue}=require("../models/issue.model")
 const {User}=require("../models/user.model")
+const nodemailer = require('nodemailer');
 
 
 
 const express = require("express");
 const router = express.Router();
+
+
+const transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
+  requireTLS: true,
+  auth: {
+    user: '2021csb1107@iitrpr.ac.in', // Update with your email
+    pass: 'KUSHagra08092004@', // Update with your email password
+  },
+});
 
 module.exports.getAllWorkspaceOfUser = async (req, res) => {
   try {
@@ -25,6 +38,7 @@ module.exports.getAllWorkspaceOfUser = async (req, res) => {
     const workspaceData = workspaces.map((workspace) => ({
       name: workspace.name,
       id: workspace._id,
+      url:workspace.url
     }));
 
     console.log(workspaceData);
@@ -206,19 +220,36 @@ module.exports.getAllMemberOfWorkspace = async (req, res) => {
     }
 
     // Find the workspace by ID
-    const workspace = await Workspace.findById(workspaceId).populate('members', 'username');
+    const workspace = await Workspace.findById(workspaceId)
+      .populate('adminuserId', 'id name email username') // Populate admin details with username
+      .populate('members', 'id name email username'); // Populate members details with username
 
     if (!workspace) {
       return res.status(404).json({ message: 'Workspace not found' });
     }
 
-    // Get the members array from the workspace
+    // Extract admin details
+    // const admin = {
+    //   id: workspace.adminuserId._id,
+    //   name: workspace.adminuserId.name,
+    //   email: workspace.adminuserId.email,
+    //   username: workspace.adminuserId.username,
+    //   role: 'admin'
+    // };
+
+    // Extract members details with their roles
     const members = workspace.members.map(member => ({
-      _id: member._id,
-      username: member.username
+      id: member._id,
+      name: member.name,
+      email: member.email,
+      username: member.username,
+      role: member._id.equals(workspace.adminuserId._id) ? 'admin' : 'member'
     }));
-    console.log(members);
-    res.status(200).json({ members:members });
+
+    // Combine admin and members into a single array
+    // const allMembers = [admin, ...members];
+
+    res.status(200).json({ members: members });
   } catch (error) {
     console.error('Error fetching workspace members:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -226,3 +257,87 @@ module.exports.getAllMemberOfWorkspace = async (req, res) => {
   
 
 }        
+
+exports.removeMemberFromWorkspace = async (req, res) => {
+  try {
+    const { workspaceId, memberId } = req.body;
+    const userId = req.userId;
+  
+    // Find the workspace by ID
+    const workspace = await Workspace.findById(workspaceId);
+  
+    if (!workspace) {
+      return res.status(404).json({ message: 'Workspace not found' });
+    }
+  
+    // Check if the user is the admin of the workspace
+    if (workspace.adminuserId.toString() !== userId) {
+      return res.status(403).json({ message: 'Only the workspace admin can remove members' });
+    }
+    if(workspace.adminuserId.toString()===memberId){
+      return res.status(403).json({ message: 'Delete workspace!Admin can\'t assign' });
+    }
+  
+    // Remove the member from the workspace's members array
+    workspace.members = workspace.members.filter(id => id.toString() !== memberId);
+  
+    // Iterate through all projects within the workspace
+    const projects = await Project.find({ workspaceID: workspaceId });
+  
+    // Remove the member from each project's memberIDs array
+    for (const project of projects) {
+      project.memberIDs = project.memberIDs.filter(id => id.toString() !== memberId);
+  
+      await project.save();
+    }
+  
+    // Save the updated workspace
+    await workspace.save();
+  
+    res.status(200).json({ message: 'Member removed from workspace and projects successfully' });
+  } catch (error) {
+    console.error('Error removing member:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+exports.addMemberByEmail = async (req, res) => {
+  try {
+    const { workspaceId, email } = req.body;
+    const userId = req.userId; // Assuming you have the userId from authentication
+
+    // Find the workspace by ID and check if the user is the admin
+    const workspace = await Workspace.findById(workspaceId);
+    if (!workspace || workspace.adminuserId.toString() !== userId) {
+      return res.status(403).json({ message: 'Only the workspace admin can add members' });
+    }
+
+    // Check if the provided email exists in the database
+    const existingUser = await User.findOne({ email });
+    if (!existingUser) {
+      return res.status(404).json({ message: 'User not found in the database' });
+    }
+
+    // Send email invitation to the user
+    const mailOptions = {
+      from: '2021csb1107@iitrpr.ac.in',
+      to: email,
+      subject: `Invitation to join ${workspace.name} workspace`,
+      text: `Hello ${existingUser.name},\n\nYou have been invited to join the ${workspace.name} workspace.\n\nPlease click on the following link to accept the invitation: http://your-frontend-url/accept-invitation/${workspaceId}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Error sending email:', error);
+        return res.status(500).json({ message: 'Error sending email' });
+      } else {
+        console.log('Email sent:', info.response);
+        res.status(200).json({ message: 'Email invitation sent successfully' });
+      }
+    });
+  } catch (error) {
+    console.error('Error adding member by email:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};

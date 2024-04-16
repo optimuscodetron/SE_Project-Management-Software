@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import Dropdown from "../../../Components/Layout/DropDown/dropdown";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { changeActiveProject } from "../../../redux/ProjectData/activeProjectSlice";
+import { changeActiveProjectField } from "../../../redux/ProjectData/activeProjectSlice";
 
-function ProjectSettingGeneral({ project }) {
+function ProjectSettingGeneral() {
+  const project = useSelector((state) => state.activeProject.value);
+  console.log(project);
   const [workspaceName, setWorkspaceName] = useState("IIT_Ropar");
   const [projectName, setProjectName] = useState(project.name);
+  const dispatch = useDispatch()
   const projectStatusOptions = [
     "Backlog",
     "Planned",
@@ -29,7 +35,7 @@ function ProjectSettingGeneral({ project }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(
+      const response = await axios.put(
         "http://localhost:8000/api/projectUpdateInfo",
         {
           projectID: project._id,
@@ -42,7 +48,14 @@ function ProjectSettingGeneral({ project }) {
         }
       );
       // Handle success, maybe show a success message or redirect to another page
-      console.log("Project updated successfully");
+      if (response.status === 200) {
+        dispatch(changeActiveProjectField({ name: projectName, status: currentStatus,description: aboutProject }));
+        console.log("Project updated successfully");
+      }
+      else {
+        console.log("Internal server error");
+
+      }
     } catch (error) {
       // Handle error, maybe show an error message to the user
       console.error("Error updating project:", error);
@@ -58,7 +71,7 @@ function ProjectSettingGeneral({ project }) {
           scrollbarWidth: "thin",
           scrollbarColor: "rgba(0,0,0,0) rgba(0,0,0,0)",
         }}
-        onSubmit={handleSubmit}
+        onSubmit={(e) =>e.preventDefault()}
       >
         <div className="text-gray-400 text-base mb-2">
           {workspaceName} <span className="mx-2"> / </span> Projects{" "}
@@ -113,7 +126,7 @@ function ProjectSettingGeneral({ project }) {
           <button
             type="submit"
             class="inline-flex items-center px-4 py-2 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition"
-            onClick={() => window.location.reload()}
+            onClick={() => handleSubmit()}
           >
             Submit
           </button>

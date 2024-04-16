@@ -3,6 +3,8 @@ import workspaceNameIdReducer from './WorkspaceData/WorkspaceNameIdSlice'
 import activeProjectReducer from './ProjectData/activeProjectSlice'
 import userIdReducer from './userId/userIdSlice' // import the new reducer
 import activeProjectIssuesReducer from './ProjectData/activeProjectIssuesSlice'
+import WorkspaceMemberListReducer from './WorkspaceData/WorkspaceMemberListSlice'
+import activeProjectAllMemberReducer from './ProjectData/activeProjectAllMemberSlice'
 
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
@@ -16,6 +18,8 @@ const rootReducer = combineReducers({
   workspaceNameId: workspaceNameIdReducer,
   activeProject: activeProjectReducer,
   userId: userIdReducer,
+  WorkspaceMemberList:WorkspaceMemberListReducer,
+  activeProjectAllMember:activeProjectAllMemberReducer,
 })
 
 
