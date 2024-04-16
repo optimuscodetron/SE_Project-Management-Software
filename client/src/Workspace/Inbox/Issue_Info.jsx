@@ -5,7 +5,7 @@ import RightBar from "../../Project/ProjectIssues/IssueInfo/Components/RightBar"
 
 //import "./IssueInfo.css"; // Import the CSS file
 
-function IssueInfo() {
+function IssueInfo({ message }) {
   const [isMediumScreen, setIsMediumScreen] = useState(false);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ function IssueInfo() {
           }}
         >
           
-          <TitleDescrip />
+          <TitleDescrip title={message.title} description={message.description}/>
           <div className="mt-2 mx-2 my-2">
             <hr />
           </div>

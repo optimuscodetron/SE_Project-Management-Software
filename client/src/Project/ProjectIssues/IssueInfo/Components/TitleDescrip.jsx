@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-function TitleDescrip() {
-  const [titleZ, setTitleZ] = useState("Initial Title");
-  const [titleD, setTitleD] = useState("Description");
+function TitleDescrip({ title, description }) {
+  const [titleZ, setTitleZ] = useState(title ||"Initial Title");
+  const [titleD, setTitleD] = useState(description || "Description");
 
   const handleTitleChange = (event) => {
     setTitleZ(event.target.innerText);
