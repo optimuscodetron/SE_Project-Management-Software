@@ -161,9 +161,9 @@ const Inbox = (props) => {
   // Function to filter messages based on search input and filter option
   const filteredMessages = messages.filter(message => {
     // Filter by search input
-    const searchMatch = message.sender.toLowerCase().includes(searchInput.toLowerCase()) ||
-                       message.subject.toLowerCase().includes(searchInput.toLowerCase()) ||
-                       message.body.toLowerCase().includes(searchInput.toLowerCase());
+    const searchMatch = message.title.toLowerCase().includes(searchInput.toLowerCase()) ||
+                       message.priority.toLowerCase().includes(searchInput.toLowerCase()) ||
+                       message.stage.toLowerCase().includes(searchInput.toLowerCase());
     // Filter by filter option
     const filterMatch = filterOption === 'all' || 
                         (filterOption === 'read' && message.isRead) ||
@@ -179,13 +179,6 @@ const handleFilterAssignee = (name) => {
   }));
 };
 
-// Filter by priority
-const handleFilterPriority = (priority) => {
-  setFilteredList(messages.filter((message) => {
-    // Check if priority is defined before accessing toLowerCase()
-    return message.priority && message.priority.toLowerCase() === priority.toLowerCase();
-  }));
-};
 
 // Filter by project
 const handleFilterProject = (projectId) => {
