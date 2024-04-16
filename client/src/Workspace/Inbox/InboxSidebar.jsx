@@ -99,6 +99,8 @@ const Inbox = (props) => {
   const [filterOption, setFilterOption] = useState('all'); // Default filter option
   const [isOpen, setIsOpen] = useState(false); 
   const workspaceId = useSelector((state) => state.workspaceNameId.value.id);
+  const [filteredList, setFilteredList] = useState([]); // Declare filteredList state variable
+
 
   const handleSelectMessage = (messageId) => {
     setSelectedMessageId(messageId);
@@ -151,6 +153,30 @@ const Inbox = (props) => {
   useEffect(() => {
     fetchInboxMessages();
   }, [workspaceId]);
+  // Filter by assignee
+const handleFilterAssignee = (name) => {
+  setFilteredList(messages.filter((message) => {
+    // Check if assignee is defined before accessing toLowerCase()
+    return message.assignee && message.assignee.toLowerCase() === name.toLowerCase();
+  }));
+};
+
+// Filter by priority
+const handleFilterPriority = (priority) => {
+  setFilteredList(messages.filter((message) => {
+    // Check if priority is defined before accessing toLowerCase()
+    return message.priority && message.priority.toLowerCase() === priority.toLowerCase();
+  }));
+};
+
+// Filter by project
+const handleFilterProject = (projectId) => {
+  setFilteredList(messages.filter((message) => {
+    // Check if projectId is defined before accessing it
+    return message.projectId === projectId;
+  }));
+};
+
 
 
   return (
