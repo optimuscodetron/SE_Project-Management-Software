@@ -9,6 +9,7 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import CreateNewProject from "../CreateNewProject/CreateNewProject";
 import FilterSidebar from "./components/FilterSidebar";
 
+
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -26,7 +27,14 @@ const WorkspaceIssues = (props) => {
   const [selectedAssignee, setSelectedAssignee] = useState(null);
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [ changeStatusVar, setChangeStatusVar] = useState(false);
 
+ const moveIssue = (issueId, currentStatus, newStatus) => {
+    console.log("Function moveIssue Called with status", { newStatus });
+    console.log(issueId);
+    updateIssueStatus(issueId, newStatus);
+
+  };
   console.log(workspaceId);
 
   useEffect(() => {
@@ -43,8 +51,17 @@ const WorkspaceIssues = (props) => {
             }
           );
           const data = response.data;
-          setIssueList(data);
-          setFilteredList(data);
+          const modifiedIssues = data.map(issue => {
+            // Extract the last four characters from the ID string
+            const lastFourDigits = issue._id.slice(-4);
+            const projectname=issue.projectname;
+            // console.log(projectname);
+    
+            // Return the issue object with the modified ID
+            return { ...issue, id: lastFourDigits,projectname:projectname };
+          });
+          setIssueList(modifiedIssues);
+          setFilteredList(modifiedIssues);
 
           const todoDummy = [];
           const inProgressDummy = [];
@@ -53,10 +70,10 @@ const WorkspaceIssues = (props) => {
           const cancelledDummy = [];
 
 
-          data.forEach((issue) => {
-            if (issue.stage === "Todo") {
+          modifiedIssues.forEach((issue) => {
+            if (issue.stage === "ToDo") {
               todoDummy.push(issue);
-            } else if (issue.stage === "Inprogress") {
+            } else if (issue.stage === "InProgress") {
               inProgressDummy.push(issue);
             } else if (issue.stage === "Backlog") {
               backlogDummy.push(issue);
@@ -81,7 +98,8 @@ const WorkspaceIssues = (props) => {
 
       fetchIssues();
     }
-  }, [workspaceId]);
+  }, [workspaceId,changeStatusVar]);
+  console.log(IssuesList)
 
 
   const handleFilterAssignee = (name) => {
@@ -113,7 +131,7 @@ const WorkspaceIssues = (props) => {
       let filteredList = IssuesList;
       if (selectedAssignee) {
         filteredList = filteredList.filter(
-          (issue) => issue.assigneeusername.toLowerCase() === selectedAssignee.toLowerCase()
+          (issue) => issue.assignee.toLowerCase() === selectedAssignee.toLowerCase()
         );
 
       }
@@ -133,10 +151,10 @@ const WorkspaceIssues = (props) => {
 
       filteredList.forEach((issue) => {
         switch (issue.stage) {
-          case "Todo":
+          case "ToDo":
             todoDummy.push(issue);
             break;
-          case "Inprogress":
+          case "InProgress":
 
             inProgressDummy.push(issue);
             break;
@@ -164,9 +182,21 @@ const WorkspaceIssues = (props) => {
       setDataLoaded(true);
     }
   }, [IssuesList, selectedAssignee, selectedPriority, selectedProject]);
-  const moveIssue = (issueId, currentstage, newstage) => {
-    console.log("Function moveIssue Called with stage", { newstage });
-  };
+
+  const updateIssueStatus = async (issueId, newStatus) => {
+    try {
+      // Send a PATCH request to update the issue status
+      const response = await axios.patch(`http://localhost:8000/issues/${issueId}/changeStatus`, { newStatus });
+      // Handle the response
+      if (response.status === 200) {
+        console.log(response.data);
+        setChangeStatusVar(previousValue => !previousValue);
+      }
+    } catch (error) {
+      // Handle errors
+      console.error('Error updating issue status:', error);
+    }
+  }
 
 
   return (
@@ -175,7 +205,7 @@ const WorkspaceIssues = (props) => {
         <div className="flex flex-row w-screen">
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Backlog"
+              stageName="Backlog"
               issues={backlogIssues}
               onMoveIssue={moveIssue}
               icon={<LuCircleDashed />}
@@ -183,7 +213,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="To Do"
+              stageName="To Do"
               issues={toDoIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCircle />}
@@ -191,7 +221,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="In Progress"
+              stageName="In Progress"
               issues={inProgressIssues}
               onMoveIssue={moveIssue}
               icon={<FaCircleHalfStroke />}
@@ -200,7 +230,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Done"
+              stageName="Done"
               issues={doneIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCheckCircle />}
@@ -209,7 +239,7 @@ const WorkspaceIssues = (props) => {
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
-              statusName="Cancelled"
+              stageName="Cancelled"
               issues={cancelledIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegTimesCircle />}

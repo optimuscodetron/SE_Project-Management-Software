@@ -46,7 +46,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
     <div className=" shadow-md p-2 mb-2 rounded-lg bg-[#273341] hover:bg-[#36414d]">
       <div className="flex flex-row justify-between">
         <div className="text-xs text-[#acacac]">
-          {issue.projectCode ? issue.projectCode : "P04"}-{issue.id}
+          {issue.projectname ? issue.projectname : "P04"}-{issue.id}
         </div>
         <span className="bg-purple-600 rounded-full px-[4px] py-[3px] text-white text-[10px]  ">
           {assigneeInitials}
