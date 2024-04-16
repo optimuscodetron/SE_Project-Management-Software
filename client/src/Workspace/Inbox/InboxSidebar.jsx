@@ -10,7 +10,7 @@ import { useSelector,useDispatch } from "react-redux";
 import axios from "axios";
 
 const Inbox = (props) => {
-  const [messages, setMessages] = useState([
+  {/*const [messages, setMessages] = useState([
     {
       id: 6,
       sender: 'Issue 1 ',
@@ -90,17 +90,63 @@ const Inbox = (props) => {
       },
     },
     // Add more messages as needed
-  ]);
+  ]);*/}
+  const [messages, setMessages] = useState([]);
+  const [filteredList, setFilteredList] = useState([]); 
+    useEffect(() => {
+        fetchInboxMessages();
+    }, []);
+
+    const fetchInboxMessages = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:8000/api/issues/user',
+                { withCredentials: true }
+            );
+            const data = response.data.messages; // Assuming the response structure
+            setMessages(data);
+        } catch (error) {
+            console.error('Error fetching inbox messages:', error);
+            // Handle errors as needed
+            const dummyMessages = [
+              {
+                  id: 1,
+                  title: 'Dummy Issue 1',
+                  description: 'This is a dummy issue 1',
+                  creator: 'Admin',
+                  assigneeUsername: 'JohnDoe',
+                  stage: 'Backlog',
+                  priority: 'Low',
+                  dueDate: new Date(),
+                  projectId: 1,
+                  projectTitle: 'Project A'
+              },
+              {
+                  id: 2,
+                  title: 'Dummy Issue 2',
+                  description: 'This is a dummy issue 2',
+                  creator: 'Admin',
+                  assigneeUsername: 'JaneDoe',
+                  stage: 'ToDo',
+                  priority: 'High',
+                  dueDate: new Date(),
+                  projectId: 2,
+                  projectTitle: 'Project B'
+              }
+              // Add more dummy data as needed
+          ];
+          setMessages(dummyMessages);
+        }
+    };
+
 
 
   const [selectedMessageId, setSelectedMessageId] = useState(null);
   const [showIssueInfo, setShowIssueInfo] = useState(false);
   const [searchInput, setSearchInput] = useState('');
   const [filterOption, setFilterOption] = useState('all'); // Default filter option
-  const [isOpen, setIsOpen] = useState(false); 
-  const workspaceId = useSelector((state) => state.workspaceNameId.value.id);
-  const [filteredList, setFilteredList] = useState([]); // Declare filteredList state variable
 
+  
 
   const handleSelectMessage = (messageId) => {
     setSelectedMessageId(messageId);
@@ -125,39 +171,11 @@ const Inbox = (props) => {
     return searchMatch && filterMatch;
   });
 
-  const fetchInboxMessages = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8000/api/users/workspace/issues`,
-        {
-          params: {
-            workspaceId,
-          },
-          withCredentials: true,
-        }
-      );
-      const data = response.data.issues; // Assuming the response structure
-      const formattedMessages = data.map((issue) => ({
-        id: issue._id,
-        title: issue.title,
-        assigneeUsername: issue.assigneeUserID.username, // Assuming username field
-        stage: issue.stage,
-      }));
-      setMessages(formattedMessages);
-    } catch (error) {
-      console.error("Error fetching inbox messages:", error);
-      // Handle errors as needed
-    }
-  };
-
-  useEffect(() => {
-    fetchInboxMessages();
-  }, [workspaceId]);
   // Filter by assignee
 const handleFilterAssignee = (name) => {
   setFilteredList(messages.filter((message) => {
-    // Check if assignee is defined before accessing toLowerCase()
-    return message.assignee && message.assignee.toLowerCase() === name.toLowerCase();
+    // Check if assigneeUsername is defined before accessing toLowerCase()
+    return message.assigneeUsername && message.assigneeUsername.toLowerCase() === name.toLowerCase();
   }));
 };
 
@@ -176,6 +194,8 @@ const handleFilterProject = (projectId) => {
     return message.projectId === projectId;
   }));
 };
+
+  
 
 
 
@@ -235,8 +255,8 @@ const handleFilterProject = (projectId) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                 }}
               >
-                <div className="message-sender">{message.sender}</div>
-                <div className="message-subject">{message.subject}</div>
+                <div className="message-sender">{message.title}</div>
+                <div className="message-subject">{message.stage}</div>
                 {message.isRead && <div className="message-unread-dot"></div>}
               </li>
             ))}
