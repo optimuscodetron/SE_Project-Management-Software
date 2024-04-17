@@ -45,6 +45,7 @@ const CreateNewIssue = (props) => {
   let creatorid = userId; // Get the user ID from the session
   console.log("sfjbhdsbxhjb", creatorid);
   let projectId=activeProject.id;
+  console.log("projectId", projectId);
 
 
   useEffect(() => {
@@ -109,10 +110,10 @@ const CreateNewIssue = (props) => {
         priority:Priority,
         cycle:Cycle ,
         projectId:projectId,
-        stage:IssueStatus,// Here, Assignee should be set based on user selection from the project members list
+        label:IssueStatus,// Here, Assignee should be set based on user selection from the project members list
         // Include other properties like priority, issue type, cycle, etc.
       };
-
+      console.log("new issue",newIssue );
       // Send the new issue data to the backend API
       try {
         const response = await Axios.post("http://localhost:8000/api/users/workspace/project/issue", newIssue, {

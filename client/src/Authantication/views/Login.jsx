@@ -1,26 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import backgroundImage from './auth.jpg';
-import { useDispatch } from 'react-redux';
-import { setUserId } from './../../redux/userId/userIdSlice'; // import the action
+import backgroundImage from "./auth.jpg";
+import { useDispatch } from "react-redux";
+import { setUserId } from "./../../redux/userId/userIdSlice"; // import the action
 
 import { NavLink } from "react-router-dom";
 
 const Login = (props) => {
-
-
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const clientid =
     "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
-
-
 
   const onSuccess = (res) => {
     console.log("Login Success! Current User: ", res.profileObj);
@@ -38,9 +33,10 @@ const Login = (props) => {
       withCredentials: true,
     })
       .then((res) => {
-        console.log(`login succesful`,res.data.user._id);
+        console.log(`login succesful`, res.data.user._id);
         console.log(`login succesful`);
         dispatch(setUserId(res.data.user._id));
+        console.log(`login succesful`, res.data.user._id);
         navigate("/workspace");
         // window.location.reload();
       })
@@ -57,12 +53,12 @@ const Login = (props) => {
     animation: "gradient 15s ease infinite",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    overflow:"auto",
+    overflow: "auto",
   };
   const formStyle = {
     backgroundColor: "rgba(17, 24, 39)",
     padding: "10px",
-    
+
     border: "none",
     boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
     overflow: "hidden",
@@ -127,27 +123,19 @@ const Login = (props) => {
                     // style = {{background:'#191919'}}
                   />
                 </div>
-                <div
-                  className="text-center"
+
+                <NavLink
+                  to="/email"
                   style={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    paddingTop: "0.1rem",
+                    color: "black", // Change the color to Tomato
+                    textDecoration: "none",
+                    fontSize: "0.8rem",
+                    fontWeight: "bold", // Make the text bold
+                    fontStyle: "italic", // Make the text italic
                   }}
-                  data-testid="forgot"
                 >
-                  <NavLink
-                    to="/email"
-                    style={{
-                      color: "#dcdcdc",
-                      textDecoration: "none",
-                      fontSize: "0.8rem",
-                    }}
-                    
-                  >
-                    Forgot Password
-                  </NavLink>
-                </div>
+                  Forgot Password
+                </NavLink>
 
                 <div
                   className="form-group text-center"
@@ -174,14 +162,17 @@ const Login = (props) => {
               </div> */}
               <br />
               <div className="text-center" data-testid="testSignUp">
-                <span style={{ color: "#dcdcdc" }} data-testid="dontHaveAccount">
-                  Don't have an account?&nbsp;  
+                <span
+                  style={{ color: "#dcdcdc" }}
+                  data-testid="dontHaveAccount"
+                >
+                  Don't have an account?&nbsp;
                   <NavLink
                     to="/register"
                     style={{
                       fontWeight: "bold",
                       textDecoration: "none",
-                      color: "#dcdcdc"
+                      color: "#dcdcdc",
                     }}
                   >
                     Sign up

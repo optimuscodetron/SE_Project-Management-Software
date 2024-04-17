@@ -1,23 +1,17 @@
-
-
-import React, { useState } from 'react';
-import Axios from 'axios';
+import React, { useState } from "react";
+import Axios from "axios";
 
 import { useNavigate } from "react-router-dom";
-import backgroundImage from './auth.jpg';
+import backgroundImage from "./auth.jpg";
 import { NavLink } from "react-router-dom";
 
 const Registration = (props) => {
-
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
-
-   
-
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -50,7 +44,7 @@ const Registration = (props) => {
     animation: "gradient 15s ease infinite",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    overflow:"auto",
+    overflow: "auto",
   };
   const formStyle = {
     backgroundColor: "rgba(17, 24, 39)", // Transparent white
@@ -58,7 +52,6 @@ const Registration = (props) => {
     borderRadius: "10px",
     boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
     border: "none", // Set border to none
- 
   };
   const input = {
     // backgroundColor: "#191919",
@@ -71,9 +64,9 @@ const Registration = (props) => {
 
   return (
     <div style={bodyStyle}>
-      <div className="container" >
-        <div className="row" >
-          <div className="col text-center mt-3" >
+      <div className="container">
+        <div className="row">
+          <div className="col text-center mt-3">
             <a>
               <h1 className="display-4" style={{ color: "#ffff" }}>
                 TrackerX
@@ -81,8 +74,8 @@ const Registration = (props) => {
             </a>
           </div>
         </div>
-        <div className="row justify-content-center mt-5"  >
-          <div className="col-md-4" >
+        <div className="row justify-content-center mt-5">
+          <div className="col-md-4">
             <div className="card p-5 shadow rounded border" style={formStyle}>
               <h2
                 className="font-weight-bold text-center mb-5"
