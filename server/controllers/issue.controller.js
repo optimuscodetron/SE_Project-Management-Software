@@ -167,71 +167,11 @@ exports.assigneDetails = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-// piyush
-exports.assigneDetails = async (req, res) => {
-  const { id, projectId } = req.query;
-  try {
-    const user = await User.findOne({ _id: id }).exec();
-    const project = await Project.findOne({ _id: projectId }).exec();
-    if (!user) {
-      return res.status(404).json({ message: "Assignee user not found" });
-    }
-    if (!project) {
-      return res.status(404).json({ message: "Project not found" });
-    }
-    res.status(200).json({ user, projectName: project.name });
-  } catch (error) {
-    console.error("Error fetching issue:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
 
 
-// piyush
-exports.addComment = async (req, res) => {
-  const { issueId, comment } = req.body;
 
-  try {
- 
-    const issue = await Issue.findById(issueId);
 
-    if (!issue) {
-      return res.status(404).json({ message: "Issue not found" });
-    }
 
-   
-    issue.comments.push(comment);
-
-    
-    await issue.save();
-
-   
-    return res.status(200).json({ issue });
-  } catch (error) {
-    console.error("Error adding comment:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-// piyush
-exports.getComments = async (req, res) => {
-  const { issueId } = req.query;
-
-  try {
-    // Find the issue by issueId
-    const issue = await Issue.findById(issueId);
-
-    if (!issue) {
-      return res.status(404).json({ message: "Issue not found" });
-    }
-
-    
-    return res.status(200).json({ comments: issue.comments });
-  } catch (error) {
-    console.error("Error fetching comments:", error);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
 // piyush
 exports.updateIssueDescription = async (req, res) => {
   const { issueId, update } = req.body;
@@ -320,7 +260,3 @@ exports.updateIssueDescription = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
-
-
-
-
