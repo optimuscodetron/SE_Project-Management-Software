@@ -48,7 +48,7 @@ const WorkspaceListSidebar = (props) => {
           dispatch(changeWorkspaceNameId({name:data.workspaces[0].name,id:data.workspaces[0].id,url:data.workspaces[0].url}));
           return data.workspaces
         });
-        console.log(workspaceData);
+        // console.log(workspaceData);
       } else {
         throw new Error('Internal server error');
       }

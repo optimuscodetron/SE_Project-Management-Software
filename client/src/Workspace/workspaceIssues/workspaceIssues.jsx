@@ -35,7 +35,7 @@ const WorkspaceIssues = (props) => {
     updateIssueStatus(issueId, newStatus);
 
   };
-  console.log(workspaceId);
+  // console.log(workspaceId);
 
   useEffect(() => {
     if (workspaceId) {
@@ -99,7 +99,7 @@ const WorkspaceIssues = (props) => {
       fetchIssues();
     }
   }, [workspaceId,changeStatusVar]);
-  console.log(IssuesList)
+  // console.log(IssuesList)
 
 
   const handleFilterAssignee = (name) => {

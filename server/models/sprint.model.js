@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 
-const cycleSchema=new mongoose.Schema({
+const sprintSchema=new mongoose.Schema({
     projectID:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Project',
@@ -11,11 +11,11 @@ const cycleSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    currentCycleStartDate:{
+    startDate:{
         type:Date,
         required:true
     },
-    currentCycleEndDate:{
+    endDate:{
         type:Date,
         required:true,
     },
@@ -26,4 +26,4 @@ const cycleSchema=new mongoose.Schema({
 
 },{timestamps: true},)
 
-module.exports.Cycle = mongoose.model('Cycle', cycleSchema);
+module.exports.Sprint = mongoose.model('Sprint', sprintSchema);

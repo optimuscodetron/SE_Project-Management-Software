@@ -28,9 +28,9 @@ const issueSchema=new mongoose.Schema({
         enum:['Urgent','High','Medium','Low','No Priority'],
         required:true
     },
-    cycleId:{
+    sprintId:{
      type:mongoose.Schema.Types.ObjectId,
-     ref:'Cycle'
+     ref:'Sprint'
     },
     dueDate:Date,
     projectId:{
