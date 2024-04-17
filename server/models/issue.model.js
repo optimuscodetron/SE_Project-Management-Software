@@ -18,7 +18,8 @@ const issueSchema=new mongoose.Schema({
     stage:{
         type:String,
         enum:['Backlog','ToDo','InProgress','Done','Cancelled'],
-        required:true
+        required:true,
+        default:'Backlog'
     },
     label:
     {type:String

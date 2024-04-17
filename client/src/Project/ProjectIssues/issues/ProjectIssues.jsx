@@ -16,6 +16,7 @@ export default function ProjectIssues() {
   const dispatch = useDispatch()
   const projectId = useSelector((state) => state.activeProject.value._id);
   const activeProjectAllIssues = useSelector((state) => state.activeProjectIssues.value);
+  const projectname = useSelector((state) => state.activeProject.value.name);
   // console.log("asuidgfuigasdf"+activeProjectAllIssues);
   // console.log(projectId)
   const [changeStatusVar, setChangeStatusVar] = useState(false);
@@ -39,7 +40,7 @@ export default function ProjectIssues() {
         const lastFourDigits = issue._id.slice(-4);
 
         // Return the issue object with the modified ID
-        return { ...issue, id: lastFourDigits };
+        return { ...issue, id: lastFourDigits ,projectname:projectname};
       });
       const backlogIssues = [];
       const toDoIssues = [];
