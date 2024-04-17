@@ -179,10 +179,10 @@ const selectedMessage = messages.find(message => message.id === selectedMessageI
         {showIssueInfo && selectedMessage &&(
           
           <div className="issue-info">
-            <div onClick={handleCloseIssueInfo} className="close-button">
+           {/* <div onClick={handleCloseIssueInfo} className="close-button">
               &#x2716;
             </div>
-              {/*
+              
                 
                 {messages.find(message => message.id === selectedMessageId) && (
                   <div key={selectedMessageId}>
@@ -205,7 +205,7 @@ const selectedMessage = messages.find(message => message.id === selectedMessageI
 
 
               <div className="message-details">
-              <IssueInfo message={messages.find(message => message.id === selectedMessageId)}
+              <IssueInfo message={messages.find(message => message.id === selectedMessageId)} onClick={handleCloseIssueInfo}
                 />
               </div>
               
