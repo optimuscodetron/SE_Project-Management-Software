@@ -36,7 +36,8 @@ const WorkspaceIssues = (props) => {
 
   };
   console.log(workspaceId);
-
+  
+ 
   useEffect(() => {
     if (workspaceId) {
       const fetchIssues = async () => {
@@ -63,11 +64,16 @@ const WorkspaceIssues = (props) => {
           setIssueList(modifiedIssues);
           setFilteredList(modifiedIssues);
 
+
+  
+ 
+
           const todoDummy = [];
           const inProgressDummy = [];
           const backlogDummy = [];
           const doneDummy = [];
           const cancelledDummy = [];
+
 
 
           modifiedIssues.forEach((issue) => {

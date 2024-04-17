@@ -6,6 +6,7 @@ import UpcomingCycles from "./ProjectCycles/Upcoming_Cycles/Upcoming_Cycles";
 import Navbar from "../Components/Layout/navbar/navbar";
 import CurrentCycles from "./ProjectCycles/CurrentCycles/CurrentCycles";
 import PreviousCycles from "./ProjectCycles/Previous_Cycles/Previous_Cycles";
+import Header from "./ProjectIssues/Component/Header";
 
 export default function Project() {
   const [showSideBar, setShowSideBar] = useState(true);
@@ -40,12 +41,22 @@ export default function Project() {
     setShowCurrentCycle(false);
     setShowIssues(true);
   };
+
+  const [showFilterSidebar, setShowFilterSidebar] = useState(false);
+
+  
+  const handleShowFilterSidebar=(event)=>{
+    event.preventDefault();
+    setShowFilterSidebar(!showFilterSidebar);
+}
+
+
   return (
-    <div className="flex flex-col">
-      <div className="flex-1">
+    <div className="flex flex-col ">
+      <div className="flex-1 ">
         <Navbar showSideBarHandler={showSideBarHandler} />
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-row  ">
         <div className="">
           {showSideBar && (
             <PSidebar
@@ -59,14 +70,19 @@ export default function Project() {
           )}
         </div>
         {/* Main content goes here */}
-        <div className="overflow-x-auto">
-          {/* <Header headerInfo={headerInfo}/>/ */}
-          {showIssues && <ProjectIssues />}
+
+          
+        <div className="overflow-x-auto ">
+       
+          <Header  handleShowFilterSidebar={handleShowFilterSidebar}/>
+          {showIssues && <ProjectIssues showFilterSidebar={showFilterSidebar} />}
           {showUpcomingCycle && <UpcomingCycles />}
           {showCurrentCycle && <CurrentCycles />}
           {showPreviousCycle && <PreviousCycles />}
+       
         </div>
       </div>
     </div>
   );
+
 }

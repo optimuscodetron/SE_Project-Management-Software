@@ -9,16 +9,39 @@ import { FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import Axios from "axios";
+import { changeActiveProjectIssue } from "../../../redux/ProjectData/activeProjectIssuesSlice";
+import FilterSidebar from "../Component/FilterSidebar";
 import Loader from '../../../loading';
 import { changeIssueStage } from "../../../redux/ProjectData/activeProjectIssuesSlice";
 
-export default function ProjectIssues() {
-  const dispatch = useDispatch()
+
+export default function ProjectIssues(props) {
+  const dispatch = useDispatch();
   const projectId = useSelector((state) => state.activeProject.value._id);
+  // console.log(projectId);
   const activeProjectAllIssues = useSelector((state) => state.activeProjectIssues.value);
   console.log("asuidgfuigasdf"+activeProjectAllIssues);
   console.log(projectId)
-  const [changeStatusVar, setChangeStatusVar] = useState(false);
+  const [ changeStatusVar, setChangeStatusVar ] = useState(false);
+
+  
+  const [ issues, setIssues ] = useState([
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+
+    // { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 2, title: 'Issue 1', description: 'Description 1', assignee: 'Chetan Kamble', status: 'Backlog',priority:"medium" },
+    { id: 3, title: 'Issue 3', description: 'Description 1', assignee: 'Het Patel', status: 'ToDo',priority:"low" },
+    { id: 12, title: 'Issue 12', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' ,priority:"high"},
+    { id: 15, title: 'Issue 51', description: 'Description 1', assignee: 'John Doe', status: 'Done',priority:"low" },
+    { id: 17, title: 'Issue 17', description: 'Description 1', assignee: 'John Doe', status: 'Cancelled',priority:"urgent" },
+
+  ]);
+
+  const [filteredList,setFilteredList]=useState(issues);
 
   const [backlogIssues, setBacklogIssues] = useState([]);
   const [toDoIssues, setToDoIssues] = useState([]);
@@ -26,11 +49,70 @@ export default function ProjectIssues() {
   const [doneIssues, setDoneIssues] = useState([]);
   const [cancelledIssues, setCancelledIssues] = useState([]);
 
+  useEffect(()=>{
+    const backlogIssues = [];
+    const toDoIssues = [];
+    const inProgressIssues = [];
+    const doneIssues = [];
+    const cancelledIssues = [];
+    
+
+    filteredList.forEach(issue => {
+      switch (issue.status) {
+        case 'Backlog':
+          backlogIssues.push(issue);
+          break;
+        case 'ToDo':
+          toDoIssues.push(issue);
+          break;
+        case 'InProgress':
+          inProgressIssues.push(issue);
+          break;
+        case 'Done':
+          doneIssues.push(issue);
+          break;
+        case 'Cancelled':
+          cancelledIssues.push(issue);
+          break;
+        default:
+          break;
+      }
+    });
+
+    setBacklogIssues(backlogIssues);
+    setToDoIssues(toDoIssues);
+    setInProgressIssues(inProgressIssues);
+    setDoneIssues(doneIssues);
+    setCancelledIssues(cancelledIssues);
+  },[filteredList])
+
+ 
+  const handleFilterAssignee=(name)=>{
+     setFilteredList(issues.filter((member,idx)=>{
+                  return member.assignee.toLowerCase()===name.toLowerCase();
+                })
+     );
+  
+  }
+
+  const handleFilterPriority=(priority)=>{
+    setFilteredList(issues.filter((member,idx)=>{
+      return member?.priority?.toLowerCase()===priority?.toLowerCase();
+    }))
+  }
+
+  const handleClear=()=>{
+    setFilteredList(issues);
+  }
+  
+
   const moveIssue = (issueId, currentStatus, newStatus) => {
     console.log("Function moveIssue Called with status", { newStatus });
     console.log(issueId);
     updateIssueStatus(issueId, newStatus);
   };
+
+
   useEffect(() => {
     // console.log("hello"+projectId);
     if (projectId) {
@@ -142,9 +224,25 @@ export default function ProjectIssues() {
                 iconColor='text-red-400'
               />
             </div>
-          </div>
+     
+          {props.showFilterSidebar && <div className="overflow-y-scroll" >
+              <div className=" fixed right-0 h-full overflow-y-scroll z-10">
+        
+             <FilterSidebar 
+             handleFilterAssignee={handleFilterAssignee} handleClear={handleClear} handleFilterPriority={handleFilterPriority} 
+             />
+             {/* <FilterSidebar /> */}
+         
+         </div>
+        
+       </div>}
+           
+       
+        </div>
+  
         </div> : <Loader />
       }
     </>
   );
+
 }
