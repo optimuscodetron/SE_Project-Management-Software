@@ -75,7 +75,7 @@ export default function Project() {
         <div className="overflow-x-auto ">
        
           <Header  handleShowFilterSidebar={handleShowFilterSidebar}/>
-          {showIssues && <ProjectIssues showFilterSidebar={showFilterSidebar} />
+          {showIssues && <ProjectIssues showFilterSidebar={showFilterSidebar} />}
           {showUpcomingCycle && <UpcomingCycles />}
           {showCurrentCycle && <CurrentCycles />}
           {showPreviousCycle && <PreviousCycles />}
@@ -84,4 +84,5 @@ export default function Project() {
       </div>
     </div>
   );
+
 }
