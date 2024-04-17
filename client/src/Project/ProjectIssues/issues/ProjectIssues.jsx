@@ -20,8 +20,8 @@ export default function ProjectIssues(props) {
   const projectId = useSelector((state) => state.activeProject.value._id);
   // console.log(projectId);
   const activeProjectAllIssues = useSelector((state) => state.activeProjectIssues.value);
-  console.log("asuidgfuigasdf"+activeProjectAllIssues);
-  console.log(projectId)
+  // console.log("asuidgfuigasdf"+activeProjectAllIssues);
+  // console.log(projectId)
   const [ changeStatusVar, setChangeStatusVar ] = useState(false);
 
   
@@ -164,10 +164,10 @@ export default function ProjectIssues(props) {
       const response = await Axios.patch(`http://localhost:8000/issues/${issueId}/changeStatus`, { newStatus });
       // Handle the response
       if (response.status === 200) {
-        console.log(response.data);
+        // console.log(response.data);
         dispatch(changeIssueStage({ issueId: issueId, newStage: newStatus }));
         setChangeStatusVar(previousValue => !previousValue);
-        console.log("hellokwdjgc");
+        // console.log("hellokwdjgc");
       }
     } catch (error) {
       // Handle errors

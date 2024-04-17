@@ -9,6 +9,7 @@ import { MdFormatListBulletedAdd } from "react-icons/md";
 import CreateNewProject from "../../../CreateNewProject/CreateNewProject";
 import {changeActiveProject} from "../../../../redux/ProjectData/activeProjectSlice"
 import { changeActiveProjectIssue } from "../../../../redux/ProjectData/activeProjectIssuesSlice";
+import { changeActiveProjectSprintList } from "../../../../redux/ProjectData/activeProjectSprintListSlice";
 import Axios from "axios";//comment for testing
 
 
@@ -20,7 +21,7 @@ const ProjectListSidebar = (props) => {
   const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);
   const projectId = useSelector((state) => state.activeProject.value.id);
   //commented for testing
-  console.log(workspaceId);//commented for testing
+  // console.log(workspaceId);//commented for testing
   
 
   const [showProject, setShowProject] = useState(false);
@@ -79,6 +80,8 @@ const ProjectListSidebar = (props) => {
   //  {
     fetchActiveProjectIssue(item.id);
     fetchAllMemberOfProject(item.id);
+    fetchActiveProjectSprintList(item.id);
+
   // }
 
   };
@@ -91,7 +94,7 @@ const ProjectListSidebar = (props) => {
       }
       );
       // Handle the response from the backend
-      console.log(response.data);
+      // console.log(response.data);
       // Do something with the data received from the backend
       const { issues } = response.data;
       dispatch(changeActiveProjectIssue(issues));
@@ -115,14 +118,36 @@ const ProjectListSidebar = (props) => {
 
       // Extract project and members data from the response
       const { project, members } = response.data;
-      console.log(members);
+      // console.log(members);
       dispatch(changeActiveProjectAllMember(members));
-      console.log(project);
+      // console.log(project);
       dispatch(changeActiveProject(project));
 
     }
     catch(error){
       console.error('Error fetching all memeber:', error);
+    }
+  }
+
+  const fetchActiveProjectSprintList = async (projectID) => {
+    try {
+      // Use Axios to make a GET request with query parameters
+      const response = await Axios.post("http://localhost:8000/api/getSprintList", 
+      {
+        projectID: projectID,
+      },
+      {
+        withCredentials: true,
+      }
+      );
+      
+      console.log("sprint list**:"+response.data);
+      
+      const { sprintList } = response.data;
+      dispatch(changeActiveProjectSprintList(sprintList));
+    } catch (error) {
+      
+      console.error('Error fetching issues:', error);
     }
   }
 

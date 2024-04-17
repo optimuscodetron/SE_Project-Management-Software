@@ -38,9 +38,9 @@ const ProjectSchema = new mongoose.Schema({
         type:Date,
         // required:true
     },
-    cycleIDs:[{
+    sprintIDs:[{
         type:Schema.Types.ObjectId,
-       ref:'Cycle'
+       ref:'sprint'
     }],
     status:{
         type:String,

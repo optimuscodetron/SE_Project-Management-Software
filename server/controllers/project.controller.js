@@ -4,7 +4,7 @@ const router = express.Router();
 const { User } = require('../models/user.model');
 const { Workspace } = require('../models/workspace.model');
 const { Issue } = require('../models/issue.model');
-const { Cycle } = require('../models/cycle.model');
+const {Sprint} =require('../models/sprint.model');
 module.exports.getAllProjectOfUser = async (req, res) => {
     try {
         const { workspaceId } = req.body;
@@ -75,9 +75,9 @@ module.exports.createProject = async (req, res) => {
     }
 }
 
-module.exports.createCycle=async(req,res)=>{
+module.exports.createSprint=async(req,res)=>{
     try {
-        const { projectID, name, currentCycleStartDate, currentCycleEndDate } = req.body;
+        const { projectID, name, startDate, endDate } = req.body;
         const userId = req.userId;
 
         // Check if projectId is provided
@@ -93,73 +93,50 @@ module.exports.createCycle=async(req,res)=>{
             return res.status(404).json({ error: 'Project not found' });
         }
         else if(project.lead!=userId){
-            return res.status(405).json({ error: 'Only lead can create cycle' });
+            return res.status(505).json({ error: 'Only lead can create sprint' });
         }
 
-        // Create the new cycle
-        const cycle = new Cycle({
+        const sprint = new Sprint({
             projectID,
             name,
-            currentCycleStartDate,
-            currentCycleEndDate
+            startDate,
+            endDate
         });
 
-        // Save the cycle
-        await cycle.save();
+        await sprint.save();
 
-        // Update the project with the new cycle
-        project.cycleIDs.push(cycle._id);
+        project.sprintIDs.push(sprint._id);
         await project.save();
 
-        res.status(201).json({ message: 'Cycle created successfully', cycle: cycle });
+        res.status(201).json({ message: 'Sprint created successfully', sprint: sprint });
     } catch (error) {
-        console.error('Failed to create cycle:', error);
-        res.status(500).json({ error: 'Failed to create cycle' });
+        console.error('Failed to create sprint:', error);
+        res.status(500).json({ error: 'Failed to create sprint' });
     }
 };
 
-module.exports.createCycle=async(req,res)=>{
-    try {
-        const { projectID, name, currentCycleStartDate, currentCycleEndDate } = req.body;
-        const userId = req.userId;
+module.exports.getSprintList = async (req, res) => {
+  try {
+    const { projectID } = req.body;
+    // console.log(projectID);
+    const sprintList = await Sprint.find({ projectID })
+      .select('_id name startDate endDate')
+      .exec();
 
-        // Check if projectId is provided
-        if (!projectID) {
-            return res.status(400).json({ error: 'Project ID is required' });
-        }
-
-        // Find the project by projectId
-        const project = await Project.findById(projectID);
-
-        // If project doesn't exist, return error
-        if (!project) {
-            return res.status(404).json({ error: 'Project not found' });
-        }
-        else if(project.lead!=userId){
-            return res.status(405).json({ error: 'Only lead can create cycle' });
-        }
-
-        // Create the new cycle
-        const cycle = new Cycle({
-            projectID,
-            name,
-            currentCycleStartDate,
-            currentCycleEndDate
-        });
-
-        // Save the cycle
-        await cycle.save();
-
-        // Update the project with the new cycle
-        project.cycleIDs.push(cycle._id);
-        await project.save();
-
-        res.status(201).json({ message: 'Cycle created successfully', cycle: cycle });
-    } catch (error) {
-        console.error('Failed to create cycle:', error);
-        res.status(500).json({ error: 'Failed to create cycle' });
+    // Check if sprints are found
+    if (!sprintList) {
+      return res.status(404).json({ error: 'No sprints found for the specified project' });
     }
+
+    // Send the list of sprints in the response
+    console.log("sprint: "+sprintList);
+    res.status(200).json({ sprintList });
+  } catch (error) {
+    console.error("Failed to get sprint list:", error);
+    res.status(500).json({ error: "Failed to get sprint list" });
+  }
 };
+
 
 module.exports.fetchallmembers = async (req, res) => {
     const projectId = req.body.projectid;
@@ -231,12 +208,16 @@ module.exports.projectUpdateInfo = async (req, res) => {
     try {
 
         const projectID = req.body.projectID;
+        const userId = req.userId;
         if (!projectID) {
             return res.status(400).json({ error: "Project ID is required" });
         }
         let project = await Project.findById(projectID);
         if (!project) {
             return res.status(404).json({ error: "Project not found" });
+        }
+        else if(project.lead!=userId){
+            return res.status(201).json({ error: "Only lead can create sprint" });
         }
         if (req.body.name) {
             project.name = req.body.name;
@@ -291,7 +272,7 @@ module.exports.allIssues = async (req, res) => {
                 stage: issue.stage,
                 label: issue.label,
                 priority: issue.priority,
-                cycleId: issue.cycleId,
+                sprintId: issue.sprintId,
                 dueDate: issue.dueDate,
                 projectId: issue.projectId,
                 creationDate: issue.creationDate
