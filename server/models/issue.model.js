@@ -17,10 +17,10 @@ const issueSchema = new mongoose.Schema(
     },
     stage: {
       type: String,
-      enum: ["Backlog", "ToDo", "InProgress", "Done", "Cancelled"],
+      enum: ["Backlog", "Todo", "Inprogress", "Done", "Cancelled"],
       required: true,
     },
-    label: { type: String, enum: ["Bug", "Improvement", "Feature"] },
+    label: { type: String, enum: ["Bug", "Improvement", "Feature"], },
     priority: {
       type: String,
       enum: ["Urgent", "High", "Medium", "Low", "No Priority"],
