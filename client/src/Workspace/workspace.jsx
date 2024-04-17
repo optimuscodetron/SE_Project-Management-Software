@@ -41,6 +41,7 @@ export default function Workspace() {
   };
 
   const [headerInfo, setHeaderInfo] = useState([]);
+  
   const currentWorkspaceHandler = (item) => {
     console.log(item);
     setHeaderInfo([

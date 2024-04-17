@@ -10,37 +10,101 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import Axios from "axios";
 import { changeActiveProjectIssue } from "../../../redux/ProjectData/activeProjectIssuesSlice";
+import FilterSidebar from "../Component/FilterSidebar";
 
+export default function ProjectIssues(props) {
+  const dispatch = useDispatch();
 
-export default function ProjectIssues() {
-  const dispatch = useDispatch()
+  // const issues = useSelector((store)=>store.activeProjectIssues.value);
+  // console.log(issues);
+
   const projectId = useSelector((state) => state.activeProject.value.id);
-  console.log(projectId)
+  // console.log(projectId);
+
   const [ changeStatusVar, setChangeStatusVar ] = useState(false);
 
-  const [backlogIssues, setBacklogIssues] = useState([
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'John Doe', status: 'Backlog' },
-    // ...
-    { id: 2, title: 'Issue 1', description: 'Description 1', assignee: 'John Doe', status: 'Backlog' },
-    // ...
-  ]);
-  const [toDoIssues, setToDoIssues] = useState([
-    { id: 3, title: 'Issue 3', description: 'Description 1', assignee: 'John Doe', status: 'ToDo' },
+  
+  const [ issues, setIssues ] = useState([
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+
+    // { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 2, title: 'Issue 1', description: 'Description 1', assignee: 'Chetan Kamble', status: 'Backlog',priority:"medium" },
+    { id: 3, title: 'Issue 3', description: 'Description 1', assignee: 'Het Patel', status: 'ToDo',priority:"low" },
+    { id: 12, title: 'Issue 12', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' ,priority:"high"},
+    { id: 15, title: 'Issue 51', description: 'Description 1', assignee: 'John Doe', status: 'Done',priority:"low" },
+    { id: 17, title: 'Issue 17', description: 'Description 1', assignee: 'John Doe', status: 'Cancelled',priority:"urgent" },
 
   ]);
-  const [inProgressIssues, setInProgressIssues] = useState([
-    { id: 12, title: 'Issue 12', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' },
-    // ...
 
-  ]);
-  const [doneIssues, setDoneIssues] = useState([
-    { id: 15, title: 'Issue 51', description: 'Description 1', assignee: 'John Doe', status: 'Done' },
+  const [filteredList,setFilteredList]=useState(issues);
 
-  ]);
-  const [cancelledIssues, setCancelledIssues] = useState([
-    { id: 17, title: 'Issue 17', description: 'Description 1', assignee: 'John Doe', status: 'Cancelled' },
+  const [backlogIssues, setBacklogIssues] = useState([]);
+  const [toDoIssues, setToDoIssues] = useState([]);
+  const [inProgressIssues, setInProgressIssues] = useState([]);
+  const [doneIssues, setDoneIssues] = useState([]);
+  const [cancelledIssues, setCancelledIssues] = useState([]);
 
-  ]);
+  useEffect(()=>{
+    const backlogIssues = [];
+    const toDoIssues = [];
+    const inProgressIssues = [];
+    const doneIssues = [];
+    const cancelledIssues = [];
+    
+
+    filteredList.forEach(issue => {
+      switch (issue.status) {
+        case 'Backlog':
+          backlogIssues.push(issue);
+          break;
+        case 'ToDo':
+          toDoIssues.push(issue);
+          break;
+        case 'InProgress':
+          inProgressIssues.push(issue);
+          break;
+        case 'Done':
+          doneIssues.push(issue);
+          break;
+        case 'Cancelled':
+          cancelledIssues.push(issue);
+          break;
+        default:
+          break;
+      }
+    });
+
+    setBacklogIssues(backlogIssues);
+    setToDoIssues(toDoIssues);
+    setInProgressIssues(inProgressIssues);
+    setDoneIssues(doneIssues);
+    setCancelledIssues(cancelledIssues);
+  },[filteredList])
+
+ 
+  const handleFilterAssignee=(name)=>{
+     setFilteredList(issues.filter((member,idx)=>{
+                  return member.assignee.toLowerCase()===name.toLowerCase();
+                })
+     );
+  
+  }
+
+  const handleFilterPriority=(priority)=>{
+    setFilteredList(issues.filter((member,idx)=>{
+      return member?.priority?.toLowerCase()===priority?.toLowerCase();
+    }))
+  }
+
+  const handleClear=()=>{
+    setFilteredList(issues);
+  }
+
+
 
   const moveIssue = (issueId, currentStatus, newStatus) => {
     console.log("Function moveIssue Called with status", { newStatus });
@@ -48,6 +112,8 @@ export default function ProjectIssues() {
     updateIssueStatus(issueId, newStatus);
 
   };
+
+
   useEffect(() => {
     // console.log("hello"+projectId);
     if(projectId)
@@ -174,6 +240,17 @@ export default function ProjectIssues() {
               iconColor='text-red-400'
             />
           </div>
+          {props.showFilterSidebar && <div className="overflow-y-scroll" >
+              <div className=" fixed right-0 h-full overflow-y-scroll z-10">
+        
+             <FilterSidebar 
+             handleFilterAssignee={handleFilterAssignee} handleClear={handleClear} handleFilterPriority={handleFilterPriority} 
+             />
+             {/* <FilterSidebar /> */}
+         
+         </div>
+        
+       </div>}
         </div>
         </div>
     );

@@ -27,7 +27,7 @@ const WorkspaceIssues = (props) => {
   console.log(workspaceId);
 
 
-  const[name,setname]=useState("Ayush");
+  
   const [filteredList,setFilteredList]=useState(IssuesList);
 
   const handleFilterAssignee=(name)=>{
