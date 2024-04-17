@@ -3,9 +3,9 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { changeActiveIssue } from '../../../redux/issueId/activeIssueSlice'
 import React, { useState } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { changeActiveIssue } from '../../../redux/issueId/activeIssueSlice'
+import { changeActiveIssue } from "../../../redux/issueId/activeIssueSlice";
 import {
   TbAntennaBars2,
   TbAntennaBars3,
@@ -57,10 +57,16 @@ export default function IssueCard({ issue, onMoveIssue }) {
           {assigneeInitials}
         </span>
       </div>
-      <NavLink to = "/workspace/project/board/issue"
-      style={{ textDecoration: "none", cursor: "pointer" }}>
-
-      <div className="mb-1 text-white" onClick={() => dispatch(changeActiveIssue(issue))}>{issue.title}</div>
+      <NavLink
+        to="/workspace/project/board/issue"
+        style={{ textDecoration: "none", cursor: "pointer" }}
+      >
+        <div
+          className="mb-1 text-white"
+          onClick={() => dispatch(changeActiveIssue(issue))}
+        >
+          {issue.title}
+        </div>
       </NavLink>
       <div className="flex items-center">
         {issue.stage !== "Backlog" && (
@@ -110,9 +116,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
             </button>
           )}
           {dropdownOpen && (
-            <div
-              className=" right-0 z-10 absolute w-20 rounded-md shadow-lg bg-[rgb(21,26,35)] text-white"
-            >
+            <div className=" right-0 z-10 absolute w-20 rounded-md shadow-lg bg-[rgb(21,26,35)] text-white">
               <div className="py-1" role="none">
                 {Object.keys(priorities).map((priority) => (
                   <button
@@ -121,7 +125,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
                     onClick={() => handlePrioritySelect(priority)}
                   >
                     {priorities[priority]}
-                     {priority}
+                    {priority}
                   </button>
                 ))}
               </div>
