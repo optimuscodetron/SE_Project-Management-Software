@@ -44,7 +44,7 @@ module.exports.getAllIssueOfWorkspace = async (req, res) => {
 }
 exports.createIssue = async (req, res) => {
     console.log(req.body);
-    const creatorId = req.body.creator;
+    const creatorId = req.userId;
     const projectId = req.body.projectId;
     const username=req.body.assignee;
     try {
@@ -57,8 +57,8 @@ exports.createIssue = async (req, res) => {
             description:req.body.description,
             assigneeUserID:assignee._id,
             creator:user._id,
-            stage:"Inprogress",
-            priority:"High",
+            stage:"InProgress",
+            priority:req.body.priority,
             projectId:project1._id,
             creationDate:req.body.targetDate,
             dueDate:req.body.targetDate,
@@ -92,6 +92,7 @@ exports.changeIssueStatus = async (req, res) => {
 
         // Find the issue by its ID
         const issue = await Issue.findById(issueId);
+        console.log(issue);
 
         // Check if the issue exists
         if (!issue) {

@@ -25,7 +25,7 @@ const issueSchema=new mongoose.Schema({
     },
     priority:{
         type:String,
-        enum:['Lowest','Low','High','Highest'],
+        enum:['Urgent','High','Medium','Low','No Priority'],
         required:true
     },
     cycleId:{

@@ -87,7 +87,7 @@ export default function Workspace() {
           )}
         </div>
         {/* Main content goes here */}
-        <div className="overflow-x-scroll">
+        <div className="overflow-x-auto">
           <Header
             headerInfo={headerInfo}
             handleShowFilterSidebar={handleShowFilterSidebar}

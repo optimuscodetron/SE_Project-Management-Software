@@ -9,11 +9,9 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import CreateNewProject from "../CreateNewProject/CreateNewProject";
 import FilterSidebar from "./components/FilterSidebar";
 
-import { useSelector,useDispatch } from "react-redux";
 
-// import { Axios } from "axios";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-
 
 const WorkspaceIssues = (props) => {
   const [toDoIssues, setToDoIssues] = useState([]);
@@ -22,106 +20,194 @@ const WorkspaceIssues = (props) => {
   const [doneIssues, setDoneIssues] = useState([]);
   const [cancelledIssues, setCancelledIssues] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [isopen,setIsOpen]=useState(false);
-  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);
+  const [isopen, setIsOpen] = useState(false);
+  const workspaceId = useSelector((state) => state.workspaceNameId.value.id);
+  const [IssuesList, setIssueList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
+  const [selectedAssignee, setSelectedAssignee] = useState(null);
+  const [selectedPriority, setSelectedPriority] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [ changeStatusVar, setChangeStatusVar] = useState(false);
+
+ const moveIssue = (issueId, currentStatus, newStatus) => {
+    console.log("Function moveIssue Called with status", { newStatus });
+    console.log(issueId);
+    updateIssueStatus(issueId, newStatus);
+
+  };
   console.log(workspaceId);
-
-
   
-  const [filteredList,setFilteredList]=useState(IssuesList);
-
-  const handleFilterAssignee=(name)=>{
-     setFilteredList(IssuesList.filter((member,idx)=>{
-                  return member.assignee.toLowerCase()===name.toLowerCase();
-                })
-     );
-    //  console.log(IssuesList);
-    //  console.log(filteredList);
-    // console.log(name);
-  }
-
-  const handleFilterPriority=(priority)=>{
-    // console.log(IssuesList[0].priority);
-    setFilteredList(IssuesList.filter((member,idx)=>{
-      return member?.priority?.toLowerCase()===priority?.toLowerCase();
-    }))
-  }
-
-  const handleFilterProject=(projectid)=>{
-    // console.log(IssuesList[0].priority);
-    setFilteredList(IssuesList.filter((member,idx)=>{
-      return member?.projectid===projectid;
-    }))
-  }
-
-
-
-  const handleClear=()=>{
-    setFilteredList(IssuesList);
-  }
-
+ 
   useEffect(() => {
-
-    const fetchIssues = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:8000/api/users/workspace/issues`,
-          {
-            params: {
-              activeWorkspaceId: workspaceId,
-            },
-            withCredentials: true,
-          }
-        );
-        const data = response.data;
-        console.log(data);
-  
-        const todoDummy = [];
-        const inProgressDummy = [];
-        const backlogDummy = [];
-        const doneDummy = [];
-        const cancelledDummy = [];
-  
-        data.forEach((issue) => {
-          console.log(issue);
-          if (issue.stage === "ToDo") {
-            todoDummy.push(issue);
-          } else if (issue.stage === "InProgress") {
-            inProgressDummy.push(issue);
-          } else if (issue.stage === "Backlog") {
-            backlogDummy.push(issue);
-          } else if (issue.stage === "Cancelled") {
-            cancelledDummy.push(issue);
-          } else if (issue.stage === "Done") {
-            doneDummy.push(issue);
-          }
-        });
-        console.log(todoDummy);
-  
-        setToDoIssues(todoDummy);
-        console.log(toDoIssues);
-        setInProgressIssues(inProgressDummy);
-        setBacklogIssues(backlogDummy);
-        setCancelledIssues(cancelledDummy);
-        setDoneIssues(doneDummy);
-        setDataLoaded(true);
-      } catch (error) {
-        console.error("Error fetching Issues:", error);
-        // Handle errors as needed
-      }
-    };
-  
-    fetchIssues();
-  }, []);
+    if (workspaceId) {
+      const fetchIssues = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:8000/api/users/workspace/issues`,
+            {
+              params: {
+                activeWorkspaceId: workspaceId,
+              },
+              withCredentials: true,
+            }
+          );
+          const data = response.data;
+          const modifiedIssues = data.map(issue => {
+            // Extract the last four characters from the ID string
+            const lastFourDigits = issue._id.slice(-4);
+            const projectname=issue.projectname;
+            // console.log(projectname);
+    
+            // Return the issue object with the modified ID
+            return { ...issue, id: lastFourDigits,projectname:projectname };
+          });
+          setIssueList(modifiedIssues);
+          setFilteredList(modifiedIssues);
 
 
-  const moveIssue = (issueId, currentstage, newstage) => {
-    console.log("Function moveIssue Called with stage", { newstage });
+  
+ 
+
+          const todoDummy = [];
+          const inProgressDummy = [];
+          const backlogDummy = [];
+          const doneDummy = [];
+          const cancelledDummy = [];
+
+
+
+          modifiedIssues.forEach((issue) => {
+            if (issue.stage === "ToDo") {
+              todoDummy.push(issue);
+            } else if (issue.stage === "InProgress") {
+              inProgressDummy.push(issue);
+            } else if (issue.stage === "Backlog") {
+              backlogDummy.push(issue);
+            } else if (issue.stage === "Cancelled") {
+              cancelledDummy.push(issue);
+            } else if (issue.stage === "Done") {
+              doneDummy.push(issue);
+            }
+          });
+
+          setToDoIssues(todoDummy);
+          setInProgressIssues(inProgressDummy);
+          setBacklogIssues(backlogDummy);
+          setCancelledIssues(cancelledDummy);
+          setDoneIssues(doneDummy);
+          setDataLoaded(true);
+        } catch (error) {
+          console.error("Error fetching Issues:", error);
+          // Handle errors as needed
+        }
+      };
+
+      fetchIssues();
+    }
+  }, [workspaceId,changeStatusVar]);
+  console.log(IssuesList)
+
+
+  const handleFilterAssignee = (name) => {
+    setSelectedAssignee(name);
   };
 
+  const handleFilterPriority = (priority) => {
+    setSelectedPriority(priority);
+  };
+
+  const handleFilterProject = (projectid) => {
+    setSelectedProject(projectid);
+  };
+  const handleClear = () => {
+    setSelectedAssignee(null);
+    setSelectedPriority(null);
+    setSelectedProject(null);
+  };
+  
+
+  useEffect(() => {
+    if (IssuesList.length > 0) {
+      const todoDummy = [];
+      const inProgressDummy = [];
+      const backlogDummy = [];
+      const doneDummy = [];
+      const cancelledDummy = [];
+
+      let filteredList = IssuesList;
+      if (selectedAssignee) {
+        filteredList = filteredList.filter(
+          (issue) => issue.assignee.toLowerCase() === selectedAssignee.toLowerCase()
+        );
+
+      }
+      if (selectedPriority) {
+        filteredList = filteredList.filter(
+          (issue) =>
+            issue?.priority?.toLowerCase() === selectedPriority.toLowerCase()
+        );
+      }
+      if (selectedProject) {
+        filteredList = filteredList.filter(
+          (issue) => issue?.projectname === selectedProject
+        );
+      }
+
+      setFilteredList(filteredList);
+
+      filteredList.forEach((issue) => {
+        switch (issue.stage) {
+          case "ToDo":
+            todoDummy.push(issue);
+            break;
+          case "InProgress":
+
+            inProgressDummy.push(issue);
+            break;
+          case "Backlog":
+            backlogDummy.push(issue);
+            break;
+          case "Cancelled":
+            cancelledDummy.push(issue);
+            break;
+          case "Done":
+            doneDummy.push(issue);
+
+            break;
+          default:
+            break;
+        }
+      });
+
+
+      setToDoIssues(todoDummy);
+      setInProgressIssues(inProgressDummy);
+      setBacklogIssues(backlogDummy);
+      setCancelledIssues(cancelledDummy);
+      setDoneIssues(doneDummy);
+      setDataLoaded(true);
+    }
+  }, [IssuesList, selectedAssignee, selectedPriority, selectedProject]);
+
+  const updateIssueStatus = async (issueId, newStatus) => {
+    try {
+      // Send a PATCH request to update the issue status
+      const response = await axios.patch(`http://localhost:8000/issues/${issueId}/changeStatus`, { newStatus });
+      // Handle the response
+      if (response.status === 200) {
+        console.log(response.data);
+        setChangeStatusVar(previousValue => !previousValue);
+      }
+    } catch (error) {
+      // Handle errors
+      console.error('Error updating issue status:', error);
+    }
+  }
+
+
   return (
+    
     <div className="bg-[#171e28] overflow-x-scroll px-2 pt-2">
-     
       {dataLoaded && (
         <div className="flex flex-row w-screen">
           <div className="w-[320px] mx-1">
@@ -131,7 +217,6 @@ const WorkspaceIssues = (props) => {
               onMoveIssue={moveIssue}
               icon={<LuCircleDashed />}
             />
-             {/* <button className="text-white" onClick={()=>handleFilterAssignee("Priyanshu Kumar")}>Hello Click Me</button> */}
           </div>
           <div className="w-[320px] mx-1">
             <IssuePanel
@@ -156,7 +241,7 @@ const WorkspaceIssues = (props) => {
               issues={doneIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCheckCircle />}
-              iconColor='text-green-400'
+              iconColor="text-green-400"
             />
           </div>
           <div className="w-[320px] mx-1">
@@ -165,28 +250,25 @@ const WorkspaceIssues = (props) => {
               issues={cancelledIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegTimesCircle />}
-              iconColor='text-red-400'
+              iconColor="text-red-400"
             />
           </div>
-          {props.showFilterSidebar && <div className="overflow-y-scroll">
-         <div className=" fixed right-0 h-full overflow-y-scroll">
-        
-             <FilterSidebar handleFilterAssignee={handleFilterAssignee} handleClear={handleClear} handleFilterPriority={handleFilterPriority} handleFilterProject={handleFilterProject}/>
-             {/* <FilterSidebar /> */}
-         
-         </div>
-        
-       </div>}
-
+          {props.showFilterSidebar && (
+            <div className="overflow-y-scroll">
+              <div className="fixed right-0 h-full overflow-y-scroll">
+                <FilterSidebar
+                  handleFilterAssignee={handleFilterAssignee}
+                  handleClear={handleClear}
+                  handleFilterPriority={handleFilterPriority}
+                  handleFilterProject={handleFilterProject}
+                />
+              </div>
+            </div>
+          )}
         </div>
-         
-        
       )}
-      
-      </div>
-
-       
-   
+    </div>
   );
 };
+
 export default WorkspaceIssues;
