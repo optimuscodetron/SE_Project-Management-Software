@@ -9,7 +9,7 @@ module.exports = function(app){
 
 
     /*piyush*/
-    app.get('/api/workspace/issue/description', authenticate, Issuecontroller.getIssue);
+    app.get('/api/workspace/issue/description', authenticate, Issuecontroller.getIssue)
     app.put('/api/workspace/issue/updateDescription', authenticate, Issuecontroller.updateIssueDescription);
     
     app.get('/api/workspace/issue/details',authenticate, Issuecontroller.assigneDetails);
