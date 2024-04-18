@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { userIdSlice } from "./../../redux/userId/userIdSlice"; // import the slice
-import { activeProjectSlice } from "../../redux/ProjectData/activeProjectSlice";
+
 import {
   FaArrowRight,
   FaExclamationCircle,
@@ -41,24 +40,27 @@ const CreateNewIssue = (props) => {
 
 
   const userId = useSelector((state) => state.userId.value);
-  const activeProject = useSelector((state) => state.activeProject.value);
+  // const activeProject = useSelector((state) => state.activeProject.value);
   let creatorid = userId; // Get the user ID from the session
   console.log("sfjbhdsbxhjb", creatorid);
 
-  let projectId=activeProject.id;
+  let projectId= useSelector((state) => state.activeProject.value._id);
 
   useEffect(() => {
-    fetchMembers(); // Fetch members when component mounts
-  }, []);
+    fetchMembers();// Fetch members when component mounts
+    console.log(projectId);
+
+  }, [projectId]);
 
   const fetchMembers = async () => {
     try {
 
       const data={
 
-        projectid:activeProject.id,
+        projectid:projectId,
 
       }
+      console.log(projectId);
        Axios.post("http://localhost:8000/api/users/workspace/project/members", data,{
         withCredentials:true// Replace with actual project ID
       })
@@ -121,6 +123,7 @@ const CreateNewIssue = (props) => {
         }
       );
       console.log("New issue added successfully:", response.data);
+      
     } catch (error) {
       console.error("Error adding new issue:", error);
     }

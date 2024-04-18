@@ -109,11 +109,11 @@ const CreateNewProject = (props) => {
     else {
       const filteredIds = workspaceMemberData
         .filter((member) => filteredMembers.includes(member.username))
-        .map((member) => member._id);
+        .map((member) => member.id);
       let modifyLead = "";
       for (let i = 0; i < workspaceMemberData.length; i++) {
         if (workspaceMemberData[i].username === lead) {
-          modifyLead = workspaceMemberData[i]._id;
+          modifyLead = workspaceMemberData[i].id;
           break;
         }
       }

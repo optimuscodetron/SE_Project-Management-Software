@@ -18,7 +18,8 @@ const issueSchema=new mongoose.Schema({
     stage:{
         type:String,
         enum:['Backlog','ToDo','InProgress','Done','Cancelled'],
-        required:true
+        required:true,
+        default:'Backlog'
     },
     label:
     {type:String
@@ -28,9 +29,9 @@ const issueSchema=new mongoose.Schema({
         enum:['Urgent','High','Medium','Low','No Priority'],
         required:true
     },
-    cycleId:{
+    sprintId:{
      type:mongoose.Schema.Types.ObjectId,
-     ref:'Cycle'
+     ref:'Sprint'
     },
     dueDate:Date,
     projectId:{
