@@ -8,7 +8,7 @@ function IssueInfo() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMediumScreen(window.innerWidth <= 768);
+      setIsMediumScreen(window.innerWidth <= 1024);
     };
 
     handleResize(); // Initial check
