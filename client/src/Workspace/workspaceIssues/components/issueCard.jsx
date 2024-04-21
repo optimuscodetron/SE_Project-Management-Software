@@ -1,4 +1,7 @@
+import { changeActiveIssue } from '../../../redux/issueId/activeIssueSlice'
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
 import {
   TbAntennaBars2,
   TbAntennaBars3,
@@ -15,9 +18,8 @@ function getInitials(name) {
   return initials;
 }
 export default function IssueCard({ issue, onMoveIssue }) {
+  const dispatch = useDispatch();
   const btnstyle =
-
-
     "text-slate-300 hover:text-white border border-gray-800 rounded-lg text-xs px-1 py-1 text-center me-1 mb-1";
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -52,7 +54,17 @@ export default function IssueCard({ issue, onMoveIssue }) {
           {assigneeInitials}
         </span>
       </div>
-      <div className="mb-1 text-white">{issue.title}</div>
+      <NavLink
+        to="/workspace/project/board/issue"
+        style={{ textDecoration: "none", cursor: "pointer" }}
+      >
+        <div
+          className="mb-1 text-white"
+          onClick={() => dispatch(changeActiveIssue(issue))}
+        >
+          {issue.title}
+        </div>
+      </NavLink>
       <div className="flex items-center">
         {issue.stage !== "Backlog" && (
           <button
@@ -101,9 +113,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
             </button>
           )}
           {dropdownOpen && (
-            <div
-              className=" right-0 z-10 absolute w-20 rounded-md shadow-lg bg-[rgb(21,26,35)] text-white"
-            >
+            <div className=" right-0 z-10 absolute w-20 rounded-md shadow-lg bg-[rgb(21,26,35)] text-white">
               <div className="py-1" role="none">
                 {Object.keys(priorities).map((priority) => (
                   <button
@@ -112,7 +122,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
                     onClick={() => handlePrioritySelect(priority)}
                   >
                     {priorities[priority]}
-                     {priority}
+                    {priority}
                   </button>
                 ))}
               </div>

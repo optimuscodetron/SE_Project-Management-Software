@@ -99,6 +99,7 @@ const CreateNewIssue = (props) => {
   };
 
   const handleCreateIssue = async () => {
+     console.log("issuestatus",IssueStatus)
     const newIssue = {
       projectName: projectName.current.value,
       description: description.current.value,
@@ -109,7 +110,7 @@ const CreateNewIssue = (props) => {
       priority: Priority,
       cycle: Cycle,
       projectId: projectId,
-      stage: IssueStatus, // Here, Assignee should be set based on user selection from the project members list
+      label:IssueStatus, // Here, Assignee should be set based on user selection from the project members list
       // Include other properties like priority, issue type, cycle, etc.
     };
 

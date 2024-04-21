@@ -21,9 +21,7 @@ const issueSchema=new mongoose.Schema({
         required:true,
         default:'Backlog'
     },
-    label:
-    {type:String
-    },
+    label: { type: String, enum: ["Bug", "Improvement", "Feature"], },
     priority:{
         type:String,
         enum:['Urgent','High','Medium','Low','No Priority'],
@@ -42,7 +40,20 @@ const issueSchema=new mongoose.Schema({
     creationDate:{
     type:Date,
     required:true
-    }
+    },
+    comments: [
+        {
+          commentText: {
+            type: String,
+            required: true,
+          },
+          commentedBy: {
+            type: String,
+            ref: "User",
+            required: true,
+          },
+        },
+      ],
 
 },{timestamps: true})
 module.exports.Issue = mongoose.model('Issue', issueSchema);
