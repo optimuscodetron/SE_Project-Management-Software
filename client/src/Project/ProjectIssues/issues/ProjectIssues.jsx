@@ -23,22 +23,23 @@ export default function ProjectIssues(props) {
   const projectname = useSelector((state) => state.activeProject.value.name);
   // console.log("asuidgfuigasdf"+activeProjectAllIssues);
   // console.log(projectId)
+  // console.log(projectname);
   const [ changeStatusVar, setChangeStatusVar ] = useState(false);
 
   
   const [ issues, setIssues ] = useState([
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"Urgent", projectname:projectname },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"Urgent", projectname:projectname },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"Urgent", projectname:projectname },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"Urgent", projectname:projectname },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"Urgent", projectname:projectname },
 
-    // { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
-    { id: 2, title: 'Issue 1', description: 'Description 1', assignee: 'Chetan Kamble', status: 'Backlog',priority:"medium" },
-    { id: 3, title: 'Issue 3', description: 'Description 1', assignee: 'Het Patel', status: 'ToDo',priority:"low" },
-    { id: 12, title: 'Issue 12', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' ,priority:"high"},
-    { id: 15, title: 'Issue 51', description: 'Description 1', assignee: 'John Doe', status: 'Done',priority:"low" },
-    { id: 17, title: 'Issue 17', description: 'Description 1', assignee: 'John Doe', status: 'Cancelled',priority:"urgent" },
+    // { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"urgent" },
+    { id: 2, title: 'Issue 1', description: 'Description 1', assignee: 'Chetan Kamble', stage: 'Backlog',priority:"Medium", projectname:projectname },
+    { id: 3, title: 'Issue 3', description: 'Description 1', assignee: 'Het Patel', stage: 'ToDo',priority:"Low", projectname:projectname },
+    { id: 12, title: 'Issue 12', description: 'Description 1', assignee: 'John Doe', stage: 'InProgress' ,priority:"High", projectname:projectname},
+    { id: 15, title: 'Issue 51', description: 'Description 1', assignee: 'John Doe', stage: 'Done',priority:"Low", projectname:projectname },
+    { id: 17, title: 'Issue 17', description: 'Description 1', assignee: 'John Doe', stage: 'Cancelled',priority:"Urgent", projectname:projectname },
 
   ]);
 
@@ -59,7 +60,7 @@ export default function ProjectIssues(props) {
     
 
     filteredList.forEach(issue => {
-      switch (issue.status) {
+      switch (issue.stage) {
         case 'Backlog':
           backlogIssues.push(issue);
           break;
@@ -188,6 +189,7 @@ export default function ProjectIssues(props) {
                 issues={backlogIssues}
                 onMoveIssue={moveIssue}
                 icon={<LuCircleDashed />}
+                isWorkspace={false}
               />
             </div>
             <div className="w-[320px] mx-1">
@@ -196,6 +198,7 @@ export default function ProjectIssues(props) {
                 issues={toDoIssues}
                 onMoveIssue={moveIssue}
                 icon={<FaRegCircle />}
+                isWorkspace={false}
               />
             </div>
             <div className="w-[320px] mx-1">
@@ -205,6 +208,7 @@ export default function ProjectIssues(props) {
                 onMoveIssue={moveIssue}
                 icon={<FaCircleHalfStroke />}
                 iconColor="text-yellow-400"
+                isWorkspace={false}
               />
             </div>
             <div className="w-[320px] mx-1">
@@ -214,6 +218,7 @@ export default function ProjectIssues(props) {
                 onMoveIssue={moveIssue}
                 icon={<FaRegCheckCircle />}
                 iconColor='text-green-400'
+                isWorkspace={false}
               />
             </div>
             <div className="w-[320px] mx-1">
@@ -223,6 +228,7 @@ export default function ProjectIssues(props) {
                 onMoveIssue={moveIssue}
                 icon={<FaRegTimesCircle />}
                 iconColor='text-red-400'
+                isWorkspace={false}
               />
             </div>
      
