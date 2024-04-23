@@ -324,16 +324,32 @@ exports.addMemberByEmail = async (req, res) => {
       from: '2021csb1107@iitrpr.ac.in',
       to: email,
       subject: `Invitation to join ${workspace.name} workspace`,
-      text: `Hello ${existingUser.name},\n\nYou have been invited to join the ${workspace.name} workspace.\n\nPlease click on the following link to accept the invitation: http://your-frontend-url/accept-invitation/${workspaceId}`,
+      text: `Hello ${existingUser.name},\n\nYou have joined the ${workspace.name} workspace.`,
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+
+
+    transporter.sendMail(mailOptions, async (error, info) => {
       if (error) {
         console.error('Error sending email:', error);
         return res.status(500).json({ message: 'Error sending email' });
       } else {
+        // console.log('Email sent:', info.response);
+        // res.status(200).json({ message: 'Email invitation sent successfully' });
         console.log('Email sent:', info.response);
-        res.status(200).json({ message: 'Email invitation sent successfully' });
+
+        // Add existing user id to the workspace memberIDs list
+        workspace.members.push(existingUser._id);
+        await workspace.save();
+
+        // Return response with user details
+        res.status(200).json({
+          id: existingUser._id,
+          name: existingUser.name,
+          email: existingUser.email,
+          username: existingUser.username,
+          role:'member'
+        });
       }
     });
   } catch (error) {
