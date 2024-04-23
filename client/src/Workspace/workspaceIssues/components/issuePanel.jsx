@@ -59,13 +59,13 @@ const IssuePanel = (props) => {
                 onMoveIssue={props.onMoveIssue}
               />
             ))}
-        <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36414d] ">
+        {!props.isWorkspace&& <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36414d] cursor-pointer" onClick={openCreateIssue}>
           <div className="ml-[45%]">
-            <BsPlusCircleComponent onClick={openCreateIssue} />
+            <BsPlusCircleComponent  />
           </div>
-        </div>
+        </div>}
       </div>
-      {createIssue && (
+      {createIssue &&  (
         <CreateNewIssue
           onCloseCreateIssue={closeCreateIssue}
           isWorkspaceContext={true}
