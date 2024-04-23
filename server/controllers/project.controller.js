@@ -259,7 +259,7 @@ module.exports.allIssues = async (req, res) => {
 
             // Add assignee's username to the issue object
             issue.assigneeUsername = assigneeUser ? assigneeUser.username : null;
-            issuesWithUsernames.assigneename=assigneeUser?assigneeUser.name:null;
+            issue.assigneename=assigneeUser?assigneeUser.name:null;
 
 
             return {
@@ -268,7 +268,7 @@ module.exports.allIssues = async (req, res) => {
                 description: issue.description,
                 assigneeUserID: issue.assigneeUserID,
                 assignee: assigneeUser ? assigneeUser.username : null, // Assuming username field in User model
-                assigneename:assigneeUser?assigneeUser.name:null,
+                assigneename:assigneeUser ? assigneeUser.name:null,
                 creator: issue.creator,
                 creatorUsername: creatorUser ? creatorUser.username : null, // Assuming username field in User model
                 stage: issue.stage,

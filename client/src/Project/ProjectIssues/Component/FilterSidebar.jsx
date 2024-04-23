@@ -21,6 +21,7 @@ const FilterSidebar = (props) => {
   }
 
   const members = useSelector((state) => state.activeProjectAllMember.value);
+  const projectname=useSelector((state) => state.activeProject.value.name);
 
 
   
@@ -64,7 +65,7 @@ const FilterSidebar = (props) => {
 
           <div className='flex items-center mt-4  '>
               <GrProjects/>
-              <p className='ml-3'>Project name</p>
+              <p className='ml-3'>{projectname}</p>
           </div>
         </div>
 
@@ -94,22 +95,22 @@ const FilterSidebar = (props) => {
               
                 <button className=' w-full group text-left p-2 hover:bg-gray-700 flex justify-between' onClick={(e)=>handleFilterSidebarPriority(e,"urgent",1)} >
                   <div className='flex items-center'><TbUrgent/><p className='ml-2'>Urgent</p></div>
-                  <div className='text-gray-400 group flex w-[34%] justify-between'>{button2==1? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>} <p>{priority[0]}</p> </div>
+                  <div className='text-gray-400 group flex w-[34%] justify-between'>{button2==1? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>}  </div>
                  </button>
 
                 <button className=' w-full group text-left p-2 hover:bg-gray-700 flex justify-between' onClick={(e)=>handleFilterSidebarPriority(e,"high",2)}>
                 <div className='flex items-center'><PiCellSignalHighBold /><p className='ml-2'>High</p></div>
-                <div className='text-gray-400 group flex w-[34%] justify-between'>{button2==2? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>}<p>{priority[1]}</p> </div>
+                <div className='text-gray-400 group flex w-[34%] justify-between'>{button2==2? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>}</div>
                 </button>
                
                 <button className=' w-full group text-left p-2 hover:bg-gray-700 flex justify-between' onClick={(e)=>handleFilterSidebarPriority(e,"medium",3)}>
                 <div className='flex items-center'><PiCellSignalHighThin/><p className='ml-2'>Medium</p></div>
-                <div className='text-gray-400 group flex w-[34%] justify-between'>{button2==3? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>}<p>{priority[2]}</p> </div>
+                <div className='text-gray-400 group flex w-[34%] justify-between'>{button2==3? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>}</div>
                   </button>
 
                 <button className=' w-full group text-left p-2 hover:bg-gray-700 flex justify-between' onClick={(e)=>handleFilterSidebarPriority(e,"low",4)}>
                 <div className='flex items-center'><PiCellSignalMedium/><p className='ml-2'>Low</p></div>
-                <div className='text-gray-400 group flex w-[34%] justify-between'>{button2==4? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>}<p>{priority[3]}</p> </div>
+                <div className='text-gray-400 group flex w-[34%] justify-between'>{button2==4? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>}</div>
                 </button>
               
             </div>:null

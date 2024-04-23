@@ -49,63 +49,82 @@ export default function ProjectIssues(props) {
   const [inProgressIssues, setInProgressIssues] = useState([]);
   const [doneIssues, setDoneIssues] = useState([]);
   const [cancelledIssues, setCancelledIssues] = useState([]);
+  const [selectedAssignee, setSelectedAssignee] = useState(null);
+  const [selectedPriority, setSelectedPriority] = useState(null);
 
   useEffect(()=>{
-    const backlogIssues = [];
-    const toDoIssues = [];
-    const inProgressIssues = [];
-    const doneIssues = [];
-    const cancelledIssues = [];
-    // filteredList=issues;
-    
+    if (issues.length > 0) {
+      const todoDummy = [];
+      const inProgressDummy = [];
+      const backlogDummy = [];
+      const doneDummy = [];
+      const cancelledDummy = [];
 
-    filteredList.forEach(issue => {
-      switch (issue.status) {
-        case 'Backlog':
-          backlogIssues.push(issue);
-          break;
-        case 'ToDo':
-          toDoIssues.push(issue);
-          break;
-        case 'InProgress':
-          inProgressIssues.push(issue);
-          break;
-        case 'Done':
-          doneIssues.push(issue);
-          break;
-        case 'Cancelled':
-          cancelledIssues.push(issue);
-          break;
-        default:
-          break;
+      let filteredList = issues;
+      if (selectedAssignee) {
+        filteredList = filteredList.filter(
+          (issue) => issue.assigneename.toLowerCase() === selectedAssignee.toLowerCase()
+        );
+
       }
-    });
+      if (selectedPriority) {
+        filteredList = filteredList.filter(
+          (issue) =>
+            issue?.priority?.toLowerCase() === selectedPriority.toLowerCase()
+        );
+      }
+      
 
-    setBacklogIssues(backlogIssues);
-    setToDoIssues(toDoIssues);
-    setInProgressIssues(inProgressIssues);
-    setDoneIssues(doneIssues);
-    setCancelledIssues(cancelledIssues);
-  },[filteredList])
+      setFilteredList(filteredList);
+
+      filteredList.forEach((issue) => {
+        switch (issue.stage) {
+          case "ToDo":
+            todoDummy.push(issue);
+            break;
+          case "InProgress":
+
+            inProgressDummy.push(issue);
+            break;
+          case "Backlog":
+            backlogDummy.push(issue);
+            break;
+          case "Cancelled":
+            cancelledDummy.push(issue);
+            break;
+          case "Done":
+            doneDummy.push(issue);
+
+            break;
+          default:
+            break;
+        }
+      });
+
+
+      setToDoIssues(todoDummy);
+      setInProgressIssues(inProgressDummy);
+      setBacklogIssues(backlogDummy);
+      setCancelledIssues(cancelledDummy);
+      setDoneIssues(doneDummy);
+      // setDataLoaded(true);
+    }
+  }, [issues, selectedAssignee, selectedPriority]);
+
 
  
-  const handleFilterAssignee=(name)=>{
-     setFilteredList(issues.filter((member,idx)=>{
-                  return member.assigneename.toLowerCase()===name.toLowerCase();
-                })
-     );
-  
-  }
+  const handleFilterAssignee = (name) => {
+    setSelectedAssignee(name);
+  };
 
-  const handleFilterPriority=(priority)=>{
-    setFilteredList(issues.filter((member,idx)=>{
-      return member?.priority?.toLowerCase()===priority?.toLowerCase();
-    }))
-  }
+  const handleFilterPriority = (priority) => {
+    setSelectedPriority(priority);
+  };
 
-  const handleClear=()=>{
-    setFilteredList(issues);
-  }
+  const handleClear = () => {
+    setSelectedAssignee(null);
+    setSelectedPriority(null);
+  };
   
 
   const moveIssue = (issueId, currentStatus, newStatus) => {
@@ -131,6 +150,7 @@ export default function ProjectIssues(props) {
       const doneIssues = [];
       const cancelledIssues = [];
       setIssues(modifiedIssues);
+      setFilteredList(modifiedIssues);
 
       modifiedIssues.forEach(issue => {
         switch (issue.stage) {
