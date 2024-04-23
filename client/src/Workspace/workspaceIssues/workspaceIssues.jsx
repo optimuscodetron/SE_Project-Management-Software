@@ -136,7 +136,7 @@ const WorkspaceIssues = (props) => {
       let filteredList = IssuesList;
       if (selectedAssignee) {
         filteredList = filteredList.filter(
-          (issue) => issue.assignee.toLowerCase() === selectedAssignee.toLowerCase()
+          (issue) => issue.assigneename.toLowerCase() === selectedAssignee.toLowerCase()
         );
 
       }

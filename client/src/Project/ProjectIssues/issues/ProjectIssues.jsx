@@ -56,6 +56,7 @@ export default function ProjectIssues(props) {
     const inProgressIssues = [];
     const doneIssues = [];
     const cancelledIssues = [];
+    // filteredList=issues;
     
 
     filteredList.forEach(issue => {
@@ -90,7 +91,7 @@ export default function ProjectIssues(props) {
  
   const handleFilterAssignee=(name)=>{
      setFilteredList(issues.filter((member,idx)=>{
-                  return member.assignee.toLowerCase()===name.toLowerCase();
+                  return member.assigneename.toLowerCase()===name.toLowerCase();
                 })
      );
   
@@ -129,6 +130,7 @@ export default function ProjectIssues(props) {
       const inProgressIssues = [];
       const doneIssues = [];
       const cancelledIssues = [];
+      setIssues(modifiedIssues);
 
       modifiedIssues.forEach(issue => {
         switch (issue.stage) {

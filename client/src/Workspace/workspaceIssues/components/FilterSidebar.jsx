@@ -40,12 +40,12 @@ const FilterSidebar = (props) => {
 
       if (response.status === 200) {
         const Memberdata = await response.data.members;
-        const formattedMembers = Memberdata.map(member => ({username: member.username }));
+        const formattedMembers = Memberdata.map(member => ({name: member.name }));
         setMembers(formattedMembers);
-        const newMember = { username: "2021csb1109" };
+        // const newMember = { name: "Het Patel" };
 
   // Add the new member to the existing members array
-  setMembers(prevMembers => [...prevMembers, newMember]);
+  // setMembers(prevMembers => [...prevMembers, newMember]);
         
       }
       else {
@@ -171,10 +171,10 @@ const FilterSidebar = (props) => {
          {num==1? <div className='mt-[1.5rem] overflow-y-scroll text-sm md:text-[16px]'>
             {members.map((member,idx)=>{
               return (
-                <button className=' w-full text-left p-2 group  hover:bg-gray-700 flex justify-between' onClick={()=>handleFilterSidebar(member.username,idx)}>
+                <button className=' w-full text-left p-2 group  hover:bg-gray-700 flex justify-between' onClick={()=>handleFilterSidebar(member.name,idx)}>
                   <div className='flex justify-start  items-center w-[65%]'>
-                  <p className='rounded-full bg-purple-600 h-6 text-center text-[11px] w-6 p-1 mr-2'>{member.username.split(" ")[0][0]}</p>
-                  <p className='text-md'>{member.username}</p>
+                  <p className='rounded-full bg-purple-600 h-6 text-center text-[11px] w-6 p-1 mr-2'>{member.name.split(" ")[0][0]}</p>
+                  <p className='text-md'>{member.name}</p>
                   </div>
                   <div className='text-gray-400 group flex w-[35%] justify-between'>{button==idx ? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>}<p>{member.issues}</p> </div>
                 </button>
