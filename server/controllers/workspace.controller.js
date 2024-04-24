@@ -110,13 +110,16 @@ module.exports.getAllIssuesWorkspace = async (req, res) => {
     // Map over allIssues and add assignee and creator usernames to each issue
     const modifiedIssues = await Promise.all(allIssues.map(async issue => {
       const assignee = await User.findById(issue.assigneeUserID).select('username');
+      const assigneename = await User.findById(issue.assigneeUserID).select('name');
+
       const creator = await User.findById(issue.creator).select('username');
       const project=await Project.findById(issue.projectId).select('name');
       return {
         ...issue.toObject(),
         assignee: assignee.username,
         creatorUsername: creator.username,
-        projectname:project.name
+        projectname:project.name,
+        assigneename:assigneename.name
       };
     }));
     console.log(modifiedIssues);
