@@ -23,22 +23,23 @@ export default function ProjectIssues(props) {
   const projectname = useSelector((state) => state.activeProject.value.name);
   // console.log("asuidgfuigasdf"+activeProjectAllIssues);
   // console.log(projectId)
+  // console.log(projectname);
   const [ changeStatusVar, setChangeStatusVar ] = useState(false);
 
   
   const [ issues, setIssues ] = useState([
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
-    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"Urgent", projectname:projectname },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"Urgent", projectname:projectname },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"Urgent", projectname:projectname },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"Urgent", projectname:projectname },
+    { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"Urgent", projectname:projectname },
 
-    // { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', status: 'Backlog',priority:"urgent" },
-    { id: 2, title: 'Issue 1', description: 'Description 1', assignee: 'Chetan Kamble', status: 'Backlog',priority:"medium" },
-    { id: 3, title: 'Issue 3', description: 'Description 1', assignee: 'Het Patel', status: 'ToDo',priority:"low" },
-    { id: 12, title: 'Issue 12', description: 'Description 1', assignee: 'John Doe', status: 'InProgress' ,priority:"high"},
-    { id: 15, title: 'Issue 51', description: 'Description 1', assignee: 'John Doe', status: 'Done',priority:"low" },
-    { id: 17, title: 'Issue 17', description: 'Description 1', assignee: 'John Doe', status: 'Cancelled',priority:"urgent" },
+    // { id: 1, title: 'Issue 1', description: 'Description 1', assignee: 'Ayush Sahu', stage: 'Backlog',priority:"urgent" },
+    { id: 2, title: 'Issue 1', description: 'Description 1', assignee: 'Chetan Kamble', stage: 'Backlog',priority:"Medium", projectname:projectname },
+    { id: 3, title: 'Issue 3', description: 'Description 1', assignee: 'Het Patel', stage: 'ToDo',priority:"Low", projectname:projectname },
+    { id: 12, title: 'Issue 12', description: 'Description 1', assignee: 'John Doe', stage: 'InProgress' ,priority:"High", projectname:projectname},
+    { id: 15, title: 'Issue 51', description: 'Description 1', assignee: 'John Doe', stage: 'Done',priority:"Low", projectname:projectname },
+    { id: 17, title: 'Issue 17', description: 'Description 1', assignee: 'John Doe', stage: 'Cancelled',priority:"Urgent", projectname:projectname },
 
   ]);
 
@@ -49,62 +50,85 @@ export default function ProjectIssues(props) {
   const [inProgressIssues, setInProgressIssues] = useState([]);
   const [doneIssues, setDoneIssues] = useState([]);
   const [cancelledIssues, setCancelledIssues] = useState([]);
+  const [selectedAssignee, setSelectedAssignee] = useState(null);
+  const [selectedPriority, setSelectedPriority] = useState(null);
 
   useEffect(()=>{
-    const backlogIssues = [];
-    const toDoIssues = [];
-    const inProgressIssues = [];
-    const doneIssues = [];
-    const cancelledIssues = [];
+
+    if (issues.length > 0) {
+      const todoDummy = [];
+      const inProgressDummy = [];
+      const backlogDummy = [];
+      const doneDummy = [];
+      const cancelledDummy = [];
+
+      let filteredList = issues;
+      if (selectedAssignee) {
+        filteredList = filteredList.filter(
+          (issue) => issue.assigneename.toLowerCase() === selectedAssignee.toLowerCase()
+        );
+
+
     
-
-    filteredList.forEach(issue => {
-      switch (issue.status) {
-        case 'Backlog':
-          backlogIssues.push(issue);
-          break;
-        case 'ToDo':
-          toDoIssues.push(issue);
-          break;
-        case 'InProgress':
-          inProgressIssues.push(issue);
-          break;
-        case 'Done':
-          doneIssues.push(issue);
-          break;
-        case 'Cancelled':
-          cancelledIssues.push(issue);
-          break;
-        default:
-          break;
       }
-    });
+      if (selectedPriority) {
+        filteredList = filteredList.filter(
+          (issue) =>
+            issue?.priority?.toLowerCase() === selectedPriority.toLowerCase()
+        );
+      }
+      
 
-    setBacklogIssues(backlogIssues);
-    setToDoIssues(toDoIssues);
-    setInProgressIssues(inProgressIssues);
-    setDoneIssues(doneIssues);
-    setCancelledIssues(cancelledIssues);
-  },[filteredList])
+      setFilteredList(filteredList);
+
+      filteredList.forEach((issue) => {
+        switch (issue.stage) {
+          case "ToDo":
+            todoDummy.push(issue);
+            break;
+          case "InProgress":
+
+            inProgressDummy.push(issue);
+            break;
+          case "Backlog":
+            backlogDummy.push(issue);
+            break;
+          case "Cancelled":
+            cancelledDummy.push(issue);
+            break;
+          case "Done":
+            doneDummy.push(issue);
+
+            break;
+          default:
+            break;
+        }
+      });
+
+
+      setToDoIssues(todoDummy);
+      setInProgressIssues(inProgressDummy);
+      setBacklogIssues(backlogDummy);
+      setCancelledIssues(cancelledDummy);
+      setDoneIssues(doneDummy);
+      // setDataLoaded(true);
+    }
+  }, [issues, selectedAssignee, selectedPriority]);
+
 
  
-  const handleFilterAssignee=(name)=>{
-     setFilteredList(issues.filter((member,idx)=>{
-                  return member.assignee.toLowerCase()===name.toLowerCase();
-                })
-     );
-  
-  }
+  const handleFilterAssignee = (name) => {
+    setSelectedAssignee(name);
+  };
 
-  const handleFilterPriority=(priority)=>{
-    setFilteredList(issues.filter((member,idx)=>{
-      return member?.priority?.toLowerCase()===priority?.toLowerCase();
-    }))
-  }
+  const handleFilterPriority = (priority) => {
+    setSelectedPriority(priority);
+  };
 
-  const handleClear=()=>{
-    setFilteredList(issues);
-  }
+  const handleClear = () => {
+    setSelectedAssignee(null);
+    setSelectedPriority(null);
+  };
   
 
   const moveIssue = (issueId, currentStatus, newStatus) => {
@@ -129,6 +153,8 @@ export default function ProjectIssues(props) {
       const inProgressIssues = [];
       const doneIssues = [];
       const cancelledIssues = [];
+      setIssues(modifiedIssues);
+      setFilteredList(modifiedIssues);
 
       modifiedIssues.forEach(issue => {
         switch (issue.stage) {
@@ -188,6 +214,7 @@ export default function ProjectIssues(props) {
                 issues={backlogIssues}
                 onMoveIssue={moveIssue}
                 icon={<LuCircleDashed />}
+                isWorkspace={false}
               />
             </div>
             <div className="w-[320px] mx-1">
@@ -196,6 +223,7 @@ export default function ProjectIssues(props) {
                 issues={toDoIssues}
                 onMoveIssue={moveIssue}
                 icon={<FaRegCircle />}
+                isWorkspace={false}
               />
             </div>
             <div className="w-[320px] mx-1">
@@ -205,6 +233,7 @@ export default function ProjectIssues(props) {
                 onMoveIssue={moveIssue}
                 icon={<FaCircleHalfStroke />}
                 iconColor="text-yellow-400"
+                isWorkspace={false}
               />
             </div>
             <div className="w-[320px] mx-1">
@@ -214,6 +243,7 @@ export default function ProjectIssues(props) {
                 onMoveIssue={moveIssue}
                 icon={<FaRegCheckCircle />}
                 iconColor='text-green-400'
+                isWorkspace={false}
               />
             </div>
             <div className="w-[320px] mx-1">
@@ -223,6 +253,7 @@ export default function ProjectIssues(props) {
                 onMoveIssue={moveIssue}
                 icon={<FaRegTimesCircle />}
                 iconColor='text-red-400'
+                isWorkspace={false}
               />
             </div>
      

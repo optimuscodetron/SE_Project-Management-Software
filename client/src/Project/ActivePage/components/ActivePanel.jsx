@@ -1,9 +1,29 @@
+import { useState } from "react";
 import ActiveCard from "./ActiveCard";
 import { BsPlusCircle } from "react-icons/bs";
 const ActivePanel = (props) => {
+  const [createIssue, setCreateIssue] = useState(false);
+
+  const openCreateIssue = () => {
+    setCreateIssue(true);
+  };
+
+  const closeCreateIssue = () => {
+    setCreateIssue(false);
+  };
+
+  const BsPlusCircleComponent = ({ onClick }) => {
+    return (
+      <BsPlusCircle
+        onClick={onClick} // Trigger the onClick function when clicked
+        style={{ cursor: "pointer" }} // Add pointer cursor to indicate clickable element
+      />
+    );
+  };
+
   return (
-    <div className=" h-screen custom-sidebar-2 p-3 min-w-60 rounded-lg">
-      <div className=" text-white font-normal  tracking-wider py-2 px-1 text-start font-sans justify-between  ">
+    <div className="">
+      <div className="text-white font-normal tracking-wider py-2 px-1 text-start font-sans justify-between ">
         <div className="flex flex-row">
           <div
             className={`align-self-center mr-2 ${
@@ -13,7 +33,7 @@ const ActivePanel = (props) => {
             {props.icon}
           </div>
           <div className="text-lg align-self-center mr-2">
-            {props.statusName}
+            {props.stageName}
           </div>
           <div className="text-sm text-[#acacac] align-self-center mr-2">
             {props.issues.length}
@@ -32,17 +52,18 @@ const ActivePanel = (props) => {
           ? "No Item Is Present Here"
           : props.issues.map((issue) => (
               <ActiveCard
-                key={issue.id}
+                key={issue._id}
                 issue={issue}
                 onMoveIssue={props.onMoveIssue}
               />
             ))}
-        <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36475a] ">
+        {!props.isWorkspace&& <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36414d] cursor-pointer" onClick={openCreateIssue}>
           <div className="ml-[45%]">
-            <BsPlusCircle />
+            <BsPlusCircleComponent  />
           </div>
-        </div>
+        </div>}
       </div>
+      
     </div>
   );
 };

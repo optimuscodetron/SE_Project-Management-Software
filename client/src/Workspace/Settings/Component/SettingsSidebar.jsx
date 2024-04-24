@@ -5,7 +5,7 @@ import { FaUsers } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 
 const SettingsSidebar = (props) => {
-  const location = useLocation();
+  const location = useLocation();// comment for testing
   const array = location.pathname.split("/");
   const section = array[array.length - 1];
   console.log(section);
