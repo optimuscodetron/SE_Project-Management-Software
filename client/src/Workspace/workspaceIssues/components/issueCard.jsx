@@ -107,7 +107,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
           </button>
         )}
         <div className="relative">
-          {issue.projectname && (
+          {issue.priority && (
             <button onClick={toggleDropdown} className={btnstyle}>
               {priorities[issue.priority]}
             </button>
