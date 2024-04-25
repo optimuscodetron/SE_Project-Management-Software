@@ -19,6 +19,7 @@ import IssueInfo from "./Project/ProjectIssues/IssueInfo/IssueInfo";
 import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
 import Workspace from "./Workspace/workspace";
 import ActivePage from "./Project/ActivePage/ActivePage";
+import Tabs from "./Project/Project_Analysis/Chart_all";
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import MemberSetting from "./Workspace/Settings/Member/MemberSetting";
 import Profile from "./Workspace/Settings/Profile/Profile";
@@ -102,6 +103,7 @@ function App() {
 
         <Route path="/workspace" element={<Workspace />} />
         <Route path="/Activepage" element={<ActivePage />} />
+        <Route path="/Chartall" element={<Tabs />} />
 
         <Route path="/workspace/project" element={<Project />} />
 
