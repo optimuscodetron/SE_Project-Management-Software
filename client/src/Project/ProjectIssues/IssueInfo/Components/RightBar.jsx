@@ -44,7 +44,7 @@ function RightBar() {
   ];
   const initialSelectedProjectOption = "Project 1";
 
-  const statusOptions = ["Backlog", "Todo", "In Progress", "Done", "Canceled"];
+  const statusOptions = ['Backlog','ToDo','InProgress','Done','Cancelled'];
 
   const PriorityOptions = ["No priority", "Urgent", "High", "Medium", "Low"]; // Your options array
   const initialSelectedPriorityOption = "No priority"; // Initial selected option
