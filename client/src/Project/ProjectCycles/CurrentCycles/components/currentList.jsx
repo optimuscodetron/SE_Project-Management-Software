@@ -5,6 +5,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Nikhil Garg",
     status: "Backlog",
+    sprint: "Sprint 1",
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Het Patel",
     status: "Backlog",
+    sprint: "Sprint 1",
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Priyanshu Kumar",
     status: "ToDo",
+    sprint: "Sprint 1",
   },
   // ...
   {
@@ -27,6 +30,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Ayush Sahu",
     status: "ToDo",
+    sprint: "Sprint 2",
   },
   // ...
   {
@@ -35,6 +39,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Het Patel",
     status: "ToDo",
+    sprint: "Sprint 2",
   },
   // ...
   {
@@ -43,6 +48,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Nikhil Garg",
     status: "ToDo",
+    sprint: "Sprint 2",
   },
   // ...
   {
@@ -51,6 +57,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Kushagra Sharma",
     status: "ToDo",
+    sprint: "Sprint 3",
   },
   // ...
   {
@@ -59,6 +66,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Priyanshu Kumar",
     status: "ToDo",
+    sprint: "Sprint 3",
   },
   // ...
   {
@@ -67,6 +75,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Nikhil Garg",
     status: "ToDo",
+    sprint: "Sprint 3",
   },
   // ...
   {
@@ -75,6 +84,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Het Patel",
     status: "ToDo",
+    sprint: "Sprint 4",
   },
   // ...
   {
@@ -83,6 +93,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Ayush Sahu",
     status: "ToDo",
+    sprint: "Sprint 4",
   },
   {
     id: 12,
@@ -90,6 +101,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Priyanshu Kumar",
     status: "InProgress",
+    sprint: "Sprint 4",
   },
   // ...
   {
@@ -98,6 +110,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Chetan Kamble",
     status: "InProgress",
+    sprint: "Sprint 5",
   },
   // ...
   {
@@ -106,6 +119,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Kushagra Sharma",
     status: "InProgress",
+    sprint: "Sprint 5",
   },
   {
     id: 15,
@@ -113,6 +127,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Chetan Kamble",
     status: "Done",
+    sprint: "Sprint 5",
   },
   // ...
   {
@@ -121,6 +136,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Chetan Kamble",
     status: "Done",
+    sprint: "Sprint 5",
   },
   {
     id: 17,
@@ -128,6 +144,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Kushagra Sharma",
     status: "Cancelled",
+    sprint: "Sprint 5",
   },
   // ...
   {
@@ -136,6 +153,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Nikhil Garg",
     status: "Cancelled",
+    sprint: "Sprint 3",
   },
   // ...
   {
@@ -144,6 +162,7 @@ const CurrentList = [
     description: "Description 1",
     assignee: "Kushagra Sharma",
     status: "Cancelled",
+    sprint: "Sprint 1",
   },
 ];
 
