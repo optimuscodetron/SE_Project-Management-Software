@@ -26,7 +26,12 @@ import General from "./Workspace/Settings/General/General";
 
 import Invite from "./Invite/Invite";
 import InboxSidebar from "./Workspace/Inbox/InboxSidebar";
-import Sprint from "./Project/Sprint/Sprint"
+
+
+
+import HomePage from "./Components/Home";
+
+
 
 // import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 // import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
@@ -82,8 +87,7 @@ function App() {
         >
           {" "}
         </Route>
-        <Route path="/project/sprint" element={<Sprint />}>
-        </Route>
+        
 
         {/* by Priyanshu */}
         <Route path="/workspace/settings/members" element={<MemberSetting />}>
@@ -109,6 +113,8 @@ function App() {
         <Route path="/workspace/project/board/issue" element={<IssueInfo />} />
 
         <Route path="/workspace/settings/profile" element={<Profile />} />
+
+        <Route path="/home" element={<HomePage />} />
 
         {/*by khushboo*/}
         <Route path="/Invite" element={<Invite />} />

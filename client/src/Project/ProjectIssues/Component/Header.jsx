@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { TbLayoutSidebarRight } from "react-icons/tb";
 import { GoProjectRoadmap } from "react-icons/go";
+
 import { useSelector, useDispatch } from "react-redux";
 
 const Header=(props)=>{
 
-    const projectName=useSelector((state) => state.activeProject.value.name);
-
-    
+    const projectName=useSelector((state) => state.activeProject.value.name);  
     return (
         <div className="w-full h-14 custom-workspaceHeader text-white flex  justify-content-between relative">
             <div className='p-3 flex items-center '>
