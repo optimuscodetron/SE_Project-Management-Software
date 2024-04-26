@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import "./Inbox.css";
 import InboxIssues from './InboxIssues';
-import IssueInfo from './Issue_Info';
-//import IssueInfo from "../../Project/ProjectIssues/IssueInfo/IssueInfo";
+//import IssueInfo from './Issue_Info';
+import IssueInfo from "../../Project/ProjectIssues/IssueInfo/IssueInfo";
 import { useSelector,useDispatch } from "react-redux";
 
 // import { Axios } from "axios";

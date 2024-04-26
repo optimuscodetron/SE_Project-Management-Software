@@ -1,14 +1,9 @@
 
 import React, { useState } from "react";
-
-function TitleDescrip({ title, description }) {
-  const [titleZ, setTitleZ] = useState(title ||"Initial Title");
-  const [titleD, setTitleD] = useState(description || "Description");
-=======
 import axios from "axios";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+
 function TitleDescrip() {
   const [Disc, setDisc] = useState(" ");
   const activeIssue = useSelector((state) => state.activeIssue.value);
