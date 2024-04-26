@@ -26,7 +26,7 @@ import General from "./Workspace/Settings/General/General";
 
 import Invite from "./Invite/Invite";
 import InboxSidebar from "./Workspace/Inbox/InboxSidebar";
-
+import Sprint from "./Project/Sprint/Sprint"
 
 // import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 // import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
@@ -82,6 +82,9 @@ function App() {
         >
           {" "}
         </Route>
+        <Route path="/project/sprint" element={<Sprint />}>
+        </Route>
+
         {/* by Priyanshu */}
         <Route path="/workspace/settings/members" element={<MemberSetting />}>
           {" "}

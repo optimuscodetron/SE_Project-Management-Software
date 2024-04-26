@@ -9,7 +9,7 @@ import activeProjectSprintListReducer from './ProjectData/activeProjectSprintLis
 import activeIssueReducer from './issueId/activeIssueSlice' 
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
-
+import activeSprintReducer from './ProjectData/activeSprint'
 const persistConfig = {
   key: 'root',
   storage,
@@ -23,6 +23,7 @@ const rootReducer = combineReducers({
   activeProjectAllMember:activeProjectAllMemberReducer,
   activeProjectSprintList:activeProjectSprintListReducer,
   activeIssue: activeIssueReducer,
+  activeSprint:activeSprintReducer
 })
 
 

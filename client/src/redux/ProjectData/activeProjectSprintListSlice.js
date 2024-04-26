@@ -16,6 +16,7 @@ export const activeProjectSprintListSlice = createSlice({
     removeSprintFromProject: (state, action) => {
       state.value = state.value.filter(member => member.id !== action.payload.id); // Filter out the member with the specified ID
     },
+    
   },
 });
 
