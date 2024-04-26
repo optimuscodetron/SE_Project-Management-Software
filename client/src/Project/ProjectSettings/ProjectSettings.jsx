@@ -3,7 +3,7 @@ import Axios from "axios";
 import ProjectSettingSidebar from "./Components/ProjectSettingSidebar";
 import ProjectSettingGeneral from "./Components/ProjectSettingGeneral";
 import ProjectSettingTeamMembers from "./Components/ProjectSettingTeamMembers";
-import ProjectSettingCycle from "./Components/ProjectSettingCycle";
+import ProjectSettingSprint from "./Components/ProjectSettingSprint";
 import { useSelector,useDispatch } from "react-redux";
 
 function ProjectSettings() {
@@ -12,7 +12,7 @@ function ProjectSettings() {
   const teamMembers =useSelector((state) => state.activeProjectAllMember.value);
 
   useEffect(() => {
-    
+
   }, []);
 
 
@@ -26,7 +26,7 @@ function ProjectSettings() {
         />
       );
     } else if (loc === "3") {
-      return <ProjectSettingCycle project={project} />;
+      return <ProjectSettingSprint />;
     }
   };
 

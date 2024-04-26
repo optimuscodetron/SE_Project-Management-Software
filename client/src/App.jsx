@@ -18,8 +18,6 @@ import Project from "./Project/Project";
 import IssueInfo from "./Project/ProjectIssues/IssueInfo/IssueInfo";
 import ProjectSettings from "./Project/ProjectSettings/ProjectSettings";
 import Workspace from "./Workspace/workspace";
-import ChartComponent from "./Project/chart_status"
-import Barchart_Mem from "./Project/barchart_member";
 import ActivePage from "./Project/ActivePage/ActivePage";
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import MemberSetting from "./Workspace/Settings/Member/MemberSetting";
@@ -28,6 +26,8 @@ import General from "./Workspace/Settings/General/General";
 
 import Invite from "./Invite/Invite";
 import InboxSidebar from "./Workspace/Inbox/InboxSidebar";
+
+import HomePage from "./Components/Home";
 
 
 // import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
@@ -96,9 +96,7 @@ function App() {
         <Route path="*" element={<Error />} />
 
         <Route path="/workspace" element={<Workspace />} />
-        <Route path="/barpie" element={<ChartComponent />} />
         <Route path="/Activepage" element={<ActivePage />} />
-        <Route path="/barchart" element={<Barchart_Mem />} />
 
         <Route path="/workspace/project" element={<Project />} />
 
@@ -110,6 +108,8 @@ function App() {
         <Route path="/workspace/project/board/issue" element={<IssueInfo />} />
 
         <Route path="/workspace/settings/profile" element={<Profile />} />
+
+        <Route path="/home" element={<HomePage />} />
 
         {/*by khushboo*/}
         <Route path="/Invite" element={<Invite />} />

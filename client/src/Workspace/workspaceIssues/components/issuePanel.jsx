@@ -24,7 +24,7 @@ const IssuePanel = (props) => {
   };
 
   return (
-    <div className="">
+    <div className="" data-testid="issue-panel">
       <div className="text-white font-normal tracking-wider py-2 px-1 text-start font-sans justify-between ">
         <div className="flex flex-row">
           <div
@@ -57,18 +57,20 @@ const IssuePanel = (props) => {
                 key={issue._id}
                 issue={issue}
                 onMoveIssue={props.onMoveIssue}
+                data-testid={'issuecard'+issue._id}
               />
             ))}
-        <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36414d] ">
+        {!props.isWorkspace&& <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36414d] cursor-pointer" onClick={openCreateIssue}>
           <div className="ml-[45%]">
-            <BsPlusCircleComponent onClick={openCreateIssue} />
+            <BsPlusCircleComponent  />
           </div>
-        </div>
+        </div>}
       </div>
-      {createIssue && (
+      {createIssue &&  (
         <CreateNewIssue
           onCloseCreateIssue={closeCreateIssue}
           isWorkspaceContext={true}
+          data-testid="create-issue-modal"
         />
       )}
     </div>

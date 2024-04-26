@@ -10,6 +10,9 @@ export const activeProjectIssueSlice = createSlice({
     changeActiveProjectIssue: (state, action) => {
       state.value = action.payload;
     },
+    addIssueToProject: (state, action) => {
+      state.value.push(action.payload); // Push the new member to the value array
+    },
     changeIssueStage: (state, action) => {
       const { issueId, newStage } = action.payload;
       const index = state.value.findIndex(issue => issue._id === issueId);
@@ -24,6 +27,6 @@ export const activeProjectIssueSlice = createSlice({
   },
 });
 
-export const { changeActiveProjectIssue, changeIssueStage } = activeProjectIssueSlice.actions;
+export const { changeActiveProjectIssue , addIssueToProject , changeIssueStage } = activeProjectIssueSlice.actions;
 
 export default activeProjectIssueSlice.reducer;

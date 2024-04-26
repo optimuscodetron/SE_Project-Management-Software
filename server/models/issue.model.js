@@ -18,19 +18,18 @@ const issueSchema=new mongoose.Schema({
     stage:{
         type:String,
         enum:['Backlog','ToDo','InProgress','Done','Cancelled'],
-        required:true
+        required:true,
+        default:'Backlog'
     },
-    label:
-    {type:String
-    },
+    label: { type: String, enum: ["Bug", "Improvement", "Feature"], },
     priority:{
         type:String,
         enum:['Urgent','High','Medium','Low','No Priority'],
         required:true
     },
-    cycleId:{
+    sprintId:{
      type:mongoose.Schema.Types.ObjectId,
-     ref:'Cycle'
+     ref:'Sprint'
     },
     dueDate:Date,
     projectId:{
@@ -41,7 +40,20 @@ const issueSchema=new mongoose.Schema({
     creationDate:{
     type:Date,
     required:true
-    }
+    },
+    comments: [
+        {
+          commentText: {
+            type: String,
+            required: true,
+          },
+          commentedBy: {
+            type: String,
+            ref: "User",
+            required: true,
+          },
+        },
+      ],
 
 },{timestamps: true})
 module.exports.Issue = mongoose.model('Issue', issueSchema);

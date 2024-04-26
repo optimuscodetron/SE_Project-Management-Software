@@ -35,7 +35,7 @@ const WorkspaceIssues = (props) => {
     updateIssueStatus(issueId, newStatus);
 
   };
-  console.log(workspaceId);
+  // console.log(workspaceId);
 
   useEffect(() => {
     if (workspaceId) {
@@ -63,13 +63,15 @@ const WorkspaceIssues = (props) => {
           setIssueList(modifiedIssues);
           setFilteredList(modifiedIssues);
 
+
+  
+ 
+
           const todoDummy = [];
           const inProgressDummy = [];
           const backlogDummy = [];
           const doneDummy = [];
           const cancelledDummy = [];
-
-
           modifiedIssues.forEach((issue) => {
             if (issue.stage === "ToDo") {
               todoDummy.push(issue);
@@ -99,7 +101,7 @@ const WorkspaceIssues = (props) => {
       fetchIssues();
     }
   }, [workspaceId,changeStatusVar]);
-  console.log(IssuesList)
+  // console.log(IssuesList)
 
 
   const handleFilterAssignee = (name) => {
@@ -131,7 +133,7 @@ const WorkspaceIssues = (props) => {
       let filteredList = IssuesList;
       if (selectedAssignee) {
         filteredList = filteredList.filter(
-          (issue) => issue.assignee.toLowerCase() === selectedAssignee.toLowerCase()
+          (issue) => issue.assigneename.toLowerCase() === selectedAssignee.toLowerCase()
         );
 
       }
@@ -210,6 +212,7 @@ const WorkspaceIssues = (props) => {
               issues={backlogIssues}
               onMoveIssue={moveIssue}
               icon={<LuCircleDashed />}
+              isWorkspace={true}
             />
           </div>
           <div className="w-[320px] mx-1">
@@ -218,6 +221,7 @@ const WorkspaceIssues = (props) => {
               issues={toDoIssues}
               onMoveIssue={moveIssue}
               icon={<FaRegCircle />}
+              isWorkspace={true}
             />
           </div>
           <div className="w-[320px] mx-1">
@@ -227,6 +231,7 @@ const WorkspaceIssues = (props) => {
               onMoveIssue={moveIssue}
               icon={<FaCircleHalfStroke />}
               iconColor="text-yellow-400"
+              isWorkspace={true}
             />
           </div>
           <div className="w-[320px] mx-1">
@@ -236,6 +241,7 @@ const WorkspaceIssues = (props) => {
               onMoveIssue={moveIssue}
               icon={<FaRegCheckCircle />}
               iconColor="text-green-400"
+              isWorkspace={true}
             />
           </div>
           <div className="w-[320px] mx-1">
@@ -245,6 +251,7 @@ const WorkspaceIssues = (props) => {
               onMoveIssue={moveIssue}
               icon={<FaRegTimesCircle />}
               iconColor="text-red-400"
+              isWorkspace={true}
             />
           </div>
           {props.showFilterSidebar && (

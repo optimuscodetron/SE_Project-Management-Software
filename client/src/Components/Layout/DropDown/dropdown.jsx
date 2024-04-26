@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const Dropdown = ({ options, initialSelectedOption,currentStatus,setCurrentStatus , width}) => {
-  const [selectedOption, setSelectedOption] = useState(initialSelectedOption);
+const Dropdown = ({ options, initialSelectedOption,currentStatus,setCurrentStatus,onChange, width}) => {
+  const [selectedOption, setSelectedOption] = useState(initialSelectedOption); 
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -11,7 +11,10 @@ const Dropdown = ({ options, initialSelectedOption,currentStatus,setCurrentStatu
 
   const selectOption = (option) => {
     setSelectedOption(option);
-    setCurrentStatus(option);
+    setCurrentStatus(option); // Update the status here
+    if(onChange){
+      onChange(option);
+    }
     console.log(option);
     setIsOpen(false);
   };

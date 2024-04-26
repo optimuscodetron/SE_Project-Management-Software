@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import Dropdown from "../../../../Components/Layout/DropDown/dropdown";
 import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function formatDate(dateString) {
   const [day, month, year] = dateString.split("/");
@@ -10,6 +12,15 @@ function formatDate(dateString) {
 
 function RightBar() {
   const [isMediumScreen, setIsMediumScreen] = useState(false);
+  const [status, setStatus] = useState(null);
+  const [state, setstatus] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [priority, setpriority] = useState(null);
+  const [date, setdate] = useState(null);
+  const [Assigne, setAssigne] = useState("");
+  const [Label, setLabel] = useState("");
+  const [projectname, setprojectname] = useState("");
+  const activeIssue = useSelector((state) => state.activeIssue.value);
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,7 +45,6 @@ function RightBar() {
   const initialSelectedProjectOption = "Project 1";
 
   const statusOptions = ["Backlog", "Todo", "In Progress", "Done", "Canceled"];
-  const initialSelectedStatusOption = "Backlog";
 
   const PriorityOptions = ["No priority", "Urgent", "High", "Medium", "Low"]; // Your options array
   const initialSelectedPriorityOption = "No priority"; // Initial selected option
@@ -59,6 +69,128 @@ function RightBar() {
 
   const [dueDate, setStartDate] = useState(formatDate("22/03/2024"));
 
+  useEffect(() => {
+    fetchStatus(); // Fetch status when component mounts
+  }, []);
+
+  const fetchStatus = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/workspace/issue/description`,
+        {
+          params: {
+            activeIssueId: activeIssue._id,
+          },
+          withCredentials: true,
+        }
+      );
+
+      const assigneeUsername = response.data;
+      console.log("assigner", assigneeUsername.issue.label);
+      const fetchedStatus = assigneeUsername.issue.stage;
+      console.log("fetchedsteatsus", fetchedStatus);
+      const fetchedPriority = assigneeUsername.issue.priority;
+      const dateinfo = assigneeUsername.issue.dueDate;
+      const assigner = assigneeUsername.issue.assigneeUserID;
+      const label = assigneeUsername.issue.label;
+      console.log("label",label);
+      const projid = assigneeUsername.issue.projectId;
+
+      const response2 = await axios.get(
+        `http://localhost:8000/api/workspace/issue/details`,
+        {
+          params: {
+            id: assigner,
+            projectId: projid,
+          },
+          withCredentials: true,
+        }
+      );
+      console.log("piyushddd", response2.data);
+      setprojectname(response2.data.projectName);
+      const assignename = response2.data.user.name;
+      setAssigne(assignename);
+      console.log("assigner", assigner);
+      console.log("fetchedPrddddddiority", assigneeUsername);
+      setStatus(fetchedStatus); // Set status
+      setpriority(fetchedPriority); // Set status
+      setdate(dateinfo); // Set status
+      setLabel(label); // Set label
+      setIsLoading(false); // Set loading state to false after data is fetched
+    } catch (error) {
+      console.error("Failed to fetch issue:", error);
+      setIsLoading(false); // Set loading state to false if there's an error
+    }
+  };
+
+  // Function to update issue details
+  const updateIssueDetails = async (update) => {
+    try {
+      // Make a PUT request to the update issue details API
+      console.log("activnesss", activeIssue._id);
+      const response = await axios.put(
+        "http://localhost:8000/api/workspace/issue/updateDescription",
+        {
+          issueId: activeIssue._id, // replace with actual issue ID
+          update,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      // Handle the response as needed
+      console.log(response.data);
+    } catch (error) {
+      console.error("Failed to update issue details:", error);
+    }
+  };
+
+  // const updateprojectassignename = async (assigneeId, projectId) => {
+  //   try {
+  //     const update = {
+  //       userId: assigneeId,
+  //       update: { projectId }
+  //     };
+
+  //     const response = await axios.put(
+  //       "http://localhost:8000/api/workspace/issue/updateDetails",
+  //       update,
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
+
+  //     if (response.status === 200) {
+  //       console.log("Update successful:", response.data);
+  //     } else {
+  //       console.log("Update failed:", response.data);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating issue details:", error);
+  //   }
+  // };
+
+  const handleStatusChange = async (newStatus) => {
+    await updateIssueDetails({ stage: newStatus });
+  };
+
+  const handlePriorityChange = async (newPriority) => {
+    await updateIssueDetails({ priority: newPriority });
+  };
+  const handleLabelChange = async (newLabel) => {
+    await updateIssueDetails({ label: newLabel });
+  };
+  const handleDateChange = async (newDate) => {
+    setdate(newDate);
+
+    const formattedDate = newDate.toISOString().split("T")[0];
+    await updateIssueDetails({ dueDate: formattedDate });
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       {!isMediumScreen ? (
@@ -73,7 +205,9 @@ function RightBar() {
             <div className="text-white w-[20%] mr-3">Status</div>
             <Dropdown
               options={statusOptions}
-              initialSelectedOption={initialSelectedStatusOption}
+              initialSelectedOption={status || "Loading..."}
+              setCurrentStatus={setStatus}
+              onChange={handleStatusChange}
               width="40"
             />
           </div>
@@ -82,7 +216,9 @@ function RightBar() {
             <div className="text-white w-[20%] mr-3 ">Priority</div>
             <Dropdown
               options={PriorityOptions}
-              initialSelectedOption={initialSelectedPriorityOption}
+              initialSelectedOption={priority}
+              setCurrentStatus={setpriority}
+              onChange={handlePriorityChange}
               width="40"
             />
           </div>
@@ -91,7 +227,8 @@ function RightBar() {
             <div className="text-white w-[20%] mr-3">Assigne</div>
             <Dropdown
               options={AssigneOptions}
-              initialSelectedOption={initialSelectedAssigneOption}
+              initialSelectedOption={Assigne}
+              setCurrentStatus={setAssigne}
               width="40"
             />
           </div>
@@ -109,7 +246,9 @@ function RightBar() {
             <div className="text-white w-[20%] mr-3">Labels</div>
             <Dropdown
               options={LabelOptions}
-              initialSelectedOption={initialSelectedLabelOption}
+              initialSelectedOption={Label}
+              setCurrentStatus={setLabel}
+              onChange={handleLabelChange}
               width="40"
             />
           </div>
@@ -120,7 +259,8 @@ function RightBar() {
             <div className="text-white w-[20%] mr-3">Project</div>
             <Dropdown
               options={projectOptions}
-              initialSelectedOption={initialSelectedProjectOption}
+              initialSelectedOption={projectname}
+              setCurrentStatus={setprojectname}
               width="40"
             />
           </div>
@@ -128,47 +268,43 @@ function RightBar() {
           <div className="mb-4 flex justify-start items-center">
             <div className="text-white w-[20%] mr-3">Due date</div>
             <DatePicker
-              selected={dueDate}
-              onChange={(date) => setStartDate(date)}
+              selected={date}
+              onChange={handleDateChange}
               dateFormat="dd/MM/yyyy"
               className="bg-gray-800 text-white py-1 px-4 rounded inline-flex items-center focus:outline-none w-40"
             />
           </div>
         </div>
       ) : (
-        <div
-          className="bg-gray-900 w-full flex flex-row overflow-x-scroll overflow-y-hidden text-white p-3"
-          
-        >
-          <div className="mr-4 ml-7 flex justify-start items-center">
-            
+        <div className="bg-gray-900 w-full flex flex-wrap text-white p-3">
+          <div className="ml-7 mb-2 flex justify-start items-center">
             <Dropdown
               options={statusOptions}
-              initialSelectedOption={initialSelectedStatusOption}
+              initialSelectedOption={status || "Loading..."}
+              setCurrentStatus={setStatus}
               width="40"
             />
           </div>
 
-          <div className="mr-4 flex justify-start items-center">
-            
+          <div className="ml-7 mb-2 flex justify-start items-center">
             <Dropdown
               options={PriorityOptions}
-              initialSelectedOption={initialSelectedPriorityOption}
+              initialSelectedOption={priority}
+              setCurrentStatus={setpriority}
               width="40"
             />
           </div>
 
-          <div className="mr-4 flex justify-start items-center">
-            
+          <div className="ml-7 mb-2 flex justify-start items-center">
             <Dropdown
               options={AssigneOptions}
-              initialSelectedOption={initialSelectedAssigneOption}
+              initialSelectedOption={Assigne}
+              setCurrentStatus={setAssigne}
               width="40"
             />
           </div>
 
-          <div className="mr-4 flex justify-start items-center">
-            
+          <div className="ml-7 mb-2 flex justify-start items-center">
             <Dropdown
               options={cycleOptions}
               initialSelectedOption={initialSelectedCycleOption}
@@ -176,18 +312,16 @@ function RightBar() {
             />
           </div>
 
-          <div className="mr-4 flex justify-start items-center">
-            
+          <div className="ml-7 mb-2 flex justify-start items-center">
             <Dropdown
               options={LabelOptions}
-              initialSelectedOption={initialSelectedLabelOption}
+              initialSelectedOption={Label}
+              setCurrentStatus={setLabel}
               width="40"
             />
           </div>
 
-
-          <div className="mr-4 flex justify-start items-center">
-            
+          <div className="ml-7 mb-2 flex justify-start items-center">
             <Dropdown
               options={projectOptions}
               initialSelectedOption={initialSelectedProjectOption}
@@ -195,11 +329,10 @@ function RightBar() {
             />
           </div>
 
-          <div className="mr-4 flex justify-start items-center">
-            
+          <div className="ml-7 mb-2 flex justify-start items-center">
             <DatePicker
-              selected={dueDate}
-              onChange={(date) => setStartDate(date)}
+              selected={date}
+              onChange={(date) => setdate(date)}
               dateFormat="dd/MM/yyyy"
               className="bg-gray-800 text-white py-1 px-4 rounded inline-flex items-center focus:outline-none w-40"
             />

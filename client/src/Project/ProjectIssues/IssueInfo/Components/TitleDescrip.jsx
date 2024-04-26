@@ -1,31 +1,95 @@
+
 import React, { useState } from "react";
 
 function TitleDescrip({ title, description }) {
   const [titleZ, setTitleZ] = useState(title ||"Initial Title");
   const [titleD, setTitleD] = useState(description || "Description");
+=======
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+function TitleDescrip() {
+  const [Disc, setDisc] = useState(" ");
+  const activeIssue = useSelector((state) => state.activeIssue.value);
+  const [title, setTitle] = useState("");
+  useEffect(() => {
+    const fetchIssue = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/workspace/issue/description`,
+          {
+            params: {
+              activeIssueId: activeIssue._id,
+            },
+            withCredentials: true,
+          }
+        );
 
-  const handleTitleChange = (event) => {
-    setTitleZ(event.target.innerText);
-  };
-  const handleDescriptionChange = (event) => {
-    setTitleD(event.target.innerText);
+
+        const assigneeUsername = response.data;
+        console.log(assigneeUsername);
+        const title = assigneeUsername.issue.title;
+        const Disc = assigneeUsername.issue.description;
+        setTitle(title);
+        setDisc(Disc);
+      } catch (error) {
+        console.error("Failed to fetch issue:", error);
+      }
+    };
+
+    fetchIssue();
+  }, []);
+
+  const updateIssueDetails = async (update) => {
+    try {
+      // Make a PUT request to the update issue details API
+      console.log("activnesss", activeIssue._id);
+      const response = await axios.put(
+        "http://localhost:8000/api/workspace/issue/updateDescription",
+        {
+          issueId: activeIssue._id, // replace with actual issue ID
+          update,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      // Handle the response as needed
+      console.log(response.data);
+    } catch (error) {
+      console.error("Failed to update issue details:", error);
+    }
   };
 
+  const fnc1 = async (event) => {
+    const newTitle = event.target.textContent;
+    await updateIssueDetails({ title: newTitle });
+  };
+  
+  const fnc2 = async (event) => {
+    const newDescription = event.target.textContent;
+    await updateIssueDetails({ description: newDescription });
+  };
+  
   return (
     <div className="h-auto p-3 m-3 mb-0 ">
       <h1
         className="text-3xl tracking-wide mb-[3vh] font-semibold"
         contentEditable="true"
-        onBlur={handleTitleChange}
+       
+        onBlur = {fnc1}
       >
-        {titleZ}
+        {title}
       </h1>
       <p
         className=" tracking-wide text-wrap  font-semibold min-h-[10vh] border-0"
         contentEditable="true"
-        onBlur={handleDescriptionChange}
+        
+        onBlur = {fnc2}
       >
-        {titleD}
+        {Disc}
       </p>
     </div>
   );
