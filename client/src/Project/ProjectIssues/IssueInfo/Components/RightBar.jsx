@@ -32,7 +32,6 @@ function RightBar() {
   const activeIssue = useSelector((state) => state.activeIssue.value);
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  
 
   useEffect(() => {
     const handleResize = () => {
@@ -105,7 +104,7 @@ function RightBar() {
       const dateinfo = assigneeUsername.issue.dueDate;
       const assigner = assigneeUsername.issue.assigneeUserID;
       const label = assigneeUsername.issue.label;
-      console.log("label",label);
+      console.log("label", label);
       const projid = assigneeUsername.issue.projectId;
 
       const response2 = await axios.get(
@@ -161,7 +160,6 @@ function RightBar() {
     }
   };
 
-
   const handleStatusChange = async (newStatus) => {
     await updateIssueDetails({ stage: newStatus });
   };
@@ -185,10 +183,35 @@ function RightBar() {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+  const delete2 = async () => {
+    try {
+      const confirmation = window.confirm(
+        `Are you sure you want to delete ${title} issue?`
+      );
+      if (confirmation) {
+        await axios.delete(
+          "http://localhost:8000/api/workspace/issue/details",
+          {
+            params: {
+              activeIssue: activeIssue,
+            },
+            withCredentials: true,
+          }
+        );
+        toast.success(`${title} issue deleted successfully!`);
+        setTimeout(function () {
+          navigate("/workspace");
+        }, 3000);
+      }
+    } catch (error) {
+      toast.error(`Error deleting issue ${title}`);
+      console.error("Error deleting issue:", error);
+    }
+  };
   const filteredTeamMembers = activeProjectMembers.filter((member) =>
-  member.name.toLowerCase().includes(searchQuery.toLowerCase())
-);
-  
+    member.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div>
       {!isMediumScreen ? (
@@ -235,7 +258,10 @@ function RightBar() {
           <div className="mb-4 flex justify-start items-center">
             <div className="text-white w-[20%] mr-3">Sprint</div>
             <Dropdown
-              options={sprintList.slice().reverse().map((sprint) => sprint.name)}
+              options={sprintList
+                .slice()
+                .reverse()
+                .map((sprint) => sprint.name)}
               initialSelectedOption={initialSelectedCycleOption}
               width="40"
             />
@@ -270,6 +296,14 @@ function RightBar() {
               className="bg-gray-800 text-white py-1 px-4 rounded inline-flex items-center focus:outline-none w-40"
             />
           </div>
+          <div className="mb-4 flex justify-start items-center mt-auto">
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              onClick={delete2}
+            >
+              Delete Issue
+            </button>
+          </div>
         </div>
       ) : (
         <div className="bg-gray-900 w-full flex flex-wrap text-white p-3">
@@ -301,8 +335,11 @@ function RightBar() {
           </div>
 
           <div className="ml-7 mb-2 flex justify-start items-center">
-          <Dropdown
-              options={sprintList.slice().reverse().map((sprint) => sprint.name)}
+            <Dropdown
+              options={sprintList
+                .slice()
+                .reverse()
+                .map((sprint) => sprint.name)}
               initialSelectedOption={initialSelectedCycleOption}
               width="40"
             />
@@ -318,7 +355,7 @@ function RightBar() {
           </div>
 
           <div className="ml-7 mb-2 flex justify-start items-center">
-          <div className="bg-gray-800 rounded text-white py-1 px-4 w-40">
+            <div className="bg-gray-800 rounded text-white py-1 px-4 w-40">
               {projectname}
             </div>
           </div>
@@ -331,9 +368,17 @@ function RightBar() {
               className="bg-gray-800 text-white py-1 px-4 rounded inline-flex items-center focus:outline-none w-40"
             />
           </div>
+          <div className="ml-7  mb-2 flex justify-start items-center">
+            <button
+              className="bg-red-500 hover:bg-red-700 py-1 px-4  text-white font-bold rounded"
+              onClick={delete2}
+            >
+              Delete Issue
+            </button>
+          </div>
         </div>
       )}
-       <ToastContainer />
+      <ToastContainer />
     </div>
   );
 }
