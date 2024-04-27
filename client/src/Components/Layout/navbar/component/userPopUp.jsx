@@ -1,17 +1,17 @@
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import './../navbar.css';
+import "./../navbar.css";
 const UserPopUp = () => {
   // Initials of the user's name
   const getInitials = (name) => {
-    const splitName = name.toUpperCase().split(' ');
+    const splitName = name.toUpperCase().split(" ");
     if (splitName.length === 1) {
-      return splitName[0] ? splitName[0].charAt(0) : '';
+      return splitName[0] ? splitName[0].charAt(0) : "";
     } else {
       return splitName[0].charAt(0) + splitName[1].charAt(0);
     }
-  }
+  };
   const [formData, setFormData] = useState({
     email: "", // Default email
     fullname: "", // Default full name
@@ -102,7 +102,15 @@ const UserPopUp = () => {
           </div>
 
           {/* Navigation links */}
-          <ul className="text-sm text-gray-700 dark:text-gray-200 p-0">
+          <ul className="text-sm text-gray-700 dark:text-gray-200 p-0 divide-y divide-gray-100">
+            <li>
+              <NavLink
+                to="/workspace"
+                className="flex text-white justify-center w-full py-2 text-decoration-none nav-link"
+              >
+                Dashboard
+              </NavLink>
+            </li>
             <li>
               <NavLink
                 to="/workspace/settings/profile"
@@ -126,7 +134,6 @@ const UserPopUp = () => {
       )}
     </div>
   );
-}
-
+};
 
 export default UserPopUp;

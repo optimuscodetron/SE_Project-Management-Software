@@ -55,26 +55,33 @@ const Dropdown = ({ options, initialSelectedOption,currentStatus,setCurrentStatu
       </button>
 
       {/* Dropdown menu */}
-      <ul
-        className={`absolute ${
+      {options.length > 0 ? (
+        <ul
+          className={`absolute ${
+            isOpen ? 'block' : 'hidden'
+            } bg-gray-800 text-white py-1 z-1 w-${width}  rounded-md shadow-lg`}
+        >
+          {options.map((option) => (
+            <li key={option}>
+              <button
+                onClick={() => selectOption(option)}
+                className={`block w-full text-left px-4 py-2 hover:bg-gray-700 focus:outline-none ${
+                  selectedOption === option ? 'bg-gray-700' : ''
+                  }`}
+              >
+                {option}{' '}
+                {selectedOption === option && <span className="float-right">✔</span>}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className={`absolute ${
           isOpen ? 'block' : 'hidden'
-        } bg-gray-800 text-white py-1 z-1 w-${width}  rounded-md shadow-lg`}
-        
-      >
-        {options.map((option) => (
-          <li key={option}>
-            <button
-              onClick={() => selectOption(option)}
-              className={`block w-full text-left px-4 py-2 hover:bg-gray-700 focus:outline-none ${
-                selectedOption === option ? 'bg-gray-700' : ''
-              }`}
-            >
-              {option}{' '}
-              {selectedOption === option && <span className="float-right">✔</span>}
-            </button>
-          </li>
-        ))}
-      </ul>
+          } bg-gray-800 text-white py-1 z-1 w-${width}  rounded-md shadow-lg`}>
+          No content
+        </div>
+      )}
     </div>
   );
 };

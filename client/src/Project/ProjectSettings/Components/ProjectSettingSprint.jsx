@@ -69,7 +69,10 @@ function ProjectSettingSprint() {
           toast.success(response.data.message); // Notify user about successful update
           dispatch(addSprintToProject(response.data.sprint));
           // window. location. reload();
-        } else {
+        } else if (response.status === 202) {
+          toast.error(response.data.message);
+        }
+        else {
           toast.error(response.data.message);
         }
       } catch (error) {

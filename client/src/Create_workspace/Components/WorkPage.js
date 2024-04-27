@@ -25,7 +25,7 @@ const WorkPage = () => {
         // console.log(res.data.workspace);
         console.log(`workspace succesfully created`);
         navigate("/workspace");
-        // window.location.reload();
+        window.location.reload();
       })
     }
    

@@ -23,7 +23,7 @@ const PSidebar = (props) => {
     >
       <div className="h-full px-2 overflow-y-auto bg-[#171e28] dark:bg-[#171e28]">
         <ul className="space-y-2 font-medium pt-2">
-          <li data-testid = "issues" onClick={props.openIssues}>
+          <li data-testid = "issues" onClick={props.handleProjectIssuesTrue}>
             <NavLink className={"text-decoration-none "}>
               <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group">
                 <BsFillInboxesFill />
@@ -35,7 +35,8 @@ const PSidebar = (props) => {
           </li>
           <li>
             <PSidebarCycleList
-              handleProjectIssues={props.handleProjectIssues}
+              handleProjectIssuesFalse={props.handleProjectIssuesFalse}
+
             />
           </li>
           <hr className="w-full h-1 mx-auto my-4 bg-gray-300 border-0 rounded md:my-10 dark:bg-gray-500" />

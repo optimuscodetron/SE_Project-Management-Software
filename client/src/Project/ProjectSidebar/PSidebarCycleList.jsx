@@ -21,7 +21,7 @@ const PSidebarCycleList = (props) => {
 
     const handleSprint=(_id)=>{
       dispatch(changeActiveSprint({_id:_id}));
-      props.handleProjectIssues();
+      props.handleProjectIssuesFalse();
     }
 
   return (
