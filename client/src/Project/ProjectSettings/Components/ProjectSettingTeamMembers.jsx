@@ -5,11 +5,13 @@ import { useSelector, useDispatch } from "react-redux";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { addMemberToProject, removeMemberFromProject } from "../../../redux/ProjectData/activeProjectAllMemberSlice";
+import Dropdown from "../../../Components/Layout/DropDown/dropdown";
 
 function ProjectSettingTeamMembers() {
 
   const dispatch = useDispatch()
   const activeWorkspaceMembers = useSelector((state) => state.WorkspaceMemberList.value);
+  const [addMemberEmails, setAddMemeberEmails]= useState();
   const activeProjectMembers = useSelector((state) => state.activeProjectAllMember.value);
   const projectId = useSelector((state) => state.activeProject.value._id);
   const [addMemberList, setAddMemeberList] = useState([]);
@@ -92,7 +94,6 @@ function ProjectSettingTeamMembers() {
     setShowRemoveConfirmation(true);
     console.log(showRemoveConfirmation);
 
-
   };
 
 
@@ -153,10 +154,17 @@ function ProjectSettingTeamMembers() {
   useEffect(() => {
     const filteredArray = activeWorkspaceMembers.filter(item1 => !activeProjectMembers.some(item2 => item2.id === item1.id));
     setAddMemeberList(filteredArray);
+    
     console.log(filteredArray);
 
 
-  }, []);
+  }, [filteredTeamMembers]);
+  useEffect(() => {
+    
+    setAddMemeberEmails(addMemberList.map(member => member.email));
+
+
+  }, [addMemberList]);
 
   return (
     <>
@@ -190,19 +198,24 @@ function ProjectSettingTeamMembers() {
                 <div className="bg-gray-900 text-center p-6 rounded-md shadow-md border-1 border-gray-700">
                   <h2 className="text-lg font-semibold mb-4">Add Member</h2>
                   {/* Email input field */}
-                  <input
+                  {/* <input
                     type="email"
                     placeholder="Enter email"
                     value={newMemberEmail}
                     onChange={(e) => setNewMemberEmail(e.target.value)}
                     className="border border-gray-600 rounded-sm text-white font-normal bg-[rgb(15,19,29)] text-base px-3 py-1 mb-2"
-                  />
-                  {/* <Dropdown
-                  options={addMemberList.email}
+                  /> */}
+                  {console.log(addMemberEmails)}
+                  <Dropdown
+                  options={addMemberEmails}
+                  initialSelectedOption={'Select Member To Add'}
+                  setCurrentStatus={setNewMemberEmail}
+
+                  // options, initialSelectedOption,currentStatus,setCurrentStatus,onChange, width
 
                   width="64"
                 />
-                 */}
+                
                   <div className="flex justify-end mt-4">
                     <button
                       onClick={handleAddMember}

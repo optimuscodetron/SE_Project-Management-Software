@@ -62,7 +62,8 @@ const WorkspaceIssues = (props) => {
           });
           setIssueList(modifiedIssues);
           setFilteredList(modifiedIssues);
-
+          props.setIssue(true);
+          console.log(props.issue);
 
   
  

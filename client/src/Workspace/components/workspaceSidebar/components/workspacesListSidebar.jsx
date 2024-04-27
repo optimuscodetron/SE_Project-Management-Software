@@ -45,7 +45,12 @@ const WorkspaceListSidebar = (props) => {
           const workspaceNames = data.workspaces.map(workspace => workspace.name);
           setUserWorkspace(workspaceNames);
           setCurrentWorkspace(workspaceNames[0]);
+          props.headerInfo({
+            headerIcon: <PiMonitorFill />,
+            headerTitle: workspaceNames[0]
+          });
           dispatch(changeWorkspaceNameId({name:data.workspaces[0].name,id:data.workspaces[0].id,url:data.workspaces[0].url}));
+          fetchallmembersOfWorkspace(data.workspaces[0].id);
           return data.workspaces
         });
         // console.log(workspaceData);
@@ -71,14 +76,14 @@ const WorkspaceListSidebar = (props) => {
     props.headerInfo(data);//comment for testing
     setCurrentWorkspace(userWorkspaces[index]);
     setShowWorkspaces(!showWorkspaces);
-    fetchallmembersOfWorkspace();
+    fetchallmembersOfWorkspace(item.id);
 
   }
-  const fetchallmembersOfWorkspace = async () => {
+  const fetchallmembersOfWorkspace = async (Id) => {
     try {
       // Replace 'your_workspace_id' with the actual workspace ID
       const data = {
-        workspaceId: workspaceId
+        workspaceId: Id
       }
       const response = await Axios.post('http://localhost:8000/workspace/members', data, {
         withCredentials: true,

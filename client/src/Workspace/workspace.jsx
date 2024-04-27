@@ -7,8 +7,10 @@ import Invite from "../Invite/Invite";
 import CreateNewProject from "./CreateNewProject/CreateNewProject";
 import Header from "../Components/header/header";
 import Inbox from "./Inbox/InboxSidebar";
+import Loader from "../loading";
 export default function Workspace() {
   const [showSideBar, setShowSideBar] = useState(true);
+  const [issue,setIssue] = useState(false);
   const showSideBarHandler = () => {
     setShowSideBar((prevState) => !prevState);
   };
@@ -70,6 +72,7 @@ export default function Workspace() {
 
   return (
     <div className="flex flex-col">
+      {!issue && <Loader />}
       <div className="flex-1">
         <Navbar showSideBarHandler={showSideBarHandler} />
       </div>
@@ -94,7 +97,7 @@ export default function Workspace() {
           />
 
           {openWorkspace && (
-            <WorkspaceIssues showFilterSidebar={showFilterSidebar} />
+            <WorkspaceIssues showFilterSidebar={showFilterSidebar} setIssue={setIssue} issue={issue}/>
           )}
           {openInbox && <Inbox onCloseInbox={closeInboxHandler} />}
         </div>
@@ -109,5 +112,6 @@ export default function Workspace() {
         </div>
       </div>
     </div>
+    
   );
 }
