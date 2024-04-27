@@ -228,7 +228,7 @@ exports.getIssue = async (req, res) => {
       if (!issue) {
         return res.status(404).json({ message: "Issue not found" });
       }
-  
+      await issue.save();
       // Return the updated issue
       return res.status(200).json({ issue });
     } catch (error) {
