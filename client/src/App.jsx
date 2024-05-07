@@ -21,17 +21,14 @@ import Workspace from "./Workspace/workspace";
 import ActivePage from "./Project/ActivePage/ActivePage";
 import WorkPage from "./Create_workspace/Components/WorkPage";
 import MemberSetting from "./Workspace/Settings/Member/MemberSetting";
+import Tabs from "./Project/Project_Analysis/Chart_all";
 import Profile from "./Workspace/Settings/Profile/Profile";
 import General from "./Workspace/Settings/General/General";
 
 import Invite from "./Invite/Invite";
 import InboxSidebar from "./Workspace/Inbox/InboxSidebar";
 
-
-
 import HomePage from "./Components/Home";
-
-
 
 // import IssueInfo from "./Project/ProjectBoard/IssueInfo/IssueInfo";
 // import CreateNewProject from "./Workspace/CreateNewProject/CreateNewProject";
@@ -42,7 +39,6 @@ const clientid =
   "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
 
 function App() {
-
   useEffect(() => {
     function start() {
       gapi.client.init({
@@ -87,7 +83,6 @@ function App() {
         >
           {" "}
         </Route>
-        
 
         {/* by Priyanshu */}
         <Route path="/workspace/settings/members" element={<MemberSetting />}>
@@ -102,6 +97,7 @@ function App() {
 
         <Route path="/workspace" element={<Workspace />} />
         <Route path="/Activepage" element={<ActivePage />} />
+        <Route path="/chartall" element={<Tabs />} />
 
         <Route path="/workspace/project" element={<Project />} />
 
@@ -123,6 +119,5 @@ function App() {
     </>
   );
 }
-
 
 export default App;

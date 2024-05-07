@@ -1,6 +1,7 @@
+// chart_status.jsx
 import React, { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
-import CurrentList from "../ProjectCycles/CurrentCycles/components/currentList"; // Importing the CurrentList data
+import CurrentList from "./currentList";
 
 const ChartComponent = () => {
   const barChartRef = useRef(null);
@@ -34,7 +35,7 @@ const ChartComponent = () => {
       labels: Object.keys(statusCounts),
       datasets: [
         {
-          label: "Number of Issues",
+          // label: "Number of Issues",
           data: Object.values(statusCounts),
           backgroundColor: [
             "rgba(255, 99, 132, 0.5)",
@@ -87,11 +88,19 @@ const ChartComponent = () => {
           scales: {
             y: {
               beginAtZero: true,
+              ticks: {
+                color: "black",
+              },
+            },
+            x: {
+              ticks: {
+                color: "black",
+              },
             },
           },
           plugins: {
             legend: {
-              display: true,
+              display: false,
               position: "top",
             },
           },
@@ -111,6 +120,7 @@ const ChartComponent = () => {
         type: "pie",
         data: pieChartData,
         options: {
+          color: "black",
           plugins: {
             legend: {
               display: true,
