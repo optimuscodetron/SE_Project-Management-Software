@@ -102,15 +102,16 @@ function ProjectSettingGeneral() {
             Project Details
           </h1>
 
-          <div class="mb-4 ">
-            <label for="form-field-17" class="block text-lg text-white  mt-10">
+          <div className="mb-4 ">
+            <label htmlFor="form-field-17" className="block text-lg text-white  mt-10">
               Project Name
             </label>
             <input
+              data-testid= 'ProjectNameInput'
               name="name"
               value={projectName}
               onChange={handleInputChangeProjectName}
-              class="h-10 w-[60%] lg:w-[17vw] px-2 rounded-sm border-[1px] border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base"
+              className="h-10 w-[60%] lg:w-[17vw] px-2 rounded-sm border-[1px] border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base"
             />
             {inputValue.trim() === "" && (
               <p className="text-red-500 text-xs italic mt-1">
@@ -120,7 +121,7 @@ function ProjectSettingGeneral() {
           </div>
 
           <div className="mb-4 ">
-            <label for="form-field-17" class="block text-lg text-white  mt-10">
+            <label htmlFor="form-field-17" className="block text-lg text-white  mt-10">
               Status
             </label>
             <Dropdown
@@ -131,28 +132,29 @@ function ProjectSettingGeneral() {
             />
           </div>
 
-          <div class="mb-4">
-            <label for="form-field-19" class="block text-lg text-white mt-10">
+          <div className="mb-4">
+            <label htmlFor="form-field-19" className="block text-lg text-white mt-10">
               Project Description
             </label>
             <textarea
               name="desciption"
+              data-testid= 'ProjectDescriptionInput'
               value={aboutProject}
               onChange={handleAboutProjectChange}
-              class="h-40 w-full px-2 rounded-sm border-[1px] border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base resize-none"
+              className="h-40 w-full px-2 rounded-sm border-[1px] border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base resize-none"
             />
           </div>
 
-          <div class="flex justify-between">
+          <div className="flex justify-between">
             <button
-              class="inline-flex items-center px-4 py-2 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition"
+              className="inline-flex items-center px-4 py-2 bg-[#9333EA] rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:bg-[#9233eac6] hover:ring hover:ring-indigo-300 disabled:opacity-25 transition"
               onClick={() => handleSubmit()}
             >
               Submit
             </button>
             <button
               type="delete"
-              class="inline-flex items-center px-4 py-2 bg-red-800 rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:border-indigo-800 hover:ring hover:ring-indigo-300 disabled:opacity-25 transition"
+              className="inline-flex items-center px-4 py-2 bg-red-800 rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:outline-none hover:border-indigo-800 hover:ring hover:ring-indigo-300 disabled:opacity-25 transition"
             >
               Delete
             </button>
