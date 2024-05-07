@@ -10,9 +10,10 @@ module.exports = function(app){
     /*piyush*/
     app.get('/api/workspace/issue/description', authenticate, Issuecontroller.getIssue)
     app.put('/api/workspace/issue/updateDescription', authenticate, Issuecontroller.updateIssueDescription);
-    
+    //piyush
     app.get('/api/workspace/issue/details',authenticate, Issuecontroller.assigneDetails);
-
+    app.delete('/api/workspace/issue/details',authenticate, Issuecontroller.deleteIssue);
+    //piyush
     app.post('/api/workspace/issue/comment', authenticate, Issuecontroller.addComment);
     app.get('/api/workspace/issue/comments', authenticate, Issuecontroller.getComments);
 

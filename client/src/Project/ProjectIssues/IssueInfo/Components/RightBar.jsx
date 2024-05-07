@@ -4,6 +4,8 @@ import Dropdown from "../../../../Components/Layout/DropDown/dropdown";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function formatDate(dateString) {
   const [day, month, year] = dateString.split("/");
@@ -11,6 +13,12 @@ function formatDate(dateString) {
 }
 
 function RightBar() {
+  const activeProjectMembers = useSelector(
+    (state) => state.activeProjectAllMember.value
+  );
+  const sprintList = useSelector(
+    (state) => state.activeProjectSprintList.value
+  );
   const [isMediumScreen, setIsMediumScreen] = useState(false);
   const [status, setStatus] = useState(null);
   const [state, setstatus] = useState(null);
@@ -19,8 +27,11 @@ function RightBar() {
   const [date, setdate] = useState(null);
   const [Assigne, setAssigne] = useState("");
   const [Label, setLabel] = useState("");
+  const [title, setTitle] = useState("");
   const [projectname, setprojectname] = useState("");
   const activeIssue = useSelector((state) => state.activeIssue.value);
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const handleResize = () => {
@@ -44,7 +55,7 @@ function RightBar() {
   ];
   const initialSelectedProjectOption = "Project 1";
 
-  const statusOptions = ["Backlog", "Todo", "In Progress", "Done", "Canceled"];
+  const statusOptions = ['Backlog','ToDo','InProgress','Done','Cancelled'];
 
   const PriorityOptions = ["No priority", "Urgent", "High", "Medium", "Low"]; // Your options array
   const initialSelectedPriorityOption = "No priority"; // Initial selected option
@@ -55,17 +66,17 @@ function RightBar() {
   const LabelOptions = ["Improvement", "Feature", "Bug", "None"]; // Your options array
   const initialSelectedLabelOption = "None"; // Initial selected option
 
-  const cycleOptions = [
-    "Cycle 1",
-    "Cycle 2",
-    "Cycle 3",
-    "Cycle 4",
-    "Cycle 5",
-    "Cycle 6",
-    "Cycle 7",
-    "Cycle 8",
+  const sprintOptions = [
+    "sprint 1",
+    "sprint 2",
+    "sprint 3",
+    "sprint 4",
+    "sprint 5",
+    "sprint 6",
+    "sprint 7",
+    "sprint 8",
   ]; // Your options array
-  const initialSelectedCycleOption = "Cycle 1"; // Initial selected option
+  const initialSelectedCycleOption = "CHEtan";
 
   const [dueDate, setStartDate] = useState(formatDate("22/03/2024"));
 
@@ -93,7 +104,7 @@ function RightBar() {
       const dateinfo = assigneeUsername.issue.dueDate;
       const assigner = assigneeUsername.issue.assigneeUserID;
       const label = assigneeUsername.issue.label;
-      console.log("label",label);
+      console.log("label", label);
       const projid = assigneeUsername.issue.projectId;
 
       const response2 = await axios.get(
@@ -116,6 +127,9 @@ function RightBar() {
       setpriority(fetchedPriority); // Set status
       setdate(dateinfo); // Set status
       setLabel(label); // Set label
+      const title = assigneeUsername.issue.title;
+      console.log("label", label);
+      setTitle(title);
       setIsLoading(false); // Set loading state to false after data is fetched
     } catch (error) {
       console.error("Failed to fetch issue:", error);
@@ -146,31 +160,6 @@ function RightBar() {
     }
   };
 
-  // const updateprojectassignename = async (assigneeId, projectId) => {
-  //   try {
-  //     const update = {
-  //       userId: assigneeId,
-  //       update: { projectId }
-  //     };
-
-  //     const response = await axios.put(
-  //       "http://localhost:8000/api/workspace/issue/updateDetails",
-  //       update,
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     );
-
-  //     if (response.status === 200) {
-  //       console.log("Update successful:", response.data);
-  //     } else {
-  //       console.log("Update failed:", response.data);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating issue details:", error);
-  //   }
-  // };
-
   const handleStatusChange = async (newStatus) => {
     await updateIssueDetails({ stage: newStatus });
   };
@@ -179,6 +168,9 @@ function RightBar() {
     await updateIssueDetails({ priority: newPriority });
   };
   const handleLabelChange = async (newLabel) => {
+    await updateIssueDetails({ label: newLabel });
+  };
+  const handleAssigneChange = async (newLabel) => {
     await updateIssueDetails({ label: newLabel });
   };
   const handleDateChange = async (newDate) => {
@@ -191,6 +183,35 @@ function RightBar() {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+  const delete2 = async () => {
+    try {
+      const confirmation = window.confirm(
+        `Are you sure you want to delete ${title} issue?`
+      );
+      if (confirmation) {
+        await axios.delete(
+          "http://localhost:8000/api/workspace/issue/details",
+          {
+            params: {
+              activeIssue: activeIssue,
+            },
+            withCredentials: true,
+          }
+        );
+        toast.success(`${title} issue deleted successfully!`);
+        setTimeout(function () {
+          navigate("/workspace");
+        }, 3000);
+      }
+    } catch (error) {
+      toast.error(`Error deleting issue ${title}`);
+      console.error("Error deleting issue:", error);
+    }
+  };
+  const filteredTeamMembers = activeProjectMembers.filter((member) =>
+    member.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div>
       {!isMediumScreen ? (
@@ -226,17 +247,21 @@ function RightBar() {
           <div className="mb-4 flex justify-start items-center">
             <div className="text-white w-[20%] mr-3">Assigne</div>
             <Dropdown
-              options={AssigneOptions}
+              options={filteredTeamMembers.map((member) => member.name)}
               initialSelectedOption={Assigne}
               setCurrentStatus={setAssigne}
+              onChange={handleAssigneChange}
               width="40"
             />
           </div>
 
           <div className="mb-4 flex justify-start items-center">
-            <div className="text-white w-[20%] mr-3">Cycle</div>
+            <div className="text-white w-[20%] mr-3">Sprint</div>
             <Dropdown
-              options={cycleOptions}
+              options={sprintList
+                .slice()
+                .reverse()
+                .map((sprint) => sprint.name)}
               initialSelectedOption={initialSelectedCycleOption}
               width="40"
             />
@@ -257,12 +282,9 @@ function RightBar() {
 
           <div className="mb-4 flex justify-start items-center">
             <div className="text-white w-[20%] mr-3">Project</div>
-            <Dropdown
-              options={projectOptions}
-              initialSelectedOption={projectname}
-              setCurrentStatus={setprojectname}
-              width="40"
-            />
+            <div className="bg-gray-800 rounded text-white py-1 px-4 w-40">
+              {projectname}
+            </div>
           </div>
 
           <div className="mb-4 flex justify-start items-center">
@@ -273,6 +295,14 @@ function RightBar() {
               dateFormat="dd/MM/yyyy"
               className="bg-gray-800 text-white py-1 px-4 rounded inline-flex items-center focus:outline-none w-40"
             />
+          </div>
+          <div className="mb-4 flex justify-start items-center mt-auto">
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              onClick={delete2}
+            >
+              Delete Issue
+            </button>
           </div>
         </div>
       ) : (
@@ -306,7 +336,10 @@ function RightBar() {
 
           <div className="ml-7 mb-2 flex justify-start items-center">
             <Dropdown
-              options={cycleOptions}
+              options={sprintList
+                .slice()
+                .reverse()
+                .map((sprint) => sprint.name)}
               initialSelectedOption={initialSelectedCycleOption}
               width="40"
             />
@@ -322,11 +355,9 @@ function RightBar() {
           </div>
 
           <div className="ml-7 mb-2 flex justify-start items-center">
-            <Dropdown
-              options={projectOptions}
-              initialSelectedOption={initialSelectedProjectOption}
-              width="40"
-            />
+            <div className="bg-gray-800 rounded text-white py-1 px-4 w-40">
+              {projectname}
+            </div>
           </div>
 
           <div className="ml-7 mb-2 flex justify-start items-center">
@@ -337,8 +368,17 @@ function RightBar() {
               className="bg-gray-800 text-white py-1 px-4 rounded inline-flex items-center focus:outline-none w-40"
             />
           </div>
+          <div className="ml-7  mb-2 flex justify-start items-center">
+            <button
+              className="bg-red-500 hover:bg-red-700 py-1 px-4  text-white font-bold rounded"
+              onClick={delete2}
+            >
+              Delete Issue
+            </button>
+          </div>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 }

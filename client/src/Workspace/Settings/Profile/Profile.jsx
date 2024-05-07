@@ -66,6 +66,10 @@ const Profile = () => {
       );
       toast.success("Profile updated successfully!"); // Notify user about successful update
       console.log("Profile updated successfully:", response.data);
+      setTimeout(() => {
+        
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.error("Error updating profile:", error);
       toast.error("Error updating profile!"); // Notify user about the error

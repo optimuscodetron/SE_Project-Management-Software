@@ -22,4 +22,5 @@ module.exports = function(app){
   app.get("/api/users/profile", authenticate, UserController.getProfile);
  // Update user profile, Piyush
   app.put("/api/users/profile", authenticate, UserController.updateProfile);
+  app.get("/api/users/logout",authenticate, UserController.userLogout)
 }

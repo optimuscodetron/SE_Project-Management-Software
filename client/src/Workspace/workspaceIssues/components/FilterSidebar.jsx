@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect, useRef } from "react";
 import { AiFillSetting } from "react-icons/ai"
 import { TbUrgent } from "react-icons/tb";
-import { PiCellSignalHighBold } from "react-icons/pi";
+import { PiCellSignalHighBold, PiCellSignalLowBold } from "react-icons/pi";
 import { PiCellSignalMedium } from "react-icons/pi";
 import { GrProjects } from "react-icons/gr";
 import Axios from "axios";
@@ -23,6 +23,7 @@ const FilterSidebar = (props) => {
     ]);
   const workspacename = useSelector((state) => state.workspaceNameId.value.name);
 
+  
 
   useEffect(() => {
     fetchallmembersOfWorkspace();
@@ -149,7 +150,7 @@ const FilterSidebar = (props) => {
 
 
   return (
-    <div className='bg-[#171e28] sm:w-[30vw] md:w-[25vw] w-[65vw] h-[80vh] overflow-y-scroll  text-white  z-10  right-0'>
+    <div className='bg-gray-900 sm:w-[30vw] md:w-[25vw] w-[65vw] h-[80vh] overflow-y-scroll  text-white  z-10  right-0'>
 
        <div className='p-4'>
           <span className='bg-gray-700 p-1 text-sm'>Active Issues</span> 
@@ -199,6 +200,11 @@ const FilterSidebar = (props) => {
                 <div className='flex items-center'><PiCellSignalMedium/><p className='ml-2'>Medium</p></div>
                 <div className='text-gray-400 group flex w-[34%] justify-between'>{button2==3? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>}<p></p> </div>
                   </button>
+
+                <button className=' w-full group text-left p-2 hover:bg-gray-700 flex justify-between' onClick={(e)=>handleFilterSidebarPriority(e,"low",4)} >
+                <div className='flex items-center'><PiCellSignalLowBold/><p className='ml-2'>Low</p></div>
+                <div className='text-gray-400 group flex w-[34%] justify-between'>{button2==4? <button className='text-white bg-gray-800 text-sm p-1' onClick={(e)=>handleClearFilters(e)}>Clear filters</button>:<p className='opacity-10 group-hover:opacity-100 mr-2 '>See issues</p>} <p></p> </div>
+                 </button>
               
             </div>:null
           }

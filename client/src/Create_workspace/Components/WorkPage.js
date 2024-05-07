@@ -25,7 +25,7 @@ const WorkPage = () => {
         // console.log(res.data.workspace);
         console.log(`workspace succesfully created`);
         navigate("/workspace");
-        // window.location.reload();
+        window.location.reload();
       })
     }
    
@@ -38,9 +38,29 @@ const WorkPage = () => {
       // console.log(name.current.value);
       seturl("trackerX.app/"+name1.current.value);
     }
+
+    const handleGoBack = () => {
+      const currentURL = window.location.href;
+  const newURL = currentURL.replace("/create_workspace", "/workspace");
+  window.location.href = newURL;
+    };
     
   return (
     <div className='bg-gray-800 w-full h-screen text-white'>
+
+<button onClick={handleGoBack} className=" cursor-pointer m-2 ">
+          <svg
+            className=" h-8 w-8 text-gray-500 "
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
 
         <div className='pt-[100px] pb-16 m-auto w-[40%]'>
 

@@ -93,7 +93,7 @@ module.exports.createSprint=async(req,res)=>{
             return res.status(404).json({ error: 'Project not found' });
         }
         else if(project.lead!=userId){
-            return res.status(505).json({ error: 'Only lead can create sprint' });
+            return res.status(202).json({ message: 'Only lead can create sprint' });
         }
 
         const sprint = new Sprint({

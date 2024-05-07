@@ -36,12 +36,27 @@ function ProjectSettingSprint() {
   }
 
   const handleCreate = async () => {
+    const currentDateWithoutTime = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+    const startDateWithoutTime = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    );
+    const endDateWithoutTime = new Date(
+      endDate.getFullYear(),
+      endDate.getMonth(),
+      endDate.getDate()
+    );
     if (sprintName === "") {
       toast.error("Please enter Sprint Name!!");
-    } else if (startDate < currentDate) {
-      toast.error("Please select valid start date for sprint!!");
-    } else if (endDate < startDate) {
-      toast.error("End date cannot be before start date!!");
+    } else if (startDateWithoutTime < currentDateWithoutTime) {
+      toast.error("Please select a valid start date for the sprint!!");
+    } else if (endDateWithoutTime < startDateWithoutTime) {
+      toast.error("End date cannot be before the start date!!");
     } else {
       try {
         const data = {
@@ -62,7 +77,10 @@ function ProjectSettingSprint() {
           toast.success("Sprint Successfully Created"); // Notify user about successful update
           dispatch(addSprintToProject(response.data.sprint));
           // window. location. reload();
-        } else {
+        } else if (response.status === 202) {
+          toast.error(response.data.message);
+        }
+        else {
           toast.error(response.data.message);
         }
       } catch (error) {
@@ -109,7 +127,7 @@ function ProjectSettingSprint() {
             />
           </div>
           <div className="flex flex-row items-center ml-5 mt-3">
-          <label class="block text-lg text-white w-40" htmlFor="startDate">Select End Date </label>
+            <label class="block text-lg text-white w-40" htmlFor="startDate">Select End Date </label>
             <input type="date"
             id="startDate"
             selected={endDate}
@@ -129,7 +147,7 @@ function ProjectSettingSprint() {
         <h1 className="text-3xl tracking-wide text-center font-semibold mt-4 mb-4 border-y border-gray-600 py-3 ">
           List of Sprints
         </h1>
-        <div className="h-full w-full overflow-scroll">
+        <div className="h-full w-full overflow-scroll min-h-[200px]">
           <div className="w-full flex flex-col items-center">
             {sprintList.slice().reverse().map((sprint) => (
               <div

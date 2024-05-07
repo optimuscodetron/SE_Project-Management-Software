@@ -14,11 +14,7 @@ function ProjectSettingGeneral() {
   const [projectName, setProjectName] = useState(project.name);
   const dispatch = useDispatch();
   const projectStatusOptions = [
-    "Backlog",
-    "Planned",
-    "In Progress",
-    "Completed",
-    "Cancelled",
+    'Backlog','ToDo','InProgress','Done','Cancelled'
   ];
   const initialSelectedStatus = project.status;
   const [currentStatus, setCurrentStatus] = useState(project.status);
