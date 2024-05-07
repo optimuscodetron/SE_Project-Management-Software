@@ -113,7 +113,7 @@ function ProjectSettingGeneral() {
               onChange={handleInputChangeProjectName}
               className="h-10 w-[60%] lg:w-[17vw] px-2 rounded-sm border-[1px] border-gray-600 text-white font-normal bg-[rgb(15,19,29)] text-base"
             />
-            {inputValue?.trim() === "" && (
+            {inputValue.trim() === "" && (
               <p className="text-red-500 text-xs italic mt-1">
                 Project name must not be empty.
               </p>
