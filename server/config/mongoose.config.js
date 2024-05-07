@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 const { Workspace } = require('../models/workspace.model');
 // const db=process.env.DB
@@ -18,4 +19,3 @@ mongoose.connect("mongodb+srv://Kushagra_18:bDFTOPZeMaygXAE3@cluster0.mxxglsz.mo
 
 })
     .catch(err => console.log("Something went wrong ", err));
-

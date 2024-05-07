@@ -1,109 +1,145 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import "./Inbox.css";
 import InboxIssues from './InboxIssues';
-import IssueInfo from './Issue_Info';
+//import IssueInfo from './Issue_Info';
+import IssueInfo from "../../Project/ProjectIssues/IssueInfo/IssueInfo";
+import { useSelector,useDispatch } from "react-redux";
+
+// import { Axios } from "axios";
+import axios from "axios";
 
 const Inbox = (props) => {
-  const [messages, setMessages] = useState([
-    {
-      id: 6,
-      sender: 'Issue 1 ',
-      subject: 'Alert',
-      body: 'This is a message about upcoming meeting. Answer the poll for deciding meeting date.',
-      isRead: false,
-      relatedTask: {
-        taskId: 'Task005',
-        taskName: 'Meetings',
-        deadline: '2024-04-10',
-        completed: false,
-      },
-    },
-    {
-      id: 5,
-      sender: 'Issue 2',
-      subject: 'Alert',
-      body: 'This is a message to ask info about your branch of the project.',
-      isRead: true,
-      relatedTask: {
-        taskId: 'Task006',
-        taskName: 'Merging',
-        deadline: '2024-03-26',
-        completed: true,
-      },
-    },
-    {
-      id: 1,
-      sender: 'Issue 3',
-      subject: 'Alert',
-      body: 'This is a message about a project update.',
-      isRead: false,
-      relatedTask: {
-        taskId: 'Task001',
-        taskName: 'Implement User Authentication',
-        deadline: '2024-04-15',
-        completed: false,
-      },
-    },
-    {
-      id: 2,
-      sender: 'Issue 4',
-      subject: 'Alert',
-      body: 'This is a message to remind you about a task.',
-      isRead: true,
-      relatedTask: {
-        taskId: 'Task002',
-        taskName: 'Update Dashboard UI',
-        deadline: '2024-03-28',
-        completed: true,
-      },
-    },
-    {
-      id: 3,
-      sender: 'Issue 5',
-      subject: 'Alert',
-      body: 'The deadline for the UI redesign task has been extended to next week.',
-      isRead: false,
-      relatedTask: {
-        taskId: 'Task003',
-        taskName: 'Redesign User Interface',
-        deadline: '2024-04-05',
-        completed: false,
-      },
-    },
-    {
-      id: 4,
-      sender: 'Issue 6',
-      subject: 'Alert',
-      body: 'I need to request some time off next month.',
-      isRead: false,
-      relatedTask: {
-        taskId: 'Task004',
-        taskName: 'Optimize Database Queries',
-        deadline: '2024-04-15',
-        completed: false,
-      },
-    },
-    // Add more messages as needed
-  ]);
+  
+  const [messages, setMessages] = useState([]);
+  const [filteredList, setFilteredList] = useState([]); 
+    useEffect(() => {
+        fetchInboxMessages();
+    }, []);
+
+    const fetchInboxMessages = async () => {
+        try {
+            const response = await axios.get(
+                'http://localhost:8000/api/issues/user',
+                { withCredentials: true }
+            );
+            const data = response.data.messages; // Assuming the response structure
+            setMessages(data);
+        } catch (error) {
+            console.error('Error fetching inbox messages:', error);
+            // Handle errors as needed
+            const dummyMessages = [
+              {
+                  id: 1,
+                  title: 'Dummy Issue 1',
+                  description: 'This is a dummy issue 1',
+                  creator: 'Admin',
+                  assigneeUsername: 'JohnDoe',
+                  stage: 'Backlog',
+                  priority: 'Low',
+                  dueDate: new Date(),
+                  projectId: 1,
+                  projectTitle: 'Project A'
+              },
+              {
+                  id: 2,
+                  title: 'Dummy Issue 2',
+                  description: 'This is a dummy issue 2',
+                  creator: 'Admin',
+                  assigneeUsername: 'JaneDoe',
+                  stage: 'ToDo',
+                  priority: 'High',
+                  dueDate: new Date(),
+                  projectId: 2,
+                  projectTitle: 'Project B'
+              }
+              // Add more dummy data as needed
+          ];
+          setMessages(dummyMessages);
+        }
+    };
+
 
 
   const [selectedMessageId, setSelectedMessageId] = useState(null);
   const [showIssueInfo, setShowIssueInfo] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
+  const [filterOption, setFilterOption] = useState('all'); // Default filter option
+
+  
+
   const handleSelectMessage = (messageId) => {
     setSelectedMessageId(messageId);
-    setShowIssueInfo(true); 
+    setShowIssueInfo(true);
   };
 
   const handleCloseIssueInfo = () => {
     setSelectedMessageId(null);
-    setShowIssueInfo(false); // Hide the IssueInfo component when closed
+    setShowIssueInfo(false);
   };
+
+  // Function to filter messages based on search input and filter option
+  const filteredMessages = messages.filter(message => {
+    // Filter by search input
+    const searchMatch = message.title.toLowerCase().includes(searchInput.toLowerCase()) ||
+                       message.priority.toLowerCase().includes(searchInput.toLowerCase()) ||
+                       message.stage.toLowerCase().includes(searchInput.toLowerCase());
+    // Filter by filter option
+    const filterMatch = filterOption === 'all' || 
+                        (filterOption === 'read' && message.isRead) ||
+                        (filterOption === 'unread' && !message.isRead);
+    return searchMatch && filterMatch;
+  });
+
+  // Filter by assignee
+const handleFilterAssignee = (name) => {
+  setFilteredList(messages.filter((message) => {
+    // Check if assigneeUsername is defined before accessing toLowerCase()
+    return message.assigneeUsername && message.assigneeUsername.toLowerCase() === name.toLowerCase();
+  }));
+};
+
+
+// Filter by project
+const handleFilterProject = (projectId) => {
+  setFilteredList(messages.filter((message) => {
+    // Check if projectId is defined before accessing it
+    return message.projectId === projectId;
+  }));
+};
+
+  
+const selectedMessage = messages.find(message => message.id === selectedMessageId);
+
+
 
   return (
     <div className="inbox-container bg-navy-700">
       <div className="inbox-content">
         <div className="message-list">
+          {/* Search Input */}
+          <div className="search-container">
+            <input
+              type="text"
+              placeholder="Search messages..."
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+            
+      
+            <div className="filter-dropdown">
+            <select
+              value={filterOption}
+              onChange={(e) => setFilterOption(e.target.value)}
+            >
+              <option value="all">All</option>
+              <option value="read">Read</option>
+              <option value="unread">Unread</option>
+            </select>
+      <div className="dropdown-arrow"></div> {/* Arrow indicating dropdown */}
+    </div>
+          </div>
+          {/* Message List */}
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -124,43 +160,56 @@ const Inbox = (props) => {
             Inbox
           </h2>
           <ul>
-            {messages.map((message) => (
+            {filteredMessages.map((message) => (
               <li
                 key={message.id}
                 className={`message-item ${selectedMessageId === message.id ? 'selected' : ''}`}
                 onClick={() => handleSelectMessage(message.id)}
                 style={{
-                  borderBottom: '1px solid  rgba(255, 255, 255, 0.1)', // Light white with 50% opacity
+                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                 }}
               >
-                <div className="message-sender">{message.sender}</div>
-                <div className="message-subject">{message.subject}</div>
+                <div className="message-sender">{message.title}</div>
+                <div className="message-subject">{message.stage}</div>
                 {message.isRead && <div className="message-unread-dot"></div>}
               </li>
             ))}
           </ul>
         </div>
-        {showIssueInfo  && (
+        {showIssueInfo && selectedMessage &&(
+          
           <div className="issue-info">
-          <div className="message-details">
-            <IssueInfo  onCloseIssueInfo={handleCloseIssueInfo}/>
-            <br></br>
-            <br></br>{/*
-            <h1>{messages.find((m) => m.id === selectedMessageId)?.subject}</h1><br></br>
-            <div className="message-task">
-              <h2>Task Details:</h2><br></br>
-              <p><strong>Task ID:</strong> {messages.find((m) => m.id === selectedMessageId)?.relatedTask.taskId}</p><br></br>
-              <p><strong>Task Name:</strong> {messages.find((m) => m.id === selectedMessageId)?.relatedTask.taskName}</p><br></br>
-              <p><strong>Deadline:</strong> {messages.find((m) => m.id === selectedMessageId)?.relatedTask.deadline}</p><br></br>
-              <p><strong>Status:</strong> {messages.find((m) => m.id === selectedMessageId)?.relatedTask.completed ? 'Completed' : 'Pending'}</p><br></br>
+           {/* <div onClick={handleCloseIssueInfo} className="close-button">
+              &#x2716;
             </div>
-            <div className="message-body">
-              <h2>Message Body:</h2>
-              <p>{messages.find((m) => m.id === selectedMessageId)?.body}</p>
-            </div><br></br>
-           */}
-        </div>
-        </div>
+              
+                
+                {messages.find(message => message.id === selectedMessageId) && (
+                  <div key={selectedMessageId}>
+                   
+                    <h1>{messages.find(message => message.id === selectedMessageId).title}</h1><br></br>
+                    <div className="message-task">
+                      <h2>Task Details:</h2><br></br>
+                      <p><strong>Task ID:</strong> {messages.find(message => message.id === selectedMessageId).id}</p><br></br>
+                      <p><strong>Task Name:</strong> {messages.find(message => message.id === selectedMessageId).title}</p><br></br>
+                      <p><strong>Deadline:</strong> {messages.find(message => message.id === selectedMessageId).dueDate}</p><br></br>
+                      <p><strong>Status:</strong> {messages.find(message => message.id === selectedMessageId).stage}</p><br></br>
+                    </div>
+                    <div className="message-body">
+                      <h2>Message Body:</h2>
+                      <p>{messages.find(message => message.id === selectedMessageId).description}</p>
+                    </div>
+                  </div>
+                )}*/}
+              
+
+
+              <div className="message-details">
+              <IssueInfo message={messages.find(message => message.id === selectedMessageId)} onClick={handleCloseIssueInfo}
+                />
+              </div>
+              
+          </div>
         )}
       </div>
     </div>
@@ -168,3 +217,6 @@ const Inbox = (props) => {
 };
 
 export default Inbox;
+
+
+  

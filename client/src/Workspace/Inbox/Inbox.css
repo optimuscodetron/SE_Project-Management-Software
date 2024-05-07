@@ -7,6 +7,37 @@
     
     
   }
+  .search-container input[type="text"] {
+    color: black; /* Change text color to black */
+  }
+  .search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .filter-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px;
+    color: black;
+  }
+  
+  .filter-dropdown select {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding-right: 20px;
+    
+  }
+  
+  
+  
   
   .inbox-title {
     color: aliceblue;
@@ -125,7 +156,7 @@
     padding: 5px 10px; /* Add some padding */
     border-radius: 4px; /* Add rounded corners */
     cursor: pointer; /* Set cursor to pointer on hover */
-    width: 10%;
+    width: 5vh;
   }
   
   .close-button:hover {

@@ -115,6 +115,49 @@ exports.changeIssueStatus = async (req, res) => {
     }
 }
 
+module.exports.getAllIssuesOfSignedInUser = async (req, res) => {
+    try {
+        const userId = req.userId; // Assuming userId is extracted from authentication middleware
+
+        // Find all projects where the user is a member
+        const projects = await Project.find({ memberIDs: userId });
+
+        // Extract project IDs from the projects found
+        const projectIds = projects.map(project => project._id);
+
+        // Retrieve all issues associated with those project IDs and assigned to the user
+        const issues = await Issue.find({ 
+            projectId: { $in: projectIds }, 
+            assigneeUserID: userId 
+        })
+        .populate('assigneeUserID', 'username') // Populate the username of the assignee
+        .populate('projectId', 'title'); // Populate the title of the project
+
+        const formattedMessages = issues.map(issue => ({
+            id: issue._id, // Unique identifier of the issue
+            title: issue.title, // Title of the issue
+            description: issue.description, // Description of the issue
+            creator: issue.creator ? issue.creator.username : null, // Username of the creator if available
+            assigneeUsername: issue.assigneeUserID ? issue.assigneeUserID.username : null, // Username of the assignee if available
+            stage: issue.stage, // Stage of the issue (e.g., Backlog, ToDo, InProgress, Done, Cancelled)
+            priority: issue.priority, // Priority of the issue (e.g., Lowest, Low, High, Highest)
+            dueDate: issue.dueDate, // Due date of the issue
+            projectId: issue.projectId ? issue.projectId._id : null, // ID of the project to which the issue belongs
+            projectTitle: issue.projectId ? issue.projectId.title : null // Title of the project to which the issue belongs
+        }));
+        
+        // formattedMessages is an array containing formatted data of all the issues
+        
+
+        // Send the list of issues as a response
+        res.status(200).json({ messages: formattedMessages });
+    } catch (error) {
+        console.error('Error fetching issues of signed-in user:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+
 exports.getIssue = async (req, res) => {
     const { activeIssueId } = req.query;
   

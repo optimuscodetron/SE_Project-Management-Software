@@ -1,7 +1,9 @@
+
+import React, { useState } from "react";
 import axios from "axios";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+
 function TitleDescrip() {
   const [Disc, setDisc] = useState(" ");
   const activeIssue = useSelector((state) => state.activeIssue.value);
@@ -18,6 +20,7 @@ function TitleDescrip() {
             withCredentials: true,
           }
         );
+
 
         const assigneeUsername = response.data;
         console.log(assigneeUsername);
