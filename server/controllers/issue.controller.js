@@ -271,7 +271,7 @@ exports.getIssue = async (req, res) => {
       if (!issue) {
         return res.status(404).json({ message: "Issue not found" });
       }
-  
+      await issue.save();
       // Return the updated issue
       return res.status(200).json({ issue });
     } catch (error) {
@@ -279,4 +279,26 @@ exports.getIssue = async (req, res) => {
       return res.status(500).json({ message: "Internal server error" });
     }
   };
+  //piyush
+  exports.deleteIssue = async (req,res) =>{
+    try {
+      
+      const activeIssueId = req.query.activeIssue;
+      const issue = await Issue.findOne({
+        _id : activeIssueId,
+    })
+    
+    if(!issue)
+    {
+      return res.status(404).json({ message: "Issue not found" });
+    }
 
+    await Issue.findOneAndDelete({
+      _id : activeIssueId
+    })
+    res.status(200).json({ message: `issue ${activeIssueId} deleted successfully` });
+  } catch (error) {
+    console.error(`Error deleting ${activeIssueId} Issue:`, error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}

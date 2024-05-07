@@ -68,7 +68,7 @@ function Comment() {
   useEffect(() => {
     const fetchIssue = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/workspace/issue/description`, {
+        const response = await axios.get(`http://localhost:8000/api/users/profile`, {
           params: {
             activeIssueId: activeIssue._id,
           },
@@ -77,7 +77,7 @@ function Comment() {
     
         const assigneeUsername = response.data;
         console.log(assigneeUsername);
-        const username = assigneeUsername.assigneeUser.username;
+        const username = assigneeUsername.username;
         
         setAssigne(username);
         console.log("details", assigneeUsername.assigneeUser.username);

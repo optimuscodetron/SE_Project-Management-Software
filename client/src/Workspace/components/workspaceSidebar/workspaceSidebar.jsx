@@ -98,10 +98,10 @@ const WorkspaceSidebar = (props) => {
           <div className="border-b border-white my-2 w-full"></div>
           <li>
             
-             { !isHide?  <ProjectListSidebar
+               <ProjectListSidebar
                   onOpenCreateProject={props.onOpenCreateProject}
                   // workspaceId={workspaceId}
-                />:null}
+                />
            
 
           </li>

@@ -306,6 +306,15 @@ module.exports.getProfile = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   };
+
+  module.exports.userLogout = async (req,res) =>{
+    try {
+      res.clearCookie("usertoken");
+      res.redirect("http://localhost:3000");
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
   
   
 

@@ -1,5 +1,5 @@
 import { changeActiveIssue } from '../../../redux/issueId/activeIssueSlice'
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {
@@ -43,6 +43,22 @@ export default function IssueCard({ issue, onMoveIssue }) {
   };
 
   const assigneeInitials = getInitials(issue.assignee);
+
+  const dropdownRef = useRef(null);
+
+    const handleOutsideClick = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setDropdownOpen(false);
+        }
+    };
+    useEffect(() => {
+        document.addEventListener('click', handleOutsideClick);
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, []);
+
+
 
   return (
     <div className=" shadow-md p-2 mb-2 rounded-lg bg-[#273341] hover:bg-[#36414d]">
@@ -106,7 +122,7 @@ export default function IssueCard({ issue, onMoveIssue }) {
             Cancelled
           </button>
         )}
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
           {issue.priority && (
             <button onClick={toggleDropdown} className={btnstyle}>
               {priorities[issue.priority]}

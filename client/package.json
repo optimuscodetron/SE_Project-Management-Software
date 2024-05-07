@@ -4,7 +4,7 @@
   "private": true,
   "jest": {
     "moduleNameMapper": {
-      "^axios$":"axios/dist/node/axios.cjs"
+      "^axios$": "axios/dist/node/axios.cjs"
     }
   },
   "dependencies": {
@@ -30,7 +30,9 @@
     "react-switch": "^7.0.0",
     "react-toastify": "^10.0.4",
     "redux": "^4.0.5",
+    "redux-mock-store": "^1.5.4",
     "redux-persist": "^6.0.0",
+    "thunk": "^0.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

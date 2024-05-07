@@ -5,7 +5,8 @@ import Navbar from "../../../Components/Layout/navbar/navbar";
 import { ToastContainer, toast } from 'react-toastify';
 import Axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
-import { removeMemberFromWorkspace } from "../../../redux/WorkspaceData/WorkspaceMemberListSlice";
+import { removeMemberFromWorkspace,addMemberToWorkspace } from "../../../redux/WorkspaceData/WorkspaceMemberListSlice";
+
 
 
 function MemberList() {
@@ -64,6 +65,8 @@ function MemberList() {
       if (response.status === 200) {
         console.log('Email invitation sent successfully');
         // Display a success toast notification
+        console.log(response.data);
+        dispatch(addMemberToWorkspace(response.data));
         toast.success('Email invitation sent successfully');
       } else {
         // Display an error toast notification

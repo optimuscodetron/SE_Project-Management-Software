@@ -202,7 +202,7 @@ const General = () => {
               <p className="text-[20px] font-normal tracking-wide my-2">
                 General
               </p>
-              <label className="text-gray-300 text-[15px] font-normal tracking-wide my-2" for="workspaceName">
+              <label className="text-gray-300 text-[15px] font-normal tracking-wide my-2 mr-3" for="workspaceName">
                 Workspace name
               </label>
               <input
@@ -218,8 +218,8 @@ const General = () => {
               ) : (
                 ""
               )}
-
-              <label className="text-gray-300 tracking-wide text-[15px] mt-4 font-normal my-2" for='workspaceURL'>
+              <br></br>
+              <label className="text-gray-300 tracking-wide text-[15px] mt-4 font-normal my-2 mr-3" for='workspaceURL'>
                 Workspace URL
               </label>
               <input

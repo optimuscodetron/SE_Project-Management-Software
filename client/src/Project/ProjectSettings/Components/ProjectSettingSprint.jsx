@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,13 +26,37 @@ function ProjectSettingSprint() {
     setSprintName(changedValue);
   };
 
+  const startDateHandler=(e)=>{
+    // console.log(e.target.value);
+    setStartDate(e.target.value);
+  }
+  const endDateHandler=(e)=>{
+    // console.log(e.target.value);
+    setEndDate(e.target.value);
+  }
+
   const handleCreate = async () => {
+    const currentDateWithoutTime = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+    const startDateWithoutTime = new Date(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    );
+    const endDateWithoutTime = new Date(
+      endDate.getFullYear(),
+      endDate.getMonth(),
+      endDate.getDate()
+    );
     if (sprintName === "") {
       toast.error("Please enter Sprint Name!!");
-    } else if (startDate < currentDate) {
-      toast.error("Please select valid start date for sprint!!");
-    } else if (endDate < startDate) {
-      toast.error("End date cannot be before start date!!");
+    } else if (startDateWithoutTime < currentDateWithoutTime) {
+      toast.error("Please select a valid start date for the sprint!!");
+    } else if (endDateWithoutTime < startDateWithoutTime) {
+      toast.error("End date cannot be before the start date!!");
     } else {
       try {
         const data = {
@@ -51,10 +74,13 @@ function ProjectSettingSprint() {
         );
         if (response.status === 201) {
           console.log(response.data.message);
-          toast.success(response.data.message); // Notify user about successful update
+          toast.success("Sprint Successfully Created"); // Notify user about successful update
           dispatch(addSprintToProject(response.data.sprint));
           // window. location. reload();
-        } else {
+        } else if (response.status === 202) {
+          toast.error(response.data.message);
+        }
+        else {
           toast.error(response.data.message);
         }
       } catch (error) {
@@ -76,39 +102,38 @@ function ProjectSettingSprint() {
           {workspaceName}
           <span className="mx-2"> / </span> {projectName}
         </div>
-        <h1 className="text-3xl tracking-wide font-semibold mb-4 border-b border-gray-600 pb-3 ">
+        <div className="text-3xl tracking-wide font-semibold mb-4 border-b border-gray-600 pb-3 ">
           Create Sprint
-        </h1>
+        </div>
         <div class="flex flex-col sm:items-center mb-4">
           <div className="flex flex-row items-center ml-5">
-            <div class="block text-lg text-white w-40">Sprint Name</div>
+            <label class="block text-lg text-white w-40" htmlFor="sprintName">Sprint Name</label>
             <input
               name="name"
+              id="sprintName"
               value={sprintName}
               onChange={handleInputChangeSprintName}
               class="h-9 ml-10 bg-gray-800 text-white px-4 rounded inline-flex justify-center items-center sm:w-80 w-40 overflow-x-hidden"
             />
           </div>
           <div className="flex flex-row items-center ml-5 mt-3">
-            <div class="block text-lg text-white w-40">Select Start date </div>
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              dateFormat="dd/MM/yyyy"
+            <label class="block text-lg text-white w-40" htmlFor="startDate">Select Start Date </label>
+            <input type="date"
+            id="startDate"
+            selected={startDate}
+            onChange={startDateHandler}
               className="h-9 ml-10 bg-gray-800 text-white px-4 rounded inline-flex justify-center items-center focus:outline-none sm:w-80 w-40"
+            
             />
           </div>
           <div className="flex flex-row items-center ml-5 mt-3">
-            <div class="block text-lg text-white w-40">Select Start date </div>
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              dateFormat="dd/MM/yyyy"
+            <label class="block text-lg text-white w-40" htmlFor="startDate">Select End Date </label>
+            <input type="date"
+            id="startDate"
+            selected={endDate}
+            onChange={endDateHandler}
               className="h-9 ml-10 bg-gray-800 text-white px-4 rounded inline-flex justify-center items-center focus:outline-none sm:w-80 w-40"
-              onClick={() => {
-                console.log(startDate);
-                console.log(endDate);
-              }}
+            
             />
           </div>
 
@@ -122,7 +147,7 @@ function ProjectSettingSprint() {
         <h1 className="text-3xl tracking-wide text-center font-semibold mt-4 mb-4 border-y border-gray-600 py-3 ">
           List of Sprints
         </h1>
-        <div className="h-full w-full overflow-scroll">
+        <div className="h-full w-full overflow-scroll min-h-[200px]">
           <div className="w-full flex flex-col items-center">
             {sprintList.slice().reverse().map((sprint) => (
               <div
