@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
-import CurrentList from "../ProjectCycles/CurrentCycles/components/currentList";
+import CurrentList from "./currentList";
 
 const ChartComponent1 = ({ backgroundColor }) => {
   const barChartRef = useRef(null);
