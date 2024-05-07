@@ -57,7 +57,7 @@ const IssuePanel = (props) => {
                 key={issue._id}
                 issue={issue}
                 onMoveIssue={props.onMoveIssue}
-                data-testid={'issuecard'+issue._id}
+                data-testid={issue.title}
               />
             ))}
         {!props.isWorkspace&& <div className="shadow-md p-2 w-full rounded-lg bg-[#273341] hover:bg-[#36414d] cursor-pointer" onClick={openCreateIssue}>

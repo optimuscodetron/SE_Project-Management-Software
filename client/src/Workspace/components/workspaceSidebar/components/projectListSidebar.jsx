@@ -18,8 +18,10 @@ import { changeActiveProjectAllMember } from "../../../../redux/ProjectData/acti
 
 const ProjectListSidebar = (props) => {
   const dispatch = useDispatch()
-  const workspaceId=useSelector((state)=>state.workspaceNameId.value.id);
-  const projectId = useSelector((state) => state.activeProject.value.id);
+  const workspaceId=useSelector((state)=>state.workspaceNameId?.value.id);
+ 
+  const projectId = useSelector((state) => state?.activeProject.value.id);
+  console.log(projectId);
   //commented for testing
   // console.log(workspaceId);//commented for testing
   

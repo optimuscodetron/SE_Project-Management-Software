@@ -1,31 +1,57 @@
-import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
-import WorkspaceListSidebar from '../components/workspacesListSidebar';
+import React from "react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import "@testing-library/jest-dom/extend-expect";
+import { BrowserRouter as Router } from "react-router-dom";
+import Axios from "axios";
+import { PiMonitorFill } from "react-icons/pi";
+import WorkspaceListSidebar from "../components/workspacesListSidebar";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
 
-describe('WorkspaceListSidebar', () => {
-  it('renders workspace list when showWorkspaces is true', () => {
-    render(<WorkspaceListSidebar />);
-    
-    // Check if the workspace list is initially rendered
-    expect(screen.getByText('Workspace 1')).toBeInTheDocument();
+jest.mock("axios");
+
+const mockHeaderInfo = jest.fn();
+const mockOpenWorkspace = jest.fn();
+const mockStore = createStore((state = {}) => state);
+
+describe("WorkspaceListSidebar Component", () => {
+  const initialProps = {
+    headerInfo: mockHeaderInfo,
+    openWorkspace: mockOpenWorkspace,
+  };
+  const renderComponent = (props) => {
+    return render(
+      <Provider store={mockStore}>
+        <Router>
+          <WorkspaceListSidebar {...initialProps} {...props} />
+        </Router>
+      </Provider>
+    );
+  };
+  test("renders the component with initial state", async () => {
+    renderComponent();
+
+    // Check initial display and properties
+    expect(screen.getByText("Workspace 1")).toBeInTheDocument();
+    expect(mockHeaderInfo).toHaveBeenCalledWith({
+      headerIcon: <PiMonitorFill />,
+      headerTitle: "Workspace 1",
+    });
   });
 
-  it('toggles workspace list visibility when clicking on the header', () => {
-    render(<WorkspaceListSidebar />);
+  // Test case for toggling workspaces list visibility
+  test("toggles workspaces list visibility", async () => {
+    renderComponent();
 
-    // Initially, the workspace list should be visible
-    expect(screen.getByText('Workspace 1')).toBeInTheDocument();
+    // Click on the current workspace to toggle the list visibility
+    fireEvent.click(screen.getAllByText("Workspace 1")[0]);
 
-    // Click on the header to hide the workspace list
-    fireEvent.click(screen.getByText('Workspace 1'));
-
-    // Now the workspace list should not be visible
-    expect(screen.queryAllByText('Workspace 1')[1]).toBeInTheDocument();
-
-    // Click on the header again to show the workspace list
-    fireEvent.click(screen.getByText('Workspace 2'));
-
-    // Now the workspace list should be visible again
-    expect(screen.getByText('Workspace 2')).toBeInTheDocument();
+    // Check if the workspaces list is visible
+    await waitFor(() => {
+      expect(screen.getAllByText("Workspace 1")[1]).toBeInTheDocument();
+      expect(screen.getByText("Workspace 2")).toBeInTheDocument();
+      expect(screen.getByText("Workspace 3")).toBeInTheDocument();
+    });
   });
+
 });
