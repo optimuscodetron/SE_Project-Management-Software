@@ -3,6 +3,7 @@ import axios from "axios";
 import SettingsSidebar from "../Component/SettingsSidebar";
 import Navbar from "../../../Components/Layout/navbar/navbar";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -12,9 +13,35 @@ const Profile = () => {
   });
   const [showSidebar, setShowSidebar] = useState(false);
 
+  const navigate = useNavigate();
   useEffect(() => {
-    profile(); // Fetch user profile on component mount
-  }, []);
+    const isUserLoggedIn = () => {
+      const cookies = document.cookie.split(";");
+      console.log(document.cookie);
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("usertoken=")) {
+          const token = cookie.substring("usertoken=".length, cookie.length);
+          // If token has some value, return true indicating user is logged in
+          if (token) {
+            return true;
+          }
+        }
+      }
+      // If no token found or token is empty, return false
+      return false;
+    };
+
+    // Check if the user is logged in
+    const isLoggedIn = isUserLoggedIn();
+    console.log(isLoggedIn);
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+    else{
+      profile(); // Fetch user profile on component mount
+    }
+  },[]);
 
   // Fetch user profile data from the backend
   const profile = async () => {

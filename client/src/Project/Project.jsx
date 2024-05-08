@@ -7,8 +7,10 @@ import Header from "./ProjectIssues/Component/Header";
 import { useSelector } from "react-redux";
 import Sprint from "./Sprint/Sprint";
 import Loader from "../loading";
+import { useNavigate } from "react-router-dom";
 
 export default function Project() {
+  
   const [showSideBar, setShowSideBar] = useState(true);
   const showSideBarHandler = () => {
     setShowSideBar((prevState) => !prevState);
@@ -40,32 +42,55 @@ export default function Project() {
 
   const handleProjectIssuesTrue = () => {
     setProjectIssues(true);
-
-  }
+  };
 
   const [isHide, setIsHide] = useState(true);
 
   setTimeout(() => setIsHide(false), 500);
-
+  const navigate = useNavigate();
   useEffect(() => {
-    console.log(sprintId + "Yo");
-    if (!projectIssues) {
-      const Activesprint = list.find((obj) =>
-        sprintId ? obj._id == sprintId : obj
-      );
+    const isUserLoggedIn = () => {
+      const cookies = document.cookie.split(";");
+      console.log(document.cookie);
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("usertoken=")) {
+          const token = cookie.substring("usertoken=".length, cookie.length);
+          // If token has some value, return true indicating user is logged in
+          if (token) {
+            return true;
+          }
+        }
+      }
+      // If no token found or token is empty, return false
+      return false;
+    };
 
-      setActivesprint(Activesprint);
-      console.log(Activesprint);
-      setSprintName(Activesprint.name);
-      setSprintStartDate(Activesprint.startDate);
-      setSprintEndDate(Activesprint.endDate);
+    // Check if the user is logged in
+    const isLoggedIn = isUserLoggedIn();
+    console.log(isLoggedIn);
+    if (!isLoggedIn) {
+      navigate("/login");
+    } else {
+      console.log(sprintId + "Yo");
+      if (!projectIssues) {
+        const Activesprint = list.find((obj) =>
+          sprintId ? obj._id == sprintId : obj
+        );
+
+        setActivesprint(Activesprint);
+        console.log(Activesprint);
+        setSprintName(Activesprint.name);
+        setSprintStartDate(Activesprint.startDate);
+        setSprintEndDate(Activesprint.endDate);
+      }
     }
     //console.log(sprintStartDate);
   }, [sprintId, projectIssues]);
 
   return (
     <>
-    {isHide && <Loader/>}
+      {isHide && <Loader />}
       <div className="flex flex-col ">
         <div className="flex-1 ">
           <Navbar showSideBarHandler={showSideBarHandler} />

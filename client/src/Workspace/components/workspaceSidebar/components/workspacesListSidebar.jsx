@@ -99,19 +99,13 @@ const WorkspaceListSidebar = (props) => {
 
   }
   const fetchallmembersOfWorkspace = async (Id) => {
-    fetchallmembersOfWorkspace();
-  };
-  const fetchallmembersOfWorkspace = async () => {
+    
     try {
       // Replace 'your_workspace_id' with the actual workspace ID
       const data = {
         workspaceId: Id
       }
-      const response = await Axios.post('http://localhost:8000/workspace/members', data, {
-        withCredentials: true,
-      });
-        workspaceId: workspaceId,
-      };
+      
       const response = await Axios.post(
         "http://localhost:8000/workspace/members",
         data,

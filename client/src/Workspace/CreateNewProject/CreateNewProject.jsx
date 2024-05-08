@@ -13,6 +13,7 @@ import Axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CreateNewProject = (props) => {
   const workspaceId = useSelector((state) => state.workspaceNameId.value.id);
@@ -149,8 +150,33 @@ const CreateNewProject = (props) => {
   const handleStatus = (e) => {
     setProjectStatus(e?.target?.textContent);
   };
+ 
 
+  const navigate = useNavigate();
   useEffect(() => {
+    const isUserLoggedIn = () => {
+      const cookies = document.cookie.split(";");
+      console.log(document.cookie);
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("usertoken=")) {
+          const token = cookie.substring("usertoken=".length, cookie.length);
+          // If token has some value, return true indicating user is logged in
+          if (token) {
+            return true;
+          }
+        }
+      }
+      // If no token found or token is empty, return false
+      return false;
+    };
+
+    // Check if the user is logged in
+    const isLoggedIn = isUserLoggedIn();
+    console.log(!isLoggedIn);
+    if (isLoggedIn) {
+      navigate("/login");
+    }
     const usernames = workspaceMemberList.map(member => member.username);
         console.log(usernames);
         setWorkspaceMemberData(workspaceMemberList);

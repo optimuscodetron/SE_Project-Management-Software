@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { FaChevronUp } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { RiTeamFill } from "react-icons/ri";
 import { GoProjectRoadmap } from "react-icons/go";
 import { MdFormatListBulletedAdd } from "react-icons/md";
@@ -17,6 +17,8 @@ import { useSelector,useDispatch } from "react-redux";
 import { changeActiveProjectAllMember } from "../../../../redux/ProjectData/activeProjectAllMemberSlice";
 
 const ProjectListSidebar = (props) => {
+  const navigate = useNavigate();
+  
   const dispatch = useDispatch()
   const workspaceId=useSelector((state)=>state.workspaceNameId?.value.id);
  
@@ -43,7 +45,33 @@ const ProjectListSidebar = (props) => {
 
 
   useEffect(() => {
-    fetchProjectData();
+    const isUserLoggedIn = () => {
+      const cookies = document.cookie.split(";");
+      console.log(document.cookie);
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("usertoken=")) {
+          const token = cookie.substring("usertoken=".length, cookie.length);
+          // If token has some value, return true indicating user is logged in
+          if (token) {
+            return true;
+          }
+        }
+      }
+      // If no token found or token is empty, return false
+      return false;
+    };
+
+    // Check if the user is logged in
+    const isLoggedIn = isUserLoggedIn();
+    console.log(isLoggedIn);
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+    else{
+
+      fetchProjectData();
+    }
    
 
   }, [workspaceId]);

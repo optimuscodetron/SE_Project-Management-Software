@@ -91,7 +91,7 @@ function App() {
 
         <Route path="/otp" element={<Otp />} />
         <Route path="/newpassword" element={<Newpassword />} />
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
 
         <Route path="*" element={<Error />} />
 
@@ -110,7 +110,7 @@ function App() {
 
         <Route path="/workspace/settings/profile" element={<Profile />} />
 
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
 
         {/*by khushboo*/}
         <Route path="/Invite" element={<Invite />} />

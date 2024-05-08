@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -73,6 +73,32 @@ const Email = () => {
     //   });
 
     // }
+
+    useEffect(() => {
+        const isUserLoggedIn = () => {
+          const cookies = document.cookie.split(";");
+          console.log(document.cookie);
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith("usertoken=")) {
+              const token = cookie.substring("usertoken=".length, cookie.length);
+              // If token has some value, return true indicating user is logged in
+              if (token) {
+                return true;
+              }
+            }
+          }
+          // If no token found or token is empty, return false
+          return false;
+        };
+    
+        // Check if the user is logged in
+        const isLoggedIn = isUserLoggedIn();
+        console.log(isLoggedIn);
+        if (isLoggedIn) {
+          navigate("/workspace");
+        }
+      });
 
 
 
