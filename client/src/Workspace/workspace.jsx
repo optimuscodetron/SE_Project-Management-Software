@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import WorkspaceSidebar from "./components/workspaceSidebar/workspaceSidebar";
 import Navbar from "../Components/Layout/navbar/navbar";
 import { useState } from "react";
@@ -8,7 +8,34 @@ import CreateNewProject from "./CreateNewProject/CreateNewProject";
 import Header from "../Components/header/header";
 import Inbox from "./Inbox/InboxSidebar";
 import Loader from "../loading";
+import { useNavigate } from "react-router-dom";
 export default function Workspace() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const isUserLoggedIn = () => {
+      const cookies = document.cookie.split(";");
+      console.log(document.cookie);
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("usertoken=")) {
+          const token = cookie.substring("usertoken=".length, cookie.length);
+          // If token has some value, return true indicating user is logged in
+          if (token) {
+            return true;
+          }
+        }
+      }
+      // If no token found or token is empty, return false
+      return false;
+    };
+
+    // Check if the user is logged in
+    const isLoggedIn = isUserLoggedIn();
+    console.log(isLoggedIn);
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  },[]);
   const [showSideBar, setShowSideBar] = useState(true);
   const [issue,setIssue] = useState(false);
   const showSideBarHandler = () => {
@@ -69,6 +96,7 @@ export default function Workspace() {
     setOpenInbox(false);
     setOpenWorkspace(true);
   };
+  
 
   return (
     <div className="flex flex-col">

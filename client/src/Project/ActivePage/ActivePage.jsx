@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import ActivePanel from "./components/ActivePanel";
 import { FaRegCircle } from "react-icons/fa6";
 import { FaCircleHalfStroke } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const ActivePage = () => {
   const [toDoIssues, setToDoIssues] = useState([]);
@@ -17,8 +18,48 @@ const ActivePage = () => {
     updateIssueStatus(issueId, newStatus);
 
   };
+  const navigate=useNavigate();
+
+
+  const updateIssueStatus = async (issueId, newStatus) => {
+    try {
+      // Send a PATCH request to update the issue status
+      const response = await axios.patch(`http://localhost:8000/issues/${issueId}/changeStatus`, { newStatus });
+      // Handle the response
+      if (response.status === 200) {
+        console.log(response.data);
+        setChangeStatusVar(previousValue => !previousValue);
+      }
+    } catch (error) {
+      // Handle errors
+      console.error('Error updating issue status:', error);
+    }
+  }
   useEffect(() => {
-    if (workspaceId) {
+    const isUserLoggedIn = () => {
+      const cookies = document.cookie.split(";");
+      console.log(document.cookie);
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("usertoken=")) {
+          const token = cookie.substring("usertoken=".length, cookie.length);
+          // If token has some value, return true indicating user is logged in
+          if (token) {
+            return true;
+          }
+        }
+      }
+      // If no token found or token is empty, return false
+      return false;
+    };
+
+    // Check if the user is logged in
+    const isLoggedIn = isUserLoggedIn();
+    console.log(isLoggedIn);
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+    else if (workspaceId) {
       const fetchIssues = async () => {
         try {
           const response = await axios.get(
@@ -69,22 +110,6 @@ const ActivePage = () => {
       fetchIssues();
     }
   }, [workspaceId,changeStatusVar]);
-
-  const updateIssueStatus = async (issueId, newStatus) => {
-    try {
-      // Send a PATCH request to update the issue status
-      const response = await axios.patch(`http://localhost:8000/issues/${issueId}/changeStatus`, { newStatus });
-      // Handle the response
-      if (response.status === 200) {
-        console.log(response.data);
-        setChangeStatusVar(previousValue => !previousValue);
-      }
-    } catch (error) {
-      // Handle errors
-      console.error('Error updating issue status:', error);
-    }
-  }
-
  
 
   return (

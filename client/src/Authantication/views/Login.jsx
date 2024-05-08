@@ -1,26 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import backgroundImage from './auth.jpg';
-import { useDispatch } from 'react-redux';
-import { setUserId } from './../../redux/userId/userIdSlice'; // import the action
+import backgroundImage from "./auth.jpg";
+import { useDispatch } from "react-redux";
+import { setUserId } from "./../../redux/userId/userIdSlice"; // import the action
 
 import { NavLink } from "react-router-dom";
 
 const Login = (props) => {
-
-
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const clientid =
     "495965121219-65gvv679mrctt1ksda4048jtmu4r1to4.apps.googleusercontent.com";
-
-
 
   const onSuccess = (res) => {
     console.log("Login Success! Current User: ", res.profileObj);
@@ -38,7 +33,7 @@ const Login = (props) => {
       withCredentials: true,
     })
       .then((res) => {
-        console.log(`login succesful`,res.data.user._id);
+        console.log(`login succesful`, res.data.user._id);
         console.log(`login succesful`);
         dispatch(setUserId(res.data.user._id));
         navigate("/workspace");
@@ -57,12 +52,12 @@ const Login = (props) => {
     animation: "gradient 15s ease infinite",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    overflow:"auto",
+    overflow: "auto",
   };
   const formStyle = {
     backgroundColor: "rgba(17, 24, 39)",
     padding: "10px",
-    
+
     border: "none",
     boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
     overflow: "hidden",
@@ -78,6 +73,32 @@ const Login = (props) => {
     marginBottom: "15px",
     animation: "animateInput 0.5s ease both",
   };
+
+  useEffect(() => {
+    const isUserLoggedIn = () => {
+      const cookies = document.cookie.split(";");
+      console.log(document.cookie);
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("usertoken=")) {
+          const token = cookie.substring("usertoken=".length, cookie.length);
+          // If token has some value, return true indicating user is logged in
+          if (token) {
+            return true;
+          }
+        }
+      }
+      // If no token found or token is empty, return false
+      return false;
+    };
+
+    // Check if the user is logged in
+    const isLoggedIn = isUserLoggedIn();
+    console.log(isLoggedIn);
+    if (isLoggedIn) {
+      navigate("/workspace");
+    }
+  },[]);
 
   return (
     <div style={bodyStyle}>
@@ -143,7 +164,6 @@ const Login = (props) => {
                       textDecoration: "none",
                       fontSize: "0.8rem",
                     }}
-                    
                   >
                     Forgot Password
                   </NavLink>
@@ -174,14 +194,17 @@ const Login = (props) => {
               </div> */}
               <br />
               <div className="text-center" data-testid="testSignUp">
-                <span style={{ color: "#dcdcdc" }} data-testid="dontHaveAccount">
-                  Don't have an account?&nbsp;  
+                <span
+                  style={{ color: "#dcdcdc" }}
+                  data-testid="dontHaveAccount"
+                >
+                  Don't have an account?&nbsp;
                   <NavLink
                     to="/register"
                     style={{
                       fontWeight: "bold",
                       textDecoration: "none",
-                      color: "#dcdcdc"
+                      color: "#dcdcdc",
                     }}
                   >
                     Sign up

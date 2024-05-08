@@ -1,11 +1,38 @@
 //Project_Analysis
 // Chart_all.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChartComponent from "./chart_status.jsx";
 import ChartComponent1 from "./chart_mem.jsx";
 import ChartComponent2 from "./chart_sprint.jsx";
+import { useNavigate } from "react-router-dom";
 
 const Tabs = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const isUserLoggedIn = () => {
+      const cookies = document.cookie.split(";");
+      console.log(document.cookie);
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("usertoken=")) {
+          const token = cookie.substring("usertoken=".length, cookie.length);
+          // If token has some value, return true indicating user is logged in
+          if (token) {
+            return true;
+          }
+        }
+      }
+      // If no token found or token is empty, return false
+      return false;
+    };
+
+    // Check if the user is logged in
+    const isLoggedIn = isUserLoggedIn();
+    console.log(isLoggedIn);
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  },[]);
   const [activeTab, setActiveTab] = useState("Status");
 
   const renderTabContent = () => {

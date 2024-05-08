@@ -1,6 +1,6 @@
 
 import { ToastContainer, toast } from 'react-toastify';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import 'react-router';
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -158,6 +158,31 @@ const NewPassword = () => {
         marginBottom: "15px",
         animation: "animateInput 0.5s ease both",
       };
+      useEffect(() => {
+        const isUserLoggedIn = () => {
+          const cookies = document.cookie.split(";");
+          console.log(document.cookie);
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith("usertoken=")) {
+              const token = cookie.substring("usertoken=".length, cookie.length);
+              // If token has some value, return true indicating user is logged in
+              if (token) {
+                return true;
+              }
+            }
+          }
+          // If no token found or token is empty, return false
+          return false;
+        };
+    
+        // Check if the user is logged in
+        const isLoggedIn = isUserLoggedIn();
+        console.log(isLoggedIn);
+        if (isLoggedIn) {
+          navigate("/workspace");
+        }
+      },[]);
     return (
         <>
             <div style={bodyStyle}>

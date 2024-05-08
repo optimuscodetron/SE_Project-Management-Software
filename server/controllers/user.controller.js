@@ -132,7 +132,6 @@ module.exports.create = (req, res) => {
       console.log(userToken)
       res
         .cookie("usertoken", userToken, {
-          httpOnly: true,
         })
         .json({ message: "Success!", user: user });
     })
@@ -192,7 +191,6 @@ module.exports.login = async (req, res) => {
     console.log(userToken);
     res
       .cookie("usertoken", userToken, {
-        httpOnly: true,
       })
       .json({ message: "Success!", user: user });
   } catch {

@@ -2,22 +2,49 @@ import React, { useEffect, useState } from "react";
 import TitleDescrip from "./Components/TitleDescrip";
 import Comment from "./Components/Comment";
 import RightBar from "./Components/RightBar";
+import { useNavigate } from "react-router-dom";
 
 function IssueInfo() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const isUserLoggedIn = () => {
+      const cookies = document.cookie.split(";");
+      console.log(document.cookie);
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith("usertoken=")) {
+          const token = cookie.substring("usertoken=".length, cookie.length);
+          // If token has some value, return true indicating user is logged in
+          if (token) {
+            return true;
+          }
+        }
+      }
+      // If no token found or token is empty, return false
+      return false;
+    };
+
+    // Check if the user is logged in
+    const isLoggedIn = isUserLoggedIn();
+    console.log(isLoggedIn);
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+    else{
+      const handleResize = () => {
+        setIsMediumScreen(window.innerWidth <= 1024);
+      };
+  
+      handleResize(); // Initial check
+      window.addEventListener("resize", handleResize);
+  
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
+  },[]);
   const [isMediumScreen, setIsMediumScreen] = useState(false);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMediumScreen(window.innerWidth <= 1024);
-    };
-
-    handleResize(); // Initial check
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const handleGoBack = () => {
     window.history.back();
