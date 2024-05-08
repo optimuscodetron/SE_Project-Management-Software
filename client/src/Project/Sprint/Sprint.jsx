@@ -59,7 +59,7 @@ export default function Sprint(props) {
       let filteredList = issues;
       if (selectedAssignee) {
         filteredList = filteredList.filter(
-          (issue) => issue.assigneename.toLowerCase() === selectedAssignee.toLowerCase()
+          (issue) => issue.assigneename.toLowerCase() === selectedAssignee.toLowerCase() 
         );
 
 
@@ -68,7 +68,7 @@ export default function Sprint(props) {
       if (selectedPriority) {
         filteredList = filteredList.filter(
           (issue) =>
-            issue?.priority?.toLowerCase() === selectedPriority.toLowerCase()
+            issue?.priority?.toLowerCase() === selectedPriority.toLowerCase() 
         );
       }
       
@@ -76,26 +76,19 @@ export default function Sprint(props) {
       setFilteredList(filteredList);
 
       filteredList.forEach((issue) => {
-        switch (issue.stage) {
-          case "ToDo":
-            todoDummy.push(issue);
-            break;
-          case "InProgress":
-
-            inProgressDummy.push(issue);
-            break;
-          case "Backlog":
-            backlogDummy.push(issue);
-            break;
-          case "Cancelled":
-            cancelledDummy.push(issue);
-            break;
-          case "Done":
-            doneDummy.push(issue);
-
-            break;
-          default:
-            break;
+        if (issue.stage === "ToDo" && issue.sprintId===sprintId) {
+          toDoIssues.push(issue);
+        } else if (issue.stage === "Backlog" && issue.sprintId===sprintId) {
+          backlogIssues.push(issue);
+        }
+        else if (issue.stage === "Cancelled" && issue.sprintId===sprintId) {
+          cancelledIssues.push(issue);
+        }
+        else if (issue.stage === "Done" && issue.sprintId===sprintId) {
+          doneIssues.push(issue);
+        }
+        else if (issue.stage === "InProgress" && issue.sprintId===sprintId) {
+          inProgressIssues.push(issue);
         }
         
       });
@@ -108,7 +101,7 @@ export default function Sprint(props) {
       setDoneIssues(doneDummy);
       // setDataLoaded(true);
     }
-  }, [issues, selectedAssignee, selectedPriority]);
+  }, [selectedAssignee, selectedPriority]);
 
 
  
@@ -143,6 +136,7 @@ export default function Sprint(props) {
         // Return the issue object with the modified ID
         return { ...issue, id: lastFourDigits ,projectname:projectname};
       });
+      // console.log(sprintId+"sprintId");
       const backlogIssues = [];
       const toDoIssues = [];
       const inProgressIssues = [];
@@ -171,18 +165,18 @@ export default function Sprint(props) {
         //   default:
         //     break;
         // }
-        if (issue.stage === "ToDo" && issue.sprintId==sprintId) {
+        if (issue.stage === "ToDo" && issue.sprintId===sprintId) {
           toDoIssues.push(issue);
-        } else if (issue.stage === "Backlog" && issue.sprintId==sprintId) {
+        } else if (issue.stage === "Backlog" && issue.sprintId===sprintId) {
           backlogIssues.push(issue);
         }
-        else if (issue.stage === "Cancelled" && issue.sprintId==sprintId) {
+        else if (issue.stage === "Cancelled" && issue.sprintId===sprintId) {
           cancelledIssues.push(issue);
         }
-        else if (issue.stage === "Done" && issue.sprintId==sprintId) {
+        else if (issue.stage === "Done" && issue.sprintId===sprintId) {
           doneIssues.push(issue);
         }
-        else if (issue.stage === "InProgress" && issue.sprintId==sprintId) {
+        else if (issue.stage === "InProgress" && issue.sprintId===sprintId) {
           inProgressIssues.push(issue);
         }
       });

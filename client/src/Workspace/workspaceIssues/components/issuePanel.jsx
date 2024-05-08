@@ -24,7 +24,7 @@ const IssuePanel = (props) => {
   };
 
   return (
-    <div className="" data-testid="issue-panel">
+    <div className="w-76" data-testid="issue-panel">
       <div className="text-white font-normal tracking-wider py-2 px-1 text-start font-sans justify-between ">
         <div className="flex flex-row">
           <div

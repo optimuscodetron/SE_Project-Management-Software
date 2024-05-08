@@ -18,7 +18,7 @@ import Axios from "axios";
 
 const CreateNewIssue = (props) => {
   const [isopen, setisopen] = useState(false);
-  const [Workspacename] = useState("Workspace");
+  const Workspacename = useSelector((state) => state.workspaceNameId.value.name);
   const [sDate, setsDate] = useState(false);
   const [eDate, seteDate] = useState(false);
   const [isSelect, setIsSelect] = useState(false);
@@ -34,7 +34,7 @@ const CreateNewIssue = (props) => {
   const [Status, setStatus] = useState("Status");
   const [isEmpty, setIsEmpty] = useState(false);
   const [iscancel, setIsCancel] = useState(false);
-  const projectName = useRef();
+  const issueName = useRef();
   const description = useRef();
   const [targetDate, setTargetDate] = useState(null);
   const [members, setMembers] = useState([]); // Empty array initially
@@ -49,6 +49,7 @@ const CreateNewIssue = (props) => {
   console.log("sfjbhdsbxhjb", creatorid);
 
   let projectId= useSelector((state) => state.activeProject.value._id);
+  let projectName= useSelector((state) => state.activeProject.value.name);
 
   const list = useSelector((store) => store.activeProjectSprintList.value);
   console.log("hi");
@@ -58,7 +59,7 @@ const CreateNewIssue = (props) => {
     fetchMembers();// Fetch members when component mounts
     console.log(projectId);
 
-  }, [projectId]);
+  }, [projectId,projectName,Workspacename]);
 
   const fetchMembers = async () => {
     try {
@@ -110,7 +111,7 @@ const CreateNewIssue = (props) => {
   const handleCreateIssue = async () => {
      console.log("issuestatus",IssueStatus)
     const newIssue = {
-      issueName: projectName.current.value,
+      issueName: issueName.current.value,
       description: description.current.value,
       targetDate: targetDate,
       assignee: Assignee,
@@ -149,7 +150,7 @@ const CreateNewIssue = (props) => {
   };
 
   const handleName = () => {
-    if (projectName.current.value) setIsEmpty(false);
+    if (issueName.current.value) setIsEmpty(false);
   };
 
   const handlediscard = () => {
@@ -225,40 +226,11 @@ const CreateNewIssue = (props) => {
                 onClick={(num) => handleSelect(5)}
               >
                 <p className="overflow-hidden ">
-                  {props.isWorkspaceContext ? Priorit : "Project 1"}
+                  {projectName}
                 </p>
               </button>
 
-              {props.isWorkspaceContext && isSelect5 && (
-                <div className="absolute z-10 mt-2 w-[9vw] bg-gray-900 shadow-lg border border-gray-200 rounded-sm">
-                  <ul>
-                    <li>
-                      <button
-                        onClick={handlePriorit}
-                        className="block w-full text-left py-1 px-3 hover:bg-gray-600"
-                      >
-                        Project 1
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handlePriorit}
-                        className="block w-full text-left py-1 px-3 hover:bg-gray-600"
-                      >
-                        Project 2
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handlePriorit}
-                        className="block w-full text-left py-1 px-3 hover:bg-gray-600"
-                      >
-                        Project 3
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
+              
             </div>
           </h1>
 
@@ -269,7 +241,7 @@ const CreateNewIssue = (props) => {
                 data-testid="textbox1"
                 type="text"
                 placeholder="Issue name "
-                ref={projectName}
+                ref={issueName}
                 onChange={handleName}
                 className="outline-none bg-transparent md:text-xl text-sm placeholder:md:text-lg placeholder:text:sm p-1"
               ></input>

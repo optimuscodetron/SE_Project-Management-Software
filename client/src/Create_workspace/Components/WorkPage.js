@@ -47,7 +47,7 @@ const WorkPage = () => {
   };
 
   return (
-    <div className="bg-gray-800 w-full h-full text-white">
+    <div className="bg-gray-800 w-full h-screen text-white">
       <div className="pt-[100px] pb-16 m-auto w-[40%]">
         <h1 className=" text-2xl mb-4 font-normal text-center">
           Create a new Workspace
