@@ -1,6 +1,8 @@
 const { Issue } = require('../models/issue.model');
 const { Project } = require('../models/project.model');
 const { User } = require('../models/user.model');
+const { Sprint } = require('../models/sprint.model');
+
 
 const express = require('express');
 const router = express.Router();
@@ -53,19 +55,19 @@ exports.createIssue = async (req, res) => {
         const assignee=await User.findOne({username:username});
         const project1=await Project.findOne({_id:projectId});
         const data={
-            title:req.body.projectName,
+            title:req.body.issueName,
             description:req.body.description,
             assigneeUserID:assignee._id,
             creator:user._id,
-            stage:"InProgress",
+            stage:req.body.stage,
             priority:req.body.priority,
             projectId:project1._id,
             creationDate:req.body.targetDate,
             dueDate:req.body.targetDate,
             label: req.body.label,
+            sprintId:req.body.sprint,
         }
-        console.log(data);
- 
+        console.log(req.body);
         const newIssue = await Issue.create(data);
         const project=await Project.findOne({_id:projectId});
         console.log(project);
@@ -76,8 +78,42 @@ exports.createIssue = async (req, res) => {
             { $push: { issuesIDs: newIssue._id } },
             { new: true }
         );
+        const updatedSprint = await Sprint.findOneAndUpdate(
+          { _id: req.body.sprint },
+          { $push: { issuesID: newIssue._id } },
+          { new: true }
+      );
 
-        res.json({ message: "Issue Successfully created!", issue: newIssue, user: user, project: updatedProject });
+      const creatorUser = await User.findById(req.body.creator);
+        const assigneeUser = await User.findById(newIssue.assigneeUserID);
+
+        
+        console.log(creatorUser+"hhhhhh");
+        console.log(assigneeUser+"hhhhhh");
+
+
+
+        // Add creator's username to the issue object
+        newIssue.creatorUsername =   creatorUser.username ;
+
+        // Add assignee's username to the issue object
+        newIssue.assigneeUsername =  assigneeUser.username ;
+        newIssue.assigneename=assigneeUser.name;
+
+        const resIssue={
+          ...newIssue.toObject(),
+          creatorUsername: creatorUser.username,
+          assigneename :assigneeUser.username,
+          assignee:assigneeUser.name
+
+        }
+
+        console.log(JSON.stringify(resIssue, null, 2)
+        +"DKJLFJHJIBHDFXJB")
+
+
+
+        res.json({ message: "Issue Successfully created!", issue: resIssue, user: user, project: updatedProject });
     } catch (err) {
         res.status(400).json(err);
     }

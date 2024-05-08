@@ -47,68 +47,68 @@ export default function Sprint(props) {
   const [selectedAssignee, setSelectedAssignee] = useState(null);
   const [selectedPriority, setSelectedPriority] = useState(null);
 
-  // useEffect(()=>{
+  useEffect(()=>{
 
-  //   if (issues.length > 0) {
-  //     const todoDummy = [];
-  //     const inProgressDummy = [];
-  //     const backlogDummy = [];
-  //     const doneDummy = [];
-  //     const cancelledDummy = [];
+    if (issues.length > 0) {
+      const todoDummy = [];
+      const inProgressDummy = [];
+      const backlogDummy = [];
+      const doneDummy = [];
+      const cancelledDummy = [];
 
-  //     let filteredList = issues;
-  //     if (selectedAssignee) {
-  //       filteredList = filteredList.filter(
-  //         (issue) => issue.assigneename.toLowerCase() === selectedAssignee.toLowerCase()
-  //       );
+      let filteredList = issues;
+      if (selectedAssignee) {
+        filteredList = filteredList.filter(
+          (issue) => issue.assigneename.toLowerCase() === selectedAssignee.toLowerCase()
+        );
 
 
     
-  //     }
-  //     if (selectedPriority) {
-  //       filteredList = filteredList.filter(
-  //         (issue) =>
-  //           issue?.priority?.toLowerCase() === selectedPriority.toLowerCase()
-  //       );
-  //     }
+      }
+      if (selectedPriority) {
+        filteredList = filteredList.filter(
+          (issue) =>
+            issue?.priority?.toLowerCase() === selectedPriority.toLowerCase()
+        );
+      }
       
 
-  //     setFilteredList(filteredList);
+      setFilteredList(filteredList);
 
-  //     filteredList.forEach((issue) => {
-  //       switch (issue.stage) {
-  //         case "ToDo":
-  //           todoDummy.push(issue);
-  //           break;
-  //         case "InProgress":
+      filteredList.forEach((issue) => {
+        switch (issue.stage) {
+          case "ToDo":
+            todoDummy.push(issue);
+            break;
+          case "InProgress":
 
-  //           inProgressDummy.push(issue);
-  //           break;
-  //         case "Backlog":
-  //           backlogDummy.push(issue);
-  //           break;
-  //         case "Cancelled":
-  //           cancelledDummy.push(issue);
-  //           break;
-  //         case "Done":
-  //           doneDummy.push(issue);
+            inProgressDummy.push(issue);
+            break;
+          case "Backlog":
+            backlogDummy.push(issue);
+            break;
+          case "Cancelled":
+            cancelledDummy.push(issue);
+            break;
+          case "Done":
+            doneDummy.push(issue);
 
-  //           break;
-  //         default:
-  //           break;
-  //       }
+            break;
+          default:
+            break;
+        }
         
-  //     });
+      });
 
 
-  //     setToDoIssues(todoDummy);
-  //     setInProgressIssues(inProgressDummy);
-  //     setBacklogIssues(backlogDummy);
-  //     setCancelledIssues(cancelledDummy);
-  //     setDoneIssues(doneDummy);
-  //     // setDataLoaded(true);
-  //   }
-  // }, [issues, selectedAssignee, selectedPriority]);
+      setToDoIssues(todoDummy);
+      setInProgressIssues(inProgressDummy);
+      setBacklogIssues(backlogDummy);
+      setCancelledIssues(cancelledDummy);
+      setDoneIssues(doneDummy);
+      // setDataLoaded(true);
+    }
+  }, [issues, selectedAssignee, selectedPriority]);
 
 
  
@@ -193,7 +193,7 @@ export default function Sprint(props) {
       setDoneIssues(doneIssues);
       setCancelledIssues(cancelledIssues);
     }
-  }, [projectId, changeStatusVar]);
+  }, [projectId, changeStatusVar,sprintId,activeProjectAllIssues]);
   
   const updateIssueStatus = async (issueId, newStatus) => {
     try {

@@ -97,6 +97,7 @@ function RightBar() {
       );
 
       const assigneeUsername = response.data;
+      console.log("piysugh", assigneeUsername);
       console.log("assigner", assigneeUsername.issue.label);
       const fetchedStatus = assigneeUsername.issue.stage;
       console.log("fetchedsteatsus", fetchedStatus);

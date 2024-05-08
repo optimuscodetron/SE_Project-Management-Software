@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 
 import {
   FaArrowRight,
@@ -12,6 +12,8 @@ import { GrProjects, GrStatusDisabledSmall } from "react-icons/gr";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import DatePicker from "react-datepicker";
 import Modal from "../../UI/Modal";
+import { addIssueToProject } from "../../redux/ProjectData/activeProjectIssuesSlice";
+
 import Axios from "axios";
 
 const CreateNewIssue = (props) => {
@@ -22,22 +24,24 @@ const CreateNewIssue = (props) => {
   const [isSelect, setIsSelect] = useState(false);
   const [IssueStatus, setIssueStatus] = useState("Issue Type");
   const [isSelect2, setIsSelect2] = useState(false);
-  const [Assignee, setAssignee] = useState(""); // Change to empty string
+  const [Assignee, setAssignee] = useState("Lead"); // Change to empty string
   const [isSelect3, setIsSelect3] = useState(false);
   const [Priority, setPriority] = useState("Priority");
   const [isSelect4, setIsSelect4] = useState(false);
-  const [Cycle, setCycle] = useState("Cycle");
+  const [sprint, setSprint] = useState("Sprint");
   const [isSelect5, setIsSelect5] = useState(false);
   const [Priorit, setPriorit] = useState("Select Project");
+  const [Status, setStatus] = useState("Status");
   const [isEmpty, setIsEmpty] = useState(false);
   const [iscancel, setIsCancel] = useState(false);
   const projectName = useRef();
   const description = useRef();
-  const [startDate, setStartDate] = useState(null);
   const [targetDate, setTargetDate] = useState(null);
   const [members, setMembers] = useState([]); // Empty array initially
   const [filteredMembers, setFilteredMembers] = useState([]);
-
+  const [isSelect6,setIsSelect6]=useState(false);
+ const [sprintId,setSprintId]=useState();
+ const dispatch=useDispatch();
 
   const userId = useSelector((state) => state.userId.value);
   // const activeProject = useSelector((state) => state.activeProject.value);
@@ -45,6 +49,10 @@ const CreateNewIssue = (props) => {
   console.log("sfjbhdsbxhjb", creatorid);
 
   let projectId= useSelector((state) => state.activeProject.value._id);
+
+  const list = useSelector((store) => store.activeProjectSprintList.value);
+  console.log("hi");
+  console.log(list);
 
   useEffect(() => {
     fetchMembers();// Fetch members when component mounts
@@ -91,6 +99,7 @@ const CreateNewIssue = (props) => {
     if (num === 3) setIsSelect3(!isSelect3);
     if (num === 4) setIsSelect4(!isSelect4);
     if (num === 5) setIsSelect5(!isSelect5);
+    if (num === 6) setIsSelect6(!isSelect6);
   };
 
   const handleAssigneeSelect = (username) => {
@@ -101,16 +110,16 @@ const CreateNewIssue = (props) => {
   const handleCreateIssue = async () => {
      console.log("issuestatus",IssueStatus)
     const newIssue = {
-      projectName: projectName.current.value,
+      issueName: projectName.current.value,
       description: description.current.value,
-      startDate: startDate,
       targetDate: targetDate,
       assignee: Assignee,
       creator: creatorid,
       priority: Priority,
-      cycle: Cycle,
+      sprint: sprintId,
       projectId: projectId,
-      label:IssueStatus, // Here, Assignee should be set based on user selection from the project members list
+      label:IssueStatus,
+      stage:Status // Here, Assignee should be set based on user selection from the project members list
       // Include other properties like priority, issue type, cycle, etc.
     };
 
@@ -118,12 +127,17 @@ const CreateNewIssue = (props) => {
     try {
       const response = await Axios.post(
         "http://localhost:8000/api/users/workspace/project/issue",
-        newIssue,
+        newIssue, 
         {
           withCredentials: true,
         }
       );
       console.log("New issue added successfully:", response.data);
+      const issue=response.data.issue
+      console.log(issue);
+
+      dispatch(addIssueToProject(issue));
+      props.onCloseCreateIssue();
       
     } catch (error) {
       console.error("Error adding new issue:", error);
@@ -146,6 +160,10 @@ const CreateNewIssue = (props) => {
     setIssueStatus(e?.target?.textContent);
   };
 
+  const handleStatus2 = (e) => {
+    setStatus(e?.target?.textContent);
+  };
+
   const handlePriority = (e) => {
     setPriority(e?.target?.textContent);
   };
@@ -154,9 +172,14 @@ const CreateNewIssue = (props) => {
     setPriorit(e?.target?.textContent);
   };
 
-  const handleCycle = (e) => {
-    setCycle(e?.target?.textContent);
+  const handleCycle = (e,_id) => {
+    setSprint(e?.target?.textContent);
+   if(_id!=-1) setSprintId(_id);
+   else setSprintId("");
+    console.log("jhkk");
+    console.log(_id);
   };
+  
 
   return (
     <Modal onClose={props.onCloseCreateIssue}>
@@ -188,7 +211,7 @@ const CreateNewIssue = (props) => {
         <div
           className={` ${
             iscancel ? " pointer-events-none " : ""
-          }bg-gray-900 opacity-100 absolute text-[13px] md:text-[17px] w-[100%] md:w-[100%]  h-full  text-white px-[1vw] py-[2vh] flex flex-col justify-between`}
+          }bg-gray-900 opacity-100 absolute text-[13px] md:text-[17px] w-[120%] md:w-[120%]  h-full  text-white px-[1vw] py-[2vh] flex flex-col justify-between`}
         >
           <h1 className="flex items-center">
             <span className="md:p-[4px] md:px-[6px] p-[1px] bg-gray-600 rounded-sm border-[1px] border-gray-400">
@@ -266,6 +289,7 @@ const CreateNewIssue = (props) => {
 
           <div>
             <div className="flex justify-evenly md:justify-evenly gap-y-3 gap-x-2 flex-wrap  ">
+
               <div className="bg-white overflow-visible h-[4vh] w-1/3 md:w-[9vw] rounded-sm md:text-sm text-[10px]">
                 <button
                   data-testid="combobox1"
@@ -334,6 +358,7 @@ const CreateNewIssue = (props) => {
                 )}
               </div>
 
+              
               <div className="bg-white overflow-visible h-[4vh] w-1/3 md:w-[9vw] rounded-sm md:text-sm text-[10px]">
                 <button
                   data-testid="combobox3"
@@ -387,29 +412,83 @@ const CreateNewIssue = (props) => {
 
               <div className="bg-white overflow-visible h-[4vh] w-1/3 md:w-[9vw] rounded-sm md:text-sm text-[10px]">
                 <button
+                  data-testid="combobox3"
+                  className="flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 "
+                  onClick={(num) => handleSelect(6)}
+                >
+                  <FaExclamationCircle />{" "}
+                  <p className="overflow-hidden ">{Status}</p>
+                </button>
+
+                {isSelect6 && (
+                  <div className="flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 ">
+                    <button
+                      key={1}
+                      onClick={handleStatus2}
+                      className="block w-full hover:bg-gray-600"
+                    >
+                      ToDo
+                    </button>
+                    <button
+                      key={2}
+                      onClick={handleStatus2}
+                      className="block w-full hover:bg-gray-600"
+                    >
+                      InProgress
+                    </button>
+                    <button
+                      key={3}
+                      onClick={handleStatus2}
+                      className="block w-full hover:bg-gray-600"
+                    >
+                      Backlog
+                    </button>
+                    <button
+                      key={4}
+                      onClick={handleStatus2}
+                      className="block w-full hover:bg-gray-600"
+                    >
+                      Done
+                    </button>
+                    
+                  </div>
+                )}
+              </div>
+
+              <div className="bg-white overflow-visible h-[4vh] w-1/3 md:w-[9vw] rounded-sm md:text-sm text-[10px]">
+                <button
                   data-testid="combobox4"
                   className="flex justify-evenly h-[4vh] items-center w-full   md:w-[9vw] md:text-sm rounded-sm border-[1px] border-gray-400  bg-gray-700 "
                   onClick={(num) => handleSelect(4)}
                 >
-                  <FaSyncAlt /> <p className="overflow-hidden ">{Cycle}</p>
+                  <FaSyncAlt /> <p className="overflow-hidden ">{sprint}</p>
                 </button>
 
                 {isSelect4 && (
                   <div className="flex flex-col w-[25vw] md:w-auto z-1 items-start py-2 px-1 md:px-4 relative top-[2vh]  rounded-md bg-gray-900 border-[1px]  border-gray-400 ">
-                    <button
-                      key={1}
-                      onClick={handleCycle}
-                      className="block w-full hover:bg-gray-600"
+                    {
+                      list.map((member,idx)=>{
+                        return (
+                          <button
+                            key={idx}
+                            onClick={(e)=>handleCycle(e,member._id)}
+                            className="block w-full hover:bg-gray-600"
                     >
-                      No Cycle
+                      {member.name}
                     </button>
-                    <button
-                      key={2}
-                      onClick={handleCycle}
-                      className="block w-full hover:bg-gray-600"
+                    
+                        )
+                      })
+
+                    }
+                      <button
+                            // key={idx}
+                            onClick={(e)=>handleCycle(e,-1)}
+                            className="block w-full hover:bg-gray-600"
                     >
-                      Cycle 1
+                      No Sprint
                     </button>
+                    
                   </div>
                 )}
               </div>
@@ -426,6 +505,8 @@ const CreateNewIssue = (props) => {
                   />
                 </div>
               </div>
+
+
             </div>
 
             <div className="border-t-[1px] mt-2 border-gray-500 ">
@@ -449,7 +530,11 @@ const CreateNewIssue = (props) => {
                 </button>
               </div>
             </div>
+
+            
+
           </div>
+       
         </div>
       </div>
     </Modal>
