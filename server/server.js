@@ -20,26 +20,23 @@ require('./routes/issue.routes')(app);
 require('./routes/project.routes')(app);
 require('./routes/issue.routes')(app);
 
+module.exports = app;
 
 
-const server = app.listen(port, () =>
-    console.log(`Listening on port: ${port}`)
-);
+// const server = app.listen(port, () =>
+//     console.log(`Listening on port: ${port}`)
+// );
 
-const io = socketIo(server);
 
-io.on('connection', (socket) => {
-    //this is for autoupdating the list of issues
-    socket.on('new task created', (task) => {
-        io.emit('new task added', task);
+
+if (require.main === module) {
+    const server = app.listen(port, () =>
+        console.log(`Listening on port: ${port}`)
+    );
+
+    const io = socketIo(server);
+
+    io.on('connection', (socket) => {
+        // Your socket.io event handlers here
     });
-    socket.on('new comment created', (comment) => {
-        console.log('this is the new comment: ', comment);
-        io.emit('new comment added', comment);
-    });
-
-    //don't think we actually need this
-    // socket.on('disconnect', () => {
-    //     console.log(`Someone left`);
-    // })
-});
+}

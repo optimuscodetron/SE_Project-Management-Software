@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 module.exports.authenticate = function(req, res, next){
     try{
         
-        // console.log(req.cookies.usertoken);
 
         const decode=jwt.verify(req.cookies.usertoken, "abcdef");
         console.log("0000");

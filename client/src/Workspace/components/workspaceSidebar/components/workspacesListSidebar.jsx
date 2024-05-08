@@ -102,6 +102,7 @@ const WorkspaceListSidebar = (props) => {
     
     try {
       // Replace 'your_workspace_id' with the actual workspace ID
+      console.log("workspaceId"+workspaceId);
       const data = {
         workspaceId: Id
       }
@@ -117,7 +118,7 @@ const WorkspaceListSidebar = (props) => {
       if (response.status === 200) {
         const Memberdata = await response.data.members;
         // setMembers(data.members);
-        console.log(Memberdata);
+        console.log("qejkdggwsc"+Memberdata);
         dispatch(changeworkspaceMemberList(Memberdata));
       } else {
         throw new Error("Failed to fetch members of the workspace");
