@@ -8,8 +8,7 @@ import { FaRegTimesCircle } from "react-icons/fa";
 import { FaRegCheckCircle } from "react-icons/fa";
 import CreateNewProject from "../CreateNewProject/CreateNewProject";
 import FilterSidebar from "./components/FilterSidebar";
-
-
+import { changeIssueStage } from "../../redux/ProjectData/activeProjectIssuesSlice";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
@@ -28,6 +27,8 @@ const WorkspaceIssues = (props) => {
   const [selectedPriority, setSelectedPriority] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [ changeStatusVar, setChangeStatusVar] = useState(false);
+  const dispatch=useDispatch();
+
 
  const moveIssue = (issueId, currentStatus, newStatus) => {
     console.log("Function moveIssue Called with status", { newStatus });
@@ -186,6 +187,10 @@ const WorkspaceIssues = (props) => {
     }
   }, [IssuesList, selectedAssignee, selectedPriority, selectedProject]);
 
+
+
+
+  
   const updateIssueStatus = async (issueId, newStatus) => {
     try {
       // Send a PATCH request to update the issue status
@@ -194,6 +199,7 @@ const WorkspaceIssues = (props) => {
       if (response.status === 200) {
         console.log(response.data);
         setChangeStatusVar(previousValue => !previousValue);
+        dispatch(changeIssueStage({ issueId: issueId, newStage: newStatus }));
       }
     } catch (error) {
       // Handle errors

@@ -184,7 +184,7 @@ export default function ProjectIssues(props) {
       setDoneIssues(doneIssues);
       setCancelledIssues(cancelledIssues);
     }
-  }, [projectId, changeStatusVar]);
+  }, [projectId, changeStatusVar,activeProjectAllIssues]);
   const updateIssueStatus = async (issueId, newStatus) => {
     try {
       // Send a PATCH request to update the issue status
