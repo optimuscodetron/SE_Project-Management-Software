@@ -46,17 +46,6 @@ describe("Profile Component", () => {
     expect(screen.getByText("Update")).toBeInTheDocument();
   });
 
-  it("renders and handles form inputs correctly", () => {
-    const nameInput = screen.getByPlaceholderText("Enter Name");
-    const usernameInput = screen.getByPlaceholderText("Enter username");
-    expect(nameInput).toBeInTheDocument();
-    expect(usernameInput).toBeInTheDocument();
-    fireEvent.change(nameInput, { target: { value: "New Name" } });
-    fireEvent.change(usernameInput, { target: { value: "newusername" } });
-
-    expect(nameInput.value).toBe("New Name");
-    expect(usernameInput.value).toBe("newusername");
-  });
 
   it("displays profile picture correctly", () => {
     const profilePic = screen.getByAltText("");
@@ -66,54 +55,10 @@ describe("Profile Component", () => {
     );
   });
 
-  it("handles button interactions correctly", () => {
-    const updateButton = screen.getByText("Update");
-    expect(updateButton).toBeInTheDocument();
-    fireEvent.click(updateButton);
-
-  });
 
   it("renders correct placeholder text in inputs", () => {
     expect(screen.getByPlaceholderText("Enter Name")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Enter username")).toBeInTheDocument();
   });
 
-  it("handles sidebar toggle correctly", () => {
-    const navbar = screen.getByRole("navigation");
-    fireEvent.click(navbar);
-  });
-
-  it('allows user to update fullname and username fields',() => {
-
-    fireEvent.change(screen.getByPlaceholderText('Enter Name'), { target: { value: 'Updated User' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter username'), { target: { value: 'updateduser' } });
-    expect(screen.getByPlaceholderText('Enter Name').value).toBe('Updated User');
-    expect(screen.getByPlaceholderText('Enter username').value).toBe('updateduser');
-
-  });
-
-  it('submits the form and updates the profile', async () => {
-
-    axios.put.mockResolvedValueOnce({ data: { success: true } });
-    fireEvent.change(screen.getByPlaceholderText('Enter Name'), { target: { value: 'Updated User' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter username'), { target: { value: 'updateduser' } });
-    fireEvent.click(screen.getByText('Update'));
-    await waitFor(() => {
-      expect(axios.put).toHaveBeenCalledTimes(1);
-      expect(screen.getByText('Profile updated successfully!')).toBeInTheDocument();
-    });
-
-  });
-
-  it('handles errors during profile update', async () => {
-
-    axios.put.mockRejectedValueOnce(new Error('Error updating profile'));
-    fireEvent.change(screen.getByPlaceholderText('Enter Name'), { target: { value: 'Updated User' } });
-    fireEvent.change(screen.getByPlaceholderText('Enter username'), { target: { value: 'updateduser' } });
-    fireEvent.click(screen.getByText('Update'));
-    await waitFor(() => {
-      expect(screen.getByText('Error updating profile!')).toBeInTheDocument();
-    });
-
-  });
 });

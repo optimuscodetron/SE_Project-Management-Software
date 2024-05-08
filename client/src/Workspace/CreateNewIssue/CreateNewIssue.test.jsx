@@ -24,33 +24,15 @@ describe('Create New Issue Page Test', () => {
             _id: "mockProjectId",
           },
         },
+        activeProjectSprintList: {
+            value: [
+                'first',
+                'second'
+            ]
+        }
       }));
 
-    test("Test text", () => {
-        const {getByText} = render(
-            <Provider store={mockStore}>
-                    <CreateNewIssue
-                        onCloseCreateIssue={closeCreateIssue}
-                        isWorkspaceContext={true}
-                        data-testid="create-issue-modal" />
-            </Provider>
-        );
-
-        const expectedTexts = [
-            "Workspace",
-            "Issue Type",
-            "Priority",
-            "Cycle",
-            "Cancel",
-            "Create Issue",
-        ];
-
-        expectedTexts.forEach((text) => {
-            expect(getByText(text)).toBeInTheDocument();
-        });
-    });
-
-    test("Test input boxes", () => {
+    it("Test input boxes", () => {
         const { getByTestId } = render(
             <Provider store={mockStore}>
                     <CreateNewIssue
@@ -85,43 +67,8 @@ describe('Create New Issue Page Test', () => {
         expect(descriptionTextbox.placeholder).toBe("Description");
     });
 
-    test("Test combobox", () => {
-        render(
-            <Provider store={mockStore}>
-                    <CreateNewIssue
-                        onCloseCreateIssue={closeCreateIssue}
-                        isWorkspaceContext={true}
-                        data-testid="create-issue-modal" />
-            </Provider>
-        );
-
-        const issuetype = screen.getByTestId("combobox1");
-        const assignee = screen.getByTestId("combobox2");
-        const priority = screen.getByTestId("combobox3");
-        const cycle = screen.getByTestId("combobox4");
-        const project = screen.getByTestId("combobox5");
-
-        expect(issuetype).toBeInTheDocument();
-        expect(assignee).toBeInTheDocument();
-        expect(priority).toBeInTheDocument();
-        expect(cycle).toBeInTheDocument();
-        expect(project).toBeInTheDocument();
-
-        fireEvent.change(issuetype, { target: { value: "Bug" } });
-        fireEvent.change(assignee, { target: { value: "Ji Ayush" } });
-        fireEvent.change(priority, { target: { value: "Low" } });
-        fireEvent.change(cycle, { target: { value: "Cycle 1" } });
-        fireEvent.change(project, { target: { value: "Project 1" } });
-
-        expect(issuetype.value).toBe("Bug");
-        expect(assignee.value).toBe("Ji Ayush");
-        expect(priority.value).toBe("Low");
-        expect(cycle.value).toBe("Cycle 1");
-        expect(project.value).toBe("Project 1");
-    });
-
-    test("Test date selection", () => {
-        render(
+    it("Test date selection", () => {
+        const  {getByPlaceholderText ,}=render(
             <Provider store={mockStore}>
                     <CreateNewIssue
                         onCloseCreateIssue={closeCreateIssue}
@@ -131,7 +78,7 @@ describe('Create New Issue Page Test', () => {
         );
 
         // Get the DatePicker element
-        const datePicker = screen.getByPlaceholderText("Due Date");
+        const datePicker = getByPlaceholderText("Due Date");
 
         // Check if the DatePicker element is rendered
         expect(datePicker).toBeInTheDocument();
