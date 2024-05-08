@@ -7,10 +7,11 @@ import "./workspaceSidebar.css";
 import { FiInbox } from "react-icons/fi";
 import { AiFillSetting } from "react-icons/ai";
 import { IoPersonAdd } from "react-icons/io5";
-import { HiPlus } from "react-icons/hi";
+import { HiChartBar, HiPlus } from "react-icons/hi";
 import Axios from "axios";
 
 import CreateNewProject from "../../CreateNewProject/CreateNewProject";
+import { FaChartBar } from "react-icons/fa";
 
 const WorkspaceSidebar = (props) => {
   const [workspaceId, setWorkspaceId] = useState();
@@ -79,6 +80,19 @@ const WorkspaceSidebar = (props) => {
                 Inbox
               </span>
             </div>
+          </li>
+          <li data-testid="testChartPage">
+            <NavLink
+              to={"/chartall"}
+              className={"text-decoration-none "}
+            >
+              <div className="flex items-center p-2 text-white text-decoration-none  rounded-lg hover:bg-gray-950 group">
+                <FaChartBar />
+                <span className="flex-1 ms-3 text-sm whitespace-nowrap">
+                  Analysis Page
+                </span>
+              </div>
+            </NavLink>
           </li>
 
           <li data-testid="testCreateWorkspace">

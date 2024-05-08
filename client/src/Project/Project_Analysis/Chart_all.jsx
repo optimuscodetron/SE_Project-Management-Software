@@ -20,9 +20,30 @@ const Tabs = () => {
         return null;
     }
   };
+  const handleGoBack = () => {
+    window.history.back();
+  };
 
   return (
-    <div className="container">
+    <div style={{ backgroundColor: "#171e28" }}>
+      <button
+        onClick={handleGoBack}
+        className=" cursor-pointer "
+        
+      >
+        <svg
+          className="h-7 w-7 text-gray-600"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+
       <div className="tabs">
         <button
           className={`tab-btn ${activeTab === "Status" ? "active" : ""}`}
@@ -46,6 +67,11 @@ const Tabs = () => {
       <div className="content">{renderTabContent()}</div>
 
       <style jsx>{`
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
         .container {
           background-color: #171e28;
           display: flex;
