@@ -61,5 +61,16 @@ UserSchema.pre('save', function(next){
     next();
 });
 
+UserSchema.statics.create = async function(userData) {
+    try {
+        const user = new this(userData);
+        await user.save();
+        return user;
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 UserSchema.plugin(uniqueValidator);
 module.exports.User = mongoose.model('User', UserSchema);

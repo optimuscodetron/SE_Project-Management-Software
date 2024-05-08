@@ -1,9 +1,9 @@
 {
-  "name": "jiraclone",
+  "name": "project-management-app",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "testing": "jest"
   },
   "keywords": [],
   "author": "",
@@ -24,13 +24,9 @@
     "socket.io": "^4.7.4",
     "validator": "^13.11.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JiraClone/JiraClone.git"
-  },
-  "bugs": {
-    "url": "https://github.com/JiraClone/JiraClone/issues"
-  },
-  "homepage": "https://github.com/JiraClone/JiraClone#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
 }

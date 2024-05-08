@@ -62,15 +62,8 @@ const WorkspaceListSidebar = (props) => {
           });
           dispatch(changeWorkspaceNameId({name:data.workspaces[0].name,id:data.workspaces[0].id,url:data.workspaces[0].url}));
           fetchallmembersOfWorkspace(data.workspaces[0].id);
-          return data.workspaces
-          dispatch(
-            changeWorkspaceNameId({
-              name: data.workspaces[0].name,
-              id: data.workspaces[0].id,
-              url: data.workspaces[0].url,
-            })
-          );
           return data.workspaces;
+          
         });
         // console.log(workspaceData);
       } else {
@@ -102,6 +95,7 @@ const WorkspaceListSidebar = (props) => {
     
     try {
       // Replace 'your_workspace_id' with the actual workspace ID
+      console.log("workspaceId"+workspaceId);
       const data = {
         workspaceId: Id
       }
@@ -117,7 +111,7 @@ const WorkspaceListSidebar = (props) => {
       if (response.status === 200) {
         const Memberdata = await response.data.members;
         // setMembers(data.members);
-        console.log(Memberdata);
+        console.log("qejkdggwsc"+Memberdata);
         dispatch(changeworkspaceMemberList(Memberdata));
       } else {
         throw new Error("Failed to fetch members of the workspace");

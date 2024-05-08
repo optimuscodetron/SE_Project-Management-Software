@@ -189,7 +189,7 @@ module.exports.login = async (req, res) => {
       "abcdef"
     );
     console.log(userToken);
-    res
+    res.status(200)
       .cookie("usertoken", userToken, {
       })
       .json({ message: "Success!", user: user });

@@ -251,6 +251,7 @@ module.exports.getAllMemberOfWorkspace = async (req, res) => {
 
     // Combine admin and members into a single array
     // const allMembers = [admin, ...members];
+    // console.log("jay hind"+members);
 
     res.status(200).json({ members: members });
   } catch (error) {

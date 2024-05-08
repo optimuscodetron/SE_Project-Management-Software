@@ -174,7 +174,7 @@ const CreateNewProject = (props) => {
     // Check if the user is logged in
     const isLoggedIn = isUserLoggedIn();
     console.log(!isLoggedIn);
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       navigate("/login");
     }
     const usernames = workspaceMemberList.map(member => member.username);

@@ -65,13 +65,10 @@ const ProjectListSidebar = (props) => {
     // Check if the user is logged in
     const isLoggedIn = isUserLoggedIn();
     console.log(isLoggedIn);
-    if (!isLoggedIn) {
-      navigate("/login");
-    }
-    else{
+    
 
       fetchProjectData();
-    }
+    
    
 
   }, [workspaceId]);
