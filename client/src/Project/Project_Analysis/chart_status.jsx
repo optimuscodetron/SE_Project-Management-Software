@@ -1,14 +1,18 @@
-// chart_status.jsx
 import React, { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
-import CurrentList from "./currentList";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import Loader from "../../loading";
 
 const ChartComponent = () => {
   const barChartRef = useRef(null);
   const pieChartRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isLandscape, setIsLandscape] = useState(
     window.innerWidth > window.innerHeight
   );
+  const workspaceId = useSelector((state) => state.workspaceNameId.value.id);
+  const [statusCounts, setStatusCounts] = useState({});
 
   useEffect(() => {
     const handleResize = () => {
@@ -20,22 +24,49 @@ const ChartComponent = () => {
   }, []);
 
   useEffect(() => {
+    if (workspaceId) {
+      const fetchIssues = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:8000/api/users/workspace/issues`,
+            {
+              params: {
+                activeWorkspaceId: workspaceId,
+              },
+              withCredentials: true,
+            }
+          );
+          const data = response.data;
+          console.log("projectname",data);
+          const statusCounts = data.reduce((acc, curr) => {
+            let normalizedStage = curr.stage.replace(' ', '').toLowerCase();
+            acc[normalizedStage] = (acc[normalizedStage] || 0) + 1;
+            return acc;
+          }, {});
+          
+          
+          setStatusCounts(statusCounts);
+          setIsLoading(false);
+        } catch (error) {
+          console.error("Error fetching Issues:", error);
+          setIsLoading(false);
+        }
+      };
+
+      fetchIssues();
+    }
+  }, [workspaceId]);
+
+  useEffect(() => {
     const barChartCtx = barChartRef.current.getContext("2d");
     const pieChartCtx = pieChartRef.current.getContext("2d");
     let barChartInstance = null;
     let pieChartInstance = null;
 
-    // Aggregate data based on status
-    const statusCounts = CurrentList.reduce((acc, curr) => {
-      acc[curr.status] = (acc[curr.status] || 0) + 1;
-      return acc;
-    }, {});
-
     const barChartData = {
       labels: Object.keys(statusCounts),
       datasets: [
         {
-          // label: "Number of Issues",
           data: Object.values(statusCounts),
           backgroundColor: [
             "rgba(255, 99, 132, 0.5)",
@@ -146,6 +177,7 @@ const ChartComponent = () => {
     };
 
     updateChartSize();
+   
 
     return () => {
       if (barChartInstance) {
@@ -155,11 +187,13 @@ const ChartComponent = () => {
         pieChartInstance.destroy();
       }
     };
-  }, [isLandscape]);
+  }, [isLandscape, statusCounts]);
+
+
 
   return (
     <div
-      style={{ backgroundColor: "#171e28", width: "100vw", height: "100vh" }}
+      style={{ backgroundColor: "#171e28", width: "100vw", height: "100vh" ,padding:"2%"}}
     >
       <div
         className={`flex flex-col ${
@@ -170,7 +204,7 @@ const ChartComponent = () => {
           className={`w-full ${
             isLandscape ? "lg:w-1/2" : ""
           } bg-gray-200 p-4 rounded-md shadow-md`}
-          style={{ height: "400px" }}
+          style={{ height: "80%",minHeight:"600px" }}
         >
           <canvas ref={barChartRef}></canvas>
         </div>
@@ -178,7 +212,7 @@ const ChartComponent = () => {
           className={`w-full ${
             isLandscape ? "lg:w-1/2" : ""
           } bg-gray-200 p-4 rounded-md shadow-md`}
-          style={{ height: "400px" }}
+          style={{ height: "80%",minHeight:"600px" }}
         >
           <canvas ref={pieChartRef}></canvas>
         </div>

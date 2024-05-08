@@ -6,6 +6,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../../../loading"
 
 function formatDate(dateString) {
   const [day, month, year] = dateString.split("/");
@@ -182,7 +183,7 @@ function RightBar() {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loader/>;
   }
   const delete2 = async () => {
     try {

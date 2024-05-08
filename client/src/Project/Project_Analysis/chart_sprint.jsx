@@ -159,7 +159,7 @@ const SprintChartComponent = ({ backgroundColor }) => {
   }, [isLandscape]);
 
   return (
-    <div style={{ backgroundColor, width: "100vw", height: "100vh" }}>
+    <div style={{ backgroundColor, width: "100vw", height: "100vh" ,padding:"2%"}}>
       <div
         className={`flex flex-col ${
           isLandscape ? "lg:flex-row" : ""
@@ -169,7 +169,7 @@ const SprintChartComponent = ({ backgroundColor }) => {
           className={`w-full ${
             isLandscape ? "lg:w-1/2" : ""
           } bg-gray-200 p-4 rounded-md shadow-md`}
-          style={{ height: "400px" }}
+          style={{height: "80%",minHeight:"600px"}}
         >
           <canvas ref={barChartRef}></canvas>
         </div>
@@ -177,7 +177,7 @@ const SprintChartComponent = ({ backgroundColor }) => {
           className={`w-full ${
             isLandscape ? "lg:w-1/2" : ""
           } bg-gray-200 p-4 rounded-md shadow-md`}
-          style={{ height: "400px" }}
+          style={ {height: "80%",minHeight:"600px"}}
         >
           <canvas ref={pieChartRef}></canvas>
         </div>

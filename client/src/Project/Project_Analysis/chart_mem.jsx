@@ -1,7 +1,7 @@
-//chart_mem.jsx
 import React, { useEffect, useRef, useState } from "react";
 import Chart from "chart.js/auto";
-import CurrentList from "./currentList";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const ChartComponent1 = ({ backgroundColor }) => {
   const barChartRef = useRef(null);
@@ -9,6 +9,8 @@ const ChartComponent1 = ({ backgroundColor }) => {
   const [isLandscape, setIsLandscape] = useState(
     window.innerWidth > window.innerHeight
   );
+  const workspaceId = useSelector((state) => state.workspaceNameId.value.id);
+  const [memberCounts, setMemberCounts] = useState({});
 
   useEffect(() => {
     const handleResize = () => {
@@ -20,23 +22,43 @@ const ChartComponent1 = ({ backgroundColor }) => {
   }, []);
 
   useEffect(() => {
+    if (workspaceId) {
+      const fetchIssues = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:8000/api/users/workspace/issues`,
+            {
+              params: {
+                activeWorkspaceId: workspaceId,
+              },
+              withCredentials: true,
+            }
+          );
+          const data = response.data;
+          const memberCounts = data.reduce((acc, curr) => {
+            acc[curr.assigneename] = (acc[curr.assigneename] || 0) + 1;
+            return acc;
+          }, {});
+          setMemberCounts(memberCounts);
+        } catch (error) {
+          console.error("Error fetching Issues:", error);
+        }
+      };
+
+      fetchIssues();
+    }
+  }, [workspaceId]);
+
+  useEffect(() => {
     const barChartCtx = barChartRef.current.getContext("2d");
     const pieChartCtx = pieChartRef.current.getContext("2d");
     let barChartInstance = null;
     let pieChartInstance = null;
 
-    // Aggregate data based on assignee
-    const memberCounts = CurrentList.reduce((acc, curr) => {
-      acc[curr.assignee] = (acc[curr.assignee] || 0) + 1;
-      return acc;
-    }, {});
-
-    // Prepare data for charts
     const barChartData = {
       labels: Object.keys(memberCounts),
       datasets: [
         {
-          label: "Number of Issues",
           data: Object.values(memberCounts),
           backgroundColor: [
             "rgba(255, 99, 132, 0.5)",
@@ -90,18 +112,19 @@ const ChartComponent1 = ({ backgroundColor }) => {
             y: {
               beginAtZero: true,
               ticks: {
-                color: "black", // Color of vertical axis labels
+                color: "black",
               },
             },
             x: {
               ticks: {
-                color: "black", // Color of horizontal axis labels
+                color: "black",
               },
             },
           },
           plugins: {
             legend: {
               display: false,
+              position: "top",
             },
           },
           responsive: true,
@@ -155,10 +178,10 @@ const ChartComponent1 = ({ backgroundColor }) => {
         pieChartInstance.destroy();
       }
     };
-  }, [isLandscape]);
+  }, [isLandscape, memberCounts]);
 
   return (
-    <div style={{ backgroundColor, width: "100vw", height: "100vh" }}>
+    <div style={{ backgroundColor, width: "100vw", height: "100vh" ,padding:"2%"}}>
       <div
         className={`flex flex-col ${
           isLandscape ? "lg:flex-row" : ""
@@ -168,7 +191,7 @@ const ChartComponent1 = ({ backgroundColor }) => {
           className={`w-full ${
             isLandscape ? "lg:w-1/2" : ""
           } bg-gray-200 p-4 rounded-md shadow-md`}
-          style={{ height: "400px" }}
+          style={{height: "80%",minHeight:"600px"}}
         >
           <canvas ref={barChartRef}></canvas>
         </div>
@@ -176,7 +199,7 @@ const ChartComponent1 = ({ backgroundColor }) => {
           className={`w-full ${
             isLandscape ? "lg:w-1/2" : ""
           } bg-gray-200 p-4 rounded-md shadow-md`}
-          style={{ height: "400px" }}
+          style={{ height: "80%",minHeight:"600px"}}
         >
           <canvas ref={pieChartRef}></canvas>
         </div>
